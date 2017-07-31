@@ -3,14 +3,14 @@
 
 StaticMeshComponent::StaticMeshComponent() {
     m_mesh = 0;
-    m_lit = true;
+    m_applyLighting = true;
 }
 
 StaticMeshComponent* StaticMeshComponent::Clone() {
     StaticMeshComponent* clone = new StaticMeshComponent();
     
     // Copy data
-    clone->m_lit = m_lit;
+    clone->m_applyLighting = m_applyLighting;
     clone->m_obb = m_obb;
     clone->m_parent = m_parent;
     clone->SetTransform(this->GetTransform());

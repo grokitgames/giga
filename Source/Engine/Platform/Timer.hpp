@@ -7,6 +7,8 @@ public:
     Timer();
     ~Timer();
     
+    GIGA_CLASS_NAME("Timer");
+    
     /**
      * Get current timestamp (UTC)
      */

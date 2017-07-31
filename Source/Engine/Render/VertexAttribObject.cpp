@@ -16,7 +16,7 @@ void VertexAttribObject::Destroy() {
     }
 }
 
-void VertexAttribObject::Use() {
+void VertexAttribObject::Bind() {
     GL_CHECK(glBindVertexArray(m_vertexArray));
 }
 

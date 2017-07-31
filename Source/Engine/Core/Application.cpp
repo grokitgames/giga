@@ -97,6 +97,8 @@ void Application::Initialize(std::string name) {
     Application::Log(MSGTYPE_DEBUG, "Registering component types...");
     
     Component::RegisterComponentType("ScriptComponent", &ScriptingSystem::CreateScriptComponent, &ScriptingSystem::RemoveScriptComponent);
+    Component::RegisterComponentType("StaticMeshComponent", &RenderSystem::CreateStaticMeshComponent, &RenderSystem::RemoveStaticMeshComponent);
+    Component::RegisterComponentType("CameraComponent", &RenderSystem::CreateCameraComponent, &RenderSystem::RemoveCameraComponent);
     
     Application::Log(MSGTYPE_DEBUG, "Registered component types...");
     
@@ -248,6 +250,19 @@ void Application::Initialize(std::string name) {
     staticMeshType->AddObjectFunction("Instantiate", &StaticMeshComponent::Instantiate);
     
     scriptingSystem->RegisterScriptableObjectType<StaticMeshComponent>(staticMeshType);
+    
+    // Camera component
+    ScriptableObjectType* cameraType = new ScriptableObjectType("CameraComponent");
+    cameraType->AddObjectVariable("transform", &CameraComponent::GetTransform, &CameraComponent::SetTransform);
+    cameraType->AddObjectFunction("SetViewport", &CameraComponent::SetViewport);
+    cameraType->AddObjectVariable("fov", &CameraComponent::GetFOV, &CameraComponent::SetFOV);
+    cameraType->AddObjectVariable("near", &CameraComponent::GetNear, &CameraComponent::SetNear);
+    cameraType->AddObjectVariable("far", &CameraComponent::GetFar, &CameraComponent::SetFar);
+    cameraType->AddObjectVariable("look", &CameraComponent::GetLook, &CameraComponent::SetLook);
+    cameraType->AddObjectVariable("up", &CameraComponent::GetUp, 0);
+    cameraType->AddObjectVariable("right", &CameraComponent::GetRight, 0);
+    
+    scriptingSystem->RegisterScriptableObjectType<CameraComponent>(cameraType);
     
     Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
     

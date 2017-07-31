@@ -21,6 +21,18 @@ int main(int argc, const char * argv[]) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     renderSystem->Initialize(width, height);
     
+    // Create an entity
+    Entity* entity = new Entity();
+    
+    // Load a mesh
+    ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+    Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->FindResource("Resources/Meshes/crate.g3d"));
+    StaticMeshComponent* meshComponent = dynamic_cast<StaticMeshComponent*>(Component::CreateComponent("StaticMeshComponent"));
+    meshComponent->Instantiate(mesh);
+
+    // Add to entity
+    entity->AddComponent(meshComponent);
+    
     // Main loop
     while(window->IsClosing() == false) {
         window->SwapBuffer();

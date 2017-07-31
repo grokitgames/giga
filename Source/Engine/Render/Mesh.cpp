@@ -219,7 +219,7 @@ void Mesh::ProcessData() {
                 // Set the vertex attributes
                 int offset = 0;
                 child->m_vertexFormat = new VertexFormat();
-                child->m_vertexFormat->Use();
+                child->m_vertexFormat->Bind();
                 
                 // Vertex data
                 float* vertexData = (float*)malloc(sizeof(float) * vertexCount * vertexSize);

@@ -24,12 +24,12 @@ void VertexFormat::EnableVertexAttribs(int attribs) {
     }
 }
 
-void VertexFormat::Use() {
+void VertexFormat::Bind() {
     if (m_vertexArrayObject == 0) {
         m_vertexArrayObject = new VertexAttribObject();
         m_vertexArrayObject->Create();
     }
-    m_vertexArrayObject->Use();
+    m_vertexArrayObject->Bind();
 }
 
 void VertexFormat::DisableVertexAttribs() {

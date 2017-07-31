@@ -64,7 +64,6 @@ public:
     // Called when other components in the same entity are removed
     virtual void OnComponentRemoved() { }
     
-public:
     /**
      * Register a global component type that can be added to entities - create/remove likely in system
      */

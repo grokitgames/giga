@@ -5,7 +5,7 @@
 /**
  * Static mesh component to be added to entities
  */
-class StaticMeshComponent : public SceneComponent {
+class StaticMeshComponent : public RenderComponent {
 public:
     StaticMeshComponent();
     ~StaticMeshComponent() = default;
@@ -28,6 +28,27 @@ public:
     virtual StaticMeshComponent* Clone();
     
     /**
+     * Enable/disable lighting on this mesh
+     */
+    void SetLighting(bool lighting) { m_applyLighting = lighting; }
+    bool HasLighting() { return m_applyLighting; }
+    
+    /**
+     * Get bounding box
+     */
+    BoundingBox& GetBoundingBox() { return m_obb; }
+    
+    /**
+     * Get child mesh list
+     */
+    std::vector<StaticMeshComponent*>& GetChildren() { return m_children; }
+    
+    /**
+     * The mesh this class is based on
+     */
+    Mesh* GetMesh() { return m_mesh; }
+    
+    /**
      * Scripting integration
      */
     static Variant* Instantiate(Variant* obj, int argc, Variant** argv);
@@ -47,6 +68,9 @@ protected:
     
     // Oriented bounding box
     BoundingBox m_obb;
+    
+    // Whether to apply lighting to this component or not
+    bool m_applyLighting;
 };
 
 #endif

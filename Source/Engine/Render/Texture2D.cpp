@@ -3,14 +3,7 @@
 #include <Render/OpenGL.hpp>
 #include <SOIL.h>
 
-Texture2D::Texture2D() {
-    m_texture = 0;
-    m_width = m_height = 0;
-    m_channels = 0;
-    m_slot = 0;
-}
-
-void Texture2D::Initialize(int width, int height, int format, int channels) {
+void Texture2D::Initialize(int width, int height, int format, int type) {
     if (m_texture) {
         GL_CHECK(glDeleteTextures(1, &m_texture));
         m_texture = 0;
@@ -20,15 +13,21 @@ void Texture2D::Initialize(int width, int height, int format, int channels) {
     
     m_width = width;
     m_height = height;
-    m_channels = channels;
+    m_channels = 0;
     
-    int type = GL_RGB;
-    if (channels == 1) {
-        type = GL_RED;
-    }
-    if (channels == 4) {
-        type = GL_RGBA;
-    }
+    switch(type) {
+        case GL_RED:
+            m_channels = 1;
+            break;
+        case GL_RGB:
+            m_channels = 3;
+            break;
+        case GL_RGBA:
+            m_channels = 4;
+            break;
+        default:
+            break;
+    };
     
     GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_texture));
     GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, type, GL_FLOAT, NULL));
@@ -36,6 +35,18 @@ void Texture2D::Initialize(int width, int height, int format, int channels) {
     GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
     GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 }
+
+void Texture2D::Bind(int slot) {
+    GL_CHECK(glActiveTexture(GL_TEXTURE0 + slot));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_texture));
+    m_slot = slot;
+}
+
+void Texture2D::Unbind() {
+    GL_CHECK(glActiveTexture(GL_TEXTURE0 + m_slot));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
 
 void Texture2D::ProcessData() {
     int flags = SOIL_FLAG_MIPMAPS;
@@ -68,17 +79,6 @@ void Texture2D::ProcessData() {
             break;
         default: break;
     }
-}
-
-void Texture2D::Bind(int slot) {
-    GL_CHECK(glActiveTexture(GL_TEXTURE0 + slot));
-    GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_texture));
-    m_slot = slot;
-}
-
-void Texture2D::Unbind() {
-    GL_CHECK(glActiveTexture(GL_TEXTURE0 + m_slot));
-    GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
 void Texture2D::Save(std::string filename) {

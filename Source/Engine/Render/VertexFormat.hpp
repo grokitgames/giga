@@ -44,7 +44,7 @@ public:
     void EnableVertexAttribs(int attribs);
     void DisableVertexAttribs();
     
-    void Use();
+    void Bind();
     
 protected:
     std::vector<VertexAttrib*> m_attribs;

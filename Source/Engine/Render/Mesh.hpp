@@ -26,6 +26,7 @@ public:
     Material* GetMaterial() { return m_material; }
     ShaderVariation* GetShader() { return m_shader; }
     BoundingBox& GetBoundingBox() { return m_aabb; }
+    int GetTriCount() { return m_numTriangles; }
     
     /**
      * Get children

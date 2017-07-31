@@ -1,11 +1,11 @@
 
-#ifndef scenecomponent_hpp
-#define scenecomponent_hpp
+#ifndef rendercomponent_hpp
+#define rendercomponent_hpp
 
-class GIGA_API SceneComponent : public Component {
+class GIGA_API RenderComponent : public Component {
 public:
-    SceneComponent();
-    ~SceneComponent() = default;
+    RenderComponent();
+    ~RenderComponent() = default;
     
     /**
      * Get our (local) transform object
@@ -62,9 +62,6 @@ protected:
     
     // The relative transform to the transformcomponent
     Transform m_transform;
-    
-    // Whether to apply lighting to this component or not
-    bool m_lit;
 };
 
 #endif

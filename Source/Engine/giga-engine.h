@@ -80,6 +80,7 @@ typedef glm::mat4 matrix4;
 #include <Platform/DateTime.hpp>
 #include <Platform/Window.hpp>
 #include <Platform/Timer.hpp>
+#include <IO/Profiler.hpp>
 #include <Resource/Resource.hpp>
 #include <Resource/ResourceObject.hpp>
 #include <Resource/ResourceSystem.hpp>
@@ -91,7 +92,9 @@ typedef glm::mat4 matrix4;
 #include <Render/VertexAttribObject.hpp>
 #include <Render/VertexFormat.hpp>
 #include <Render/BoundingBox.hpp>
+#include <Render/Texture.hpp>
 #include <Render/Texture2D.hpp>
+#include <Render/Texture3D.hpp>
 #include <Render/Shader.hpp>
 #include <Render/ShaderVariation.hpp>
 #include <Render/ShaderSystem.hpp>
@@ -105,10 +108,22 @@ typedef glm::mat4 matrix4;
 #include <Render/AnimationInstance.hpp>
 #include <Render/Transform.hpp>
 #include <Render/TransformComponent.hpp>
-#include <Render/SceneComponent.hpp>
+#include <Render/RenderComponent.hpp>
 #include <Render/Vector3.hpp>
 #include <Render/Quaternion.hpp>
 #include <Render/StaticMeshComponent.hpp>
+#include <Render/Plane.hpp>
+#include <Render/Frustum.hpp>
+#include <Render/CameraComponent.hpp>
+#include <Render/LightComponent.hpp>
+#include <Render/SpotLightComponent.hpp>
+#include <Render/Scene.hpp>
+#include <Render/Framebuffer.hpp>
+#include <Render/RenderPass.hpp>
+#include <Render/GBufferPass.hpp>
+#include <Render/PostProcessPass.hpp>
+#include <Render/DeferredRenderPass.hpp>
+#include <Render/DeferredLightingPass.hpp>
 #include <Render/RenderSystem.hpp>
 #include <Core/Application.hpp>
 

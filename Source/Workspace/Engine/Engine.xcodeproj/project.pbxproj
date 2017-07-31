@@ -85,8 +85,38 @@
 		5E556B2E1F2ABDFC00F6FB2E /* Quaternion.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E556B2C1F2ABDFC00F6FB2E /* Quaternion.hpp */; };
 		5E6C652D1F2B9E610089FD55 /* TransformComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C652B1F2B9E600089FD55 /* TransformComponent.cpp */; };
 		5E6C652E1F2B9E610089FD55 /* TransformComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C652C1F2B9E600089FD55 /* TransformComponent.hpp */; };
-		5E6C65311F2BA1050089FD55 /* SceneComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C652F1F2BA1050089FD55 /* SceneComponent.cpp */; };
-		5E6C65321F2BA1050089FD55 /* SceneComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65301F2BA1050089FD55 /* SceneComponent.hpp */; };
+		5E6C65311F2BA1050089FD55 /* RenderComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C652F1F2BA1050089FD55 /* RenderComponent.cpp */; };
+		5E6C65321F2BA1050089FD55 /* RenderComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65301F2BA1050089FD55 /* RenderComponent.hpp */; };
+		5E6C653E1F2C02F20089FD55 /* CameraComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C653C1F2C02F20089FD55 /* CameraComponent.cpp */; };
+		5E6C653F1F2C02F20089FD55 /* CameraComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C653D1F2C02F20089FD55 /* CameraComponent.hpp */; };
+		5E6C65421F2C041F0089FD55 /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65401F2C041F0089FD55 /* Plane.cpp */; };
+		5E6C65431F2C041F0089FD55 /* Plane.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65411F2C041F0089FD55 /* Plane.hpp */; };
+		5E6C65461F2C04800089FD55 /* Frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65441F2C04800089FD55 /* Frustum.cpp */; };
+		5E6C65471F2C04800089FD55 /* Frustum.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65451F2C04800089FD55 /* Frustum.hpp */; };
+		5E6C654A1F2CF26B0089FD55 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65481F2CF26B0089FD55 /* RenderPass.cpp */; };
+		5E6C654B1F2CF26B0089FD55 /* RenderPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65491F2CF26B0089FD55 /* RenderPass.hpp */; };
+		5E6C654E1F2CF2CE0089FD55 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C654C1F2CF2CE0089FD55 /* Scene.cpp */; };
+		5E6C654F1F2CF2CE0089FD55 /* Scene.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C654D1F2CF2CE0089FD55 /* Scene.hpp */; };
+		5E6C65521F2CF4480089FD55 /* Framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65501F2CF4480089FD55 /* Framebuffer.cpp */; };
+		5E6C65531F2CF4480089FD55 /* Framebuffer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65511F2CF4480089FD55 /* Framebuffer.hpp */; };
+		5E6C65561F2CF7AE0089FD55 /* GBufferPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65541F2CF7AE0089FD55 /* GBufferPass.cpp */; };
+		5E6C65571F2CF7AE0089FD55 /* GBufferPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65551F2CF7AE0089FD55 /* GBufferPass.hpp */; };
+		5E6C655A1F2D62D00089FD55 /* Profiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65581F2D62D00089FD55 /* Profiler.cpp */; };
+		5E6C655B1F2D62D00089FD55 /* Profiler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65591F2D62D00089FD55 /* Profiler.hpp */; };
+		5E6C655E1F2EA1390089FD55 /* DeferredRenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C655C1F2EA1390089FD55 /* DeferredRenderPass.cpp */; };
+		5E6C655F1F2EA1390089FD55 /* DeferredRenderPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C655D1F2EA1390089FD55 /* DeferredRenderPass.hpp */; };
+		5E6C65621F2EA40F0089FD55 /* PostProcessPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65601F2EA40F0089FD55 /* PostProcessPass.cpp */; };
+		5E6C65631F2EA40F0089FD55 /* PostProcessPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65611F2EA40F0089FD55 /* PostProcessPass.hpp */; };
+		5E6C65661F2EADBB0089FD55 /* DeferredLightingPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65641F2EADBB0089FD55 /* DeferredLightingPass.cpp */; };
+		5E6C65671F2EADBB0089FD55 /* DeferredLightingPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65651F2EADBB0089FD55 /* DeferredLightingPass.hpp */; };
+		5E6C656A1F2EAF990089FD55 /* LightComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65681F2EAF990089FD55 /* LightComponent.cpp */; };
+		5E6C656B1F2EAF990089FD55 /* LightComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65691F2EAF990089FD55 /* LightComponent.hpp */; };
+		5E6C656E1F2EB0A40089FD55 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C656C1F2EB0A40089FD55 /* Texture.cpp */; };
+		5E6C656F1F2EB0A40089FD55 /* Texture.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C656D1F2EB0A40089FD55 /* Texture.hpp */; };
+		5E6C65721F2EB6A50089FD55 /* Texture3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65701F2EB6A50089FD55 /* Texture3D.cpp */; };
+		5E6C65731F2EB6A50089FD55 /* Texture3D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65711F2EB6A50089FD55 /* Texture3D.hpp */; };
+		5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65741F2EB9630089FD55 /* SpotLightComponent.cpp */; };
+		5E6C65771F2EB9630089FD55 /* SpotLightComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65751F2EB9630089FD55 /* SpotLightComponent.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDA41F219857009FA81B /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFD9D1F219857009FA81B /* libicui18n.a */; };
@@ -208,8 +238,38 @@
 		5E556B2C1F2ABDFC00F6FB2E /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Quaternion.hpp; path = ../../Engine/Render/Quaternion.hpp; sourceTree = "<group>"; };
 		5E6C652B1F2B9E600089FD55 /* TransformComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TransformComponent.cpp; path = ../../Engine/Render/TransformComponent.cpp; sourceTree = "<group>"; };
 		5E6C652C1F2B9E600089FD55 /* TransformComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TransformComponent.hpp; path = ../../Engine/Render/TransformComponent.hpp; sourceTree = "<group>"; };
-		5E6C652F1F2BA1050089FD55 /* SceneComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SceneComponent.cpp; path = ../../Engine/Render/SceneComponent.cpp; sourceTree = "<group>"; };
-		5E6C65301F2BA1050089FD55 /* SceneComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SceneComponent.hpp; path = ../../Engine/Render/SceneComponent.hpp; sourceTree = "<group>"; };
+		5E6C652F1F2BA1050089FD55 /* RenderComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderComponent.cpp; path = ../../Engine/Render/RenderComponent.cpp; sourceTree = "<group>"; };
+		5E6C65301F2BA1050089FD55 /* RenderComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderComponent.hpp; path = ../../Engine/Render/RenderComponent.hpp; sourceTree = "<group>"; };
+		5E6C653C1F2C02F20089FD55 /* CameraComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraComponent.cpp; path = ../../Engine/Render/CameraComponent.cpp; sourceTree = "<group>"; };
+		5E6C653D1F2C02F20089FD55 /* CameraComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CameraComponent.hpp; path = ../../Engine/Render/CameraComponent.hpp; sourceTree = "<group>"; };
+		5E6C65401F2C041F0089FD55 /* Plane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Plane.cpp; path = ../../Engine/Render/Plane.cpp; sourceTree = "<group>"; };
+		5E6C65411F2C041F0089FD55 /* Plane.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Plane.hpp; path = ../../Engine/Render/Plane.hpp; sourceTree = "<group>"; };
+		5E6C65441F2C04800089FD55 /* Frustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Frustum.cpp; path = ../../Engine/Render/Frustum.cpp; sourceTree = "<group>"; };
+		5E6C65451F2C04800089FD55 /* Frustum.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Frustum.hpp; path = ../../Engine/Render/Frustum.hpp; sourceTree = "<group>"; };
+		5E6C65481F2CF26B0089FD55 /* RenderPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderPass.cpp; path = ../../Engine/Render/RenderPass.cpp; sourceTree = "<group>"; };
+		5E6C65491F2CF26B0089FD55 /* RenderPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RenderPass.hpp; path = ../../Engine/Render/RenderPass.hpp; sourceTree = "<group>"; };
+		5E6C654C1F2CF2CE0089FD55 /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = ../../Engine/Render/Scene.cpp; sourceTree = "<group>"; };
+		5E6C654D1F2CF2CE0089FD55 /* Scene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Scene.hpp; path = ../../Engine/Render/Scene.hpp; sourceTree = "<group>"; };
+		5E6C65501F2CF4480089FD55 /* Framebuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Framebuffer.cpp; path = ../../Engine/Render/Framebuffer.cpp; sourceTree = "<group>"; };
+		5E6C65511F2CF4480089FD55 /* Framebuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Framebuffer.hpp; path = ../../Engine/Render/Framebuffer.hpp; sourceTree = "<group>"; };
+		5E6C65541F2CF7AE0089FD55 /* GBufferPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GBufferPass.cpp; path = ../../Engine/Render/GBufferPass.cpp; sourceTree = "<group>"; };
+		5E6C65551F2CF7AE0089FD55 /* GBufferPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GBufferPass.hpp; path = ../../Engine/Render/GBufferPass.hpp; sourceTree = "<group>"; };
+		5E6C65581F2D62D00089FD55 /* Profiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Profiler.cpp; path = ../../Engine/IO/Profiler.cpp; sourceTree = "<group>"; };
+		5E6C65591F2D62D00089FD55 /* Profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Profiler.hpp; path = ../../Engine/IO/Profiler.hpp; sourceTree = "<group>"; };
+		5E6C655C1F2EA1390089FD55 /* DeferredRenderPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DeferredRenderPass.cpp; path = ../../Engine/Render/DeferredRenderPass.cpp; sourceTree = "<group>"; };
+		5E6C655D1F2EA1390089FD55 /* DeferredRenderPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DeferredRenderPass.hpp; path = ../../Engine/Render/DeferredRenderPass.hpp; sourceTree = "<group>"; };
+		5E6C65601F2EA40F0089FD55 /* PostProcessPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PostProcessPass.cpp; path = ../../Engine/Render/PostProcessPass.cpp; sourceTree = "<group>"; };
+		5E6C65611F2EA40F0089FD55 /* PostProcessPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PostProcessPass.hpp; path = ../../Engine/Render/PostProcessPass.hpp; sourceTree = "<group>"; };
+		5E6C65641F2EADBB0089FD55 /* DeferredLightingPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DeferredLightingPass.cpp; path = ../../Engine/Render/DeferredLightingPass.cpp; sourceTree = "<group>"; };
+		5E6C65651F2EADBB0089FD55 /* DeferredLightingPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DeferredLightingPass.hpp; path = ../../Engine/Render/DeferredLightingPass.hpp; sourceTree = "<group>"; };
+		5E6C65681F2EAF990089FD55 /* LightComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightComponent.cpp; path = ../../Engine/Render/LightComponent.cpp; sourceTree = "<group>"; };
+		5E6C65691F2EAF990089FD55 /* LightComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LightComponent.hpp; path = ../../Engine/Render/LightComponent.hpp; sourceTree = "<group>"; };
+		5E6C656C1F2EB0A40089FD55 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = ../../Engine/Render/Texture.cpp; sourceTree = "<group>"; };
+		5E6C656D1F2EB0A40089FD55 /* Texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Texture.hpp; path = ../../Engine/Render/Texture.hpp; sourceTree = "<group>"; };
+		5E6C65701F2EB6A50089FD55 /* Texture3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture3D.cpp; path = ../../Engine/Render/Texture3D.cpp; sourceTree = "<group>"; };
+		5E6C65711F2EB6A50089FD55 /* Texture3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Texture3D.hpp; path = ../../Engine/Render/Texture3D.hpp; sourceTree = "<group>"; };
+		5E6C65741F2EB9630089FD55 /* SpotLightComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpotLightComponent.cpp; path = ../../Engine/Render/SpotLightComponent.cpp; sourceTree = "<group>"; };
+		5E6C65751F2EB9630089FD55 /* SpotLightComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SpotLightComponent.hpp; path = ../../Engine/Render/SpotLightComponent.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -369,6 +429,8 @@
 				5EFDFDB01F21A0B4009FA81B /* Keyboard.hpp */,
 				5E556AFF1F295A4200F6FB2E /* MemoryReader.cpp */,
 				5E556B001F295A4200F6FB2E /* MemoryReader.hpp */,
+				5E6C65581F2D62D00089FD55 /* Profiler.cpp */,
+				5E6C65591F2D62D00089FD55 /* Profiler.hpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -406,8 +468,22 @@
 				5E556B0C1F2A6B9300F6FB2E /* Bone.hpp */,
 				5E556AC11F2431A000F6FB2E /* BoundingBox.cpp */,
 				5E556AC21F2431A000F6FB2E /* BoundingBox.hpp */,
+				5E6C653C1F2C02F20089FD55 /* CameraComponent.cpp */,
+				5E6C653D1F2C02F20089FD55 /* CameraComponent.hpp */,
+				5E6C65641F2EADBB0089FD55 /* DeferredLightingPass.cpp */,
+				5E6C65651F2EADBB0089FD55 /* DeferredLightingPass.hpp */,
+				5E6C655C1F2EA1390089FD55 /* DeferredRenderPass.cpp */,
+				5E6C655D1F2EA1390089FD55 /* DeferredRenderPass.hpp */,
+				5E6C65501F2CF4480089FD55 /* Framebuffer.cpp */,
+				5E6C65511F2CF4480089FD55 /* Framebuffer.hpp */,
+				5E6C65441F2C04800089FD55 /* Frustum.cpp */,
+				5E6C65451F2C04800089FD55 /* Frustum.hpp */,
+				5E6C65541F2CF7AE0089FD55 /* GBufferPass.cpp */,
+				5E6C65551F2CF7AE0089FD55 /* GBufferPass.hpp */,
 				5E556AB51F242ADC00F6FB2E /* IndexBuffer.cpp */,
 				5E556AB61F242ADC00F6FB2E /* IndexBuffer.hpp */,
+				5E6C65681F2EAF990089FD55 /* LightComponent.cpp */,
+				5E6C65691F2EAF990089FD55 /* LightComponent.hpp */,
 				5E556AFB1F292F1000F6FB2E /* Material.cpp */,
 				5E556AFC1F292F1000F6FB2E /* Material.hpp */,
 				5E556B071F29736000F6FB2E /* MaterialSystem.cpp */,
@@ -415,26 +491,40 @@
 				5E556AAD1F241AF600F6FB2E /* Mesh.cpp */,
 				5E556AAE1F241AF600F6FB2E /* Mesh.hpp */,
 				5EFDFDC41F21AC23009FA81B /* OpenGL.hpp */,
+				5E6C65401F2C041F0089FD55 /* Plane.cpp */,
+				5E6C65411F2C041F0089FD55 /* Plane.hpp */,
+				5E6C65601F2EA40F0089FD55 /* PostProcessPass.cpp */,
+				5E6C65611F2EA40F0089FD55 /* PostProcessPass.hpp */,
 				5E556B2B1F2ABDFC00F6FB2E /* Quaternion.cpp */,
 				5E556B2C1F2ABDFC00F6FB2E /* Quaternion.hpp */,
-				5E6C652F1F2BA1050089FD55 /* SceneComponent.cpp */,
-				5E6C65301F2BA1050089FD55 /* SceneComponent.hpp */,
+				5E6C652F1F2BA1050089FD55 /* RenderComponent.cpp */,
+				5E6C65301F2BA1050089FD55 /* RenderComponent.hpp */,
+				5E6C65481F2CF26B0089FD55 /* RenderPass.cpp */,
+				5E6C65491F2CF26B0089FD55 /* RenderPass.hpp */,
+				5EFDFDC01F21AB8D009FA81B /* RenderSystem.cpp */,
+				5EFDFDC11F21AB8D009FA81B /* RenderSystem.hpp */,
+				5E6C654C1F2CF2CE0089FD55 /* Scene.cpp */,
+				5E6C654D1F2CF2CE0089FD55 /* Scene.hpp */,
 				5E556AEF1F2813E000F6FB2E /* Shader.cpp */,
 				5E556AF01F2813E000F6FB2E /* Shader.hpp */,
 				5E556B031F2961F100F6FB2E /* ShaderSystem.cpp */,
 				5E556B041F2961F100F6FB2E /* ShaderSystem.hpp */,
 				5E556AF31F2815E700F6FB2E /* ShaderVariation.cpp */,
 				5E556AF41F2815E700F6FB2E /* ShaderVariation.hpp */,
+				5E6C65741F2EB9630089FD55 /* SpotLightComponent.cpp */,
+				5E6C65751F2EB9630089FD55 /* SpotLightComponent.hpp */,
 				5E556B1F1F2AB65000F6FB2E /* StaticMeshComponent.cpp */,
 				5E556B201F2AB65000F6FB2E /* StaticMeshComponent.hpp */,
+				5E6C656C1F2EB0A40089FD55 /* Texture.cpp */,
+				5E6C656D1F2EB0A40089FD55 /* Texture.hpp */,
 				5E556AC51F2432D300F6FB2E /* Texture2D.cpp */,
 				5E556AC61F2432D300F6FB2E /* Texture2D.hpp */,
+				5E6C65701F2EB6A50089FD55 /* Texture3D.cpp */,
+				5E6C65711F2EB6A50089FD55 /* Texture3D.hpp */,
 				5E556B231F2AB68C00F6FB2E /* Transform.cpp */,
 				5E556B241F2AB68C00F6FB2E /* Transform.hpp */,
 				5E6C652B1F2B9E600089FD55 /* TransformComponent.cpp */,
 				5E6C652C1F2B9E600089FD55 /* TransformComponent.hpp */,
-				5EFDFDC01F21AB8D009FA81B /* RenderSystem.cpp */,
-				5EFDFDC11F21AB8D009FA81B /* RenderSystem.hpp */,
 				5E556B271F2ABA6500F6FB2E /* Vector3.cpp */,
 				5E556B281F2ABA6500F6FB2E /* Vector3.hpp */,
 				5E556ABD1F242DFC00F6FB2E /* VertexAttribObject.cpp */,
@@ -535,28 +625,36 @@
 				5E0523C21F2166000088C9BA /* EntitySystem.hpp in Headers */,
 				5E556B261F2AB68C00F6FB2E /* Transform.hpp in Headers */,
 				5E556B1E1F2AB50400F6FB2E /* AnimationInstance.hpp in Headers */,
+				5E6C655F1F2EA1390089FD55 /* DeferredRenderPass.hpp in Headers */,
 				5E556ABC1F242D7A00F6FB2E /* VertexFormat.hpp in Headers */,
+				5E6C654B1F2CF26B0089FD55 /* RenderPass.hpp in Headers */,
 				5EFDFDC81F227023009FA81B /* File.hpp in Headers */,
 				5E556AB41F2428EC00F6FB2E /* VertexBuffer.hpp in Headers */,
 				5EFDFDDC1F228C1A009FA81B /* Resource.hpp in Headers */,
 				5E556AA81F23C6CB00F6FB2E /* Command.hpp in Headers */,
 				5E0523D71F217EF90088C9BA /* ScriptableObject.hpp in Headers */,
 				5E0523CB1F216EC10088C9BA /* Error.hpp in Headers */,
+				5E6C65631F2EA40F0089FD55 /* PostProcessPass.hpp in Headers */,
 				5E0523CF1F2170410088C9BA /* ErrorSystem.hpp in Headers */,
 				5E0523901F203F7E0088C9BA /* Component.hpp in Headers */,
 				5E556A9C1F23613300F6FB2E /* Script.hpp in Headers */,
 				5E556AB01F241AF600F6FB2E /* Mesh.hpp in Headers */,
+				5E6C655B1F2D62D00089FD55 /* Profiler.hpp in Headers */,
 				5E556B121F2A6BE400F6FB2E /* AnimationFrame.hpp in Headers */,
 				5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */,
 				5E556AF21F2813E000F6FB2E /* Shader.hpp in Headers */,
+				5E6C65571F2CF7AE0089FD55 /* GBufferPass.hpp in Headers */,
 				5E556B0E1F2A6B9300F6FB2E /* Bone.hpp in Headers */,
+				5E6C65431F2C041F0089FD55 /* Plane.hpp in Headers */,
 				5E556B161F2A6C8600F6FB2E /* AnimationTransform.hpp in Headers */,
 				5E0523DE1F2181110088C9BA /* ScriptableVariant.hpp in Headers */,
-				5E6C65321F2BA1050089FD55 /* SceneComponent.hpp in Headers */,
+				5E6C65321F2BA1050089FD55 /* RenderComponent.hpp in Headers */,
+				5E6C656F1F2EB0A40089FD55 /* Texture.hpp in Headers */,
 				5E0523A41F20FE780088C9BA /* GigaObject.hpp in Headers */,
 				5E0523E21F21837D0088C9BA /* ScriptingSystem.hpp in Headers */,
 				5E556B0A1F29736000F6FB2E /* MaterialSystem.hpp in Headers */,
 				5E556AC01F242DFC00F6FB2E /* VertexAttribObject.hpp in Headers */,
+				5E6C65531F2CF4480089FD55 /* Framebuffer.hpp in Headers */,
 				5E6C652E1F2B9E610089FD55 /* TransformComponent.hpp in Headers */,
 				5EFDFDB21F21A0B4009FA81B /* Keyboard.hpp in Headers */,
 				5E0523C61F216CAB0088C9BA /* Event.hpp in Headers */,
@@ -564,21 +662,28 @@
 				5E0523A81F2162800088C9BA /* ObjectPool.hpp in Headers */,
 				5E556AA41F23618A00F6FB2E /* ScriptComponent.hpp in Headers */,
 				5E556AC81F2432D300F6FB2E /* Texture2D.hpp in Headers */,
+				5E6C653F1F2C02F20089FD55 /* CameraComponent.hpp in Headers */,
 				5E556B1A1F2A6D4300F6FB2E /* Animation.hpp in Headers */,
 				5E05239C1F2048ED0088C9BA /* Application.hpp in Headers */,
 				5E0523D31F217ABF0088C9BA /* EventSystem.hpp in Headers */,
 				5EFDFDE01F22963D009FA81B /* ResourceObject.hpp in Headers */,
 				5E556AB81F242ADC00F6FB2E /* IndexBuffer.hpp in Headers */,
+				5E6C65771F2EB9630089FD55 /* SpotLightComponent.hpp in Headers */,
 				5E556B221F2AB65000F6FB2E /* StaticMeshComponent.hpp in Headers */,
 				5EFDFDE81F229908009FA81B /* DateTime.hpp in Headers */,
+				5E6C656B1F2EAF990089FD55 /* LightComponent.hpp in Headers */,
 				5EFDFDEC1F22EB02009FA81B /* ResourceSystem.hpp in Headers */,
+				5E6C65471F2C04800089FD55 /* Frustum.hpp in Headers */,
 				5E556B2A1F2ABA6500F6FB2E /* Vector3.hpp in Headers */,
 				5E556B2E1F2ABDFC00F6FB2E /* Quaternion.hpp in Headers */,
+				5E6C65731F2EB6A50089FD55 /* Texture3D.hpp in Headers */,
 				5E0523A01F20FBA40088C9BA /* Variant.hpp in Headers */,
 				5E556AF61F2815E700F6FB2E /* ShaderVariation.hpp in Headers */,
+				5E6C654F1F2CF2CE0089FD55 /* Scene.hpp in Headers */,
 				5EFDFDC31F21AB8D009FA81B /* RenderSystem.hpp in Headers */,
 				5E0523981F20482B0088C9BA /* System.hpp in Headers */,
 				5EFDFDBB1F21A83C009FA81B /* Window.hpp in Headers */,
+				5E6C65671F2EADBB0089FD55 /* DeferredLightingPass.hpp in Headers */,
 				5EFDFDAE1F219AC0009FA81B /* InputSystem.hpp in Headers */,
 				5E0523941F2046750088C9BA /* Entity.hpp in Headers */,
 				5E556AC41F2431A000F6FB2E /* BoundingBox.hpp in Headers */,
@@ -644,31 +749,43 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E556AF11F2813E000F6FB2E /* Shader.cpp in Sources */,
+				5E6C65421F2C041F0089FD55 /* Plane.cpp in Sources */,
 				5E556B111F2A6BE400F6FB2E /* AnimationFrame.cpp in Sources */,
 				5EFDFDEB1F22EB02009FA81B /* ResourceSystem.cpp in Sources */,
 				5E0523DD1F2181110088C9BA /* ScriptableVariant.cpp in Sources */,
 				5E556B211F2AB65000F6FB2E /* StaticMeshComponent.cpp in Sources */,
+				5E6C65561F2CF7AE0089FD55 /* GBufferPass.cpp in Sources */,
+				5E6C654A1F2CF26B0089FD55 /* RenderPass.cpp in Sources */,
 				5E556ABB1F242D7A00F6FB2E /* VertexFormat.cpp in Sources */,
 				5E556B251F2AB68C00F6FB2E /* Transform.cpp in Sources */,
+				5E6C65461F2C04800089FD55 /* Frustum.cpp in Sources */,
 				5EFDFDDB1F228C1A009FA81B /* Resource.cpp in Sources */,
 				5E0523931F2046750088C9BA /* Entity.cpp in Sources */,
 				5E0523E11F21837D0088C9BA /* ScriptingSystem.cpp in Sources */,
 				5E556B091F29736000F6FB2E /* MaterialSystem.cpp in Sources */,
 				5E556AA31F23618A00F6FB2E /* ScriptComponent.cpp in Sources */,
+				5E6C65661F2EADBB0089FD55 /* DeferredLightingPass.cpp in Sources */,
+				5E6C653E1F2C02F20089FD55 /* CameraComponent.cpp in Sources */,
 				5E556AB31F2428EC00F6FB2E /* VertexBuffer.cpp in Sources */,
+				5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */,
 				5E556A9B1F23613300F6FB2E /* Script.cpp in Sources */,
 				5E0523C51F216CAB0088C9BA /* Event.cpp in Sources */,
+				5E6C65521F2CF4480089FD55 /* Framebuffer.cpp in Sources */,
+				5E6C65721F2EB6A50089FD55 /* Texture3D.cpp in Sources */,
 				5E556B051F2961F100F6FB2E /* ShaderSystem.cpp in Sources */,
 				5EFDFDE31F22986B009FA81B /* Timer.cpp in Sources */,
 				5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */,
 				5E0523D21F217ABF0088C9BA /* EventSystem.cpp in Sources */,
 				5E556AFD1F292F1000F6FB2E /* Material.cpp in Sources */,
-				5E6C65311F2BA1050089FD55 /* SceneComponent.cpp in Sources */,
+				5E6C65311F2BA1050089FD55 /* RenderComponent.cpp in Sources */,
 				5E0523D61F217EF90088C9BA /* ScriptableObject.cpp in Sources */,
 				5EFDFDDF1F22963D009FA81B /* ResourceObject.cpp in Sources */,
+				5E6C656A1F2EAF990089FD55 /* LightComponent.cpp in Sources */,
 				5E556AF51F2815E700F6FB2E /* ShaderVariation.cpp in Sources */,
 				5E05239F1F20FBA40088C9BA /* Variant.cpp in Sources */,
 				5E05238F1F203F7E0088C9BA /* Component.cpp in Sources */,
+				5E6C65621F2EA40F0089FD55 /* PostProcessPass.cpp in Sources */,
+				5E6C655A1F2D62D00089FD55 /* Profiler.cpp in Sources */,
 				5E556AA71F23C6CB00F6FB2E /* Command.cpp in Sources */,
 				5E0523C11F2166000088C9BA /* EntitySystem.cpp in Sources */,
 				5EFDFDC21F21AB8D009FA81B /* RenderSystem.cpp in Sources */,
@@ -687,10 +804,13 @@
 				5EFDFDBA1F21A83C009FA81B /* Window.cpp in Sources */,
 				5EFDFDB11F21A0B4009FA81B /* Keyboard.cpp in Sources */,
 				5E556B191F2A6D4300F6FB2E /* Animation.cpp in Sources */,
+				5E6C655E1F2EA1390089FD55 /* DeferredRenderPass.cpp in Sources */,
 				5EFDFDE71F229908009FA81B /* DateTime.cpp in Sources */,
 				5E556B2D1F2ABDFC00F6FB2E /* Quaternion.cpp in Sources */,
 				5E556AAF1F241AF600F6FB2E /* Mesh.cpp in Sources */,
 				5E0523CE1F2170410088C9BA /* ErrorSystem.cpp in Sources */,
+				5E6C656E1F2EB0A40089FD55 /* Texture.cpp in Sources */,
+				5E6C654E1F2CF2CE0089FD55 /* Scene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

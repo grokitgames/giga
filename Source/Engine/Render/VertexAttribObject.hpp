@@ -18,7 +18,7 @@ public:
     /**
      * Use these vertex attributes
      */
-    void Use();
+    void Bind();
     
     /**
      * Destroy the vertex attrib object

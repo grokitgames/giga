@@ -32,6 +32,9 @@ private:
     // Storage for combined view/proj matrix
     matrix4 m_viewproj;
     matrix4 m_view;
+    
+    // Window width and height
+    int m_windowWidth, m_windowHeight;
 };
 
 #endif

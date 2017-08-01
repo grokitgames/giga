@@ -115,7 +115,7 @@ Variant& Variant::operator =(quaternion rhs) {
 }
 
 Variant& Variant::operator =(std::string rhs) {
-    m_type = VAR_VECTOR3;
+    m_type = VAR_STRING;
     m_data.str = (char*)malloc(rhs.length() + 1);
     strcpy(m_data.str, rhs.data());
     return *this;

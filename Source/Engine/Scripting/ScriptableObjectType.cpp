@@ -153,7 +153,7 @@ void ScriptableObjectType::HandleStaticFunctionCallback(const v8::FunctionCallba
         v8::String::Utf8Value funcName(func->GetName());
         if (funcList[i]->variableName == std::string(*funcName)) {
             if (funcList[i]->func != 0) {
-                ScriptableVariant* scrval = dynamic_cast<ScriptableVariant*>(funcList[i]->func(0, argc, argv));
+                ScriptableVariant* scrval = (ScriptableVariant*)(funcList[i]->func(0, argc, argv));
                 v8::Local<v8::Value> val = scrval->GetValue();
                 info.GetReturnValue().Set(val);
                 delete scrval;
@@ -195,7 +195,7 @@ void ScriptableObjectType::HandleObjectFunctionCallback(const v8::FunctionCallba
         v8::String::Utf8Value funcName(func->GetName());
         if (funcList[i]->variableName == std::string(*funcName)) {
             if (funcList[i]->func != 0) {
-                ScriptableVariant* value = dynamic_cast<ScriptableVariant*>(funcList[i]->func(obj, argc, argv));
+                ScriptableVariant* value = (ScriptableVariant*)(funcList[i]->func(obj, argc, argv));
                 v8::Local<v8::Value> val = value->GetValue();
                 info.GetReturnValue().Set(val);
                 delete value;
@@ -229,7 +229,7 @@ void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, co
     for (size_t i = 0; i < varList.size(); i++) {
         if (varList[i]->variableName == std::string(*propName)) {
             if (varList[i]->getter != 0) {
-                ScriptableVariant* value = dynamic_cast<ScriptableVariant*>(varList[i]->getter(obj));
+                ScriptableVariant* value = (ScriptableVariant*)(varList[i]->getter(obj));
                 v8::Local<v8::Value> val = value->GetValue();
                 info.GetReturnValue().Set(val);
                 delete value;
@@ -277,7 +277,7 @@ void ScriptableObjectType::HandleStaticGetter(v8::Local<v8::String> property, co
         v8::String::Utf8Value propName(property);
         if (varList[i]->variableName == std::string(*propName)) {
             if (varList[i]->getter != 0) {
-                ScriptableVariant* value = dynamic_cast<ScriptableVariant*>(varList[i]->getter(0));
+                ScriptableVariant* value = (ScriptableVariant*)(varList[i]->getter(0));
                 v8::Local<v8::Value> val = value->GetValue();
                 info.GetReturnValue().Set(val);
                 delete value;

@@ -3,6 +3,9 @@
 #include <Render/OpenGL.hpp>
 
 void GBufferPass::Initialize(int windowWidth, int windowHeight) {
+    m_windowWidth = windowWidth;
+    m_windowHeight = windowHeight;
+    
     Framebuffer* gbufferFramebuffer = new Framebuffer();
     gbufferFramebuffer->Initialize(windowWidth, windowHeight);
     
@@ -71,6 +74,11 @@ void GBufferPass::Render(Scene* scene) {
     
     // Get the camera
     CameraComponent* camera = scene->GetActiveCamera();
+    
+    // Update camera
+    camera->SetViewport(m_windowWidth, m_windowHeight);
+    
+    // Get matrices
     matrix4 view = camera->GetViewMatrix();
     matrix4 proj = camera->GetProjectionMatrix();
     m_viewproj = proj * view;
@@ -96,9 +104,6 @@ void GBufferPass::Render(Scene* scene) {
                 if ((viewFrustum.Intersects(obb) == 0) && (obb.Inside(cameraPosition) == false)) {
                     continue;
                 }
-                
-                // TODO: Set custom shader vars (including animation)
-                //m_defaultShader->Set("hasBones", hasBoneAnimation);
                 
                 // Render recursively
                 RecursiveRender(renderList[i], model, scene, i);
@@ -149,6 +154,9 @@ void GBufferPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent, Sce
     if (diffuseTexture) {
         program->Set("diffuseTexture", texloc);
         diffuseTexture->Bind(texloc);
+        
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
+        
         texloc++;
     }
     

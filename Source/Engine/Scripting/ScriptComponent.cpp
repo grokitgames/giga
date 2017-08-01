@@ -45,7 +45,7 @@ void ScriptComponent::Initialize(Script* script) {
     }
     
     // Copy source
-    std::string source = (char*)m_scriptSource->GetData();
+    std::string source = m_scriptSource->GetString();
     v8::Local<v8::String> scriptSrc = v8::String::NewFromUtf8(isolate, source.c_str(), v8::NewStringType::kNormal).ToLocalChecked();
     
     v8::Local<v8::Script> vscript;
@@ -96,7 +96,7 @@ void ScriptComponent::Initialize(Script* script) {
         typeStr = (char*)*type;
         
         // If an undefined variable, add to our list
-        if(strcmp(typeStr, "undefined")) {
+        if(strcmp(typeStr, "undefined") == 0) {
             m_globals.push_back(std::string(typeStr));
         }
         
@@ -112,6 +112,34 @@ void ScriptComponent::Initialize(Script* script) {
         }
     }
     
+    context->Exit();
+    scriptingSystem->SetCurrentScript(0);
+}
+
+void ScriptComponent::SetGlobal(std::string name, Variant* value) {
+    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+    scriptingSystem->SetCurrentScript(this);
+    
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    
+    // Create a stack-allocated handle scope.
+    v8::HandleScope handle_scope(isolate);
+    
+    // Reset our current local context
+    v8::Local<v8::Context> context = m_context.Get(isolate);
+    context->Enter();
+    
+    // Catch any errors the script might throw
+    v8::TryCatch try_catch(isolate);
+    
+    // Get into our global namespace
+    v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
+    
+    // Set
+    ScriptableVariant* variant = (ScriptableVariant*)value;
+    globalSpace->Set(v8::String::NewFromUtf8(isolate, name.c_str()), variant->GetValue());
+    
+    // Exit
     context->Exit();
     scriptingSystem->SetCurrentScript(0);
 }
@@ -137,10 +165,11 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
     // Get our global object space and start adding stuff to it
     v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
     
-    // Convert our arguments to v8::values
+    // Convert our arguments to v8::Values
     v8::Local<v8::Value>* args = (v8::Local<v8::Value>*)malloc(argc * sizeof(v8::Local<v8::Value>*));
     for(int i = 0; i < argc; i++) {
-        args[i] = dynamic_cast<ScriptableVariant*>(argv[i])->GetValue();
+        ScriptableVariant* variant = (ScriptableVariant*)(argv[i]);
+        args[i] = variant->GetValue();
     }
     
     // Attempt to call the function
@@ -154,6 +183,7 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
         v8::String::Utf8Value error(try_catch.Exception());
         if(*error) {
             ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to execute function", (char*)*error));
+            GIGA_ASSERT(false, *error);
         }
     }
     else {

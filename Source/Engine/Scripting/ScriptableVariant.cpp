@@ -10,29 +10,43 @@ Variant& ScriptableVariant::operator =(v8::Local<v8::Value> rhs) {
     v8::String::Utf8Value type(rhs->TypeOf(isolate));
     
     if (rhs->IsInt32() || rhs->IsUint32()) {
-        Variant((int)rhs->NumberValue());
+        m_type = VAR_INT;
+        m_data.i = rhs->NumberValue();
+        return *this;
     }
     
     if (rhs->IsNumber() && rhs->IsInt32() == false && rhs->IsUint32() == false) {
-        Variant((float)rhs->NumberValue());
+        m_type = VAR_FLOAT;
+        m_data.f1 = rhs->NumberValue();
+        return *this;
     }
     
     if (rhs->IsString()) {
         v8::String::Utf8Value val(rhs.As<v8::String>());
-        Variant(std::string(*val));
+        
+        m_type = VAR_STRING;
+        m_data.str = (char*)malloc(val.length() + 1);
+        strcpy(m_data.str, *val);
+        return *this;
     }
     
     if (rhs->IsFunction()) {
         v8::Local<v8::Function> func = rhs.As<v8::Function>();
         v8::String::Utf8Value name(func->GetName());
-        Variant(std::string(*name));
+        
         m_type = VAR_FUNCTION;
+        m_data.str = (char*)malloc(name.length() + 1);
+        strcpy(m_data.str, *name);
+        return *this;
     }
     
     if (rhs->IsObject() && (rhs->IsFunction() == false)) {
         v8::Local<v8::Object> val = rhs->ToObject();
         void* valptr = val->GetAlignedPointerFromInternalField(0);
-        Variant((GigaObject*)valptr);
+        
+        m_type = VAR_OBJECT;
+        m_data.obj = (ScriptableObject*)valptr;
+        return *this;
     }
     
     return(*this);

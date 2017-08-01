@@ -9,8 +9,7 @@ class ScriptableVariant : public Variant {
 public:
     // JS types
     enum JSType {
-        VAR_INT = Variant::Type::VAR_LASTTYPE,
-        VAR_FUNCTION
+        VAR_FUNCTION = Variant::Type::VAR_LASTTYPE
     };
     
     /**

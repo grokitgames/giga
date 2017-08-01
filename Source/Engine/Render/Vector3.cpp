@@ -39,7 +39,7 @@ void Vector3::Initialize(Variant** argv, int argc) {
     GIGA_ASSERT(argc == 1 || argc == 3, "Vector3 excepts 0, 1 or 3 arguments.");
     
     for(int i = 0; i < argc; i++) {
-        GIGA_ASSERT(argv[i]->IsFloat(), "Parameters to Vector3 should be floats.");
+        GIGA_ASSERT(argv[i]->IsNumeric(), "Parameters to Vector3 should be floats.");
     }
     
     if(argc == 1) {

@@ -115,7 +115,7 @@ Texture2D* MaterialSystem::GetTexture() {
     // Rebuild our material texture if necessary
     if (m_dirty) {
         // Rebuild
-        m_texture->Initialize(4, MAX_MATERIAL_TEXTURE_SIZE, GL_RGB16F, 3);
+        m_texture->Initialize(4, MAX_MATERIAL_TEXTURE_SIZE, GL_RGB16F, GL_RGB);
         m_texture->Bind(0);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, 4, MAX_MATERIAL_TEXTURE_SIZE, 0, GL_RGB, GL_FLOAT, m_data);
         m_texture->Unbind();

@@ -22,6 +22,7 @@ int main(int argc, const char * argv[]) {
     resourceSystem->AddSearchPath("Resources/Meshes");
     resourceSystem->AddSearchPath("Resources/Textures");
     resourceSystem->AddSearchPath("Resources/Shaders");
+    resourceSystem->AddSearchPath("Resources/Scripts");
     
     // Initialize render system
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
@@ -44,6 +45,8 @@ int main(int argc, const char * argv[]) {
     // Create a camera
     CameraComponent* cc = dynamic_cast<CameraComponent*>(Component::CreateComponent("CameraComponent"));
     cc->SetViewport(width, height);
+    cc->SetWorldPosition(vector3(0, 1.25, 3));
+    cc->SetLookVector(vector3(0, -0.1, -1.0));
     camera->AddComponent(cc);
     
     // Set camera as active
@@ -51,17 +54,27 @@ int main(int argc, const char * argv[]) {
     scene->SetActiveCamera(cc);
     scene->SetAmbientLight(vector3(1, 1, 1));
     
+    // Add script to camera
+    ScriptComponent* sc = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
+    Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("input.js", "Script"));
+    sc->Initialize(inputjs);
+    
+    camera->AddComponent(sc);
+    
+    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+    
     // Main loop
     while(window->IsClosing() == false) {
         PROFILE_START_FRAME();
         
+        scriptingSystem->Update(0.0f);
         renderSystem->Update(0.0f);
         
         window->SwapBuffer();
         window->ProcessEvents();
         
         PROFILE_END_FRAME();
-        Timer::Sleep(10);
+        Timer::Sleep(1);
     }
     
     // Dump profiler

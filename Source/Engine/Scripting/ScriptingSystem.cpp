@@ -89,6 +89,17 @@ void ScriptingSystem::EventHandler(Event* event) {
     }
 }
 
+void ScriptingSystem::Update(float delta) {
+    std::vector<ScriptComponent*> scripts = m_scripts.GetList();
+    Variant* d = new Variant(delta);
+    for(size_t i = 0; i < scripts.size(); i++) {
+        scripts[i]->SetGlobal("GameObject", new Variant(scripts[i]->GetParent()));
+        scripts[i]->CallFunction("Update", 1, &d);
+    }
+    
+    delete d;
+}
+
 Component* ScriptingSystem::CreateScriptComponent() {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     

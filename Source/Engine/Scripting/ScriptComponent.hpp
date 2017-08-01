@@ -35,6 +35,11 @@ public:
      */
     void CallFunction(std::string function, int argc, Variant** argv);
     
+    /**
+     * Set a global variable inside our context
+     */
+    void SetGlobal(std::string name, Variant* value);
+    
 protected:
     // Our script
     Script* m_scriptSource;

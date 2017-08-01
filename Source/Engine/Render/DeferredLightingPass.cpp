@@ -29,15 +29,12 @@ void DeferredLightingPass::Render(Scene* scene) {
     
     GL_CHECK(glDisable(GL_BLEND));
     
-    PROFILE_END_AREA("Deferred Lighting Pass");
-    
-    return;
-    
     // Enable additive blending (accumulate lighting)
     GL_CHECK(glEnable(GL_BLEND));
     GL_CHECK(glBlendFunc(GL_ONE, GL_ONE));
     
     // Set ortho matrix
+    m_shader->Bind();
     m_shader->Set("ortho", m_ortho);
     
     // Get active camera
@@ -92,6 +89,8 @@ void DeferredLightingPass::Render(Scene* scene) {
     
     m_buffer->Unbind();
     m_format->DisableVertexAttribs();
+    
+    m_shader->Unbind();
     
     GL_CHECK(glDisable(GL_BLEND));
     

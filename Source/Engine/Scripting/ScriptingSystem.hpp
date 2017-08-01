@@ -18,6 +18,11 @@ public:
     void Initialize();
     
     /**
+     * Update loop
+     */
+    void Update(float delta);
+    
+    /**
      * Find an interface definition by its class name
      */
     ScriptableObjectType* GetScriptableObjectType(std::string name);

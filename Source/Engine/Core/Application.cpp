@@ -166,6 +166,11 @@ void Application::Initialize(std::string name) {
     
     scriptingSystem->RegisterScriptableObjectType<KeyboardEventData>(keyboardEventType);
     
+    // Device types
+    scriptingSystem->RegisterGlobal("INPUTDEVICE_KEYBOARD", new Variant(INPUTDEVICE_KEYBOARD));
+    scriptingSystem->RegisterGlobal("INPUTDEVICE_MOUSE", new Variant(INPUTDEVICE_MOUSE));
+    scriptingSystem->RegisterGlobal("INPUTDEVICE_JOYSTICK", new Variant(INPUTDEVICE_JOYSTICK));
+    
     /**
      * Platform
      */
@@ -236,7 +241,7 @@ void Application::Initialize(std::string name) {
     quaternionType->AddObjectVariable("z", &Quaternion::GetZ, &Quaternion::SetZ);
     quaternionType->AddObjectVariable("w", &Quaternion::GetW, &Quaternion::SetW);
     
-    scriptingSystem->RegisterScriptableObjectType<Vector3>(vector3Type);
+    scriptingSystem->RegisterScriptableObjectType<Quaternion>(quaternionType);
     
     // Transform component
     ScriptableObjectType* transformComponentType = new ScriptableObjectType("TransformComponent");

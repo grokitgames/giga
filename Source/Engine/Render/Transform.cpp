@@ -78,7 +78,7 @@ Variant* Transform::Translate(Variant* obj, int argc, Variant** argv) {
 
 Variant* Transform::Rotate(Variant* obj, int argc, Variant** argv) {
     GIGA_ASSERT(argc == 2, "Expected 2 arguments.");
-    GIGA_ASSERT(argv[0]->IsFloat(), "Expected float as 1st argument.");
+    GIGA_ASSERT(argv[0]->IsNumeric(), "Expected float as 1st argument.");
     GIGA_ASSERT(argv[1]->IsObject(), "Expected vector as 2nd argument.");
     
     Transform* tc = obj->AsObject<Transform>();

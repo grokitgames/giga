@@ -2,13 +2,17 @@
 #include <giga-engine.h>
 #include <GLFW/glfw3.h>
 
+Keyboard::Keyboard() {
+    m_type = INPUTDEVICE_KEYBOARD;
+}
+
 // GLFW callback functions
 void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     // Get our input system
     InputSystem* ioSystem = GetSystem<InputSystem>();
     
     // Find our keyboard device
-    Keyboard* keyboard = dynamic_cast<Keyboard*>(ioSystem->GetInputDevice(INPUTDEVICETYPE_KEYBOARD));
+    Keyboard* keyboard = dynamic_cast<Keyboard*>(ioSystem->GetInputDevice(INPUTDEVICE_KEYBOARD));
     
     // Dispatch event
     keyboard->ProcessAction(key, action);

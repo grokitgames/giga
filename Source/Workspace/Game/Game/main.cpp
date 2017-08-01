@@ -61,17 +61,34 @@ int main(int argc, const char * argv[]) {
     
     camera->AddComponent(sc);
     
+    // Get other necessary systems
+    InputSystem* inputSystem = GetSystem<InputSystem>();
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+    EventSystem* eventSystem = GetSystem<EventSystem>();
+    
+    // Create keyboard
+    Keyboard* keyboard = new Keyboard();
+    keyboard->Initialize();
+    inputSystem->RegisterInputDevice(keyboard);
+    
+    // Create main loop timer
+    Timer* mainTimer = new Timer();
+    mainTimer->Start();
+    float delta = 0.1f;
     
     // Main loop
     while(window->IsClosing() == false) {
         PROFILE_START_FRAME();
         
-        scriptingSystem->Update(0.0f);
-        renderSystem->Update(0.0f);
+        scriptingSystem->Update(delta);
+        renderSystem->Update(delta);
+        eventSystem->Update(delta);
         
         window->SwapBuffer();
         window->ProcessEvents();
+        
+        delta = mainTimer->Duration();
+        mainTimer->Reset();
         
         PROFILE_END_FRAME();
         Timer::Sleep(1);

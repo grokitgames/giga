@@ -7,7 +7,7 @@
  */
 class GIGA_API Event : public ScriptableObject {
 public:
-    Event() : m_type(0) { }
+    Event() { }
     Event(std::string type) : m_type(type), m_data(0), m_sender(0) { }
     Event(std::string type, EventData* data) : m_type(type), m_data(data), m_sender(0) { }
     Event(std::string type, EventData* data, GigaObject* sender) : m_type(type), m_data(data), m_sender(sender) { }

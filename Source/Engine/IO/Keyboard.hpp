@@ -8,7 +8,7 @@
 class GIGA_API KeyboardEventData : public EventData {
 public:
     KeyboardEventData() = default;
-    KeyboardEventData(int key) : m_key(0) { }
+    KeyboardEventData(int key) : m_key(key) { }
     
     GIGA_CLASS_NAME("KeyboardEventData")
     
@@ -27,7 +27,7 @@ protected:
  */
 class GIGA_API Keyboard : public InputDevice {
 public:
-    Keyboard() = default;
+    Keyboard();
     ~Keyboard() = default;
     
     GIGA_CLASS_NAME("Keyboard")

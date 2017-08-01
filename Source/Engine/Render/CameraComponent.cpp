@@ -21,6 +21,7 @@ void CameraComponent::CalculateMatricesAndFrustum() {
     
     // Update our view and projection matrices
     vector3 position = GetWorldPosition();
+    m_look = GetWorldRotation() * glm::vec3(0.0f, 0.0f, -1.0f);
     m_view = glm::lookAt(position, position + m_look, m_up);
     m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_fnear, m_ffar);
     

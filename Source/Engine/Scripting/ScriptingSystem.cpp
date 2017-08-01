@@ -43,8 +43,14 @@ void ScriptingSystem::Initialize() {
 
 void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
     // Keep a copy of the variant for ourselves (so it doesn't get deleted)
-    ScriptableVariant* variant = dynamic_cast<ScriptableVariant*>(new Variant(*value));
+    ScriptableVariant* variant = (ScriptableVariant*)(value);
     m_globals[name] = variant;
+    
+    // Add to any existing script components
+    std::vector<ScriptComponent*> scripts = m_scripts.GetList();
+    for(size_t i = 0; i < scripts.size(); i++) {
+        scripts[i]->SetGlobal(name, value);
+    }
 }
 
 ScriptableObjectType* ScriptingSystem::GetScriptableObjectType(std::string name) {

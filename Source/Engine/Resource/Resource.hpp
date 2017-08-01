@@ -38,7 +38,6 @@ public:
      * Get the data out (sets last access time)
      */
     unsigned char* GetData();
-    std::string GetString();
     
     /**
      * Other getter functions

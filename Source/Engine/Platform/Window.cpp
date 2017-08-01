@@ -12,7 +12,7 @@ Window::Window() {
 
 void Window::Create(std::string name, int width, int height, bool fullscreen) {
     // If we do not have a window yet, initialize it
-    if (Window::m_initialized == false) {
+    if (m_initialized == false) {
         glfwInit();
         
         // Specify the minimum OpenGL version
@@ -72,5 +72,5 @@ void Window::ProcessEvents() {
 }
 
 void Window::SwapBuffer() {
-    glfwSwapBuffers((GLFWwindow*)&m_window);
+    glfwSwapBuffers((GLFWwindow*)m_window);
 }

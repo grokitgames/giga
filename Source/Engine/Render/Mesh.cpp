@@ -49,6 +49,11 @@
 
 Mesh::Mesh() {
     m_vertexBuffer = 0;
+    m_indexBuffer= 0;
+    m_vertexFormat = 0;
+    m_diffuseTexture = 0;
+    m_normalTexture = 0;
+    m_shader = 0;
 }
 
 Mesh::~Mesh() {
@@ -136,7 +141,7 @@ void Mesh::ProcessData() {
                 
                 // Vertex format
                 uint32_t vertexFormat = 0;
-                reader->Read(&m_vertexFormat, sizeof(uint32_t));
+                reader->Read(&vertexFormat, sizeof(uint32_t));
                 
                 // Size of each vertex
                 uint32_t vertexSize;
@@ -194,7 +199,7 @@ void Mesh::ProcessData() {
                     free(textureFilename);
                     
                     // TODO: use texture type to assign
-                    m_diffuseTexture = texture;
+                    child->m_diffuseTexture = texture;
                 }
                 
                 // Read in bounding box data
@@ -269,7 +274,7 @@ void Mesh::ProcessData() {
                 }
                 
                 // Set our shader
-                m_shader = ShaderSystem::Find("mesh.vs", "mesh.fs", attribs);
+                child->m_shader = ShaderSystem::Find("mesh.vs", "mesh.fs", attribs);
                 delete attribs;
                 
                 // Number of indices

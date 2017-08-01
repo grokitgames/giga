@@ -7,6 +7,7 @@ RenderSystem::RenderSystem() {
     m_scene = 0;
     m_gbufferPass = 0;
     m_deferredPass = 0;
+    m_lightingPass = 0;
 }
 
 void RenderSystem::Initialize(int width, int height) {

@@ -33,7 +33,7 @@ void StaticMeshComponent::Instantiate(Mesh *mesh) {
         StaticMeshComponent* m = new StaticMeshComponent();
         
         m->Instantiate(children[i]);
-        m_children.push_back(dynamic_cast<StaticMeshComponent*>(mesh));
+        m_children.push_back(dynamic_cast<StaticMeshComponent*>(m));
     }
     
     UpdateBoundingBox();

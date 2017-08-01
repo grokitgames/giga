@@ -17,29 +17,56 @@ int main(int argc, const char * argv[]) {
     int width = window->GetFramebufferWidth();
     int height = window->GetFramebufferHeight();
     
+    // Set up resource system
+    ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+    resourceSystem->AddSearchPath("Resources/Meshes");
+    resourceSystem->AddSearchPath("Resources/Textures");
+    resourceSystem->AddSearchPath("Resources/Shaders");
+    
     // Initialize render system
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     renderSystem->Initialize(width, height);
     
-    // Create an entity
-    Entity* entity = new Entity();
+    // Create a crate entity
+    Entity* crate = new Entity();
     
     // Load a mesh
-    ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
-    Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->FindResource("Resources/Meshes/crate.g3d"));
+    Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->LoadResource("crate.g3d", "Mesh"));
     StaticMeshComponent* meshComponent = dynamic_cast<StaticMeshComponent*>(Component::CreateComponent("StaticMeshComponent"));
     meshComponent->Instantiate(mesh);
 
     // Add to entity
-    entity->AddComponent(meshComponent);
+    crate->AddComponent(meshComponent);
+    
+    // Create our camera
+    Entity* camera = new Entity();
+
+    // Create a camera
+    CameraComponent* cc = dynamic_cast<CameraComponent*>(Component::CreateComponent("CameraComponent"));
+    cc->SetViewport(width, height);
+    camera->AddComponent(cc);
+    
+    // Set camera as active
+    Scene* scene = renderSystem->GetScene();
+    scene->SetActiveCamera(cc);
+    scene->SetAmbientLight(vector3(1, 1, 1));
     
     // Main loop
     while(window->IsClosing() == false) {
+        PROFILE_START_FRAME();
+        
+        renderSystem->Update(0.0f);
+        
         window->SwapBuffer();
         window->ProcessEvents();
         
-        Timer::Sleep(1);
+        PROFILE_END_FRAME();
+        Timer::Sleep(10);
     }
+    
+    // Dump profiler
+    Profiler* profiler = Profiler::GetInstance();
+    profiler->Log();
     
     application->Shutdown();
     

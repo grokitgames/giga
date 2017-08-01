@@ -18,6 +18,11 @@ public:
     unsigned char* GetData();
     
     /**
+     * Get file contents as null-terminated string
+     */
+    std::string GetString();
+    
+    /**
      * Get resource object
      */
     Resource* GetResource() { return m_resource; }

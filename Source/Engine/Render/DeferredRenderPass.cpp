@@ -16,7 +16,9 @@ void DeferredRenderPass::Render(Scene* scene) {
     m_renderedTriangles = 0;
     
     // Bind our FBO and set the viewport to the proper size
-    m_framebuffers[0]->Use();
+    // m_framebuffers[0]->Use();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    m_shader->Bind();
     
     GL_CHECK(glDisable(GL_DEPTH_TEST));
     
@@ -55,6 +57,8 @@ void DeferredRenderPass::Render(Scene* scene) {
     
     m_buffer->Unbind();
     m_format->DisableVertexAttribs();
+    
+    m_shader->Unbind();
     
     m_drawCalls++;
     m_renderedTriangles += 2;

@@ -5,7 +5,8 @@ CameraComponent::CameraComponent() {
     m_look = glm::vec3(0.0f, 0.0f, -1.0f);
     m_up = glm::vec3(0.0f, 1.0f, 0.0f);
     m_right = glm::vec3(1.0f, 0, 0.0f);
-    m_width = m_height = 0;
+    m_width = 800;
+    m_height = 600;
     
     m_fnear = 0.1f;
     m_ffar = 100.0f;

@@ -14,10 +14,10 @@ void PostProcessPass::CreateVertexFormat(int windowWidth, int windowHeight) {
     
     // Set up vertices
     float box[] = {
-        (float)windowWidth, 0, 1, 1,
-        0, 0, 0, 1,
-        (float)windowWidth, (float)windowHeight, 1, 0,
-        0, (float)windowHeight, 0, 0,
+        (float)windowWidth, 0, 1, 0,
+        0, 0, 0, 0,
+        (float)windowWidth, (float)windowHeight, 1, 1,
+        0, (float)windowHeight, 0, 1,
     };
     
     // Use our vertex shader

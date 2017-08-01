@@ -44,10 +44,12 @@ void ShaderVariation::Bind() {
     // Lazily compile shader on first usage
     if(m_program == 0) {
         // Concatenate definitions
-        std::string defines;
-        std::map<std::string, bool>::iterator i = m_attribs->definitions.begin();
-        for(i; i != m_attribs->definitions.end(); i++) {
-            defines += i->first + "\n";
+        std::string defines = "";
+        if(m_attribs) {
+            std::map<std::string, bool>::iterator i = m_attribs->definitions.begin();
+            for(i; i != m_attribs->definitions.end(); i++) {
+                defines += "#define " + i->first + "\n";
+            }
         }
         
         // Create a new vertex shader and load source into it
@@ -56,7 +58,7 @@ void ShaderVariation::Bind() {
         // Also, prepend version (TODO: make this more flexible based on actual version)
         std::string version = "#version 400 core\n";
         
-        std::string data = (char*)m_vertexShader->GetData();
+        std::string data = m_vertexShader->GetString();
         data = version + defines + data;
         
         unsigned long length = data.length();
@@ -78,15 +80,15 @@ void ShaderVariation::Bind() {
             GL_CHECK(glGetShaderInfoLog(m_vshader, (int)length, (int*)&length, (char*)errstr.c_str()));
             
             // ... and throw an error
-            GIGA_ASSERT(false, "Error compiling shader source.");
             ErrorSystem::Process(new Error(ERROR_WARN, errstr, m_vertexShader->GetResource()->GetFilename()));
+            GIGA_ASSERT(false, "Error compiling shader source.");
         }
         
         // Create a new vertex shader and load source into it
-        m_fshader = glCreateShader(GL_VERTEX_SHADER);
+        m_fshader = glCreateShader(GL_FRAGMENT_SHADER);
         
-        data = (char*)m_fragmentShader->GetData();
-        data = defines + data;
+        data = m_fragmentShader->GetString();
+        data = version + defines + data;
         
         length = data.length();
         str = (char*)data.c_str();
@@ -107,8 +109,8 @@ void ShaderVariation::Bind() {
             GL_CHECK(glGetShaderInfoLog(m_fshader, (int)length, (int*)&length, (char*)errstr.c_str()));
             
             // ... and throw an error
-            GIGA_ASSERT(false, "Error compiling shader source.");
             ErrorSystem::Process(new Error(ERROR_WARN, errstr, m_fragmentShader->GetResource()->GetFilename()));
+            GIGA_ASSERT(false, "Error compiling shader source.");
         }
         
         m_program = glCreateProgram();
@@ -302,7 +304,7 @@ void ShaderVariation::Set(std::string name, unsigned int value) {
         return;
     }
     
-    GL_CHECK(glUniform1i(location, value));
+    GL_CHECK(glUniform1ui(location, value));
 }
 
 void ShaderVariation::Set(std::string name, matrix4 value) {

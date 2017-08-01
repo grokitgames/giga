@@ -29,6 +29,11 @@ public:
     void RemoveRenderPass(RenderPass* pass);
     
     /**
+     * Get current scene
+     */
+    Scene* GetScene() { return m_scene; }
+    
+    /**
      * Static mesh creation/removal
      */
     static Component* CreateStaticMeshComponent();

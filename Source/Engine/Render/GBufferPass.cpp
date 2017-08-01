@@ -114,8 +114,8 @@ void GBufferPass::Render(Scene* scene) {
 void GBufferPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent, Scene* scene, int index) {
     Mesh* renderable = mesh->GetMesh();
     
-    int childCount = 0;
     std::vector<StaticMeshComponent*> children = mesh->GetChildren();
+    int childCount = children.size();
     if (childCount) {
         for (int i = 0; i < childCount; i++) {
             RecursiveRender(children[i], parent, scene, index);
@@ -139,7 +139,7 @@ void GBufferPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent, Sce
     program->Set("modelviewMatrix", mv);
     
     Material* material = renderable->GetMaterial();
-    program->Set("materialID", material->GetMaterial());
+    program->Set("materialID", (float)material->GetMaterial());
     
     // Bind our textures to their locations
     int texloc = 0;

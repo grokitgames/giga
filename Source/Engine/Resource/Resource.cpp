@@ -42,21 +42,6 @@ unsigned char* Resource::GetData() {
     return(m_data);
 }
 
-std::string Resource::GetString() {
-    // If this file is not yet loaded, load it
-    if(m_loaded == false) {
-        Load();
-    }
-    
-    // Set the last access time
-    DateTime* current = DateTime::GetCurrent();
-    m_lastAccessTime = current->GetTimestamp();
-    delete current;
-    
-    // Return the data
-    return(std::string((char*)m_data));
-}
-
 void Resource::Load() {
     // Make sure we have a valid filename
     assert(m_filename.length() > 0);
@@ -68,7 +53,7 @@ void Resource::Load() {
     
     // Try to open the file
     File* fp = new File();
-    if(fp->Open(m_filename, FILEMODE_READ | FILEMODE_BINARY) == false) {
+    if(fp->Open(m_fullpath, FILEMODE_READ | FILEMODE_BINARY) == false) {
         ErrorSystem::Process(new Error(ERROR_WARN, "Unable to open resource file", m_filename));
         return;
     }

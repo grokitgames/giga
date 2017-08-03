@@ -36,6 +36,18 @@ void Entity::RemoveComponent(Component* component) {
     }
 }
 
+Entity* Entity::Clone() {
+    Entity* entity = new Entity();
+    entity->m_id = m_id;
+    entity->m_name = m_name;
+    
+    for(size_t i = 0; i < m_components.size(); i++) {
+        entity->AddComponent(m_components[i]->Clone());
+    }
+    
+    return(entity);
+}
+
 Variant* Entity::FindComponent(Variant* object, int argc, Variant** argv) {
     GIGA_ASSERT(argc == 1, "FindComponent expects one argument.");
     GIGA_ASSERT(argv[0]->IsString(), "Argument should be a string.");

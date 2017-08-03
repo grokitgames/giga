@@ -34,6 +34,7 @@ void Application::Initialize(std::string name) {
     ResourceSystem* resourceSystem = new ResourceSystem();
     RenderSystem* renderSystem = new RenderSystem();
     MaterialSystem* materialSystem = new MaterialSystem();
+    NetworkSystem* networkSystem = new NetworkSystem();
     
     RegisterSystem(entitySystem);
     RegisterSystem(eventSystem);
@@ -43,6 +44,7 @@ void Application::Initialize(std::string name) {
     RegisterSystem(resourceSystem);
     RegisterSystem(renderSystem);
     RegisterSystem(materialSystem);
+    RegisterSystem(networkSystem);
     
     /**
      * Output log
@@ -66,6 +68,7 @@ void Application::Initialize(std::string name) {
     errorSystem->Initialize();
     resourceSystem->Initialize();
     materialSystem->Initialize();
+    networkSystem->Initialize();
     
     /**
      * Error handling

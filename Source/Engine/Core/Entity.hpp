@@ -54,6 +54,11 @@ public:
     }
     
     /**
+     * Clone entity
+     */
+    Entity* Clone();
+    
+    /**
      * Scripting integration
      */
     static Variant* FindComponent(Variant* object, int argc, Variant** argv);

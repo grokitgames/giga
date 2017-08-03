@@ -15,6 +15,11 @@ public:
     static void GetTimestamp(struct timespec *ts);
     
     /**
+     * Get difference between two timespecs
+     */
+    static timespec Diff(timespec* start, timespec* end);
+    
+    /**
      * Start, get difference, reset and end timer
      */
     void Start();

@@ -3,11 +3,6 @@
 #define application_hpp
 
 /**
- * Engine specific assertion that allows a message to be provided
- */
-#define GIGA_ASSERT(test, message) { assert(test); }
-
-/**
  * Application class that serves as a service locator
  */
 class GIGA_API Application {

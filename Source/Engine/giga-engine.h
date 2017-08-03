@@ -16,6 +16,9 @@
     #endif
 #endif
 
+// Engine specific assertion that allows a message to be provided
+#define GIGA_ASSERT(test, message) { assert(test); }
+
 // Base math includes; _USE_MATH_DEFINES gives us constants like PI
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -30,6 +33,13 @@
 #include <string.h>
 #include <time.h>
 #include <sys/types.h>
+
+#include <errno.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <fcntl.h>
 
 // STL
 #include <vector>
@@ -125,6 +135,14 @@ typedef glm::mat4 matrix4;
 #include <Render/DeferredRenderPass.hpp>
 #include <Render/DeferredLightingPass.hpp>
 #include <Render/RenderSystem.hpp>
+#include <Network/UDPSocket.hpp>
+#include <Network/PosixUDPSocket.hpp>
+#include <Network/Socket.hpp>
+#include <Network/NetworkMessage.hpp>
+#include <Network/Messages/PingMessage.hpp>
+#include <Network/Messages/PongMessage.hpp>
+#include <Network/NetworkSession.hpp>
+#include <Network/NetworkSystem.hpp>
 #include <Core/Application.hpp>
 
 #endif

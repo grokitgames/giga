@@ -112,6 +112,19 @@ void RenderSystem::RemoveCameraComponent(Component* component) {
     renderSystem->m_scene->m_cameras.RemoveObject(dynamic_cast<CameraComponent*>(component));
 }
 
+Component* RenderSystem::CreateSpotLightComponent() {
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
+    
+    SpotLightComponent* light = new SpotLightComponent();
+    renderSystem->m_scene->m_lights.AddObject(light);
+    return(light);
+}
+
+void RenderSystem::RemoveSpotLightComponent(Component* component) {
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
+    renderSystem->m_scene->m_lights.RemoveObject(dynamic_cast<SpotLightComponent*>(component));
+}
+
 Variant* RenderSystem::GetWindowWidth(Variant* obj, int argc, Variant** argv) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     return(new Variant(renderSystem->m_windowWidth));

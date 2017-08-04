@@ -15,37 +15,7 @@ Application::~Application() {
     }
 }
 
-void Application::Initialize(std::string name) {
-    /**
-     * Save name
-     */
-    m_name = name;
-    
-    /**
-     * System creation and registration
-     */
-    
-    // Create systems
-    EntitySystem* entitySystem = new EntitySystem();
-    EventSystem* eventSystem = new EventSystem();
-    ScriptingSystem* scriptingSystem = new ScriptingSystem();
-    InputSystem* inputSystem = new InputSystem();
-    ErrorSystem* errorSystem = new ErrorSystem();
-    ResourceSystem* resourceSystem = new ResourceSystem();
-    RenderSystem* renderSystem = new RenderSystem();
-    MaterialSystem* materialSystem = new MaterialSystem();
-    NetworkSystem* networkSystem = new NetworkSystem();
-    
-    RegisterSystem(entitySystem);
-    RegisterSystem(eventSystem);
-    RegisterSystem(scriptingSystem);
-    RegisterSystem(inputSystem);
-    RegisterSystem(errorSystem);
-    RegisterSystem(resourceSystem);
-    RegisterSystem(renderSystem);
-    RegisterSystem(materialSystem);
-    RegisterSystem(networkSystem);
-    
+void Application::Initialize() {
     /**
      * Output log
      */
@@ -58,18 +28,19 @@ void Application::Initialize(std::string name) {
     Application::Log(MSGTYPE_INFO, "Initializing application...");
     
     /**
-     * System initialization (note: RenderSystem can't be initialized until window is created)
+     * Get core systems
      */
+    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+    GIGA_ASSERT(scriptingSystem != 0, "Required scripting system is not registered.");
     
-    entitySystem->Initialize();
-    eventSystem->Initialize();
-    scriptingSystem->Initialize();
-    inputSystem->Initialize();
-    errorSystem->Initialize();
-    resourceSystem->Initialize();
-    materialSystem->Initialize();
-    networkSystem->Initialize();
+    ErrorSystem* errorSystem = GetSystem<ErrorSystem>();
+    GIGA_ASSERT(errorSystem != 0, "Required error system is not registered.");
     
+    ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+    GIGA_ASSERT(resourceSystem != 0, "Required resource system is not registered.");
+    
+    NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+
     /**
      * Error handling
      */
@@ -102,6 +73,7 @@ void Application::Initialize(std::string name) {
     Component::RegisterComponentType("ScriptComponent", &ScriptingSystem::CreateScriptComponent, &ScriptingSystem::RemoveScriptComponent);
     Component::RegisterComponentType("StaticMeshComponent", &RenderSystem::CreateStaticMeshComponent, &RenderSystem::RemoveStaticMeshComponent);
     Component::RegisterComponentType("CameraComponent", &RenderSystem::CreateCameraComponent, &RenderSystem::RemoveCameraComponent);
+    Component::RegisterComponentType("SpotLightComponent", &RenderSystem::CreateSpotLightComponent, &RenderSystem::RemoveSpotLightComponent);
     
     Application::Log(MSGTYPE_DEBUG, "Registered component types...");
     
@@ -274,7 +246,26 @@ void Application::Initialize(std::string name) {
     
     Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
     
+    /**
+     * Networking message types
+     */
+    
+    if(networkSystem != 0) {
+        Application::Log(MSGTYPE_DEBUG, "Registering network message types...");
+        
+        networkSystem->RegisterMessageType<EchoRequestMessage>(10);
+        networkSystem->RegisterMessageType<EchoResponseMessage>(20);
+        
+        Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
+    }
+    
     Application::Log(MSGTYPE_INFO, "Initialization complete.");
+}
+
+void Application::Update(float delta) {
+    for(size_t i = 0; i < m_systems.size(); i++) {
+        m_systems[i]->Update(delta);
+    }
 }
 
 Application* Application::GetInstance() {
@@ -283,10 +274,6 @@ Application* Application::GetInstance() {
     }
     
     return(m_instance);
-}
-
-void Application::RegisterSystem(System* system) {
-    m_systems.push_back(system);
 }
 
 void Application::Shutdown() {
@@ -305,11 +292,6 @@ void Application::Log(int type, std::string message, std::string details) {
     
     if(type < application->m_loggingLevel) {
         return;
-    }
-    
-    // Prepend application name
-    if(application->m_name.length()) {
-        output += application->m_name + " ";
     }
     
     // Prepend date/time

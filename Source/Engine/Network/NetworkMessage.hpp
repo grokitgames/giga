@@ -28,14 +28,14 @@ public:
     void Initialize(unsigned char* buffer, int size);
     
     /**
-     * Parse an existing message out of the payload
+     * Parse an existing message out of the payload (called on receive)
      */
-    virtual void Parse() { }
+    virtual void OnReceive() = 0;
     
     /**
-     * Serialize a message into the payload (can be blank so not pure virtual)
+     * Serialize a message into the payload (called on send)
      */
-    virtual void CreatePayload() { }
+    virtual void OnSend() = 0;
     
     /**
      * Get a packet with envelope + payload to be sent
@@ -50,7 +50,7 @@ public:
     /**
      * Does this message require an ack?
      */
-    void RequireAck(bool ack) { m_envelope.ack = ack; }
+    void Ack(bool ack) { m_envelope.ack = ack; }
     
 protected:
     /**

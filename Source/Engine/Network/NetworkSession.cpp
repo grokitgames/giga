@@ -22,7 +22,7 @@ void NetworkSession::Write(NetworkMessage* msg) {
     env->session = sessionID;
     
     // Create payload
-    msg->CreatePayload();
+    msg->OnSend();
     
     // Get our payload and message and write to socket
     int count = 0;

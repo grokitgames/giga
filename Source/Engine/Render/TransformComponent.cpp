@@ -18,6 +18,8 @@ void TransformComponent::SetTransform(Transform* transform) {
     m_transform.scaling = transform->scaling;
     m_transform.position = transform->position;
     m_transform.rotation = transform->rotation;
+    
+    MarkUpdated(true);
 }
 
 Variant* TransformComponent::GetTransform(Variant* obj) {

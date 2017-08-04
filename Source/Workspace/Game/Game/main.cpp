@@ -4,7 +4,19 @@
 int main(int argc, const char * argv[]) {
     // Get application
     Application* application = Application::GetInstance();
-    application->Initialize("REEVE");
+    
+    // Register systems
+    EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
+    EventSystem* eventSystem = application->CreateSystem<EventSystem>();
+    ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>();
+    InputSystem* inputSystem = application->CreateSystem<InputSystem>();
+    ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
+    ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
+    RenderSystem* renderSystem = application->CreateSystem<RenderSystem>();
+    MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
+    NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
+    
+    application->Initialize();
     
     // Create a new window
     Window* window = new Window();
@@ -18,14 +30,12 @@ int main(int argc, const char * argv[]) {
     int height = window->GetFramebufferHeight();
     
     // Set up resource system
-    ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
     resourceSystem->AddSearchPath("Resources/Meshes");
     resourceSystem->AddSearchPath("Resources/Textures");
     resourceSystem->AddSearchPath("Resources/Shaders");
     resourceSystem->AddSearchPath("Resources/Scripts");
     
     // Initialize render system
-    RenderSystem* renderSystem = GetSystem<RenderSystem>();
     renderSystem->Initialize(width, height);
     
     // Create a crate entity
@@ -61,11 +71,6 @@ int main(int argc, const char * argv[]) {
     
     camera->AddComponent(sc);
     
-    // Get other necessary systems
-    InputSystem* inputSystem = GetSystem<InputSystem>();
-    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    EventSystem* eventSystem = GetSystem<EventSystem>();
-    
     // Create keyboard
     Keyboard* keyboard = new Keyboard();
     keyboard->Initialize();
@@ -80,9 +85,7 @@ int main(int argc, const char * argv[]) {
     while(window->IsClosing() == false) {
         PROFILE_START_FRAME();
         
-        scriptingSystem->Update(delta);
-        renderSystem->Update(delta);
-        eventSystem->Update(delta);
+        application->Update(delta);
         
         window->SwapBuffer();
         window->ProcessEvents();

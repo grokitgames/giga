@@ -139,8 +139,8 @@ typedef glm::mat4 matrix4;
 #include <Network/PosixUDPSocket.hpp>
 #include <Network/Socket.hpp>
 #include <Network/NetworkMessage.hpp>
-#include <Network/Messages/PingMessage.hpp>
-#include <Network/Messages/PongMessage.hpp>
+#include <Network/Messages/EchoRequestMessage.hpp>
+#include <Network/Messages/EchoResponseMessage.hpp>
 #include <Network/NetworkSession.hpp>
 #include <Network/NetworkSystem.hpp>
 #include <Core/Application.hpp>

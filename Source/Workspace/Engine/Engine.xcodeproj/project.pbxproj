@@ -127,6 +127,10 @@
 		5E6C659E1F32A2760089FD55 /* NetworkSystem.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C659C1F32A2760089FD55 /* NetworkSystem.hpp */; };
 		5E6C65A11F32A2D60089FD55 /* NetworkSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C659F1F32A2D60089FD55 /* NetworkSession.cpp */; };
 		5E6C65A21F32A2D60089FD55 /* NetworkSession.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65A01F32A2D60089FD55 /* NetworkSession.hpp */; };
+		5E6C65A51F3374620089FD55 /* EchoRequestMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65A31F3374620089FD55 /* EchoRequestMessage.cpp */; };
+		5E6C65A61F3374620089FD55 /* EchoRequestMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */; };
+		5E6C65A91F3376240089FD55 /* EchoResponseMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */; };
+		5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDA41F219857009FA81B /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFD9D1F219857009FA81B /* libicui18n.a */; };
@@ -291,6 +295,10 @@
 		5E6C659C1F32A2760089FD55 /* NetworkSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkSystem.hpp; path = ../../Engine/Network/NetworkSystem.hpp; sourceTree = "<group>"; };
 		5E6C659F1F32A2D60089FD55 /* NetworkSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkSession.cpp; path = ../../Engine/Network/NetworkSession.cpp; sourceTree = "<group>"; };
 		5E6C65A01F32A2D60089FD55 /* NetworkSession.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkSession.hpp; path = ../../Engine/Network/NetworkSession.hpp; sourceTree = "<group>"; };
+		5E6C65A31F3374620089FD55 /* EchoRequestMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EchoRequestMessage.cpp; path = ../../Engine/Network/Messages/EchoRequestMessage.cpp; sourceTree = "<group>"; };
+		5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EchoRequestMessage.hpp; path = ../../Engine/Network/Messages/EchoRequestMessage.hpp; sourceTree = "<group>"; };
+		5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EchoResponseMessage.cpp; path = ../../Engine/Network/Messages/EchoResponseMessage.cpp; sourceTree = "<group>"; };
+		5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EchoResponseMessage.hpp; path = ../../Engine/Network/Messages/EchoResponseMessage.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -592,6 +600,10 @@
 		5E6C658E1F314C960089FD55 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */,
+				5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */,
+				5E6C65A31F3374620089FD55 /* EchoRequestMessage.cpp */,
+				5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -660,6 +672,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E556AFE1F292F1000F6FB2E /* Material.hpp in Headers */,
+				5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */,
 				5EFDFDE41F22986B009FA81B /* Timer.hpp in Headers */,
 				5E556B021F295A4200F6FB2E /* MemoryReader.hpp in Headers */,
 				5E6C65801F31485A0089FD55 /* PosixUDPSocket.hpp in Headers */,
@@ -704,6 +717,7 @@
 				5E556B061F2961F100F6FB2E /* ShaderSystem.hpp in Headers */,
 				5E0523A81F2162800088C9BA /* ObjectPool.hpp in Headers */,
 				5E556AA41F23618A00F6FB2E /* ScriptComponent.hpp in Headers */,
+				5E6C65A61F3374620089FD55 /* EchoRequestMessage.hpp in Headers */,
 				5E556AC81F2432D300F6FB2E /* Texture2D.hpp in Headers */,
 				5E6C653F1F2C02F20089FD55 /* CameraComponent.hpp in Headers */,
 				5E556B1A1F2A6D4300F6FB2E /* Animation.hpp in Headers */,
@@ -804,6 +818,7 @@
 				5E556ABB1F242D7A00F6FB2E /* VertexFormat.cpp in Sources */,
 				5E556B251F2AB68C00F6FB2E /* Transform.cpp in Sources */,
 				5E6C65461F2C04800089FD55 /* Frustum.cpp in Sources */,
+				5E6C65A51F3374620089FD55 /* EchoRequestMessage.cpp in Sources */,
 				5EFDFDDB1F228C1A009FA81B /* Resource.cpp in Sources */,
 				5E0523931F2046750088C9BA /* Entity.cpp in Sources */,
 				5E0523E11F21837D0088C9BA /* ScriptingSystem.cpp in Sources */,
@@ -843,6 +858,7 @@
 				5E556AC71F2432D300F6FB2E /* Texture2D.cpp in Sources */,
 				5E6C652D1F2B9E610089FD55 /* TransformComponent.cpp in Sources */,
 				5E556AB71F242ADC00F6FB2E /* IndexBuffer.cpp in Sources */,
+				5E6C65A91F3376240089FD55 /* EchoResponseMessage.cpp in Sources */,
 				5E556B291F2ABA6500F6FB2E /* Vector3.cpp in Sources */,
 				5E05239B1F2048ED0088C9BA /* Application.cpp in Sources */,
 				5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */,

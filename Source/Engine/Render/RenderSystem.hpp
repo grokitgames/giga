@@ -46,6 +46,12 @@ public:
     static void RemoveCameraComponent(Component* component);
     
     /**
+     * Spot light creation/removal
+     */
+    static Component* CreateSpotLightComponent();
+    static void RemoveSpotLightComponent(Component* component);
+    
+    /**
      * Scripting integration
      */
     static Variant* GetWindowWidth(Variant* obj, int argc, Variant** argv);

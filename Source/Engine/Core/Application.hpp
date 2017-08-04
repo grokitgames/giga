@@ -13,7 +13,7 @@ public:
     /**
      * Initialize our application's default systems (must be called at the beginning of application)
      */
-    void Initialize(std::string name = "");
+    void Initialize();
     
     /**
      * Get/set window if we created one in our application
@@ -29,7 +29,27 @@ public:
     /**
      * Register a new sub-system
      */
-    void RegisterSystem(System* system);
+    template<class T>
+    T* CreateSystem() {
+        T* obj = new T();
+        System* sys = dynamic_cast<System*>(obj);
+        GIGA_ASSERT(sys != 0, "Class must be inherited from system type.");
+        
+        for(size_t i = 0; i < m_systems.size(); i++) {
+            if(m_systems[i]->GetClassName() == sys->GetClassName()) {
+                GIGA_ASSERT(false, "System type already registed.");
+            }
+        }
+        
+        sys->Initialize();
+        m_systems.push_back(sys);
+        return(obj);
+    }
+    
+    /**
+     * Update registered sub-systems
+     */
+    void Update(float delta);
     
     /**
      * Get sub-systems
@@ -83,9 +103,6 @@ protected:
     
     // Debug/output log
     File* m_outputLog;
-    
-    // Application name
-    std::string m_name;
     
     // Minimum logging level
     int m_loggingLevel;

@@ -7,7 +7,7 @@ class Scene;
 /**
  * Defines a light in our world/scene
  */
-class GIGA_API LightComponent {
+class GIGA_API LightComponent : public Component {
 public:
     virtual ~LightComponent() = default;
     

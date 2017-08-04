@@ -3,6 +3,7 @@
 #define networksystem_hpp
 
 #define NETWORK_MAX_PACKET_SIZE     8000
+#define NETWORK_TICKS_PER_SECOND    20
 
 /**
  * Info specific to acting as a client
@@ -23,7 +24,6 @@ struct NetworkClientInfo {
  */
 struct NetworkServerInfo {
     // Our set of sockets to check
-    fd_set sockets;
     fd_set listenSocket;
     
     // Listening socket (server)
@@ -74,6 +74,11 @@ public:
     void Send(NetworkMessage* msg);
     
     /**
+     * Send a message to a single session
+     */
+    void Send(int sessionID, NetworkMessage* msg);
+    
+    /**
      * Process/receive new messages
      */
     void Update(float delta);
@@ -82,6 +87,12 @@ public:
      * Get current tick
      */
     int GetCurrentTick();
+    
+    /**
+     * Get/set server startup time
+     */
+    timespec GetStartupTime() { return m_startupTime; }
+    void SetStartupTime(timespec t) { m_startupTime = t; }
     
     /**
      * Add a session to our tracked sessions (server)
@@ -94,7 +105,7 @@ public:
     template<typename T>
     void RegisterMessageType(int messageID) {
         // Make sure this type isn't already registered
-        std::map<int, NetworkMessage*(*)()>::iterator i = std::find(m_messageTypes.begin(), m_messageTypes.end(), messageID);
+        std::map<int, NetworkMessage*(*)()>::iterator i = m_messageTypes.find(messageID);
         GIGA_ASSERT(i == m_messageTypes.end(), "Message type ID already registered.");
         
         // Register it (by message ID for faster lookup on incoming packets)

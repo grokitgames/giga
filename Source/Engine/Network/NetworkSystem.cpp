@@ -48,7 +48,9 @@ void NetworkSystem::Connect(std::string host, int port) {
     m_maxSocketID = std::max(m_maxSocketID, session->socket->GetSocket());
     FD_SET(session->socket->GetSocket(), &info->sockets);
     
-    // TODO: Send initial connection message
+    // Send first echo message request
+    EchoRequestMessage* request = new EchoRequestMessage();
+    session->Write(request);
 }
 
 void NetworkSystem::Listen(int port) {
@@ -58,7 +60,6 @@ void NetworkSystem::Listen(int port) {
     // Set up server info
     NetworkServerInfo* info = new NetworkServerInfo();
     FD_ZERO(&info->listenSocket);
-    FD_ZERO(&info->sockets);
     
     // Create a new socket and listen on it
     info->socket = new UDPSocket();
@@ -89,6 +90,24 @@ void NetworkSystem::Send(NetworkMessage* msg) {
             m_info.server_info->sessions[i]->Write(msg);
         }
     }
+}
+
+void NetworkSystem::Send(int sessionID, NetworkMessage* msg) {
+    GIGA_ASSERT(m_systemType == NETWORK_SYSTEM_SERVER, "This function should only be called on servers.")
+
+    // Fill in message ID and tick
+    NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
+    env->tick = GetCurrentTick();
+    env->id = ++m_lastMessageID;
+    
+    for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
+        if(m_info.server_info->sessions[i]->sessionID == sessionID) {
+            m_info.server_info->sessions[i]->Write(msg);
+            return;
+        }
+    }
+    
+    GIGA_ASSERT(false, "Session not found to send to.");
 }
 
 NetworkSession* NetworkSystem::FindSession(int sessionID, UDPSocket* socket) {
@@ -127,6 +146,11 @@ NetworkSession* NetworkSystem::FindSession(int sessionID, UDPSocket* socket) {
 }
 
 void NetworkSystem::Update(float delta) {
+    // Make sure we're initialized and have something to update
+    if(m_systemType == 0) {
+        return;
+    }
+    
     // Check if there is any data waiting
     timeval wait = {0, 0};
     
@@ -137,7 +161,7 @@ void NetworkSystem::Update(float delta) {
         socket = m_info.client_info->session->socket;
     }
     else {
-        readfds = m_info.server_info->sockets;
+        readfds = m_info.server_info->listenSocket;
         socket = m_info.server_info->socket;
     }
     
@@ -164,7 +188,7 @@ void NetworkSystem::Update(float delta) {
             NetworkSession* session = FindSession(env->session, socket);
             
             // Parse the message
-            msg->Parse();
+            msg->OnReceive();
             
             // Get the next message
             bytes = socket->Read(buffer, NETWORK_MAX_PACKET_SIZE);
@@ -191,5 +215,5 @@ int NetworkSystem::GetCurrentTick() {
         d += (double)m_info.client_info->timeOffset.tv_sec + ((double)m_info.client_info->timeOffset.tv_nsec / 1000000000);
     }
     
-    return(floor(d * 30));
+    return(floor(d * NETWORK_TICKS_PER_SECOND));
 }

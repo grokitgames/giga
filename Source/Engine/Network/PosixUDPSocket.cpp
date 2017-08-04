@@ -8,7 +8,7 @@ bool PosixUDPSocket::Connect(std::string server, int port) {
     // Create a socket
     m_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if(m_socket < 0) {
-        ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to create socket for server", server));
+        ErrorSystem::Process(new Error(ERROR_WARN, "Unable to create socket for server", server));
         return(false);
     }
     
@@ -16,7 +16,7 @@ bool PosixUDPSocket::Connect(std::string server, int port) {
     struct hostent* host;
     host = gethostbyname(server.c_str());
     if(host == 0) {
-        ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to get host", server));
+        ErrorSystem::Process(new Error(ERROR_WARN, "Unable to get host", server));
         return(false);
     }
     
@@ -24,7 +24,7 @@ bool PosixUDPSocket::Connect(std::string server, int port) {
     if (flags < 0) return false;
     flags = flags|O_NONBLOCK;
     if(fcntl(m_socket, F_SETFL, flags) != 0) {
-        ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to set non-blocking connection type.", server));
+        ErrorSystem::Process(new Error(ERROR_WARN, "Unable to set non-blocking connection type.", server));
         return(false);
     }
     
@@ -35,7 +35,7 @@ bool PosixUDPSocket::Connect(std::string server, int port) {
     
     // Connect
     if(::connect(m_socket, (struct sockaddr*)&m_sockaddr, sizeof(m_sockaddr)) < 0) {
-        ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to connect to host", server));
+        ErrorSystem::Process(new Error(ERROR_WARN, "Unable to connect to host", server));
         return(false);
     }
     
@@ -97,7 +97,6 @@ void PosixUDPSocket::Listen(int port) {
     
     if(bind(m_socket, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
         ErrorSystem::Process(new Error(ERROR_WARN, "Unable to bind socket."));
-        printf("Unable to bind socket.\n");
         return;
     }
 }

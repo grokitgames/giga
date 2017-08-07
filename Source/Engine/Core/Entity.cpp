@@ -3,6 +3,7 @@
 
 Entity::Entity() {
     m_id = 0;
+    m_updates = false;
 }
 
 Entity::~Entity() {

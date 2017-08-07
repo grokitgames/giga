@@ -131,6 +131,18 @@
 		5E6C65A61F3374620089FD55 /* EchoRequestMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */; };
 		5E6C65A91F3376240089FD55 /* EchoResponseMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */; };
 		5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */; };
+		5E6C65AD1F353AB00089FD55 /* ReplicationSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65AB1F353AB00089FD55 /* ReplicationSystem.cpp */; };
+		5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65AC1F353AB00089FD55 /* ReplicationSystem.hpp */; };
+		5E6C65B21F353AF20089FD55 /* EntitySnapshot.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65B01F353AF20089FD55 /* EntitySnapshot.hpp */; };
+		5E6C65B51F353E230089FD55 /* EntitySnapshotMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65B31F353E230089FD55 /* EntitySnapshotMessage.cpp */; };
+		5E6C65B61F353E230089FD55 /* EntitySnapshotMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65B41F353E230089FD55 /* EntitySnapshotMessage.hpp */; };
+		5E6C65B81F3545D10089FD55 /* EntitySnapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65B71F3545D10089FD55 /* EntitySnapshot.cpp */; };
+		5E6C65C01F3548F90089FD55 /* StorableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65BE1F3548F90089FD55 /* StorableObject.cpp */; };
+		5E6C65C11F3548F90089FD55 /* StorableObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65BF1F3548F90089FD55 /* StorableObject.hpp */; };
+		5E6C65C41F3549220089FD55 /* StorableObjectType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65C21F3549220089FD55 /* StorableObjectType.cpp */; };
+		5E6C65C51F3549220089FD55 /* StorableObjectType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65C31F3549220089FD55 /* StorableObjectType.hpp */; };
+		5E6C65C81F354C030089FD55 /* MemoryWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C65C61F354C030089FD55 /* MemoryWriter.cpp */; };
+		5E6C65C91F354C030089FD55 /* MemoryWriter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C65C71F354C030089FD55 /* MemoryWriter.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDA41F219857009FA81B /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFD9D1F219857009FA81B /* libicui18n.a */; };
@@ -299,6 +311,19 @@
 		5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EchoRequestMessage.hpp; path = ../../Engine/Network/Messages/EchoRequestMessage.hpp; sourceTree = "<group>"; };
 		5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EchoResponseMessage.cpp; path = ../../Engine/Network/Messages/EchoResponseMessage.cpp; sourceTree = "<group>"; };
 		5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EchoResponseMessage.hpp; path = ../../Engine/Network/Messages/EchoResponseMessage.hpp; sourceTree = "<group>"; };
+		5E6C65AB1F353AB00089FD55 /* ReplicationSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReplicationSystem.cpp; path = ../../Engine/Network/ReplicationSystem.cpp; sourceTree = "<group>"; };
+		5E6C65AC1F353AB00089FD55 /* ReplicationSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ReplicationSystem.hpp; path = ../../Engine/Network/ReplicationSystem.hpp; sourceTree = "<group>"; };
+		5E6C65B01F353AF20089FD55 /* EntitySnapshot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EntitySnapshot.hpp; path = ../../Engine/Network/EntitySnapshot.hpp; sourceTree = "<group>"; };
+		5E6C65B31F353E230089FD55 /* EntitySnapshotMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EntitySnapshotMessage.cpp; path = ../../Engine/Network/Messages/EntitySnapshotMessage.cpp; sourceTree = "<group>"; };
+		5E6C65B41F353E230089FD55 /* EntitySnapshotMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EntitySnapshotMessage.hpp; path = ../../Engine/Network/Messages/EntitySnapshotMessage.hpp; sourceTree = "<group>"; };
+		5E6C65B71F3545D10089FD55 /* EntitySnapshot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EntitySnapshot.cpp; path = ../../Engine/Network/EntitySnapshot.cpp; sourceTree = "<group>"; };
+		5E6C65BD1F3548150089FD55 /* StorableObjectField.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = StorableObjectField.hpp; path = ../../Engine/IO/StorableObjectField.hpp; sourceTree = "<group>"; };
+		5E6C65BE1F3548F90089FD55 /* StorableObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StorableObject.cpp; path = ../../Engine/IO/StorableObject.cpp; sourceTree = "<group>"; };
+		5E6C65BF1F3548F90089FD55 /* StorableObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = StorableObject.hpp; path = ../../Engine/IO/StorableObject.hpp; sourceTree = "<group>"; };
+		5E6C65C21F3549220089FD55 /* StorableObjectType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StorableObjectType.cpp; path = ../../Engine/IO/StorableObjectType.cpp; sourceTree = "<group>"; };
+		5E6C65C31F3549220089FD55 /* StorableObjectType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = StorableObjectType.hpp; path = ../../Engine/IO/StorableObjectType.hpp; sourceTree = "<group>"; };
+		5E6C65C61F354C030089FD55 /* MemoryWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryWriter.cpp; path = ../../Engine/IO/MemoryWriter.cpp; sourceTree = "<group>"; };
+		5E6C65C71F354C030089FD55 /* MemoryWriter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MemoryWriter.hpp; path = ../../Engine/IO/MemoryWriter.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -458,8 +483,15 @@
 				5EFDFDB01F21A0B4009FA81B /* Keyboard.hpp */,
 				5E556AFF1F295A4200F6FB2E /* MemoryReader.cpp */,
 				5E556B001F295A4200F6FB2E /* MemoryReader.hpp */,
+				5E6C65C61F354C030089FD55 /* MemoryWriter.cpp */,
+				5E6C65C71F354C030089FD55 /* MemoryWriter.hpp */,
 				5E6C65581F2D62D00089FD55 /* Profiler.cpp */,
 				5E6C65591F2D62D00089FD55 /* Profiler.hpp */,
+				5E6C65BD1F3548150089FD55 /* StorableObjectField.hpp */,
+				5E6C65BE1F3548F90089FD55 /* StorableObject.cpp */,
+				5E6C65BF1F3548F90089FD55 /* StorableObject.hpp */,
+				5E6C65C21F3549220089FD55 /* StorableObjectType.cpp */,
+				5E6C65C31F3549220089FD55 /* StorableObjectType.hpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -468,6 +500,8 @@
 			isa = PBXGroup;
 			children = (
 				5E6C658E1F314C960089FD55 /* Messages */,
+				5E6C65B71F3545D10089FD55 /* EntitySnapshot.cpp */,
+				5E6C65B01F353AF20089FD55 /* EntitySnapshot.hpp */,
 				5E6C65861F314AD30089FD55 /* NetworkMessage.cpp */,
 				5E6C65871F314AD30089FD55 /* NetworkMessage.hpp */,
 				5E6C659F1F32A2D60089FD55 /* NetworkSession.cpp */,
@@ -476,6 +510,8 @@
 				5E6C659C1F32A2760089FD55 /* NetworkSystem.hpp */,
 				5E6C657D1F31485A0089FD55 /* PosixUDPSocket.cpp */,
 				5E6C657E1F31485A0089FD55 /* PosixUDPSocket.hpp */,
+				5E6C65AB1F353AB00089FD55 /* ReplicationSystem.cpp */,
+				5E6C65AC1F353AB00089FD55 /* ReplicationSystem.hpp */,
 				5E6C65851F314A840089FD55 /* Socket.hpp */,
 				5E6C65791F3145AC0089FD55 /* UDPSocket.cpp */,
 				5E6C657A1F3145AD0089FD55 /* UDPSocket.hpp */,
@@ -604,6 +640,8 @@
 				5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */,
 				5E6C65A31F3374620089FD55 /* EchoRequestMessage.cpp */,
 				5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */,
+				5E6C65B31F353E230089FD55 /* EntitySnapshotMessage.cpp */,
+				5E6C65B41F353E230089FD55 /* EntitySnapshotMessage.hpp */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -672,7 +710,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E556AFE1F292F1000F6FB2E /* Material.hpp in Headers */,
+				5E6C65C51F3549220089FD55 /* StorableObjectType.hpp in Headers */,
 				5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */,
+				5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */,
 				5EFDFDE41F22986B009FA81B /* Timer.hpp in Headers */,
 				5E556B021F295A4200F6FB2E /* MemoryReader.hpp in Headers */,
 				5E6C65801F31485A0089FD55 /* PosixUDPSocket.hpp in Headers */,
@@ -681,11 +721,13 @@
 				5E556B261F2AB68C00F6FB2E /* Transform.hpp in Headers */,
 				5E556B1E1F2AB50400F6FB2E /* AnimationInstance.hpp in Headers */,
 				5E6C655F1F2EA1390089FD55 /* DeferredRenderPass.hpp in Headers */,
+				5E6C65C11F3548F90089FD55 /* StorableObject.hpp in Headers */,
 				5E556ABC1F242D7A00F6FB2E /* VertexFormat.hpp in Headers */,
 				5E6C654B1F2CF26B0089FD55 /* RenderPass.hpp in Headers */,
 				5EFDFDC81F227023009FA81B /* File.hpp in Headers */,
 				5E556AB41F2428EC00F6FB2E /* VertexBuffer.hpp in Headers */,
 				5EFDFDDC1F228C1A009FA81B /* Resource.hpp in Headers */,
+				5E6C65C91F354C030089FD55 /* MemoryWriter.hpp in Headers */,
 				5E556AA81F23C6CB00F6FB2E /* Command.hpp in Headers */,
 				5E0523D71F217EF90088C9BA /* ScriptableObject.hpp in Headers */,
 				5E0523CB1F216EC10088C9BA /* Error.hpp in Headers */,
@@ -716,6 +758,7 @@
 				5E0523C61F216CAB0088C9BA /* Event.hpp in Headers */,
 				5E556B061F2961F100F6FB2E /* ShaderSystem.hpp in Headers */,
 				5E0523A81F2162800088C9BA /* ObjectPool.hpp in Headers */,
+				5E6C65B61F353E230089FD55 /* EntitySnapshotMessage.hpp in Headers */,
 				5E556AA41F23618A00F6FB2E /* ScriptComponent.hpp in Headers */,
 				5E6C65A61F3374620089FD55 /* EchoRequestMessage.hpp in Headers */,
 				5E556AC81F2432D300F6FB2E /* Texture2D.hpp in Headers */,
@@ -725,6 +768,7 @@
 				5E0523D31F217ABF0088C9BA /* EventSystem.hpp in Headers */,
 				5EFDFDE01F22963D009FA81B /* ResourceObject.hpp in Headers */,
 				5E556AB81F242ADC00F6FB2E /* IndexBuffer.hpp in Headers */,
+				5E6C65B21F353AF20089FD55 /* EntitySnapshot.hpp in Headers */,
 				5E6C65771F2EB9630089FD55 /* SpotLightComponent.hpp in Headers */,
 				5E6C657C1F3145AD0089FD55 /* UDPSocket.hpp in Headers */,
 				5E556B221F2AB65000F6FB2E /* StaticMeshComponent.hpp in Headers */,
@@ -826,11 +870,14 @@
 				5E556AA31F23618A00F6FB2E /* ScriptComponent.cpp in Sources */,
 				5E6C657B1F3145AD0089FD55 /* UDPSocket.cpp in Sources */,
 				5E6C65661F2EADBB0089FD55 /* DeferredLightingPass.cpp in Sources */,
+				5E6C65C81F354C030089FD55 /* MemoryWriter.cpp in Sources */,
 				5E6C653E1F2C02F20089FD55 /* CameraComponent.cpp in Sources */,
 				5E556AB31F2428EC00F6FB2E /* VertexBuffer.cpp in Sources */,
+				5E6C65B81F3545D10089FD55 /* EntitySnapshot.cpp in Sources */,
 				5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */,
 				5E556A9B1F23613300F6FB2E /* Script.cpp in Sources */,
 				5E6C65881F314AD30089FD55 /* NetworkMessage.cpp in Sources */,
+				5E6C65C01F3548F90089FD55 /* StorableObject.cpp in Sources */,
 				5E0523C51F216CAB0088C9BA /* Event.cpp in Sources */,
 				5E6C657F1F31485A0089FD55 /* PosixUDPSocket.cpp in Sources */,
 				5E6C65521F2CF4480089FD55 /* Framebuffer.cpp in Sources */,
@@ -853,8 +900,10 @@
 				5E6C655A1F2D62D00089FD55 /* Profiler.cpp in Sources */,
 				5E556AA71F23C6CB00F6FB2E /* Command.cpp in Sources */,
 				5E0523C11F2166000088C9BA /* EntitySystem.cpp in Sources */,
+				5E6C65AD1F353AB00089FD55 /* ReplicationSystem.cpp in Sources */,
 				5EFDFDC21F21AB8D009FA81B /* RenderSystem.cpp in Sources */,
 				5EFDFDC71F227023009FA81B /* File.cpp in Sources */,
+				5E6C65C41F3549220089FD55 /* StorableObjectType.cpp in Sources */,
 				5E556AC71F2432D300F6FB2E /* Texture2D.cpp in Sources */,
 				5E6C652D1F2B9E610089FD55 /* TransformComponent.cpp in Sources */,
 				5E556AB71F242ADC00F6FB2E /* IndexBuffer.cpp in Sources */,
@@ -867,6 +916,7 @@
 				5E556ABF1F242DFC00F6FB2E /* VertexAttribObject.cpp in Sources */,
 				5E556B011F295A4200F6FB2E /* MemoryReader.cpp in Sources */,
 				5E556AC31F2431A000F6FB2E /* BoundingBox.cpp in Sources */,
+				5E6C65B51F353E230089FD55 /* EntitySnapshotMessage.cpp in Sources */,
 				5EFDFDBA1F21A83C009FA81B /* Window.cpp in Sources */,
 				5EFDFDB11F21A0B4009FA81B /* Keyboard.cpp in Sources */,
 				5E556B191F2A6D4300F6FB2E /* Animation.cpp in Sources */,

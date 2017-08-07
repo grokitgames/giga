@@ -5,7 +5,7 @@
 /**
  * Server response to ping (syn) message
  */
-class EchoResponseMessage : public NetworkMessage {
+class GIGA_API EchoResponseMessage : public NetworkMessage {
 public:
     EchoResponseMessage() = default;
     ~EchoResponseMessage() = default;

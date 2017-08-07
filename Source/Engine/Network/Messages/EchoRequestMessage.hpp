@@ -5,7 +5,7 @@
 /**
  * Ping from client to server
  */
-class EchoRequestMessage : public NetworkMessage {
+class GIGA_API EchoRequestMessage : public NetworkMessage {
 public:
     EchoRequestMessage() = default;
     ~EchoRequestMessage() = default;

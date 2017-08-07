@@ -16,6 +16,7 @@ typedef void(*ComponentRemoveFunc)(Component* component);
  */
 struct GIGA_API ComponentType {
     std::string name;
+    int typeID;
     ComponentCreateFunc createFunc;
     ComponentRemoveFunc removeFunc;
 };
@@ -23,7 +24,7 @@ struct GIGA_API ComponentType {
 /**
  * Base component class that can be added to entity objects
  */
-class GIGA_API Component : public ScriptableObject {
+class GIGA_API Component : public ScriptableObject, public StorableObject {
 public:
     virtual ~Component();
     
@@ -44,9 +45,10 @@ public:
     bool IsActive() { return m_active; }
     
     /**
-     * Get status of whether this component has been updated
+     * Set network update state
      */
-    bool GetUpdatedFlag() { return m_updated; }
+    void MarkUpdated(bool updated);
+    bool HasUpdates() { return m_updated; }
     
     /**
      * Overridable callback functions
@@ -67,18 +69,21 @@ public:
     /**
      * Register a global component type that can be added to entities - create/remove likely in system
      */
-    static void RegisterComponentType(std::string type, ComponentCreateFunc f1, ComponentRemoveFunc f2);
+    static void RegisterComponentType(std::string type, int typeID, ComponentCreateFunc f1, ComponentRemoveFunc f2);
     
     /**
      * Create a new component by string type
      */
     static Component* CreateComponent(std::string type);
     
-protected:
     /**
-     * Mark this component as updated
+     * Create a new component by type ID
      */
-    void MarkUpdated(bool updated) { m_updated = updated; }
+    static Component* CreateComponent(int typeID);
+    
+public:
+    // Type ID
+    int typeID;
     
 protected:
     // Parent entity

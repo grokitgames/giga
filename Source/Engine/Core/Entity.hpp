@@ -59,6 +59,17 @@ public:
     Entity* Clone();
     
     /**
+     * Set network update state
+     */
+    void SetUpdated(int updated) { m_updates += updated; }
+    int HasUpdates() { return m_updates; }
+    
+    /**
+     * Reset network state
+     */
+    void ClearUpdateFlags();
+    
+    /**
      * Scripting integration
      */
     static Variant* FindComponent(Variant* object, int argc, Variant** argv);
@@ -72,6 +83,9 @@ private:
     
     // Entity name
     std::string m_name;
+    
+    // Number of components that have been updated this frame / tick
+    int m_updates;
 };
 
 #endif

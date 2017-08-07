@@ -1,14 +1,14 @@
 
-#ifndef memoryreader_hpp
-#define memoryreader_hpp
+#ifndef memorywriter_hpp
+#define MemoryWriter_hpp
 
 /**
- * Utility class for reading bytes out of a continuous block in chunks
+ * Utility class for writing bytes to of a continuous block in chunks
  */
-class GIGA_API MemoryReader {
+class GIGA_API MemoryWriter {
 public:
-    MemoryReader();
-    ~MemoryReader() = default;
+    MemoryWriter();
+    ~MemoryWriter() = default;
     
     /**
      * Initialize a new memory reader
@@ -16,19 +16,14 @@ public:
     void Initialize(unsigned char* block, int bytes);
     
     /**
-     * Read some data
+     * Write some data
      */
-    void Read(void* ptr, int bytes);
+    void Write(void* ptr, int bytes);
     
     /**
      * Get current offset into the data
      */
     int GetPosition() { return m_offset; }
-    
-    /**
-     * Get current position
-     */
-    unsigned char* GetCurrent() { return m_current; }
     
 protected:
     // Starting pointer
@@ -43,5 +38,6 @@ protected:
     // Total size
     int m_size;
 };
+
 
 #endif

@@ -2,7 +2,7 @@
 #ifndef posixudpsocket_hpp
 #define posixudpsocket_hpp
 
-class PosixUDPSocket : public UDPSocketBase {
+class GIGA_API PosixUDPSocket : public UDPSocketBase {
 public:
     PosixUDPSocket() = default;
     ~PosixUDPSocket() = default;

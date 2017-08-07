@@ -39,6 +39,11 @@ public:
     Entity* FindEntity(std::string name);
     
     /**
+     * Get all entities
+     */
+    std::vector<Entity*>& GetEntities() { return m_entities.GetList(); }
+    
+    /**
      * Scripting integration
      */
     static Variant* FindEntity(Variant* object, int argc, Variant** argv);

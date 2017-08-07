@@ -70,10 +70,10 @@ void Application::Initialize() {
     
     Application::Log(MSGTYPE_DEBUG, "Registering component types...");
     
-    Component::RegisterComponentType("ScriptComponent", &ScriptingSystem::CreateScriptComponent, &ScriptingSystem::RemoveScriptComponent);
-    Component::RegisterComponentType("StaticMeshComponent", &RenderSystem::CreateStaticMeshComponent, &RenderSystem::RemoveStaticMeshComponent);
-    Component::RegisterComponentType("CameraComponent", &RenderSystem::CreateCameraComponent, &RenderSystem::RemoveCameraComponent);
-    Component::RegisterComponentType("SpotLightComponent", &RenderSystem::CreateSpotLightComponent, &RenderSystem::RemoveSpotLightComponent);
+    Component::RegisterComponentType("ScriptComponent", 10, &ScriptingSystem::CreateScriptComponent, &ScriptingSystem::RemoveScriptComponent);
+    Component::RegisterComponentType("StaticMeshComponent", 20, &RenderSystem::CreateStaticMeshComponent, &RenderSystem::RemoveStaticMeshComponent);
+    Component::RegisterComponentType("CameraComponent", 30, &RenderSystem::CreateCameraComponent, &RenderSystem::RemoveCameraComponent);
+    Component::RegisterComponentType("SpotLightComponent", 40, &RenderSystem::CreateSpotLightComponent, &RenderSystem::RemoveSpotLightComponent);
     
     Application::Log(MSGTYPE_DEBUG, "Registered component types...");
     

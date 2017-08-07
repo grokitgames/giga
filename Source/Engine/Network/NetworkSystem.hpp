@@ -8,7 +8,7 @@
 /**
  * Info specific to acting as a client
  */
-struct NetworkClientInfo {
+struct GIGA_API NetworkClientInfo {
     // Time offset to server
     timespec timeOffset;
     
@@ -22,7 +22,7 @@ struct NetworkClientInfo {
 /**
  * Info specific to acting as a server
  */
-struct NetworkServerInfo {
+struct GIGA_API NetworkServerInfo {
     // Our set of sockets to check
     fd_set listenSocket;
     

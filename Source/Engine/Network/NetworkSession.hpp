@@ -5,7 +5,7 @@
 /**
  * Connection properties (shared between client and server)
  */
-struct NetworkConnectionInfo {
+struct GIGA_API NetworkConnectionInfo {
     // Difference in timestamp between us and server (in seconds)
     float clientTimeDiff;
     

@@ -46,6 +46,7 @@
 #include <map>
 #include <string>
 #include <algorithm>
+#include <queue>
 
 // GLM (math)
 #define GLM_FORCE_RADIANS       1
@@ -72,6 +73,9 @@ typedef glm::mat4 matrix4;
 #include <Scripting/ScriptableVariant.hpp>
 #include <Scripting/ScriptableObjectType.hpp>
 #include <Scripting/ScriptableObject.hpp>
+#include <IO/StorableObjectField.hpp>
+#include <IO/StorableObjectType.hpp>
+#include <IO/StorableObject.hpp>
 #include <Core/Component.hpp>
 #include <Core/Entity.hpp>
 #include <Core/System.hpp>
@@ -87,6 +91,7 @@ typedef glm::mat4 matrix4;
 #include <IO/Keyboard.hpp>
 #include <IO/File.hpp>
 #include <IO/MemoryReader.hpp>
+#include <IO/MemoryWriter.hpp>
 #include <Platform/DateTime.hpp>
 #include <Platform/Window.hpp>
 #include <Platform/Timer.hpp>
@@ -143,6 +148,9 @@ typedef glm::mat4 matrix4;
 #include <Network/Messages/EchoResponseMessage.hpp>
 #include <Network/NetworkSession.hpp>
 #include <Network/NetworkSystem.hpp>
+#include <Network/EntitySnapshot.hpp>
+#include <Network/ReplicationSystem.hpp>
+#include <Network/Messages/EntitySnapshotMessage.hpp>
 #include <Core/Application.hpp>
 
 #endif

@@ -45,7 +45,7 @@ void NetworkMessage::Initialize(unsigned char* buffer, int size) {
     memcpy(m_payload, buffer + offset, m_envelope.bytes);
 }
 
-unsigned char* NetworkMessage::GetMessage(int &size) {
+unsigned char* NetworkMessage::GetPayload(int &size) {
     size = (sizeof(uint32_t) * 6) + m_envelope.bytes;
     unsigned char* buffer = (unsigned char*)malloc(size);
     

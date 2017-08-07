@@ -37,7 +37,7 @@ public:
     /**
      * Find a resource by filename
      */
-    ResourceObject* FindResource(std::string filename);
+    ResourceObject* Find(std::string filename);
     
     /**
      * Add a directory/path to search to find files

@@ -43,7 +43,7 @@ public:
      * Getter functions
      */
     int GetType() { return m_type; }
-    std::string GetMessage() { return m_message; }
+    std::string GetMsg() { return m_message; }
     std::string GetDetails() { return m_details; }
     
 protected:

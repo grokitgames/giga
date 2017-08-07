@@ -11,7 +11,7 @@ void ResourceSystem::RemoveResource(ResourceObject* resource) {
 
 ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string type) {
     // Check to see if we've loaded this resource
-    ResourceObject* resource = FindResource(filename);
+    ResourceObject* resource = this->Find(filename);
     
     // If not, try to find and load it
     if(resource == 0) {
@@ -37,7 +37,7 @@ ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string t
     return(resource);
 }
 
-ResourceObject* ResourceSystem::FindResource(std::string name) {
+ResourceObject* ResourceSystem::Find(std::string name) {
     // See if we've already loaded it
     std::vector<ResourceObject*> resources = m_resources.GetList();
     for(size_t i = 0; i < resources.size(); i++) {

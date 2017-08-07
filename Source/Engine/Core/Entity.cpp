@@ -59,7 +59,7 @@ Variant* Entity::FindComponent(Variant* object, int argc, Variant** argv) {
     
     std::vector<Component*> components = entity->GetComponents();
     for(size_t i = 0; components.size(); i++) {
-        if(components[i]->GetClassName() == name) {
+        if(components[i]->GetGigaName() == name) {
             return(new Variant(components[i]));
         }
     }

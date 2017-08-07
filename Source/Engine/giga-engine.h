@@ -5,6 +5,7 @@
 // Disable compiler warnings about using STL and dynamic linking
 #pragma warning(disable:4251)
 
+
 // Windows DLL export definition
 #ifndef GIGA_API
     #ifdef GIGA_EXPORTS
@@ -35,10 +36,6 @@
 #include <sys/types.h>
 
 #include <errno.h>
-#include <sys/socket.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <netdb.h>
 #include <fcntl.h>
 
 // STL
@@ -142,6 +139,7 @@ typedef glm::mat4 matrix4;
 #include <Render/RenderSystem.hpp>
 #include <Network/UDPSocket.hpp>
 #include <Network/PosixUDPSocket.hpp>
+#include <Network/Win32UDPSocket.hpp>
 #include <Network/Socket.hpp>
 #include <Network/NetworkMessage.hpp>
 #include <Network/Messages/EchoRequestMessage.hpp>

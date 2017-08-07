@@ -26,7 +26,7 @@ void NetworkSession::Write(NetworkMessage* msg) {
     
     // Get our payload and message and write to socket
     int count = 0;
-    unsigned char* message = msg->GetMessage(count);
+    unsigned char* message = msg->GetPayload(count);
     
     int written = socket->Write(message, count);
     assert(written == count); // Assert = message not sent in full

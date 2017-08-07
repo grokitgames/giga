@@ -1,5 +1,6 @@
 
 #include <giga-engine.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 Window::Window() {
@@ -56,7 +57,7 @@ void Window::Create(std::string name, int width, int height, bool fullscreen) {
         glewExperimental = true;
         GLenum err = glewInit();
         if (GLEW_OK != err) {
-            ErrorSystem::HandleError(new Error(ERROR_WARN, "Unable to initialize GLEW."));
+            ErrorSystem::Process(new Error(ERROR_WARN, "Unable to initialize GLEW."));
             return;
         }
 #endif

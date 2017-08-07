@@ -2,6 +2,16 @@
 #ifndef udpsocket_hpp
 #define udpsocket_hpp
 
+#ifdef _WIN32
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+#else
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#endif
+
 /**
  * UDP socket base class
  */

@@ -165,10 +165,10 @@ protected:
     ScriptObjectCreateFunc m_createFunction;
     
     // The function template
-    v8::Persistent<v8::FunctionTemplate> m_functionTemplate;
+    v8::Persistent<v8::FunctionTemplate, v8::CopyablePersistentTraits<v8::FunctionTemplate>> m_functionTemplate;
     
     // Our constructor to create new objects of this type
-    v8::Persistent<v8::Function> m_constructor;
+    v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> m_constructor;
     
     // Linked list of getter/setter combinations for vars
     std::vector<ScriptObjectCallbackPair*> m_varList;

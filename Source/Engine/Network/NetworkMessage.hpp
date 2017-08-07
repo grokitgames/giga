@@ -40,7 +40,7 @@ public:
     /**
      * Get a packet with envelope + payload to be sent
      */
-    unsigned char* GetMessage(int& size);
+    unsigned char* GetPayload(int& size);
     
     /**
      * Get our envelope

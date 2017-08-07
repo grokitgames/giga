@@ -179,7 +179,7 @@ void ScriptableObjectType::HandleObjectFunctionCallback(const v8::FunctionCallba
     
     // Get the script interface we're supposed to connect to
     ScriptingSystem* ss = GetSystem<ScriptingSystem>();
-    ScriptableObjectType* interface = ss->GetScriptableObjectType(jsobj->GetClassName());
+    ScriptableObjectType* interface = ss->GetScriptableObjectType(jsobj->GetGigaName());
     
     // Turn our info array into a list of passable Variants
     int argc = info.Length();
@@ -221,7 +221,7 @@ void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, co
     
     // Get the script interface we're supposed to connect to
     ScriptingSystem* ss = GetSystem<ScriptingSystem>();
-    ScriptableObjectType* interface = ss->GetScriptableObjectType(jsobj->GetClassName());
+    ScriptableObjectType* interface = ss->GetScriptableObjectType(jsobj->GetGigaName());
     
     // Iterate through the callback list, looking for a registered callback function
     std::vector<ScriptObjectCallbackPair*> varList = interface->GetVariableList();
@@ -246,7 +246,7 @@ void ScriptableObjectType::HandleObjectSetter(v8::Local<v8::String> property, v8
     
     // Get the script interface we're supposed to connect to
     ScriptingSystem* ss = GetSystem<ScriptingSystem>();
-    ScriptableObjectType* interface = ss->GetScriptableObjectType(jsobj->GetClassName());
+    ScriptableObjectType* interface = ss->GetScriptableObjectType(jsobj->GetGigaName());
     
     // Iterate through the callback list, looking for a registered callback function
     std::vector<ScriptObjectCallbackPair*> varList = interface->GetVariableList();

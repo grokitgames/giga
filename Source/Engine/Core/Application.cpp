@@ -330,5 +330,5 @@ void Application::Log(int type, std::string message, std::string details) {
 }
 
 void Application::LogError(Error* error) {
-    Application::Log(error->GetType(), error->GetMessage(), error->GetDetails());
+    Application::Log(error->GetType(), error->GetMsg(), error->GetDetails());
 }

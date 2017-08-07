@@ -12,7 +12,7 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
     // Lazy load interface
     if (m_scriptType == 0) {
         ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-        m_scriptType = scriptingSystem->GetScriptableObjectType(this->GetClassName());
+        m_scriptType = scriptingSystem->GetScriptableObjectType(this->GetGigaName());
         
         GIGA_ASSERT(m_scriptType != 0, "Interface not defined for class type.")
     }

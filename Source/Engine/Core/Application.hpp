@@ -36,7 +36,7 @@ public:
         GIGA_ASSERT(sys != 0, "Class must be inherited from system type.");
         
         for(size_t i = 0; i < m_systems.size(); i++) {
-            if(m_systems[i]->GetClassName() == sys->GetClassName()) {
+            if(m_systems[i]->GetGigaName() == sys->GetGigaName()) {
                 GIGA_ASSERT(false, "System type already registed.");
             }
         }
@@ -61,7 +61,7 @@ public:
      */
     template<class T>
     T* GetSystem() {
-        for (int i = 0; i < m_systems.size(); i++) {
+        for (size_t i = 0; i < m_systems.size(); i++) {
             T* object = dynamic_cast<T*>(m_systems[i]);
             if (object) {
                 return(object);

@@ -45,10 +45,10 @@ protected:
     Script* m_scriptSource;
     
     // Our internal script object
-    v8::Persistent<v8::Script> m_script;
+    v8::Persistent<v8::Script, v8::CopyablePersistentTraits<v8::Script>> m_script;
     
     // Our internal context
-    v8::Persistent<v8::Context> m_context;
+    v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>> m_context;
     
     // List of functions from inside of the script
     std::vector<ScriptFunction*> m_functions;

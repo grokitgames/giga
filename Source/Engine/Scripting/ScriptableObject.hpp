@@ -5,7 +5,7 @@
 /**
  * Scriptable object base class - all C++ classes used in JS should inherit this
  */
-class ScriptableObject : public GigaObject {
+class GIGA_API ScriptableObject : public GigaObject {
 public:
     virtual ~ScriptableObject() = default;
     
@@ -59,7 +59,7 @@ protected:
     ScriptableObjectType* m_scriptType;
     
     // Internal V8 handle
-    v8::Persistent<v8::Value> m_jsHandle;
+    v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>> m_jsHandle;
 };
 
 #endif 

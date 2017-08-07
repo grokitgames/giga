@@ -63,7 +63,7 @@ void ShaderVariation::Bind() {
         
         unsigned long length = data.length();
         char* str = (char*)data.c_str();
-        GL_CHECK(glShaderSource(m_vshader, 1, &str, (int*)&length));
+        GL_CHECK(glShaderSource(m_vshader, 1, (const char**)&str, (int*)&length));
         
         // Try to compile
         GL_CHECK(glCompileShader(m_vshader));
@@ -92,7 +92,7 @@ void ShaderVariation::Bind() {
         
         length = data.length();
         str = (char*)data.c_str();
-        GL_CHECK(glShaderSource(m_fshader, 1, &str, (int*)&length));
+        GL_CHECK(glShaderSource(m_fshader, 1, (const char**)&str, (int*)&length));
         
         // Try to compile
         GL_CHECK(glCompileShader(m_fshader));

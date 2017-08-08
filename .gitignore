@@ -45,6 +45,7 @@ Source/Workspace/Debug/*
 *.user
 *.log
 *.idb
+*.exp
 Source/Workspace/.vs/*
 
 # Qt

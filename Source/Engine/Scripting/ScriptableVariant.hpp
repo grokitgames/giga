@@ -5,7 +5,7 @@
 /**
  * Extension of our base variant class to integrate with V8's types
  */
-class ScriptableVariant : public Variant {
+class GIGA_API ScriptableVariant : public Variant {
 public:
     // JS types
     enum JSType {

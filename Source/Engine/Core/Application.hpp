@@ -2,6 +2,12 @@
 #ifndef application_hpp
 #define application_hpp
 
+#ifdef WIN32
+#define GIGA_APPLICATION(func) int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) { func(); }
+#else
+#define GIGA_APPLICATION(func) int main(int argc, const char * argv[]) { func(); }
+#endif
+
 /**
  * Application class that serves as a service locator
  */

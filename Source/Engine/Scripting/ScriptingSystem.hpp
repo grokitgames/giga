@@ -5,7 +5,7 @@
 /**
  * Scripting system, tracking interfaces to C++ and executing loaded JavaScript
  */
-class ScriptingSystem : public System {
+class GIGA_API ScriptingSystem : public System {
 public:
     ScriptingSystem() = default;
     ~ScriptingSystem();

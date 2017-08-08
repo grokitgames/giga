@@ -1,7 +1,11 @@
 
 #include <giga-engine.h>
 
-int main(int argc, const char * argv[]) {
+void StartApplication();
+
+GIGA_APPLICATION(StartApplication);
+
+void StartApplication() {
     // Get application
     Application* application = Application::GetInstance();
     
@@ -102,6 +106,4 @@ int main(int argc, const char * argv[]) {
     profiler->Log();
     
     application->Shutdown();
-    
-    return 0;
 }

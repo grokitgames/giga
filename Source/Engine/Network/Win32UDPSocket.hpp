@@ -2,7 +2,7 @@
 #ifndef win32udpsocket_hpp
 #define win32udpsocket_hpp
 
-class Win32UDPSocket : public UDPSocketBase {
+class GIGA_API Win32UDPSocket : public UDPSocketBase {
 public:
 	Win32UDPSocket();
 	~Win32UDPSocket();

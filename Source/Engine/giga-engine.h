@@ -138,8 +138,6 @@ typedef glm::mat4 matrix4;
 #include <Render/DeferredLightingPass.hpp>
 #include <Render/RenderSystem.hpp>
 #include <Network/UDPSocket.hpp>
-#include <Network/PosixUDPSocket.hpp>
-#include <Network/Win32UDPSocket.hpp>
 #include <Network/Socket.hpp>
 #include <Network/NetworkMessage.hpp>
 #include <Network/Messages/EchoRequestMessage.hpp>

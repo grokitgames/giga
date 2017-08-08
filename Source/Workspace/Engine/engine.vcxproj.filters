@@ -28,6 +28,9 @@
     <Filter Include="External">
       <UniqueIdentifier>{96a1858b-4b60-4465-91a3-935d6e9906d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network\Messages">
+      <UniqueIdentifier>{330c4b7d-8a07-4ef9-8a22-cdcd5ca2840d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp">
@@ -280,6 +283,15 @@
     <ClInclude Include="..\..\Engine\Network\Win32UDPSocket.hpp">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -503,6 +515,15 @@
     </ClCompile>
     <ClCompile Include="..\..\ThirdParty\glew\src\glew.c">
       <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.cpp">
+      <Filter>Network\Messages</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

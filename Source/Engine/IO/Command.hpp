@@ -2,7 +2,7 @@
 #ifndef command_hpp
 #define command_hpp
 
-class Command : public ScriptableObject {
+class GIGA_API Command : public ScriptableObject {
 public:
     Command() = default;
     ~Command() = default;

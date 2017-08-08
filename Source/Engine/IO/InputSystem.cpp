@@ -7,6 +7,10 @@ InputSystem::~InputSystem() {
     }
 }
 
+void InputSystem::Initialize() {
+
+}
+
 void InputSystem::Update(float delta) {
     for(size_t i = 0; i < m_devices.size(); i++) {
         m_devices[i]->Update();

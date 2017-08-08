@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{b4cd84ec-f250-4436-b017-6c7d393870a4}</ProjectGuid>
+    <Keyword>Linux</Keyword>
+    <RootNamespace>server</RootNamespace>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <ApplicationType>Linux</ApplicationType>
+    <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
+    <TargetLinuxPlatform>Generic</TargetLinuxPlatform>
+    <LinuxProjectType>{D51BCBC9-82E9-4017-911E-C93873C4EA2B}</LinuxProjectType>
+    <ProjectName>linux</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <ItemGroup>
+    <ClCompile Include="..\..\Engine\Core\Application.cpp" />
+    <ClCompile Include="..\..\Engine\Core\Component.cpp" />
+    <ClCompile Include="..\..\Engine\Core\Entity.cpp" />
+    <ClCompile Include="..\..\Engine\Core\EntitySystem.cpp" />
+    <ClCompile Include="..\..\Engine\Core\ErrorSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Core\Event.cpp" />
+    <ClCompile Include="..\..\Engine\Core\EventSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Core\GigaObject.cpp" />
+    <ClCompile Include="..\..\Engine\Core\Variant.cpp" />
+    <ClCompile Include="..\..\Engine\IO\Command.cpp" />
+    <ClCompile Include="..\..\Engine\IO\File.cpp" />
+    <ClCompile Include="..\..\Engine\IO\InputDevice.cpp" />
+    <ClCompile Include="..\..\Engine\IO\InputSystem.cpp" />
+    <ClCompile Include="..\..\Engine\IO\MemoryReader.cpp" />
+    <ClCompile Include="..\..\Engine\IO\MemoryWriter.cpp" />
+    <ClCompile Include="..\..\Engine\IO\Profiler.cpp" />
+    <ClCompile Include="..\..\Engine\IO\StorableObject.cpp" />
+    <ClCompile Include="..\..\Engine\IO\StorableObjectType.cpp" />
+    <ClCompile Include="..\..\Engine\Network\EntitySnapshot.cpp" />
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp" />
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp" />
+    <ClCompile Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.cpp" />
+    <ClCompile Include="..\..\Engine\Network\NetworkMessage.cpp" />
+    <ClCompile Include="..\..\Engine\Network\NetworkSession.cpp" />
+    <ClCompile Include="..\..\Engine\Network\NetworkSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Network\PosixUDPSocket.cpp" />
+    <ClCompile Include="..\..\Engine\Network\ReplicationSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Network\UDPSocket.cpp" />
+    <ClCompile Include="..\..\Engine\Platform\DateTime.cpp" />
+    <ClCompile Include="..\..\Engine\Platform\Timer.cpp" />
+    <ClCompile Include="..\..\Engine\Render\BoundingBox.cpp" />
+    <ClCompile Include="..\..\Engine\Render\CameraComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Frustum.cpp" />
+    <ClCompile Include="..\..\Engine\Render\LightComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\LinuxRenderSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Plane.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Quaternion.cpp" />
+    <ClCompile Include="..\..\Engine\Render\RenderComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Transform.cpp" />
+    <ClCompile Include="..\..\Engine\Render\TransformComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Vector3.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\Resource.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\ResourceObject.cpp" />
+    <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\Script.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObject.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectType.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableVariant.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Engine\Core\Application.hpp" />
+    <ClInclude Include="..\..\Engine\Core\Component.hpp" />
+    <ClInclude Include="..\..\Engine\Core\Entity.hpp" />
+    <ClInclude Include="..\..\Engine\Core\EntitySystem.hpp" />
+    <ClInclude Include="..\..\Engine\Core\Error.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ErrorSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Core\Event.hpp" />
+    <ClInclude Include="..\..\Engine\Core\EventData.hpp" />
+    <ClInclude Include="..\..\Engine\Core\EventSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Core\GigaObject.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ObjectPool.hpp" />
+    <ClInclude Include="..\..\Engine\Core\System.hpp" />
+    <ClInclude Include="..\..\Engine\Core\Variant.hpp" />
+    <ClInclude Include="..\..\Engine\giga-engine.h" />
+    <ClInclude Include="..\..\Engine\IO\Command.hpp" />
+    <ClInclude Include="..\..\Engine\IO\File.hpp" />
+    <ClInclude Include="..\..\Engine\IO\InputDevice.hpp" />
+    <ClInclude Include="..\..\Engine\IO\InputSystem.hpp" />
+    <ClInclude Include="..\..\Engine\IO\Keyboard.hpp" />
+    <ClInclude Include="..\..\Engine\IO\MemoryReader.hpp" />
+    <ClInclude Include="..\..\Engine\IO\MemoryWriter.hpp" />
+    <ClInclude Include="..\..\Engine\IO\Profiler.hpp" />
+    <ClInclude Include="..\..\Engine\IO\StorableObject.hpp" />
+    <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp" />
+    <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp" />
+    <ClInclude Include="..\..\Engine\Network\EntitySnapshot.hpp" />
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp" />
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp" />
+    <ClInclude Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.hpp" />
+    <ClInclude Include="..\..\Engine\Network\NetworkMessage.hpp" />
+    <ClInclude Include="..\..\Engine\Network\NetworkSession.hpp" />
+    <ClInclude Include="..\..\Engine\Network\NetworkSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Network\PosixUDPSocket.hpp" />
+    <ClInclude Include="..\..\Engine\Network\ReplicationSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Network\Socket.hpp" />
+    <ClInclude Include="..\..\Engine\Network\UDPSocket.hpp" />
+    <ClInclude Include="..\..\Engine\Platform\DateTime.hpp" />
+    <ClInclude Include="..\..\Engine\Platform\Timer.hpp" />
+    <ClInclude Include="..\..\Engine\Platform\Window.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Animation.hpp" />
+    <ClInclude Include="..\..\Engine\Render\AnimationFrame.hpp" />
+    <ClInclude Include="..\..\Engine\Render\AnimationInstance.hpp" />
+    <ClInclude Include="..\..\Engine\Render\AnimationTransform.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Bone.hpp" />
+    <ClInclude Include="..\..\Engine\Render\BoundingBox.hpp" />
+    <ClInclude Include="..\..\Engine\Render\CameraComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Render\DeferredLightingPass.hpp" />
+    <ClInclude Include="..\..\Engine\Render\DeferredRenderPass.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Framebuffer.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Frustum.hpp" />
+    <ClInclude Include="..\..\Engine\Render\GBufferPass.hpp" />
+    <ClInclude Include="..\..\Engine\Render\IndexBuffer.hpp" />
+    <ClInclude Include="..\..\Engine\Render\LightComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Material.hpp" />
+    <ClInclude Include="..\..\Engine\Render\MaterialSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Mesh.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Plane.hpp" />
+    <ClInclude Include="..\..\Engine\Render\PostProcessPass.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Quaternion.hpp" />
+    <ClInclude Include="..\..\Engine\Render\RenderComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Render\RenderPass.hpp" />
+    <ClInclude Include="..\..\Engine\Render\RenderSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Scene.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Shader.hpp" />
+    <ClInclude Include="..\..\Engine\Render\ShaderSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Render\ShaderVariation.hpp" />
+    <ClInclude Include="..\..\Engine\Render\SpotLightComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Render\StaticMeshComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Texture.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Texture2D.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Texture3D.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Transform.hpp" />
+    <ClInclude Include="..\..\Engine\Render\TransformComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Vector3.hpp" />
+    <ClInclude Include="..\..\Engine\Render\VertexAttribObject.hpp" />
+    <ClInclude Include="..\..\Engine\Render\VertexBuffer.hpp" />
+    <ClInclude Include="..\..\Engine\Render\VertexFormat.hpp" />
+    <ClInclude Include="..\..\Engine\Resource\Resource.hpp" />
+    <ClInclude Include="..\..\Engine\Resource\ResourceObject.hpp" />
+    <ClInclude Include="..\..\Engine\Resource\ResourceSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\Script.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObject.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectType.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableVariant.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptComponent.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptingSystem.hpp" />
+  </ItemGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;..\engine\include;..\engine\contrib\bullet\include;..\engine\contrib\fmod\include;..\engine\contrib\freetype\include;..\engine\contrib\glew\include;..\engine\contrib\glfw\include;..\engine\contrib\glm\include;..\engine\contrib\libcurl\include;..\engine\contrib\mysql\include;..\engine\contrib\openssl\include;..\engine\contrib\recast\include;..\engine\contrib\soil\include;..\engine\contrib\sqlite\include;..\engine\contrib\supereasyjson;..\engine\contrib\v8\include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux;./contrib/bullet/include;./contrib/fmod/include;./contrib/freetype/include;./contrib/glew/include;./contrib/glfw/include;./contrib/glm/include;./contrib/libcurl/include;./contrib/mysql/include;./contrib/openssl/include;./contrib/recast/include;./contrib/soil/include;./contrib/sqlite/include;./contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GIGA_API=</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>/root/projects/linux/contrib/v8/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LibraryDependencies>icui18n;icuuc;v8_base;v8_external_snapshot;v8_libbase;v8_libplatform;v8_libsampler;pthread;%(LibraryDependencies)</LibraryDependencies>
+      <AdditionalDependencies>$(StlAdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

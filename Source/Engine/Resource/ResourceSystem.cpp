@@ -9,6 +9,10 @@ void ResourceSystem::RemoveResource(ResourceObject* resource) {
     m_resources.RemoveObject(resource);
 }
 
+void ResourceSystem::Initialize() {
+
+}
+
 ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string type) {
     // Check to see if we've loaded this resource
     ResourceObject* resource = this->Find(filename);

@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{33be24ca-6750-4c30-ac9c-0d5b07d6d14f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{82901d96-1d46-4b10-ac69-f8c890dd8aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{f9110a75-f162-452a-a9e1-52f5b4521595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Messages">
+      <UniqueIdentifier>{a6e0f080-b399-414e-8d13-078d010ac947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{cacc8fa3-0590-4313-aa97-a3dde626af83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{5d21234f-32ec-44b2-9923-e5e1aab29ecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{02c40e82-875f-4d17-b2c8-48b832bdd724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{b17ecb07-2f27-45da-aa6f-211593d7b85d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Engine\Core\Application.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\Component.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\Entity.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\EntitySystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\ErrorSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\Event.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\EventSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\GigaObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\Variant.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\Command.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\File.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\InputDevice.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\InputSystem.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\MemoryReader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\MemoryWriter.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\Profiler.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\StorableObject.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\StorableObjectType.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\EntitySnapshot.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\NetworkMessage.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\NetworkSession.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\NetworkSystem.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\PosixUDPSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\ReplicationSystem.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\UDPSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Platform\DateTime.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Platform\Timer.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\ResourceObject.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\Script.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObject.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectType.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableVariant.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\CameraComponent.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Quaternion.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\RenderComponent.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Transform.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\TransformComponent.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Vector3.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\LinuxRenderSystem.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\BoundingBox.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Frustum.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\LightComponent.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Plane.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Engine\Core\Application.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\Component.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\Entity.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\EntitySystem.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\Error.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ErrorSystem.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\Event.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\EventData.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\EventSystem.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\GigaObject.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ObjectPool.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\System.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\Variant.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\giga-engine.h" />
+    <ClInclude Include="..\..\Engine\IO\Command.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\File.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\InputDevice.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\InputSystem.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\Keyboard.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\MemoryReader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\MemoryWriter.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\Profiler.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\StorableObject.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\EntitySnapshot.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\NetworkMessage.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\NetworkSession.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\NetworkSystem.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\PosixUDPSocket.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\ReplicationSystem.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Socket.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\UDPSocket.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Platform\DateTime.hpp">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Platform\Timer.hpp">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Platform\Window.hpp">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\Resource.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\ResourceObject.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\ResourceSystem.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\Script.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObject.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectType.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableVariant.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptComponent.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptingSystem.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Animation.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\AnimationFrame.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\AnimationInstance.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\AnimationTransform.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Bone.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\BoundingBox.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\CameraComponent.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\DeferredLightingPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\DeferredRenderPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Framebuffer.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Frustum.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\GBufferPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\IndexBuffer.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\LightComponent.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Material.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\MaterialSystem.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Mesh.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Plane.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\PostProcessPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Quaternion.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\RenderComponent.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\RenderPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\RenderSystem.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Scene.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Shader.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\ShaderSystem.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\ShaderVariation.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\SpotLightComponent.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\StaticMeshComponent.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Texture.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Texture2D.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Texture3D.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Transform.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\TransformComponent.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Vector3.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\VertexAttribObject.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\VertexBuffer.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\VertexFormat.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

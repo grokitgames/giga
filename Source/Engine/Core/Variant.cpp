@@ -7,11 +7,7 @@ Variant::~Variant() {
     }
 }
 
-Variant::Variant(int value) {
-    *this = value;
-}
-
-Variant::Variant(long value) {
+Variant::Variant(int32_t value) {
     *this = value;
 }
 
@@ -51,13 +47,7 @@ Variant::Variant(const Variant& value) {
     *this = value;
 }
 
-Variant& Variant::operator =(int rhs) {
-    m_type = VAR_INT;
-    m_data.i = rhs;
-    return *this;
-}
-
-Variant& Variant::operator =(long rhs) {
+Variant& Variant::operator =(int32_t rhs) {
     m_type = VAR_INT;
     m_data.i = rhs;
     return *this;

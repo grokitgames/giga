@@ -24,7 +24,7 @@ public:
     
     struct Value {
         union {
-            int i;
+			int32_t i;
             int64_t i64;
             bool b;
             float f1;
@@ -49,8 +49,7 @@ public:
     /**
      * Constructors
      */
-    Variant(int value);
-    Variant(long value);
+    Variant(int32_t value);
     Variant(int64_t value);
     Variant(bool value);
     Variant(float value);
@@ -64,8 +63,7 @@ public:
     /**
      * Set operators
      */
-    Variant& operator =(int rhs);
-    Variant& operator =(long rhs);
+    Variant& operator =(int32_t rhs);
     Variant& operator =(int64_t rhs);
     Variant& operator =(bool rhs);
     Variant& operator =(float rhs);

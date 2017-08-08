@@ -13,6 +13,11 @@ public:
     ~ResourceSystem() = default;
     
     GIGA_CLASS_NAME("ResourceSystem");
+
+	/**
+	 * Initialize
+	 */
+	void Initialize();
     
     /**
      * Update the resource system, discarding un-needed resources

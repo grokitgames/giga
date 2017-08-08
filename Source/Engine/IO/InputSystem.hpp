@@ -7,7 +7,12 @@ public:
     InputSystem() = default;
     ~InputSystem();
     
-    GIGA_CLASS_NAME("InputSystem")
+	GIGA_CLASS_NAME("InputSystem");
+
+	/**
+	 * Initialize (scripting interfaces)
+	 */
+	void Initialize();
     
     /**
      * Update input devices (polling mostly)

@@ -107,7 +107,7 @@ void PosixUDPSocket::Accept(int socket) {
 
 void PosixUDPSocket::SetSocketAddress(sockaddr_in* sock, socklen_t length) {
     m_sockaddr.sin_family = sock->sin_family;
-    memcpy((void *)&m_sockaddr.sin_addr, (void*)&sock->sin_addr, sock->sin_len);
+    memcpy((void *)&m_sockaddr.sin_addr, (void*)&sock->sin_addr, sizeof(sockaddr_in));
     m_sockaddr.sin_port = sock->sin_port;
 }
 

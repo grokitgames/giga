@@ -1,14 +1,14 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 
-void DeferredRenderPass::InitializeShader() {
+void OpenGLDeferredRenderPass::InitializeShader() {
     // Load deferred shader
     ShaderSystem* shaderSystem = GetSystem<ShaderSystem>();
     m_shader = shaderSystem->Find("ortho.vs", "deferred.fs", new ShaderAttributes());
 }
 
-void DeferredRenderPass::Render(Scene* scene) {
+void OpenGLDeferredRenderPass::Render(Scene* scene) {
     PROFILE_START_AREA("Deferred Render Pass");
     
     // Reset counters

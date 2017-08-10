@@ -34,6 +34,18 @@ void Keyboard::Initialize() {
     // Get our scripting system and register globals
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     
+    // Keyboard
+    ScriptableObjectType* keyboardType = new ScriptableObjectType("Keyboard");
+    keyboardType->AddObjectFunction("GetButtonState", &Keyboard::GetButtonState);
+    
+    scriptingSystem->RegisterScriptableObjectType<Keyboard>(keyboardType);
+    
+    // Keyboard event data
+    ScriptableObjectType* keyboardEventType = new ScriptableObjectType("KeyboardEventData");
+    keyboardEventType->AddObjectVariable("key", &KeyboardEventData::GetKey, 0);
+    
+    scriptingSystem->RegisterScriptableObjectType<KeyboardEventData>(keyboardEventType);
+    
     // Keyboard global variables/bindings
     scriptingSystem->RegisterGlobal("KEY_CODE_A", new Variant(GLFW_KEY_A));
     scriptingSystem->RegisterGlobal("KEY_CODE_B", new Variant(GLFW_KEY_B));

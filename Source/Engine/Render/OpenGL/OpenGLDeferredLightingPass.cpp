@@ -1,18 +1,18 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 
-void DeferredLightingPass::InitializeShader() {
+void OpenGLDeferredLightingPass::InitializeShader() {
     // Load lighting shader
     ShaderSystem* shaderSystem = GetSystem<ShaderSystem>();
     m_shader = shaderSystem->Find("ortho.vs", "lighting.fs", new ShaderAttributes());
 }
 
-Texture2D* DeferredLightingPass::GetLightingTexture() {
+Texture2D* OpenGLDeferredLightingPass::GetLightingTexture() {
     return(m_framebuffers[0]->GetTexture(0));
 }
 
-void DeferredLightingPass::Render(Scene* scene) {
+void OpenGLDeferredLightingPass::Render(Scene* scene) {
     PROFILE_START_AREA("Deferred Lighting Pass");
     
     // Reset counters

@@ -47,7 +47,8 @@ ShaderVariation* ShaderSystem::Find(std::string vert, std::string frag, ShaderAt
     Shader* vshader = dynamic_cast<Shader*>(resourceSystem->LoadResource(vert, "Shader"));
     Shader* fshader = dynamic_cast<Shader*>(resourceSystem->LoadResource(frag, "Shader"));
     
-    ShaderVariation* shader = new ShaderVariation();
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
+    ShaderVariation* shader = renderSystem->CreateShaderVariation();
     shader->SetVertexShader(vshader);
     shader->SetFragmentShader(fshader);
     

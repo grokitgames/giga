@@ -1,6 +1,5 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
 
 MaterialSystem::MaterialSystem() {
     memset(m_materials, 0, sizeof(Material*) * MAX_MATERIAL_TEXTURE_SIZE);
@@ -109,17 +108,14 @@ void MaterialSystem::UpdateMaterialTexture(Material* material, int slot) {
 
 Texture2D* MaterialSystem::GetTexture() {
     if (m_texture == 0) {
-        m_texture = new Texture2D();
+        RenderSystem* renderSystem = GetSystem<RenderSystem>();
+        m_texture = renderSystem->CreateTexture2D();
     }
     
     // Rebuild our material texture if necessary
     if (m_dirty) {
         // Rebuild
-        m_texture->Initialize(4, MAX_MATERIAL_TEXTURE_SIZE, GL_RGB16F, GL_RGB);
-        m_texture->Bind(0);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, 4, MAX_MATERIAL_TEXTURE_SIZE, 0, GL_RGB, GL_FLOAT, m_data);
-        m_texture->Unbind();
-        
+        m_texture->SetData(4, MAX_MATERIAL_TEXTURE_SIZE, COLOR_RGB16F, COLOR_RGB, (void*)m_data);
         m_dirty = false;
     }
     

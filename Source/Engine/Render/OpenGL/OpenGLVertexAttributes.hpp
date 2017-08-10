@@ -1,14 +1,14 @@
 
-#ifndef vertexarrayobject_hpp
-#define vertexarrayobject_hpp
+#ifndef openglvertexattributes_hpp
+#define openglvertexattributes_hpp
 
 /**
  * Vertex attribute object used in OpenGL for collective attribute setting
  */
-class GIGA_API VertexAttribObject {
+class GIGA_API OpenGLVertexAttributes : public VertexAttributes {
 public:
-    VertexAttribObject() : m_vertexArray(0) { };
-    ~VertexAttribObject();
+    OpenGLVertexAttributes() : m_vertexArray(0) { };
+    ~OpenGLVertexAttributes();
     
     /**
      * Create a new vertex attrib object
@@ -21,6 +21,11 @@ public:
     void Bind();
     
     /**
+     * Unbind
+     */
+    void Unbind();
+    
+    /**
      * Destroy the vertex attrib object
      */
     void Destroy();
@@ -28,12 +33,12 @@ public:
     /**
      * Enable a vertex attribute
      */
-    void EnableVertexAttribute(unsigned int index, unsigned int size, unsigned int stride, unsigned int offset);
+    void EnableAttribute(unsigned int index, unsigned int size, unsigned int stride, unsigned int offset);
     
     /**
      * Disable a vertex attribute
      */
-    void DisableVertexAttribute(unsigned int index);
+    void DisableAttribute(unsigned int index);
     
 protected:
     // Internal storage ID

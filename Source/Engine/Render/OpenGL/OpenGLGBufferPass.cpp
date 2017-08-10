@@ -1,55 +1,57 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 
-void GBufferPass::Initialize(int windowWidth, int windowHeight) {
+void OpenGLGBufferPass::Initialize(int windowWidth, int windowHeight) {
     m_windowWidth = windowWidth;
     m_windowHeight = windowHeight;
     
-    Framebuffer* gbufferFramebuffer = new Framebuffer();
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
+    
+    Framebuffer* gbufferFramebuffer = renderSystem->CreateFramebuffer();
     gbufferFramebuffer->Initialize(windowWidth, windowHeight);
     
     // Create our textures
-    Texture2D* diffuseTexture = new Texture2D();
+    Texture2D* diffuseTexture = renderSystem->CreateTexture2D();
     diffuseTexture->Initialize(windowWidth, windowHeight, GL_RGB16F, GL_RGB);
     gbufferFramebuffer->AddTexture(diffuseTexture, GL_COLOR_ATTACHMENT0);
     
-    Texture2D* positionTexture = new Texture2D();
+    Texture2D* positionTexture = renderSystem->CreateTexture2D();
     positionTexture->Initialize(windowWidth, windowHeight, GL_RGB16F, GL_RGB);
     gbufferFramebuffer->AddTexture(positionTexture, GL_COLOR_ATTACHMENT1);
     
-    Texture2D* normalTexture = new Texture2D();
+    Texture2D* normalTexture = renderSystem->CreateTexture2D();
     normalTexture->Initialize(windowWidth, windowHeight, GL_RGB16F, GL_RGB);
     gbufferFramebuffer->AddTexture(normalTexture, GL_COLOR_ATTACHMENT2);
     
-    Texture2D* indexTexture = new Texture2D();
+    Texture2D* indexTexture = renderSystem->CreateTexture2D();
     indexTexture->Initialize(windowWidth, windowHeight, GL_RGB16F, GL_RGB);
     gbufferFramebuffer->AddTexture(indexTexture, GL_COLOR_ATTACHMENT3);
     
-    Texture2D* depthTexture = new Texture2D();
+    Texture2D* depthTexture = renderSystem->CreateTexture2D();
     depthTexture->Initialize(windowWidth, windowHeight, GL_DEPTH_COMPONENT32F, GL_DEPTH_COMPONENT);
     gbufferFramebuffer->AddTexture(depthTexture, GL_DEPTH_ATTACHMENT);
     
     m_framebuffers.push_back(gbufferFramebuffer);
 }
 
-Texture2D* GBufferPass::GetDiffuseTexture() {
+Texture2D* OpenGLGBufferPass::GetDiffuseTexture() {
     return(m_framebuffers[0]->GetTexture(0));
 }
 
-Texture2D* GBufferPass::GetNormalTexture() {
+Texture2D* OpenGLGBufferPass::GetNormalTexture() {
     return(m_framebuffers[0]->GetTexture(2));
 }
 
-Texture2D* GBufferPass::GetPositionTexture() {
+Texture2D* OpenGLGBufferPass::GetPositionTexture() {
     return(m_framebuffers[0]->GetTexture(1));
 }
 
-Texture2D* GBufferPass::GetDepthTexture() {
+Texture2D* OpenGLGBufferPass::GetDepthTexture() {
     return(m_framebuffers[0]->GetTexture(3));
 }
 
-void GBufferPass::Render(Scene* scene) {
+void OpenGLGBufferPass::Render(Scene* scene) {
     PROFILE_START_AREA("Gbuffer Pass");
     
     // Reset counters
@@ -116,7 +118,7 @@ void GBufferPass::Render(Scene* scene) {
     PROFILE_END_AREA("Gbuffer Pass");
 }
 
-void GBufferPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent, Scene* scene, int index) {
+void OpenGLGBufferPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent, Scene* scene, int index) {
     Mesh* renderable = mesh->GetMesh();
     
     std::vector<StaticMeshComponent*> children = mesh->GetChildren();

@@ -25,7 +25,7 @@ DateTime* DateTime::GetCurrent() {
     return(dt);
 }
 
-time_t DateTime::GetTimestamp() {
+uint64_t DateTime::GetTimestamp() {
     return(m_time);
 }
 
@@ -66,7 +66,7 @@ Variant* DateTime::GetCurrent(Variant* object, int argc, Variant** argv) {
 
 Variant* DateTime::GetTimestamp(Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
-    return(new Variant(dt->GetTimestamp()));
+    return(new Variant((int64_t)dt->GetTimestamp()));
 }
 
 Variant* DateTime::GetYear(Variant* object) {

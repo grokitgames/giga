@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E0523B61F2163660088C9BA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0523B51F2163660088C9BA /* main.cpp */; };
 		5E0523BE1F2163890088C9BA /* libEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0523BD1F2163890088C9BA /* libEngine.dylib */; };
+		5EDCA3AC1F3B71C500329733 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3AB1F3B71C500329733 /* main.cpp */; };
+		5EDCA3C51F3BECB500329733 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3BE1F3BECB500329733 /* libicui18n.a */; };
+		5EDCA3C61F3BECB500329733 /* libicuuc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3BF1F3BECB500329733 /* libicuuc.a */; };
+		5EDCA3C71F3BECB500329733 /* libv8_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C01F3BECB500329733 /* libv8_base.a */; };
+		5EDCA3C81F3BECB500329733 /* libv8_external_snapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C11F3BECB500329733 /* libv8_external_snapshot.a */; };
+		5EDCA3C91F3BECB500329733 /* libv8_libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C21F3BECB500329733 /* libv8_libbase.a */; };
+		5EDCA3CA1F3BECB500329733 /* libv8_libplatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */; };
+		5EDCA3CB1F3BECB500329733 /* libv8_libsampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,8 +32,15 @@
 
 /* Begin PBXFileReference section */
 		5E0523B21F2163660088C9BA /* Game */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E0523B51F2163660088C9BA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5E0523BD1F2163890088C9BA /* libEngine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEngine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/GIGA-garymltzmxmswqecbifgmrbpftaa/Build/Products/Debug/libEngine.dylib"; sourceTree = "<group>"; };
+		5EDCA3AB1F3B71C500329733 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../Game/main.cpp; sourceTree = SOURCE_ROOT; };
+		5EDCA3BE1F3BECB500329733 /* libicui18n.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicui18n.a; path = ../../ThirdParty/v8/lib/libicui18n.a; sourceTree = "<group>"; };
+		5EDCA3BF1F3BECB500329733 /* libicuuc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicuuc.a; path = ../../ThirdParty/v8/lib/libicuuc.a; sourceTree = "<group>"; };
+		5EDCA3C01F3BECB500329733 /* libv8_base.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_base.a; path = ../../ThirdParty/v8/lib/libv8_base.a; sourceTree = "<group>"; };
+		5EDCA3C11F3BECB500329733 /* libv8_external_snapshot.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_external_snapshot.a; path = ../../ThirdParty/v8/lib/libv8_external_snapshot.a; sourceTree = "<group>"; };
+		5EDCA3C21F3BECB500329733 /* libv8_libbase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libbase.a; path = ../../ThirdParty/v8/lib/libv8_libbase.a; sourceTree = "<group>"; };
+		5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libplatform.a; path = ../../ThirdParty/v8/lib/libv8_libplatform.a; sourceTree = "<group>"; };
+		5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libsampler.a; path = ../../ThirdParty/v8/lib/libv8_libsampler.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +48,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EDCA3C51F3BECB500329733 /* libicui18n.a in Frameworks */,
+				5EDCA3C61F3BECB500329733 /* libicuuc.a in Frameworks */,
+				5EDCA3C71F3BECB500329733 /* libv8_base.a in Frameworks */,
+				5EDCA3C81F3BECB500329733 /* libv8_external_snapshot.a in Frameworks */,
+				5EDCA3C91F3BECB500329733 /* libv8_libbase.a in Frameworks */,
+				5EDCA3CA1F3BECB500329733 /* libv8_libplatform.a in Frameworks */,
+				5EDCA3CB1F3BECB500329733 /* libv8_libsampler.a in Frameworks */,
 				5E0523BE1F2163890088C9BA /* libEngine.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +82,7 @@
 		5E0523B41F2163660088C9BA /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				5E0523B51F2163660088C9BA /* main.cpp */,
+				5EDCA3AB1F3B71C500329733 /* main.cpp */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -69,6 +90,13 @@
 		5E0523BC1F2163890088C9BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5EDCA3BE1F3BECB500329733 /* libicui18n.a */,
+				5EDCA3BF1F3BECB500329733 /* libicuuc.a */,
+				5EDCA3C01F3BECB500329733 /* libv8_base.a */,
+				5EDCA3C11F3BECB500329733 /* libv8_external_snapshot.a */,
+				5EDCA3C21F3BECB500329733 /* libv8_libbase.a */,
+				5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */,
+				5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */,
 				5E0523BD1F2163890088C9BA /* libEngine.dylib */,
 			);
 			name = Frameworks;
@@ -132,7 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0523B61F2163660088C9BA /* main.cpp in Sources */,
+				5EDCA3AC1F3B71C500329733 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +267,7 @@
 					../../Engine/,
 					"../../ThirdParty/**",
 				);
+				LIBRARY_SEARCH_PATHS = "../../ThirdParty/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -251,6 +280,7 @@
 					../../Engine/,
 					"../../ThirdParty/**",
 				);
+				LIBRARY_SEARCH_PATHS = "../../ThirdParty/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

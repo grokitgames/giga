@@ -59,7 +59,7 @@ void Application::Initialize() {
     
     resourceSystem->RegisterResourceType<Script>("Script");
     resourceSystem->RegisterResourceType<Mesh>("Mesh");
-    resourceSystem->RegisterResourceType<Texture2D>("Texture2D");
+    // resourceSystem->RegisterResourceType<Texture2D>("Texture2D");
     resourceSystem->RegisterResourceType<Shader>("Shader");
     
     Application::Log(MSGTYPE_DEBUG, "Registered resource types...");
@@ -129,18 +129,6 @@ void Application::Initialize() {
     
     scriptingSystem->RegisterScriptableObjectType<InputSystem>(inputSystemType);
     
-    // Keyboard
-    ScriptableObjectType* keyboardType = new ScriptableObjectType("Keyboard");
-    keyboardType->AddObjectFunction("GetButtonState", &Keyboard::GetButtonState);
-    
-    scriptingSystem->RegisterScriptableObjectType<Keyboard>(keyboardType);
-    
-    // Keyboard event data
-    ScriptableObjectType* keyboardEventType = new ScriptableObjectType("KeyboardEventData");
-    keyboardEventType->AddObjectVariable("key", &KeyboardEventData::GetKey, 0);
-    
-    scriptingSystem->RegisterScriptableObjectType<KeyboardEventData>(keyboardEventType);
-    
     // Device types
     scriptingSystem->RegisterGlobal("INPUTDEVICE_KEYBOARD", new Variant(INPUTDEVICE_KEYBOARD));
     scriptingSystem->RegisterGlobal("INPUTDEVICE_MOUSE", new Variant(INPUTDEVICE_MOUSE));
@@ -181,14 +169,6 @@ void Application::Initialize() {
     /**
      * Rendering
      */
-    
-    // Render system
-    ScriptableObjectType* renderSystemType = new ScriptableObjectType("RenderSystem");
-    renderSystemType->SetStatic(true);
-    renderSystemType->AddStaticFunction("GetWindowWidth", &RenderSystem::GetWindowWidth);
-    renderSystemType->AddStaticFunction("GetWindowHeight", &RenderSystem::GetWindowHeight);
-    
-    scriptingSystem->RegisterScriptableObjectType<RenderSystem>(renderSystemType);
     
     // Transform
     ScriptableObjectType* transformType = new ScriptableObjectType("Transform");

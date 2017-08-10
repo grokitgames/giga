@@ -2,28 +2,36 @@
 #ifndef framebuffer_hpp
 #define framebuffer_hpp
 
+extern int FRAMEBUFFER_SLOT_0;
+extern int FRAMEBUFFER_SLOT_1;
+extern int FRAMEBUFFER_SLOT_2;
+extern int FRAMEBUFFER_SLOT_3;
+extern int FRAMEBUFFER_SLOT_4;
+extern int FRAMEBUFFER_SLOT_5;
+extern int FRAMEBUFFER_SLOT_DEPTH;
+
 /**
  * Single framebuffer object to which multiple render targets can be attached
  */
 class GIGA_API Framebuffer {
 public:
     Framebuffer();
-    ~Framebuffer();
+    virtual ~Framebuffer();
     
     /**
      * Initialize (will detroy any existing framebuffer and textures)
      */
-    void Initialize(int width, int height);
+    virtual void Initialize(int width, int height) { }
     
     /**
      * Attach a texture to our framebuffer
      */
-    void AddTexture(Texture2D* texture, int type);
+    virtual void AddTexture(Texture2D* texture, int type) { }
     
     /**
      * Set a texture to a specific slot (one-time, not permanent)
      */
-    void SetTexture(Texture2D* texture, int type);
+    virtual void SetTexture(Texture2D* texture, int type) { }
     
     /** 
      * Get a texture back out
@@ -33,7 +41,7 @@ public:
     /**
      * Use this framebuffer for rendering/output
      */
-    void Use();
+    virtual void Use() { }
     
     /**
      * Getters
@@ -47,9 +55,6 @@ protected:
     
     // The color/output slots this framebuffer draws to
     std::vector<unsigned int> m_slots;
-    
-    // Our internal framebuffer ID
-    unsigned int m_framebuffer;
     
     // Whether this framebuffer has been checked for completeness
     bool m_complete;

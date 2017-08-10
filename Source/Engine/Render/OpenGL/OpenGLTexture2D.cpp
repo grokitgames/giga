@@ -1,9 +1,9 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 #include <SOIL.h>
 
-void Texture2D::Initialize(int width, int height, int format, int type) {
+void OpenGLTexture2D::Initialize(int width, int height, int format, int type) {
     if (m_texture) {
         GL_CHECK(glDeleteTextures(1, &m_texture));
         m_texture = 0;
@@ -36,19 +36,26 @@ void Texture2D::Initialize(int width, int height, int format, int type) {
     GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 }
 
-void Texture2D::Bind(int slot) {
+void OpenGLTexture2D::SetData(int width, int height, int format, int type, void* data) {
+    GL_CHECK(glActiveTexture(GL_TEXTURE0));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_texture));
+    GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, type, GL_FLOAT, data));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+void OpenGLTexture2D::Bind(int slot) {
     GL_CHECK(glActiveTexture(GL_TEXTURE0 + slot));
     GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_texture));
     m_slot = slot;
 }
 
-void Texture2D::Unbind() {
+void OpenGLTexture2D::Unbind() {
     GL_CHECK(glActiveTexture(GL_TEXTURE0 + m_slot));
     GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
 
-void Texture2D::ProcessData() {
+void OpenGLTexture2D::ProcessData() {
     int flags = SOIL_FLAG_MIPMAPS;
     std::string extension = m_resource->GetExtension();
     if(extension == "bmp" || extension == "png") {
@@ -81,7 +88,7 @@ void Texture2D::ProcessData() {
     }
 }
 
-void Texture2D::Save(std::string filename) {
+void OpenGLTexture2D::Save(std::string filename) {
     // Dump out normal texture
     glBindTexture(GL_TEXTURE_2D, m_texture);
     float* pixels = (float*)malloc(m_width * m_height * sizeof(float) * 3);

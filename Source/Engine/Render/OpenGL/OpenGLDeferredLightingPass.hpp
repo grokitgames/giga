@@ -1,14 +1,14 @@
 
-#ifndef deferredlightingpass_hpp
-#define deferredlightingpass_hpp
+#ifndef opengldeferredlightingpass_hpp
+#define opengldeferredlightingpass_hpp
 
 /**
  * Built-in deferred lighting pass (one pass per light)
  */
-class GIGA_API DeferredLightingPass : public PostProcessPass {
+class GIGA_API OpenGLDeferredLightingPass : public PostProcessPass {
 public:
-    DeferredLightingPass() = default;
-    ~DeferredLightingPass() = default;
+    OpenGLDeferredLightingPass() = default;
+    ~OpenGLDeferredLightingPass() = default;
     
     /**
      * Initialize

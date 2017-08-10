@@ -1,6 +1,5 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
 
 PostProcessPass::PostProcessPass() {
     m_format = 0;
@@ -28,8 +27,11 @@ void PostProcessPass::CreateVertexFormat(int windowWidth, int windowHeight) {
     m_format = new VertexFormat();
     m_format->Bind();
     
+    // Get render system
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
+    
     // Set up vertex buffer
-    m_buffer = new VertexBuffer();
+    m_buffer = renderSystem->CreateVertexBuffer();
     m_buffer->Create(4, 4, box, false);
     
     m_format->AddVertexAttribute(VERTEX_ATTRIB_POSITION, 2, 4, 0);
@@ -37,13 +39,14 @@ void PostProcessPass::CreateVertexFormat(int windowWidth, int windowHeight) {
 }
 
 void PostProcessPass::Initialize(int windowWidth, int windowHeight) {
-    Framebuffer* framebuffer = new Framebuffer();
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
+    Framebuffer* framebuffer = renderSystem->CreateFramebuffer();
     framebuffer->Initialize(windowWidth, windowHeight);
     
     // Create our textures
-    Texture2D* texture = new Texture2D();
-    texture->Initialize(windowWidth, windowHeight, GL_RGB16F, GL_RGB);
-    framebuffer->AddTexture(texture, GL_COLOR_ATTACHMENT0);
+    Texture2D* texture = renderSystem->CreateTexture2D();
+    texture->Initialize(windowWidth, windowHeight, COLOR_RGB16F, COLOR_RGB);
+    framebuffer->AddTexture(texture, FRAMEBUFFER_SLOT_0);
     
     m_framebuffers.push_back(framebuffer);
     

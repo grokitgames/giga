@@ -1,17 +1,17 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 
-IndexBuffer::IndexBuffer() {
+OpenGLIndexBuffer::OpenGLIndexBuffer() {
     m_count = 0;
     m_buffer = 0;
 }
 
-IndexBuffer::~IndexBuffer() {
+OpenGLIndexBuffer::~OpenGLIndexBuffer() {
     
 }
 
-void IndexBuffer::Create(int count, void *data) {
+void OpenGLIndexBuffer::Create(int count, void *data) {
     m_count = count;
     
     GL_CHECK(glGenBuffers(1, &m_buffer));
@@ -19,7 +19,7 @@ void IndexBuffer::Create(int count, void *data) {
     GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * m_count, data, GL_STATIC_DRAW));
 }
 
-void IndexBuffer::Destroy() {
+void OpenGLIndexBuffer::Destroy() {
     if (m_buffer) {
         GL_CHECK(glDeleteBuffers(1, &m_buffer));
         m_buffer = 0;
@@ -27,11 +27,11 @@ void IndexBuffer::Destroy() {
     }
 }
 
-void IndexBuffer::Use() {
+void OpenGLIndexBuffer::Use() {
     GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_buffer));
 }
 
-uint32_t* IndexBuffer::GetData(int& count) {
+uint32_t* OpenGLIndexBuffer::GetData(int& count) {
     uint32_t* indices = (uint32_t*)malloc(sizeof(uint32_t) * m_count);
     GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_buffer));
     

@@ -99,9 +99,10 @@ typedef glm::mat4 matrix4;
 #include <Scripting/Script.hpp>
 #include <Scripting/ScriptComponent.hpp>
 #include <Scripting/ScriptingSystem.hpp>
+#include <Render/Color.hpp>
 #include <Render/VertexBuffer.hpp>
 #include <Render/IndexBuffer.hpp>
-#include <Render/VertexAttribObject.hpp>
+#include <Render/VertexAttributes.hpp>
 #include <Render/VertexFormat.hpp>
 #include <Render/BoundingBox.hpp>
 #include <Render/Texture.hpp>
@@ -132,10 +133,7 @@ typedef glm::mat4 matrix4;
 #include <Render/Scene.hpp>
 #include <Render/Framebuffer.hpp>
 #include <Render/RenderPass.hpp>
-#include <Render/GBufferPass.hpp>
 #include <Render/PostProcessPass.hpp>
-#include <Render/DeferredRenderPass.hpp>
-#include <Render/DeferredLightingPass.hpp>
 #include <Render/RenderSystem.hpp>
 #include <Network/UDPSocket.hpp>
 #include <Network/Socket.hpp>
@@ -148,5 +146,18 @@ typedef glm::mat4 matrix4;
 #include <Network/ReplicationSystem.hpp>
 #include <Network/Messages/EntitySnapshotMessage.hpp>
 #include <Core/Application.hpp>
+
+#include <Render/OpenGL/OpenGLVertexBuffer.hpp>
+#include <Render/OpenGL/OpenGLIndexBuffer.hpp>
+#include <Render/OpenGL/OpenGLVertexAttributes.hpp>
+#include <Render/OpenGL/OpenGLTexture.hpp>
+#include <Render/OpenGL/OpenGLTexture2D.hpp>
+#include <Render/OpenGL/OpenGLTexture3D.hpp>
+#include <Render/OpenGL/OpenGLShaderVariation.hpp>
+#include <Render/OpenGL/OpenGLFramebuffer.hpp>
+#include <Render/OpenGL/OpenGLGBufferPass.hpp>
+#include <Render/OpenGL/OpenGLDeferredRenderPass.hpp>
+#include <Render/OpenGL/OpenGLDeferredLightingPass.hpp>
+#include <Render/OpenGL/OpenGLRenderSystem.hpp>
 
 #endif

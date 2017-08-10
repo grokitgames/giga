@@ -1,11 +1,11 @@
 
-#ifndef gbufferpass_hpp
-#define gbufferpass_hpp
+#ifndef openglgbufferpass_hpp
+#define openglgbufferpass_hpp
 
-class GIGA_API GBufferPass : public RenderPass {
+class GIGA_API OpenGLGBufferPass : public RenderPass {
 public:
-    GBufferPass() = default;
-    ~GBufferPass() = default;
+    OpenGLGBufferPass() = default;
+    ~OpenGLGBufferPass() = default;
     
     /**
      * Initialize Gbuffer

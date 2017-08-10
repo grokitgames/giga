@@ -113,6 +113,7 @@ void Mesh::ProcessData() {
     // Get a link to our resource and material systems
     ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
     MaterialSystem* materialSystem = GetSystem<MaterialSystem>();
+    RenderSystem* renderSystem = GetSystem<RenderSystem>();
     
     // Get the file data and file size
     unsigned char* data = m_resource->GetData();
@@ -179,7 +180,7 @@ void Mesh::ProcessData() {
                 reader->Read(&numTextures, sizeof(uint32_t));
                 
                 for(uint32_t j = 0; j < numTextures; j++) {
-                    Texture2D* texture = new Texture2D();
+                    Texture2D* texture = renderSystem->CreateTexture2D();
                     
                     // Texture type - diffuse only for now
                     uint32_t textureType = 0;
@@ -231,7 +232,7 @@ void Mesh::ProcessData() {
                 reader->Read((unsigned char*)vertexData, sizeof(float) * vertexCount * vertexSize);
                 
                 // Create vertex buffer
-                child->m_vertexBuffer = new VertexBuffer();
+                child->m_vertexBuffer = renderSystem->CreateVertexBuffer();
                 child->m_vertexBuffer->Create(vertexCount, vertexSize, vertexData, false);
                 
                 if (vertexFormat & VERTEX_HAS_POSITION) {
@@ -289,7 +290,7 @@ void Mesh::ProcessData() {
                 reader->Read((unsigned char*)indexData, sizeof(uint32_t) * indexCount);
                 
                 // Create index buffer
-                child->m_indexBuffer = new IndexBuffer();
+                child->m_indexBuffer = renderSystem->CreateIndexBuffer();
                 child->m_indexBuffer->Create(indexCount, indexData);
                 
                 child->m_vertexFormat->DisableVertexAttribs();

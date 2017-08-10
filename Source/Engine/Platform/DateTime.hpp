@@ -22,7 +22,7 @@ public:
     /**
      * Get timestamp
      */
-    time_t GetTimestamp();
+    uint64_t GetTimestamp();
     
     /**
      * Get pieces

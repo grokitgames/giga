@@ -1,29 +1,29 @@
 
-#ifndef vertexbuffer_hpp
-#define vertexbuffer_hpp
+#ifndef vertexbuffer_h
+#define vertexbuffer_h
 
 /**
  * GPU vertex buffer
  */
 class GIGA_API VertexBuffer {
 public:
-    VertexBuffer();
-    ~VertexBuffer();
+    VertexBuffer() : m_count(0), m_vertexSize(0), m_dynamic(false) { }
+    virtual ~VertexBuffer() = default;
     
     /**
      * Create the buffer
      */
-    void Create(int count, int vertexSize, void* data, bool dynamic);
+    virtual void Create(int count, int vertexSize, void* data, bool dynamic) { }
     
     /**
      * Set new data (ideally for streaming buffers - full replace)
      */
-    void SetData(void* data);
+    virtual void SetData(void* data) { }
     
     /**
      * Read the buffer's contents back out
      */
-    float* GetData(int& count);
+    virtual float* GetData(int& count) { assert(false); return(0); }
     
     /**
      * Get the number of vertices inside the buffer
@@ -38,24 +38,21 @@ public:
     /**
      * Use this vertex buffer for rendering
      */
-    void Bind();
+    virtual void Bind() { }
     
     /**
      * Finish using this vertex buffer
      */
-    void Unbind();
+    virtual void Unbind() { }
     
     /**
      * Destroy the buffer
      */
-    void Destroy();
+    virtual void Destroy() { }
     
 protected:
     // Count of vertices stored in buffer
     int m_count;
-    
-    // Internal buffer ID
-    unsigned int m_buffer;
     
     // Size of each vertex
     int m_vertexSize;
@@ -63,5 +60,6 @@ protected:
     // Whether this buffer is streaming or static
     bool m_dynamic;
 };
+
 
 #endif

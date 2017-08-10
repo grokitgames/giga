@@ -1,19 +1,19 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 
-VertexBuffer::VertexBuffer() {
+OpenGLVertexBuffer::OpenGLVertexBuffer() {
     m_count = 0;
     m_buffer = 0;
     m_vertexSize = 0;
     m_dynamic = false;
 }
 
-VertexBuffer::~VertexBuffer() {
+OpenGLVertexBuffer::~OpenGLVertexBuffer() {
     
 }
 
-void VertexBuffer::Create(int count, int vertexSize, void *data, bool dynamic) {
+void OpenGLVertexBuffer::Create(int count, int vertexSize, void *data, bool dynamic) {
     m_count = count;
     m_vertexSize = vertexSize;
     m_dynamic = dynamic;
@@ -24,12 +24,12 @@ void VertexBuffer::Create(int count, int vertexSize, void *data, bool dynamic) {
                           dynamic ? GL_STREAM_DRAW : GL_STATIC_DRAW));
 }
 
-void VertexBuffer::SetData(void* data) {
+void OpenGLVertexBuffer::SetData(void* data) {
     GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_buffer));
     GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * m_vertexSize * m_count, data));
 }
 
-void VertexBuffer::Destroy() {
+void OpenGLVertexBuffer::Destroy() {
     if (m_buffer) {
         GL_CHECK(glDeleteBuffers(1, &m_buffer));
         m_buffer = 0;
@@ -38,18 +38,18 @@ void VertexBuffer::Destroy() {
     }
 }
 
-void VertexBuffer::Bind() {
+void OpenGLVertexBuffer::Bind() {
     GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, m_buffer));
     
     int size = 0;
     GL_CHECK(glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &size));
 }
 
-void VertexBuffer::Unbind() {
+void OpenGLVertexBuffer::Unbind() {
     GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
-float* VertexBuffer::GetData(int &count) {
+float* OpenGLVertexBuffer::GetData(int &count) {
     std::vector<float> vertices;
     vertices.resize(m_count * m_vertexSize);
     

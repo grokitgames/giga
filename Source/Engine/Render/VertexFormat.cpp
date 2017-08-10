@@ -1,6 +1,5 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
 
 VertexFormat::VertexFormat() {
     m_vertexArrayObject = 0;
@@ -18,7 +17,7 @@ void VertexFormat::EnableVertexAttribs(int attribs) {
     for (i; i != m_attribs.end(); i++) {
         VertexAttrib* attrib = (*i);
         if (attrib->index == attribs) {
-            m_vertexArrayObject->EnableVertexAttribute(attrib->index, attrib->components, attrib->stride, attrib->offset);
+            m_vertexArrayObject->EnableAttribute(attrib->index, attrib->components, attrib->stride, attrib->offset);
             break;
         }
     }
@@ -26,7 +25,9 @@ void VertexFormat::EnableVertexAttribs(int attribs) {
 
 void VertexFormat::Bind() {
     if (m_vertexArrayObject == 0) {
-        m_vertexArrayObject = new VertexAttribObject();
+        RenderSystem* renderSystem = GetSystem<RenderSystem>();
+        
+        m_vertexArrayObject = renderSystem->CreateVertexAttributes();
         m_vertexArrayObject->Create();
     }
     m_vertexArrayObject->Bind();
@@ -34,10 +35,10 @@ void VertexFormat::Bind() {
 
 void VertexFormat::DisableVertexAttribs() {
     for (int i = 0; i < VERTEX_ATTRIB_LAST; i++) {
-        m_vertexArrayObject->DisableVertexAttribute(i);
+        m_vertexArrayObject->DisableAttribute(i);
     }
     
-    GL_CHECK(glBindVertexArray(0));
+    m_vertexArrayObject->Unbind();
 }
 
 void VertexFormat::AddVertexAttribute(int index, int components, int stride, int offset) {

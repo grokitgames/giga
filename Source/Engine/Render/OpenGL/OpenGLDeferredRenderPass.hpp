@@ -1,14 +1,14 @@
 
-#ifndef deferredrenderpass_hpp
-#define deferredrenderpass_hpp
+#ifndef opengldeferredrenderpass_hpp
+#define opengldeferredrenderpass_hpp
 
 /**
  * Built-in deferred rendering pass (combination of previous g-buffer pass + lighting)
  */
-class GIGA_API DeferredRenderPass : public PostProcessPass {
+class GIGA_API OpenGLDeferredRenderPass : public PostProcessPass {
 public:
-    DeferredRenderPass() = default;
-    ~DeferredRenderPass() = default;
+    OpenGLDeferredRenderPass() = default;
+    ~OpenGLDeferredRenderPass() = default;
     
     /**
      * Set textures

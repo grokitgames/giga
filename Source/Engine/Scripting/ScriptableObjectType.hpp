@@ -142,7 +142,10 @@ public:
     
     // Set the constructor for this type back to a C++ object
     template<class T> void SetConstructor() {
-        m_createFunction = &CreateObject<T>;
+        if(m_static)
+            m_createFunction = 0;
+        else
+            m_createFunction = &CreateObject<T>;
     }
     
     /**

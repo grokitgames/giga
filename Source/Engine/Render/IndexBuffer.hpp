@@ -1,19 +1,19 @@
 
-#ifndef indexbuffer_hpp
-#define indexbuffer_hpp
+#ifndef indexBuffer_h
+#define indexBuffer_h
 
 /**
  * GPU index buffer
  */
 class GIGA_API IndexBuffer {
 public:
-    IndexBuffer();
-    ~IndexBuffer();
+    IndexBuffer() : m_count(0) { }
+    virtual ~IndexBuffer() = default;
     
     /**
      * Create a new buffer and fill it
      */
-    void Create(int count, void* data);
+    virtual void Create(int count, void* data) { }
     
     /**
      * Get the count of indices in this buffer
@@ -23,24 +23,21 @@ public:
     /**
      * Use this index buffer
      */
-    void Use();
+    virtual void Use() { }
     
     /**
      * Destroy this buffer's contents
      */
-    void Destroy();
+    virtual void Destroy() { }
     
     /**
      * Read the buffer's contents
      */
-    unsigned int* GetData(int& count);
+    virtual unsigned int* GetData(int& count) = 0;
     
 protected:
     // Count of indices
     int m_count;
-    
-    // Internal buffer ID
-    unsigned int m_buffer;
 };
 
-#endif
+#endif 

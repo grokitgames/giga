@@ -16,7 +16,7 @@ void StartApplication() {
     InputSystem* inputSystem = application->CreateSystem<InputSystem>();
     ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
     ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
-    RenderSystem* renderSystem = application->CreateSystem<RenderSystem>();
+    OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
     MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
     NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
     
@@ -78,6 +78,7 @@ void StartApplication() {
     // Create keyboard
     Keyboard* keyboard = new Keyboard();
     keyboard->Initialize();
+    
     inputSystem->RegisterInputDevice(keyboard);
     
     // Create main loop timer

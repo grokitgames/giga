@@ -50,7 +50,7 @@ protected:
     std::vector<VertexAttrib*> m_attribs;
     
     // Vertex array object (GL3+ state for buffers)
-    VertexAttribObject* m_vertexArrayObject;
+    VertexAttributes* m_vertexArrayObject;
 };
 
 #endif

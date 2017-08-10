@@ -1,8 +1,8 @@
 
 #include <giga-engine.h>
-#include <Render/OpenGL.hpp>
+#include <Render/OpenGL/OpenGL.hpp>
 
-void Texture3D::Initialize(int width, int height, int format, int type) {
+void OpenGLTexture3D::Initialize(int width, int height, int format, int type) {
     if (m_texture) {
         GL_CHECK(glDeleteTextures(1, &m_texture));
         m_texture = 0;
@@ -27,7 +27,7 @@ void Texture3D::Initialize(int width, int height, int format, int type) {
         default:
             break;
     };
-
+    
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture));
     
     for (unsigned int i = 0; i < 6; ++i) {
@@ -44,10 +44,10 @@ void Texture3D::Initialize(int width, int height, int format, int type) {
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }
 
-void Texture3D::Bind(int slot) {
+void OpenGLTexture3D::Bind(int slot) {
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture));
 }
 
-void Texture3D::Unbind() {
+void OpenGLTexture3D::Unbind() {
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }

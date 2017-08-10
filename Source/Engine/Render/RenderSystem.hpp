@@ -8,19 +8,19 @@
 class GIGA_API RenderSystem : public System {
 public:
     RenderSystem();
-    ~RenderSystem() = default;
+    virtual ~RenderSystem() = default;
     
     GIGA_CLASS_NAME("RenderSystem")
     
     /**
      * Initialize with width/height
      */
-    void Initialize(int width, int height);
+    virtual void Initialize(int width, int height) { }
     
     /**
      * Update (render)
      */
-    void Update(float delta);
+    virtual void Update(float delta) { }
     
     /**
      * Add or remove a post-process filter
@@ -52,6 +52,17 @@ public:
     static void RemoveSpotLightComponent(Component* component);
     
     /**
+     * Create objects
+     */
+    virtual VertexBuffer* CreateVertexBuffer() { assert(false); }
+    virtual IndexBuffer* CreateIndexBuffer() { assert(false); }
+    virtual VertexAttributes* CreateVertexAttributes() { assert(false); }
+    virtual Texture2D* CreateTexture2D() { assert(false); }
+    virtual Texture3D* CreateTexture3D() { assert(false); }
+    virtual ShaderVariation* CreateShaderVariation() { assert(false); }
+    virtual Framebuffer* CreateFramebuffer() { assert(false); }
+    
+    /**
      * Scripting integration
      */
     static Variant* GetWindowWidth(Variant* obj, int argc, Variant** argv);
@@ -63,14 +74,6 @@ protected:
     
     // Current scene
     Scene* m_scene;
-    
-    // Orthographic projection (for deferred rendering/post-processing)
-    matrix4 m_ortho;
-    
-    // Built-in system passes
-    GBufferPass* m_gbufferPass;
-    DeferredRenderPass* m_deferredPass;
-    DeferredLightingPass* m_lightingPass;
     
     // Render passes
     ObjectPool<RenderPass> m_passes;

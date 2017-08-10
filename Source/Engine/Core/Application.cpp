@@ -59,7 +59,6 @@ void Application::Initialize() {
     
     resourceSystem->RegisterResourceType<Script>("Script");
     resourceSystem->RegisterResourceType<Mesh>("Mesh");
-    // resourceSystem->RegisterResourceType<Texture2D>("Texture2D");
     resourceSystem->RegisterResourceType<Shader>("Shader");
     
     Application::Log(MSGTYPE_DEBUG, "Registered resource types...");

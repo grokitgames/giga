@@ -18,8 +18,8 @@ void MemoryReader::Initialize(unsigned char* block, int bytes) {
 void MemoryReader::Read(void* ptr, int bytes) {
     GIGA_ASSERT(m_offset + bytes <= m_size, "Overflow error.");
     
-    ptr = m_current;
-    // memcpy(ptr, m_current, bytes);
+    //ptr = m_current;
+    memcpy(ptr, m_current, bytes);
     m_current += bytes;
     m_offset += bytes;
 }

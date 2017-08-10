@@ -59,6 +59,12 @@ void OpenGLRenderSystem::Initialize(int width, int height) {
     Application::Log(MSGTYPE_INFO, "GLSL Version", (char*)glsl);
     
     /**
+     * OpenGL specific component types
+     */
+    ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+    resourceSystem->RegisterResourceType<OpenGLTexture2D>("Texture2D");
+    
+    /**
      * Scripting integration
      */
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();

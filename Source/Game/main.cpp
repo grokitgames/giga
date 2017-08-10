@@ -58,15 +58,21 @@ void StartApplication() {
 
     // Create a camera
     CameraComponent* cc = dynamic_cast<CameraComponent*>(Component::CreateComponent("CameraComponent"));
+    camera->AddComponent(cc);
+    
     cc->SetViewport(width, height);
     cc->SetWorldPosition(vector3(0, 1.25, 3));
     cc->SetLookVector(vector3(0, -0.1, -1.0));
-    camera->AddComponent(cc);
     
     // Set camera as active
     Scene* scene = renderSystem->GetScene();
     scene->SetActiveCamera(cc);
     scene->SetAmbientLight(vector3(1, 1, 1));
+    
+    // Create keyboard
+    Keyboard* keyboard = new Keyboard();
+    keyboard->Initialize();
+    inputSystem->RegisterInputDevice(keyboard);
     
     // Add script to camera
     ScriptComponent* sc = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
@@ -74,12 +80,6 @@ void StartApplication() {
     sc->Initialize(inputjs);
     
     camera->AddComponent(sc);
-    
-    // Create keyboard
-    Keyboard* keyboard = new Keyboard();
-    keyboard->Initialize();
-    
-    inputSystem->RegisterInputDevice(keyboard);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

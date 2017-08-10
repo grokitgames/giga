@@ -109,7 +109,7 @@ void ScriptingSystem::Update(float delta) {
 Component* ScriptingSystem::CreateScriptComponent() {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     
-    ScriptComponent* script = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
+    ScriptComponent* script = new ScriptComponent();
     scriptingSystem->m_scripts.AddObject(script);
     return(script);
 }

@@ -31,6 +31,9 @@
     <Filter Include="Network\Messages">
       <UniqueIdentifier>{330c4b7d-8a07-4ef9-8a22-cdcd5ca2840d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render\OpenGL">
+      <UniqueIdentifier>{e23028f9-0381-4666-8813-fef9a97cebf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp">
@@ -136,6 +139,45 @@
     <ClInclude Include="..\..\Engine\Platform\Window.hpp">
       <Filter>Platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\Script.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObject.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectType.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableVariant.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptComponent.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptingSystem.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\Resource.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\ResourceObject.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Resource\ResourceSystem.hpp">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Win32UDPSocket.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Animation.hpp">
       <Filter>Render</Filter>
     </ClInclude>
@@ -157,19 +199,13 @@
     <ClInclude Include="..\..\Engine\Render\CameraComponent.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\DeferredLightingPass.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\DeferredRenderPass.hpp">
+    <ClInclude Include="..\..\Engine\Render\Color.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Framebuffer.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Frustum.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\GBufferPass.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\IndexBuffer.hpp">
@@ -185,9 +221,6 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Mesh.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\OpenGL.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Plane.hpp">
@@ -244,7 +277,7 @@
     <ClInclude Include="..\..\Engine\Render\Vector3.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\VertexAttribObject.hpp">
+    <ClInclude Include="..\..\Engine\Render\VertexAttributes.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\VertexBuffer.hpp">
@@ -253,44 +286,44 @@
     <ClInclude Include="..\..\Engine\Render\VertexFormat.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scripting\Script.hpp">
-      <Filter>Scripting</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGL.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scripting\ScriptableObject.hpp">
-      <Filter>Scripting</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLDeferredLightingPass.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectType.hpp">
-      <Filter>Scripting</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLDeferredRenderPass.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scripting\ScriptableVariant.hpp">
-      <Filter>Scripting</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLFramebuffer.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scripting\ScriptComponent.hpp">
-      <Filter>Scripting</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLGBufferPass.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Scripting\ScriptingSystem.hpp">
-      <Filter>Scripting</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLIndexBuffer.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Resource\Resource.hpp">
-      <Filter>Resource</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLRenderSystem.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Resource\ResourceObject.hpp">
-      <Filter>Resource</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLShaderVariation.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Resource\ResourceSystem.hpp">
-      <Filter>Resource</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLTexture.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Network\Win32UDPSocket.hpp">
-      <Filter>Network</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLTexture2D.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp">
-      <Filter>Network\Messages</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLTexture3D.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp">
-      <Filter>Network\Messages</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLVertexAttributes.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.hpp">
-      <Filter>Network\Messages</Filter>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLVertexBuffer.hpp">
+      <Filter>Render\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +411,48 @@
     <ClCompile Include="..\..\Engine\Platform\Window.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\Script.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObject.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectType.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableVariant.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\ResourceObject.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Win23UDPSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\glew\src\glew.c">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Engine\Render\Animation.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -390,28 +465,13 @@
     <ClCompile Include="..\..\Engine\Render\CameraComponent.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\DeferredLightingPass.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\DeferredRenderPass.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Render\Framebuffer.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Render\Frustum.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\GBufferPass.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\IndexBuffer.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Render\LightComponent.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\Material.cpp">
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Render\MaterialSystem.cpp">
@@ -456,15 +516,6 @@
     <ClCompile Include="..\..\Engine\Render\StaticMeshComponent.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\Texture.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\Texture2D.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\Texture3D.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Render\Transform.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -474,56 +525,47 @@
     <ClCompile Include="..\..\Engine\Render\Vector3.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\VertexAttribObject.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\VertexBuffer.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Render\VertexFormat.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Scripting\Script.cpp">
-      <Filter>Scripting</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLColor.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Scripting\ScriptableObject.cpp">
-      <Filter>Scripting</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLDeferredLightingPass.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectType.cpp">
-      <Filter>Scripting</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLDeferredRenderPass.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Scripting\ScriptableVariant.cpp">
-      <Filter>Scripting</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLFramebuffer.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp">
-      <Filter>Scripting</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLGBufferPass.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp">
-      <Filter>Scripting</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLIndexBuffer.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Resource\Resource.cpp">
-      <Filter>Resource</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLRenderSystem.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Resource\ResourceObject.cpp">
-      <Filter>Resource</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLShaderVariation.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp">
-      <Filter>Resource</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLTexture.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Network\Win23UDPSocket.cpp">
-      <Filter>Network</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLTexture2D.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ThirdParty\glew\src\glew.c">
-      <Filter>External</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLTexture3D.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp">
-      <Filter>Network\Messages</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLVertexAttributes.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp">
-      <Filter>Network\Messages</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.cpp">
-      <Filter>Network\Messages</Filter>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLVertexBuffer.cpp">
+      <Filter>Render\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

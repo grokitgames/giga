@@ -39,7 +39,7 @@ public:
     T* CreateSystem() {
         T* obj = new T();
         System* sys = dynamic_cast<System*>(obj);
-        GIGA_ASSERT(sys != 0, "Class must be inherited from system type.");
+        GIGA_ASSERT(sys != 0, "Class must be inherited from System type.");
         
         for(size_t i = 0; i < m_systems.size(); i++) {
             if(m_systems[i]->GetGigaName() == sys->GetGigaName()) {
@@ -49,6 +49,25 @@ public:
         
         sys->Initialize();
         m_systems.push_back(sys);
+        return(obj);
+    }
+    
+    /**
+     * Register a new data loader
+     */
+    template<class T>
+    T* CreateDataLoader() {
+        T* obj = new T();
+        DataLoader* loader = dynamic_cast<DataLoader*>(obj);
+        GIGA_ASSERT(loader != 0, "Class must be inherited from DataLoader type.");
+        
+        for(size_t i = 0; i < m_loaders.size(); i++) {
+            if(m_loaders[i]->GetGigaName() == loader->GetGigaName()) {
+                GIGA_ASSERT(false, "System type already registed.");
+            }
+        }
+        
+        m_loaders.push_back(loader);
         return(obj);
     }
     
@@ -63,12 +82,27 @@ public:
     std::vector<System*>& GetSystems() { return m_systems; }
     
     /**
-     * Find a specific substance by class type
+     * Find a specific subsystem by class type
      */
     template<class T>
     T* GetSystem() {
         for (size_t i = 0; i < m_systems.size(); i++) {
             T* object = dynamic_cast<T*>(m_systems[i]);
+            if (object) {
+                return(object);
+            }
+        }
+        
+        return(0);
+    }
+    
+    /**
+     * Find a specific data loader by class type
+     */
+    template<class T>
+    T* GetDataLoader() {
+        for (size_t i = 0; i < m_loaders.size(); i++) {
+            T* object = dynamic_cast<T*>(m_loaders[i]);
             if (object) {
                 return(object);
             }
@@ -101,6 +135,9 @@ protected:
     // List of registered sub-systems
     std::vector<System*> m_systems;
     
+    // List of registered data loaders
+    std::vector<DataLoader*> m_loaders;
+    
     // Singleton
     static Application* m_instance;
     
@@ -118,6 +155,12 @@ protected:
 template<class T> T* GetSystem() {
     Application* application = Application::GetInstance();
     return(application->GetSystem<T>());
+}
+
+// Short-hand class to find data loaders in the Application class
+template<class T> T* GetDataLoader() {
+    Application* application = Application::GetInstance();
+    return(application->GetDataLoader<T>());
 }
 
 #endif

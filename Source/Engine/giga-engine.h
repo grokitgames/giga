@@ -63,6 +63,15 @@ typedef glm::mat4 matrix4;
 #include <libplatform/libplatform.h>
 #include <v8.h>
 
+// SQLite
+#define  SQLITE_OMIT_LOAD_EXTENSION
+#include <sqlite3.h>
+#include <sqlite3ext.h>
+
+// MySQL
+#include <my_global.h>
+#include <mysql.h>
+
 // Engine includes
 #include <Core/GigaObject.hpp>
 #include <Core/Variant.hpp>
@@ -89,6 +98,9 @@ typedef glm::mat4 matrix4;
 #include <IO/File.hpp>
 #include <IO/MemoryReader.hpp>
 #include <IO/MemoryWriter.hpp>
+#include <IO/DataLoader.hpp>
+#include <IO/SQLiteDataLoader.hpp>
+#include <IO/MySQLDataLoader.hpp>
 #include <Platform/DateTime.hpp>
 #include <Platform/Window.hpp>
 #include <Platform/Timer.hpp>

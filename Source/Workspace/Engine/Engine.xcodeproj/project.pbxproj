@@ -161,6 +161,14 @@
 		5EDCA3BB1F3BE76600329733 /* libv8_libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFDA11F219857009FA81B /* libv8_libbase.a */; };
 		5EDCA3BC1F3BE76600329733 /* libv8_libplatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFDA21F219857009FA81B /* libv8_libplatform.a */; };
 		5EDCA3BD1F3BE76600329733 /* libv8_libsampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFDA31F219857009FA81B /* libv8_libsampler.a */; };
+		5EDCA3CE1F3DF1E100329733 /* DataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3CC1F3DF1E100329733 /* DataLoader.cpp */; };
+		5EDCA3CF1F3DF1E100329733 /* DataLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3CD1F3DF1E100329733 /* DataLoader.hpp */; };
+		5EDCA3D21F3DF69F00329733 /* SQLiteDataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3D01F3DF69F00329733 /* SQLiteDataLoader.cpp */; };
+		5EDCA3D31F3DF69F00329733 /* SQLiteDataLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3D11F3DF69F00329733 /* SQLiteDataLoader.hpp */; };
+		5EDCA3D81F3DF8BD00329733 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3D71F3DF8BD00329733 /* sqlite3.c */; };
+		5EDCA3DB1F3DF92700329733 /* MySQLDataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3D91F3DF92700329733 /* MySQLDataLoader.cpp */; };
+		5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3DA1F3DF92700329733 /* MySQLDataLoader.hpp */; };
+		5EDCA3DE1F3DFB8300329733 /* libmysqlclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3DD1F3DFB8300329733 /* libmysqlclient.a */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -354,6 +362,15 @@
 		5EDCA3AF1F3BD58600329733 /* libv8_libbase.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libv8_libbase.dylib; path = ../../ThirdParty/v8/lib/libv8_libbase.dylib; sourceTree = "<group>"; };
 		5EDCA3B01F3BD58600329733 /* libv8_libplatform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libv8_libplatform.dylib; path = ../../ThirdParty/v8/lib/libv8_libplatform.dylib; sourceTree = "<group>"; };
 		5EDCA3B11F3BD58600329733 /* libv8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libv8.dylib; path = ../../ThirdParty/v8/lib/libv8.dylib; sourceTree = "<group>"; };
+		5EDCA3CC1F3DF1E100329733 /* DataLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataLoader.cpp; path = ../../Engine/IO/DataLoader.cpp; sourceTree = "<group>"; };
+		5EDCA3CD1F3DF1E100329733 /* DataLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DataLoader.hpp; path = ../../Engine/IO/DataLoader.hpp; sourceTree = "<group>"; };
+		5EDCA3D01F3DF69F00329733 /* SQLiteDataLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SQLiteDataLoader.cpp; path = ../../Engine/IO/SQLiteDataLoader.cpp; sourceTree = "<group>"; };
+		5EDCA3D11F3DF69F00329733 /* SQLiteDataLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SQLiteDataLoader.hpp; path = ../../Engine/IO/SQLiteDataLoader.hpp; sourceTree = "<group>"; };
+		5EDCA3D41F3DF73C00329733 /* sqlite3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../ThirdParty/sqlite/src/sqlite3.c; sourceTree = "<group>"; };
+		5EDCA3D71F3DF8BD00329733 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../ThirdParty/sqlite/src/sqlite3.c; sourceTree = "<group>"; };
+		5EDCA3D91F3DF92700329733 /* MySQLDataLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MySQLDataLoader.cpp; path = ../../Engine/IO/MySQLDataLoader.cpp; sourceTree = "<group>"; };
+		5EDCA3DA1F3DF92700329733 /* MySQLDataLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MySQLDataLoader.hpp; path = ../../Engine/IO/MySQLDataLoader.hpp; sourceTree = "<group>"; };
+		5EDCA3DD1F3DFB8300329733 /* libmysqlclient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmysqlclient.a; path = ../../ThirdParty/mysql/lib/libmysqlclient.a; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -420,6 +437,7 @@
 				5EDCA3BB1F3BE76600329733 /* libv8_libbase.a in Frameworks */,
 				5EDCA3BC1F3BE76600329733 /* libv8_libplatform.a in Frameworks */,
 				5EDCA3BD1F3BE76600329733 /* libv8_libsampler.a in Frameworks */,
+				5EDCA3DE1F3DFB8300329733 /* libmysqlclient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +449,7 @@
 			children = (
 				5E0523841F203B1E0088C9BA /* Audio */,
 				5E0523851F203B220088C9BA /* Core */,
+				5EDCA3D61F3DF74500329733 /* External */,
 				5E0523861F203B320088C9BA /* GUI */,
 				5E0523871F203B360088C9BA /* IO */,
 				5E0523881F203B3E0088C9BA /* Network */,
@@ -502,6 +521,8 @@
 			children = (
 				5E556AA51F23C6CB00F6FB2E /* Command.cpp */,
 				5E556AA61F23C6CB00F6FB2E /* Command.hpp */,
+				5EDCA3CC1F3DF1E100329733 /* DataLoader.cpp */,
+				5EDCA3CD1F3DF1E100329733 /* DataLoader.hpp */,
 				5EFDFDC51F227023009FA81B /* File.cpp */,
 				5EFDFDC61F227023009FA81B /* File.hpp */,
 				5EFDFD861F2194D8009FA81B /* InputDevice.cpp */,
@@ -514,8 +535,12 @@
 				5E556B001F295A4200F6FB2E /* MemoryReader.hpp */,
 				5E6C65C61F354C030089FD55 /* MemoryWriter.cpp */,
 				5E6C65C71F354C030089FD55 /* MemoryWriter.hpp */,
+				5EDCA3D91F3DF92700329733 /* MySQLDataLoader.cpp */,
+				5EDCA3DA1F3DF92700329733 /* MySQLDataLoader.hpp */,
 				5E6C65581F2D62D00089FD55 /* Profiler.cpp */,
 				5E6C65591F2D62D00089FD55 /* Profiler.hpp */,
+				5EDCA3D01F3DF69F00329733 /* SQLiteDataLoader.cpp */,
+				5EDCA3D11F3DF69F00329733 /* SQLiteDataLoader.hpp */,
 				5E6C65BD1F3548150089FD55 /* StorableObjectField.hpp */,
 				5E6C65BE1F3548F90089FD55 /* StorableObject.cpp */,
 				5E6C65BF1F3548F90089FD55 /* StorableObject.hpp */,
@@ -696,9 +721,19 @@
 			name = OpenGL;
 			sourceTree = "<group>";
 		};
+		5EDCA3D61F3DF74500329733 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				5EDCA3D71F3DF8BD00329733 /* sqlite3.c */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
 		5EFDFD8A1F2195D6009FA81B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5EDCA3DD1F3DFB8300329733 /* libmysqlclient.a */,
+				5EDCA3D41F3DF73C00329733 /* sqlite3.c */,
 				5EDCA3AD1F3BD58600329733 /* libicui18n.dylib */,
 				5EDCA3AE1F3BD58600329733 /* libicuuc.dylib */,
 				5EDCA3AF1F3BD58600329733 /* libv8_libbase.dylib */,
@@ -768,6 +803,8 @@
 				5E6C65C51F3549220089FD55 /* StorableObjectType.hpp in Headers */,
 				5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */,
 				5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */,
+				5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */,
+				5EDCA3D31F3DF69F00329733 /* SQLiteDataLoader.hpp in Headers */,
 				5EFDFDE41F22986B009FA81B /* Timer.hpp in Headers */,
 				5E556B021F295A4200F6FB2E /* MemoryReader.hpp in Headers */,
 				5E6C65FE1F3B5CDD0089FD55 /* OpenGLRenderSystem.hpp in Headers */,
@@ -783,6 +820,7 @@
 				5E556ABC1F242D7A00F6FB2E /* VertexFormat.hpp in Headers */,
 				5E6C654B1F2CF26B0089FD55 /* RenderPass.hpp in Headers */,
 				5EFDFDC81F227023009FA81B /* File.hpp in Headers */,
+				5EDCA3CF1F3DF1E100329733 /* DataLoader.hpp in Headers */,
 				5EFDFDDC1F228C1A009FA81B /* Resource.hpp in Headers */,
 				5E6C65C91F354C030089FD55 /* MemoryWriter.hpp in Headers */,
 				5E556AA81F23C6CB00F6FB2E /* Command.hpp in Headers */,
@@ -952,6 +990,7 @@
 				5EDCA3AA1F3B6AEA00329733 /* OpenGLColor.cpp in Sources */,
 				5E6C65311F2BA1050089FD55 /* RenderComponent.cpp in Sources */,
 				5E6C659D1F32A2760089FD55 /* NetworkSystem.cpp in Sources */,
+				5EDCA3DB1F3DF92700329733 /* MySQLDataLoader.cpp in Sources */,
 				5E6C65F11F3B581A0089FD55 /* OpenGLShaderVariation.cpp in Sources */,
 				5E0523D61F217EF90088C9BA /* ScriptableObject.cpp in Sources */,
 				5EFDFDDF1F22963D009FA81B /* ResourceObject.cpp in Sources */,
@@ -967,6 +1006,7 @@
 				5E0523C11F2166000088C9BA /* EntitySystem.cpp in Sources */,
 				5E6C65AD1F353AB00089FD55 /* ReplicationSystem.cpp in Sources */,
 				5EFDFDC21F21AB8D009FA81B /* RenderSystem.cpp in Sources */,
+				5EDCA3D81F3DF8BD00329733 /* sqlite3.c in Sources */,
 				5EFDFDC71F227023009FA81B /* File.cpp in Sources */,
 				5E6C65C41F3549220089FD55 /* StorableObjectType.cpp in Sources */,
 				5E6C652D1F2B9E610089FD55 /* TransformComponent.cpp in Sources */,
@@ -978,6 +1018,7 @@
 				5E0523A31F20FE780088C9BA /* GigaObject.cpp in Sources */,
 				5E556B011F295A4200F6FB2E /* MemoryReader.cpp in Sources */,
 				5E556AC31F2431A000F6FB2E /* BoundingBox.cpp in Sources */,
+				5EDCA3CE1F3DF1E100329733 /* DataLoader.cpp in Sources */,
 				5E6C65B51F353E230089FD55 /* EntitySnapshotMessage.cpp in Sources */,
 				5E6C65ED1F3B573D0089FD55 /* OpenGLTexture.cpp in Sources */,
 				5EFDFDBA1F21A83C009FA81B /* Window.cpp in Sources */,
@@ -990,6 +1031,7 @@
 				5E556B2D1F2ABDFC00F6FB2E /* Quaternion.cpp in Sources */,
 				5E556AAF1F241AF600F6FB2E /* Mesh.cpp in Sources */,
 				5E6C66071F3B5DFD0089FD55 /* OpenGLDeferredRenderPass.cpp in Sources */,
+				5EDCA3D21F3DF69F00329733 /* SQLiteDataLoader.cpp in Sources */,
 				5E0523CE1F2170410088C9BA /* ErrorSystem.cpp in Sources */,
 				5E6C65DD1F3B51BE0089FD55 /* OpenGLVertexAttributes.cpp in Sources */,
 				5E6C654E1F2CF2CE0089FD55 /* Scene.cpp in Sources */,

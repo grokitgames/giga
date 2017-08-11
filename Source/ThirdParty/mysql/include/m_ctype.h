@@ -1,4 +1,4 @@
-/* Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+/* Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -232,6 +232,22 @@ typedef struct
   uint mb_len;
 } my_match_t;
 
+enum my_lex_states
+{
+  MY_LEX_START, MY_LEX_CHAR, MY_LEX_IDENT, 
+  MY_LEX_IDENT_SEP, MY_LEX_IDENT_START,
+  MY_LEX_REAL, MY_LEX_HEX_NUMBER, MY_LEX_BIN_NUMBER,
+  MY_LEX_CMP_OP, MY_LEX_LONG_CMP_OP, MY_LEX_STRING, MY_LEX_COMMENT, MY_LEX_END,
+  MY_LEX_OPERATOR_OR_IDENT, MY_LEX_NUMBER_IDENT, MY_LEX_INT_OR_REAL,
+  MY_LEX_REAL_OR_POINT, MY_LEX_BOOL, MY_LEX_EOL, MY_LEX_ESCAPE, 
+  MY_LEX_LONG_COMMENT, MY_LEX_END_LONG_COMMENT, MY_LEX_SEMICOLON, 
+  MY_LEX_SET_VAR, MY_LEX_USER_END, MY_LEX_HOSTNAME, MY_LEX_SKIP, 
+  MY_LEX_USER_VARIABLE_DELIMITER, MY_LEX_SYSTEM_VAR,
+  MY_LEX_IDENT_OR_KEYWORD,
+  MY_LEX_IDENT_OR_HEX, MY_LEX_IDENT_OR_BIN, MY_LEX_IDENT_OR_NCHAR,
+  MY_LEX_STRING_OR_DELIMITER
+};
+
 struct charset_info_st;
 
 typedef struct my_charset_loader_st
@@ -340,7 +356,7 @@ typedef struct my_charset_handler_st
   /* Charset dependant snprintf() */
   size_t (*snprintf)(const struct charset_info_st *, char *to, size_t n,
                      const char *fmt,
-                     ...) MY_ATTRIBUTE((format(printf, 4, 5)));
+                     ...) __attribute__((format(printf, 4, 5)));
   size_t (*long10_to_str)(const struct charset_info_st *, char *to, size_t n,
                           int radix, long int val);
   size_t (*longlong10_to_str)(const struct charset_info_st *, char *to,
@@ -371,7 +387,6 @@ typedef struct my_charset_handler_st
 } MY_CHARSET_HANDLER;
 
 extern MY_CHARSET_HANDLER my_charset_8bit_handler;
-extern MY_CHARSET_HANDLER my_charset_ascii_handler;
 extern MY_CHARSET_HANDLER my_charset_ucs2_handler;
 
 
@@ -400,8 +415,8 @@ typedef struct charset_info_st
   const uint16     *tab_to_uni;
   const MY_UNI_IDX *tab_from_uni;
   const MY_UNICASE_INFO *caseinfo;
-  const struct lex_state_maps_st *state_maps; /* parser internal data */
-  const uchar *ident_map; /* parser internal data */
+  const uchar *state_map;
+  const uchar *ident_map;
   uint      strxfrm_multiply;
   uchar     caseup_multiply;
   uchar     casedn_multiply;
@@ -469,7 +484,7 @@ extern CHARSET_INFO my_charset_utf8_unicode_ci;
 extern CHARSET_INFO my_charset_utf8_bin;
 extern CHARSET_INFO my_charset_utf8_general_mysql500_ci;
 extern CHARSET_INFO my_charset_utf8mb4_bin;
-extern MYSQL_PLUGIN_IMPORT CHARSET_INFO my_charset_utf8mb4_general_ci;
+extern CHARSET_INFO my_charset_utf8mb4_general_ci;
 extern CHARSET_INFO my_charset_utf8mb4_unicode_ci;
 #define MY_UTF8MB3                 "utf8"
 #define MY_UTF8MB4                 "utf8mb4"
@@ -523,7 +538,7 @@ size_t my_scan_8bit(const CHARSET_INFO *cs, const char *b, const char *e,
 
 size_t my_snprintf_8bit(const struct charset_info_st *, char *to, size_t n,
                         const char *fmt, ...)
-  MY_ATTRIBUTE((format(printf, 4, 5)));
+  __attribute__((format(printf, 4, 5)));
 
 long       my_strntol_8bit(const CHARSET_INFO *, const char *s, size_t l,
                            int base, char **e, int *err);
@@ -645,10 +660,10 @@ int my_wildcmp_mb_bin(const CHARSET_INFO *cs,
                       const char *wildstr,const char *wildend,
                       int escape, int w_one, int w_many);
 
-int my_strcasecmp_mb_bin(const CHARSET_INFO * cs MY_ATTRIBUTE((unused)),
+int my_strcasecmp_mb_bin(const CHARSET_INFO * cs __attribute__((unused)),
                          const char *s, const char *t);
 
-void my_hash_sort_mb_bin(const CHARSET_INFO *cs MY_ATTRIBUTE((unused)),
+void my_hash_sort_mb_bin(const CHARSET_INFO *cs __attribute__((unused)),
                          const uchar *key, size_t len,ulong *nr1, ulong *nr2);
 
 size_t my_strnxfrm_mb(const CHARSET_INFO *,
@@ -765,8 +780,7 @@ uint my_mbcharlen_ptr(const CHARSET_INFO *cs, const char *s, const char *e);
   @param[in] a first byte of gb18030 code
   @param[in] b second byte of gb18030 code
   @return    the length of gb18030 code starting with given two bytes,
-             the length would be 2 or 4 for valid gb18030 code,
-             or 0 for invalid gb18030 code
+             the length would be 2 or 4
 */
 #define my_mbcharlen_2(s, a, b)       ((s)->cset->mbcharlen((s),((((a) & 0xFF) << 8) + ((b) & 0xFF))))
 /**

@@ -35,6 +35,7 @@ int SQLiteDataLoader::InternalDataCallback(void* instance, int count, char** dat
     
     unsigned int primaryKeyID = 0;
     StorableObject* record = type->CreateRecord();
+    record->InitializeStorableObject(type->GetName());
     
     for (int i = 0; i < count; i++) {
         if (data[i] == 0) {

@@ -136,14 +136,14 @@ matrix4 RenderComponent::GetModelMatrix() {
     return(mat);
 }
 
-Variant* RenderComponent::GetTransform(Variant* obj) {
+Variant* RenderComponent::GetTransform(std::string var, Variant* obj) {
     RenderComponent* mi = obj->AsObject<RenderComponent>();
     Transform* transform = mi->GetTransform();
     
     return(new Variant(transform));
 }
 
-void RenderComponent::SetTransform(Variant* obj, Variant* val) {
+void RenderComponent::SetTransform(std::string var, Variant* obj, Variant* val) {
     RenderComponent* mi = obj->AsObject<RenderComponent>();
     Transform* transform = val->AsObject<Transform>();
     

@@ -15,7 +15,7 @@ public:
     /**
      * Scripting integration
      */
-    static Variant* GetKey(Variant* object);
+    static Variant* GetKey(std::string name, Variant* object);
     
 protected:
     // Key that was pressed or released

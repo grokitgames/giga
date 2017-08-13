@@ -8,7 +8,7 @@ class Component;
 /**
  * Internal typedefs for creating and removing components
  */
-typedef Component* (*ComponentCreateFunc)(void);
+typedef Component* (*ComponentCreateFunc)(std::string type);
 typedef void(*ComponentRemoveFunc)(Component* component);
 
 /**

@@ -1,42 +1,42 @@
 
 #include <giga-engine.h>
 
-Variant* Quaternion::GetX(Variant* obj) {
+Variant* Quaternion::GetX(std::string var, Variant* obj) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     return(new Variant(quat->m_quat.x));
 }
 
-void Quaternion::SetX(Variant* obj, Variant* val) {
+void Quaternion::SetX(std::string var, Variant* obj, Variant* val) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     quat->m_quat.x = val->AsFloat();
 }
 
-Variant* Quaternion::GetY(Variant* obj) {
+Variant* Quaternion::GetY(std::string var, Variant* obj) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     return(new Variant(quat->m_quat.y));
 }
 
-void Quaternion::SetY(Variant* obj, Variant* val) {
+void Quaternion::SetY(std::string var, Variant* obj, Variant* val) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     quat->m_quat.y = val->AsFloat();
 }
 
-Variant* Quaternion::GetZ(Variant* obj) {
+Variant* Quaternion::GetZ(std::string var, Variant* obj) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     return(new Variant(quat->m_quat.z));
 }
 
-void Quaternion::SetZ(Variant* obj, Variant* val) {
+void Quaternion::SetZ(std::string var, Variant* obj, Variant* val) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     quat->m_quat.z = val->AsFloat();
 }
 
-Variant* Quaternion::GetW(Variant* obj) {
+Variant* Quaternion::GetW(std::string var, Variant* obj) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     return(new Variant(quat->m_quat.w));
 }
 
-void Quaternion::SetW(Variant* obj, Variant* val) {
+void Quaternion::SetW(std::string var, Variant* obj, Variant* val) {
     Quaternion* quat = obj->AsObject<Quaternion>();
     quat->m_quat.w = val->AsFloat();
 }

@@ -14,7 +14,7 @@ void RenderSystem::RemoveRenderPass(RenderPass* pass) {
     m_passes.RemoveObject(pass);
 }
 
-Component* RenderSystem::CreateStaticMeshComponent() {
+Component* RenderSystem::CreateStaticMeshComponent(std::string type) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     
     StaticMeshComponent* mesh = new StaticMeshComponent();
@@ -27,7 +27,7 @@ void RenderSystem::RemoveStaticMeshComponent(Component* component) {
     renderSystem->m_scene->m_meshes.RemoveObject(dynamic_cast<StaticMeshComponent*>(component));
 }
 
-Component* RenderSystem::CreateCameraComponent() {
+Component* RenderSystem::CreateCameraComponent(std::string type) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     
     CameraComponent* camera = new CameraComponent();
@@ -40,7 +40,7 @@ void RenderSystem::RemoveCameraComponent(Component* component) {
     renderSystem->m_scene->m_cameras.RemoveObject(dynamic_cast<CameraComponent*>(component));
 }
 
-Component* RenderSystem::CreateSpotLightComponent() {
+Component* RenderSystem::CreateSpotLightComponent(std::string type) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     
     SpotLightComponent* light = new SpotLightComponent();

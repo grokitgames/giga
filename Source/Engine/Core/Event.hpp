@@ -33,9 +33,9 @@ public:
     /**
      * Scripting integration
      */
-    static Variant* GetType(Variant* object);
-    static Variant* GetData(Variant* object);
-    static Variant* GetSender(Variant* object);
+    static Variant* GetType(std::string var, Variant* object);
+    static Variant* GetData(std::string var, Variant* object);
+    static Variant* GetSender(std::string var, Variant* object);
     
 protected:
     // Event type

@@ -64,42 +64,42 @@ Variant* DateTime::GetCurrent(Variant* object, int argc, Variant** argv) {
     return(new Variant(DateTime::GetCurrent()));
 }
 
-Variant* DateTime::GetTimestamp(Variant* object) {
+Variant* DateTime::GetTimestamp(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     return(new Variant((int64_t)dt->GetTimestamp()));
 }
 
-Variant* DateTime::GetYear(Variant* object) {
+Variant* DateTime::GetYear(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     tm* local = localtime(&dt->m_time);
     return(new Variant(local->tm_year + 1900));
 }
 
-Variant* DateTime::GetMonth(Variant* object) {
+Variant* DateTime::GetMonth(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     tm* local = localtime(&dt->m_time);
     return(new Variant(local->tm_mon));
 }
 
-Variant* DateTime::GetDay(Variant* object) {
+Variant* DateTime::GetDay(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     tm* local = localtime(&dt->m_time);
     return(new Variant(local->tm_mday));
 }
 
-Variant* DateTime::GetHour(Variant* object) {
+Variant* DateTime::GetHour(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     tm* local = localtime(&dt->m_time);
     return(new Variant(local->tm_hour));
 }
 
-Variant* DateTime::GetMinute(Variant* object) {
+Variant* DateTime::GetMinute(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     tm* local = localtime(&dt->m_time);
     return(new Variant(local->tm_min));
 }
 
-Variant* DateTime::GetSecond(Variant* object) {
+Variant* DateTime::GetSecond(std::string var, Variant* object) {
     DateTime* dt = object->AsObject<DateTime>();
     tm* local = localtime(&dt->m_time);
     return(new Variant(local->tm_sec));

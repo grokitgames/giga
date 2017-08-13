@@ -132,6 +132,7 @@ std::vector<StorableObject*> MySQLDataLoader::GetRecords(StorableObjectType* typ
     while((row = mysql_fetch_row(result))) {
         unsigned int primaryKeyID = 0;
         StorableObject* record = type->CreateRecord();
+        record->InitializeStorableObject(type->GetName());
         std::map<std::string, std::string> data;
         
         for(int i = 0; i < colCount; i++) {

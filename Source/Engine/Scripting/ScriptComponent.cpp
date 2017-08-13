@@ -116,6 +116,29 @@ void ScriptComponent::Initialize(Script* script) {
     scriptingSystem->SetCurrentScript(0);
 }
 
+void ScriptComponent::AddToContext(ScriptableObjectType* type) {
+    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+    scriptingSystem->SetCurrentScript(this);
+    
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    
+    // Create a stack-allocated handle scope.
+    v8::HandleScope handle_scope(isolate);
+    
+    // Catch any errors the script might throw
+    v8::TryCatch try_catch(isolate);
+    
+    // Get our context
+    v8::Local<v8::Context> context = m_context.Get(isolate);
+    context->Enter();
+    
+    // Register stuff into our script's context
+    type->AddToContext(context);
+    
+    context->Exit();
+    scriptingSystem->SetCurrentScript(0);
+}
+
 void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);

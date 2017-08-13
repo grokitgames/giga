@@ -7,12 +7,12 @@ class ScriptableObject;
 /**
  * A "getter" function template
  */
-typedef Variant* (*ScriptObjectGetterFunc)(Variant* obj);
+typedef Variant* (*ScriptObjectGetterFunc)(std::string prop, Variant* obj);
 
 /**
  * A "setter" function template
  */
-typedef void (*ScriptObjectSetterFunc)(Variant* obj, Variant* val);
+typedef void (*ScriptObjectSetterFunc)(std::string prop, Variant* obj, Variant* val);
 
 /**
  * A generic callback function template

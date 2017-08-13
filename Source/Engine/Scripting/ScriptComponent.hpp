@@ -26,6 +26,11 @@ public:
     void Initialize(Script* script);
     
     /**
+     * Add a newly defined inteface
+     */
+    void AddToContext(ScriptableObjectType* type);
+    
+    /**
      * Clone into another component
      */
     ScriptComponent* Clone();

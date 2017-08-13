@@ -38,13 +38,13 @@ public:
      * Scripting integration
      */
     static Variant* GetCurrent(Variant* object, int argc, Variant** argv);
-    static Variant* GetTimestamp(Variant* object);
-    static Variant* GetYear(Variant* object);
-    static Variant* GetMonth(Variant* object);
-    static Variant* GetDay(Variant* object);
-    static Variant* GetHour(Variant* object);
-    static Variant* GetMinute(Variant* object);
-    static Variant* GetSecond(Variant* object);
+    static Variant* GetTimestamp(std::string var, Variant* object);
+    static Variant* GetYear(std::string var, Variant* object);
+    static Variant* GetMonth(std::string var, Variant* object);
+    static Variant* GetDay(std::string var, Variant* object);
+    static Variant* GetHour(std::string var, Variant* object);
+    static Variant* GetMinute(std::string var, Variant* object);
+    static Variant* GetSecond(std::string var, Variant* object);
     
 private:
     // Use time_t struct for more general date/time storage

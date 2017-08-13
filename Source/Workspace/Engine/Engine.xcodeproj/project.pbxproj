@@ -169,6 +169,10 @@
 		5EDCA3DB1F3DF92700329733 /* MySQLDataLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3D91F3DF92700329733 /* MySQLDataLoader.cpp */; };
 		5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3DA1F3DF92700329733 /* MySQLDataLoader.hpp */; };
 		5EDCA3DE1F3DFB8300329733 /* libmysqlclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3DD1F3DFB8300329733 /* libmysqlclient.a */; };
+		5EDCA3E41F3E8AFC00329733 /* ComponentTemplateType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3E21F3E8AFC00329733 /* ComponentTemplateType.cpp */; };
+		5EDCA3E51F3E8AFC00329733 /* ComponentTemplateType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3E31F3E8AFC00329733 /* ComponentTemplateType.hpp */; };
+		5EDCA3E81F3E9BE000329733 /* ComponentTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3E61F3E9BE000329733 /* ComponentTemplate.cpp */; };
+		5EDCA3E91F3E9BE000329733 /* ComponentTemplate.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3E71F3E9BE000329733 /* ComponentTemplate.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -371,6 +375,10 @@
 		5EDCA3D91F3DF92700329733 /* MySQLDataLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MySQLDataLoader.cpp; path = ../../Engine/IO/MySQLDataLoader.cpp; sourceTree = "<group>"; };
 		5EDCA3DA1F3DF92700329733 /* MySQLDataLoader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MySQLDataLoader.hpp; path = ../../Engine/IO/MySQLDataLoader.hpp; sourceTree = "<group>"; };
 		5EDCA3DD1F3DFB8300329733 /* libmysqlclient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmysqlclient.a; path = ../../ThirdParty/mysql/lib/libmysqlclient.a; sourceTree = "<group>"; };
+		5EDCA3E21F3E8AFC00329733 /* ComponentTemplateType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentTemplateType.cpp; path = ../../Engine/Core/ComponentTemplateType.cpp; sourceTree = "<group>"; };
+		5EDCA3E31F3E8AFC00329733 /* ComponentTemplateType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ComponentTemplateType.hpp; path = ../../Engine/Core/ComponentTemplateType.hpp; sourceTree = "<group>"; };
+		5EDCA3E61F3E9BE000329733 /* ComponentTemplate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentTemplate.cpp; path = ../../Engine/Core/ComponentTemplate.cpp; sourceTree = "<group>"; };
+		5EDCA3E71F3E9BE000329733 /* ComponentTemplate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ComponentTemplate.hpp; path = ../../Engine/Core/ComponentTemplate.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -487,6 +495,10 @@
 				5E05239A1F2048ED0088C9BA /* Application.hpp */,
 				5E05238D1F203F7E0088C9BA /* Component.cpp */,
 				5E05238E1F203F7E0088C9BA /* Component.hpp */,
+				5EDCA3E61F3E9BE000329733 /* ComponentTemplate.cpp */,
+				5EDCA3E71F3E9BE000329733 /* ComponentTemplate.hpp */,
+				5EDCA3E21F3E8AFC00329733 /* ComponentTemplateType.cpp */,
+				5EDCA3E31F3E8AFC00329733 /* ComponentTemplateType.hpp */,
 				5E0523C91F216EC10088C9BA /* Error.hpp */,
 				5E0523CC1F2170410088C9BA /* ErrorSystem.cpp */,
 				5E0523CD1F2170410088C9BA /* ErrorSystem.hpp */,
@@ -812,6 +824,7 @@
 				5E6C65801F31485A0089FD55 /* PosixUDPSocket.hpp in Headers */,
 				5E6C65EA1F3B55CD0089FD55 /* OpenGLTexture2D.hpp in Headers */,
 				5E6C66061F3B5DFD0089FD55 /* OpenGLDeferredLightingPass.hpp in Headers */,
+				5EDCA3E51F3E8AFC00329733 /* ComponentTemplateType.hpp in Headers */,
 				5E0523C21F2166000088C9BA /* EntitySystem.hpp in Headers */,
 				5E6C65A21F32A2D60089FD55 /* NetworkSession.hpp in Headers */,
 				5E556B261F2AB68C00F6FB2E /* Transform.hpp in Headers */,
@@ -830,6 +843,7 @@
 				5E0523CF1F2170410088C9BA /* ErrorSystem.hpp in Headers */,
 				5E0523901F203F7E0088C9BA /* Component.hpp in Headers */,
 				5E6C65D21F3B4F4E0089FD55 /* OpenGLVertexBuffer.hpp in Headers */,
+				5EDCA3E91F3E9BE000329733 /* ComponentTemplate.hpp in Headers */,
 				5E556A9C1F23613300F6FB2E /* Script.hpp in Headers */,
 				5E556AB01F241AF600F6FB2E /* Mesh.hpp in Headers */,
 				5E6C655B1F2D62D00089FD55 /* Profiler.hpp in Headers */,
@@ -995,6 +1009,7 @@
 				5E0523D61F217EF90088C9BA /* ScriptableObject.cpp in Sources */,
 				5EFDFDDF1F22963D009FA81B /* ResourceObject.cpp in Sources */,
 				5E6C656A1F2EAF990089FD55 /* LightComponent.cpp in Sources */,
+				5EDCA3E41F3E8AFC00329733 /* ComponentTemplateType.cpp in Sources */,
 				5E556AF51F2815E700F6FB2E /* ShaderVariation.cpp in Sources */,
 				5E6C65A11F32A2D60089FD55 /* NetworkSession.cpp in Sources */,
 				5E6C65E91F3B55CD0089FD55 /* OpenGLTexture2D.cpp in Sources */,
@@ -1028,6 +1043,7 @@
 				5E556B191F2A6D4300F6FB2E /* Animation.cpp in Sources */,
 				5E6C65D81F3B50CF0089FD55 /* OpenGLIndexBuffer.cpp in Sources */,
 				5EFDFDE71F229908009FA81B /* DateTime.cpp in Sources */,
+				5EDCA3E81F3E9BE000329733 /* ComponentTemplate.cpp in Sources */,
 				5E556B2D1F2ABDFC00F6FB2E /* Quaternion.cpp in Sources */,
 				5E556AAF1F241AF600F6FB2E /* Mesh.cpp in Sources */,
 				5E6C66071F3B5DFD0089FD55 /* OpenGLDeferredRenderPass.cpp in Sources */,

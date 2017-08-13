@@ -83,6 +83,8 @@ typedef glm::mat4 matrix4;
 #include <IO/StorableObjectType.hpp>
 #include <IO/StorableObject.hpp>
 #include <Core/Component.hpp>
+#include <Core/ComponentTemplateType.hpp>
+#include <Core/ComponentTemplate.hpp>
 #include <Core/Entity.hpp>
 #include <Core/System.hpp>
 #include <Core/EntitySystem.hpp>

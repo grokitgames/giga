@@ -24,14 +24,14 @@ public:
     /**
      * Scripting integration
      */
-    static Variant* GetPosition(Variant* obj);
-    static void SetPosition(Variant* obj, Variant* val);
+    static Variant* GetPosition(std::string var, Variant* obj);
+    static void SetPosition(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetRotation(Variant* obj);
-    static void SetRotation(Variant* obj, Variant* val);
+    static Variant* GetRotation(std::string var, Variant* obj);
+    static void SetRotation(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetScaling(Variant* obj);
-    static void SetScaling(Variant* obj, Variant* val);
+    static Variant* GetScaling(std::string var, Variant* obj);
+    static void SetScaling(std::string var, Variant* obj, Variant* val);
     
     static Variant* Translate(Variant* obj, int argc, Variant** argv);
     static Variant* Rotate(Variant* obj, int argc, Variant** argv);

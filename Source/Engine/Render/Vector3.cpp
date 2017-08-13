@@ -1,32 +1,32 @@
 
 #include <giga-engine.h>
 
-Variant* Vector3::GetX(Variant* obj) {
+Variant* Vector3::GetX(std::string var, Variant* obj) {
     Vector3* vec = obj->AsObject<Vector3>();
     return(new Variant(vec->m_vector.x));
 }
 
-void Vector3::SetX(Variant* obj, Variant* val) {
+void Vector3::SetX(std::string var, Variant* obj, Variant* val) {
     Vector3* vec = obj->AsObject<Vector3>();
     vec->m_vector.x = val->AsFloat();
 }
 
-Variant* Vector3::GetY(Variant* obj) {
+Variant* Vector3::GetY(std::string var, Variant* obj) {
     Vector3* vec = obj->AsObject<Vector3>();
     return(new Variant(vec->m_vector.y));
 }
 
-void Vector3::SetY(Variant* obj, Variant* val) {
+void Vector3::SetY(std::string var, Variant* obj, Variant* val) {
     Vector3* vec = obj->AsObject<Vector3>();
     vec->m_vector.y = val->AsFloat();
 }
 
-Variant* Vector3::GetZ(Variant* obj) {
+Variant* Vector3::GetZ(std::string var, Variant* obj) {
     Vector3* vec = obj->AsObject<Vector3>();
     return(new Variant(vec->m_vector.z));
 }
 
-void Vector3::SetZ(Variant* obj, Variant* val) {
+void Vector3::SetZ(std::string var, Variant* obj, Variant* val) {
     Vector3* vec = obj->AsObject<Vector3>();
     vec->m_vector.z = val->AsFloat();
 }

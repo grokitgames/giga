@@ -53,8 +53,8 @@ public:
     /**
      * Scripting functions
      */
-    static Variant* GetTransform(Variant* obj);
-    static void SetTransform(Variant* obj, Variant* val);
+    static Variant* GetTransform(std::string var, Variant* obj);
+    static void SetTransform(std::string var, Variant* obj, Variant* val);
     
 protected:
     // A pointer to an object's transformcomponent (if applicable)

@@ -8,6 +8,11 @@ public:
     virtual ~StorableObject() = default;
     
     /**
+     * Initialize a newly created object
+     */
+    virtual void InitializeStorableObject(std::string name) { }
+    
+    /**
      * Update the data field mappings to bind to member variables
      */
     virtual void UpdateObjectDataMappings() { }

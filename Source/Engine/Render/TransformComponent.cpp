@@ -22,12 +22,12 @@ void TransformComponent::SetTransform(Transform* transform) {
     MarkUpdated(true);
 }
 
-Variant* TransformComponent::GetTransform(Variant* obj) {
+Variant* TransformComponent::GetTransform(std::string var, Variant* obj) {
     TransformComponent* tc = obj->AsObject<TransformComponent>();
     return(new Variant(tc->GetTransform()));
 }
 
-void TransformComponent::SetTransform(Variant* obj, Variant* val) {
+void TransformComponent::SetTransform(std::string var, Variant* obj, Variant* val) {
     TransformComponent* tc = obj->AsObject<TransformComponent>();
     Transform* t = val->AsObject<Transform>();
     tc->SetTransform(t);

@@ -115,6 +115,23 @@ void Application::Initialize() {
     
     scriptingSystem->RegisterScriptableObjectType<EventSystem>(eventSystemType);
     
+    // Component template type
+    ScriptableObjectType* componentTemplateType = new ScriptableObjectType("ComponentTemplateType");
+    componentTemplateType->AddObjectFunction("CreateField", &ComponentTemplateType::CreateField);
+    componentTemplateType->AddObjectFunction("SetName", &ComponentTemplateType::SetName);
+    componentTemplateType->AddObjectFunction("Register", &ComponentTemplateType::Register);
+    
+    scriptingSystem->RegisterScriptableObjectType<ComponentTemplateType>(componentTemplateType);
+    
+    // Component field types
+    scriptingSystem->RegisterGlobal("FIELD_INT", new Variant(StorableObjectField::FIELD_INT));
+    scriptingSystem->RegisterGlobal("FIELD_FILE", new Variant(StorableObjectField::FIELD_FILE));
+    scriptingSystem->RegisterGlobal("FIELD_TEXT", new Variant(StorableObjectField::FIELD_TEXT));
+    scriptingSystem->RegisterGlobal("FIELD_FLOAT", new Variant(StorableObjectField::FIELD_FLOAT));
+    scriptingSystem->RegisterGlobal("FIELD_VECTOR2", new Variant(StorableObjectField::FIELD_VECTOR2));
+    scriptingSystem->RegisterGlobal("FIELD_VECTOR3", new Variant(StorableObjectField::FIELD_VECTOR3));
+    scriptingSystem->RegisterGlobal("FIELD_QUATERNION", new Variant(StorableObjectField::FIELD_QUATERNION));
+    
     /**
      * I/O
      */

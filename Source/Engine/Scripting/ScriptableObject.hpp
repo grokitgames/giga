@@ -10,6 +10,11 @@ public:
     virtual ~ScriptableObject() = default;
     
     /**
+     * Initialize a newly created object
+     */
+    virtual void InitializeScriptableObject(std::string name) { }
+    
+    /**
      * An overridable function for objects created with "new" and parameters passed
      */
     virtual void Initialize(Variant** argv, int argc) { }

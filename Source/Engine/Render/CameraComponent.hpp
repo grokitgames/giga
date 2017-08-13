@@ -63,22 +63,22 @@ public:
     /**
      * Scripting integration
      */
-    static Variant* GetFOV(Variant* obj);
-    static void SetFOV(Variant* obj, Variant* val);
+    static Variant* GetFOV(std::string var, Variant* obj);
+    static void SetFOV(std::string var, Variant* obj, Variant* val);
     
     static Variant* SetViewport(Variant* obj, int argc, Variant** argv);
     
-    static Variant* GetNear(Variant* obj);
-    static void SetNear(Variant* obj, Variant* val);
+    static Variant* GetNear(std::string var, Variant* obj);
+    static void SetNear(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetFar(Variant* obj);
-    static void SetFar(Variant* obj, Variant* val);
+    static Variant* GetFar(std::string var, Variant* obj);
+    static void SetFar(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetLook(Variant* obj);
-    static void SetLook(Variant* obj, Variant* val);
+    static Variant* GetLook(std::string var, Variant* obj);
+    static void SetLook(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetRight(Variant* obj);
-    static Variant* GetUp(Variant* obj);
+    static Variant* GetRight(std::string var, Variant* obj);
+    static Variant* GetUp(std::string var, Variant* obj);
     
 protected:
     /**

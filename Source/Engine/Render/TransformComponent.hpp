@@ -31,8 +31,8 @@ public:
     /**
      * Scripting integration
      */
-    static Variant* GetTransform(Variant* obj);
-    static void SetTransform(Variant* obj, Variant* val);
+    static Variant* GetTransform(std::string var, Variant* obj);
+    static void SetTransform(std::string var, Variant* obj, Variant* val);
     
 protected:
     Transform m_transform;

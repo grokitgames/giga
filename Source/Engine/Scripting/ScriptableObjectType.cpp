@@ -46,6 +46,7 @@ void ScriptableObjectType::New(const v8::FunctionCallbackInfo<v8::Value>& info) 
     ScriptableObjectType* interface = ss->GetScriptableObjectType(*funcName);
     
     ScriptableObject* obj = interface->m_createFunction();
+    obj->InitializeScriptableObject(interface->GetName());
     obj->Initialize(args, info.Length());
     if (interface->m_static == false) {
         obj->Wrap(info.This());
@@ -227,9 +228,10 @@ void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, co
     std::vector<ScriptObjectCallbackPair*> varList = interface->GetVariableList();
     v8::String::Utf8Value propName(property);
     for (size_t i = 0; i < varList.size(); i++) {
-        if (varList[i]->variableName == std::string(*propName)) {
+        std::string strPropName = std::string(*propName);
+        if (varList[i]->variableName == strPropName) {
             if (varList[i]->getter != 0) {
-                ScriptableVariant* value = (ScriptableVariant*)(varList[i]->getter(obj));
+                ScriptableVariant* value = (ScriptableVariant*)(varList[i]->getter(strPropName, obj));
                 v8::Local<v8::Value> val = value->GetValue();
                 info.GetReturnValue().Set(val);
                 delete value;
@@ -252,10 +254,11 @@ void ScriptableObjectType::HandleObjectSetter(v8::Local<v8::String> property, v8
     std::vector<ScriptObjectCallbackPair*> varList = interface->GetVariableList();
     for (size_t i = 0; i < varList.size(); i++) {
         v8::String::Utf8Value propName(property);
-        if (varList[i]->variableName == std::string(*propName)) {
+        std::string strPropName = std::string(*propName);
+        if (varList[i]->variableName == strPropName) {
             if (varList[i]->setter != 0) {
                 Variant* sv = new ScriptableVariant(value);
-                varList[i]->setter(obj, sv);
+                varList[i]->setter(strPropName, obj, sv);
                 return;
             }
         }
@@ -275,9 +278,10 @@ void ScriptableObjectType::HandleStaticGetter(v8::Local<v8::String> property, co
     std::vector<ScriptObjectCallbackPair*> varList = interface->GetVariableList();
     for (size_t i = 0; i < varList.size(); i++) {
         v8::String::Utf8Value propName(property);
-        if (varList[i]->variableName == std::string(*propName)) {
+        std::string strPropName = std::string(*propName);
+        if (varList[i]->variableName == strPropName) {
             if (varList[i]->getter != 0) {
-                ScriptableVariant* value = (ScriptableVariant*)(varList[i]->getter(0));
+                ScriptableVariant* value = (ScriptableVariant*)(varList[i]->getter(strPropName, 0));
                 v8::Local<v8::Value> val = value->GetValue();
                 info.GetReturnValue().Set(val);
                 delete value;

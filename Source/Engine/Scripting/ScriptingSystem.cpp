@@ -106,7 +106,7 @@ void ScriptingSystem::Update(float delta) {
     delete d;
 }
 
-Component* ScriptingSystem::CreateScriptComponent() {
+Component* ScriptingSystem::CreateScriptComponent(std::string type) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     
     ScriptComponent* script = new ScriptComponent();

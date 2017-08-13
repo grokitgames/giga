@@ -23,17 +23,17 @@ public:
     /**
      * Scripting integration
      */
-    static Variant* GetX(Variant* obj);
-    static void SetX(Variant* obj, Variant* val);
+    static Variant* GetX(std::string var, Variant* obj);
+    static void SetX(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetY(Variant* obj);
-    static void SetY(Variant* obj, Variant* val);
+    static Variant* GetY(std::string var, Variant* obj);
+    static void SetY(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetZ(Variant* obj);
-    static void SetZ(Variant* obj, Variant* val);
+    static Variant* GetZ(std::string var, Variant* obj);
+    static void SetZ(std::string var, Variant* obj, Variant* val);
     
-    static Variant* GetW(Variant* obj);
-    static void SetW(Variant* obj, Variant* val);
+    static Variant* GetW(std::string var, Variant* obj);
+    static void SetW(std::string var, Variant* obj, Variant* val);
     
     /**
      * Scripting constructor

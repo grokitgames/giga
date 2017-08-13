@@ -40,7 +40,7 @@ Component* Component::CreateComponent(std::string type) {
         return(0);
     }
     
-    Component* component = i->second->createFunc();
+    Component* component = i->second->createFunc(type);
     component->removeFunction = i->second->removeFunc;
     component->typeID = i->second->typeID;
     return(component);
@@ -51,7 +51,7 @@ Component* Component::CreateComponent(int typeID) {
     std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
     for(i; i != m_componentTypes.end(); i++) {
         if(i->second->typeID == typeID) {
-            Component* component = i->second->createFunc();
+            Component* component = i->second->createFunc(i->second->name);
             component->removeFunction = i->second->removeFunc;
             component->typeID = i->second->typeID;
             return(component);

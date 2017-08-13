@@ -27,38 +27,38 @@ void Transform::UpdateModelMatrix() {
     m_modelMatrix = t * r * s;
 }
 
-Variant* Transform::GetPosition(Variant* obj) {
+Variant* Transform::GetPosition(std::string var, Variant* obj) {
     Transform* tc = obj->AsObject<Transform>();
     Vector3* sv = new Vector3(tc->position);
     
     return(new Variant(sv));
 }
 
-void Transform::SetPosition(Variant* obj, Variant* val) {
+void Transform::SetPosition(std::string var, Variant* obj, Variant* val) {
     Transform* tc = obj->AsObject<Transform>();
     Vector3* sv = val->AsObject<Vector3>();
     tc->position = sv->Get();
 }
 
-Variant* Transform::GetRotation(Variant* obj) {
+Variant* Transform::GetRotation(std::string var, Variant* obj) {
     Transform* tc = obj->AsObject<Transform>();
     Quaternion* sq = new Quaternion(tc->rotation);
     return(new Variant(sq));
 }
 
-void Transform::SetRotation(Variant* obj, Variant* val) {
+void Transform::SetRotation(std::string var, Variant* obj, Variant* val) {
     Transform* tc = obj->AsObject<Transform>();
     Quaternion* sq = val->AsObject<Quaternion>();
     tc->rotation = sq->Get();
 }
 
-Variant* Transform::GetScaling(Variant* obj) {
+Variant* Transform::GetScaling(std::string var, Variant* obj) {
     Transform* tc = obj->AsObject<Transform>();
     Vector3* sv = new Vector3(tc->scaling);
     return(new Variant(sv));
 }
 
-void Transform::SetScaling(Variant* obj, Variant* val) {
+void Transform::SetScaling(std::string var, Variant* obj, Variant* val) {
     Transform* tc = obj->AsObject<Transform>();
     Vector3* sv = val->AsObject<Vector3>();
     tc->scaling = sv->Get();

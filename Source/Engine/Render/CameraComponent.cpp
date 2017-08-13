@@ -101,12 +101,12 @@ CameraComponent* CameraComponent::Clone() {
     return(cc);
 }
 
-Variant* CameraComponent::GetFOV(Variant* obj) {
+Variant* CameraComponent::GetFOV(std::string var, Variant* obj) {
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     return(new Variant(camera->m_fov));
 }
 
-void CameraComponent::SetFOV(Variant* obj, Variant* val) {
+void CameraComponent::SetFOV(std::string var, Variant* obj, Variant* val) {
     GIGA_ASSERT(val->IsFloat(), "Expecting first parameter to be a float.");
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     camera->m_fov = val->AsFloat();
@@ -123,48 +123,48 @@ Variant* CameraComponent::SetViewport(Variant* obj, int argc, Variant** argv) {
     return(new Variant(0));
 }
 
-Variant* CameraComponent::GetNear(Variant* obj) {
+Variant* CameraComponent::GetNear(std::string var, Variant* obj) {
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     return(new Variant(camera->m_fnear));
 }
 
-void CameraComponent::SetNear(Variant* obj, Variant* val) {
+void CameraComponent::SetNear(std::string var, Variant* obj, Variant* val) {
     GIGA_ASSERT(val->IsFloat(), "Expecting first parameter to be a float.");
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     camera->m_fnear = val->AsFloat();
 }
 
-Variant* CameraComponent::GetFar(Variant* obj) {
+Variant* CameraComponent::GetFar(std::string var, Variant* obj) {
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     return(new Variant(camera->m_ffar));
 }
 
-void CameraComponent::SetFar(Variant* obj, Variant* val) {
+void CameraComponent::SetFar(std::string var, Variant* obj, Variant* val) {
     GIGA_ASSERT(val->IsFloat(), "Expecting first parameter to be a float.");
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     camera->m_ffar = val->AsFloat();
 }
 
-Variant* CameraComponent::GetLook(Variant* obj) {
+Variant* CameraComponent::GetLook(std::string var, Variant* obj) {
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     Vector3* look = new Vector3(camera->GetLookVector());
     return(new Variant(look));
 }
 
-void CameraComponent::SetLook(Variant* obj, Variant* val) {
+void CameraComponent::SetLook(std::string var, Variant* obj, Variant* val) {
     GIGA_ASSERT(val->IsObject(), "Expecting first parameter to be a Vector3 object.");
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     Vector3* vec = val->AsObject<Vector3>();
     camera->m_look = vec->Get();
 }
 
-Variant* CameraComponent::GetRight(Variant* obj) {
+Variant* CameraComponent::GetRight(std::string var, Variant* obj) {
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     Vector3* right = new Vector3(camera->GetRightVector());
     return(new Variant(right));
 }
 
-Variant* CameraComponent::GetUp(Variant* obj) {
+Variant* CameraComponent::GetUp(std::string var, Variant* obj) {
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     Vector3* up = new Vector3(camera->GetUpVector());
     return(new Variant(up));

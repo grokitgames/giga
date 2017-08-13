@@ -41,6 +41,12 @@ public:
         type->EndTemplate();
         
         m_types.push_back(type);
+        
+        // Add to any existing script components
+        std::vector<ScriptComponent*> scripts = m_scripts.GetList();
+        for(size_t i = 0; i < scripts.size(); i++) {
+            scripts[i]->AddToContext(type);
+        }
     }
     
     /**
@@ -72,7 +78,7 @@ public:
     /**
      * Create and remove scripts
      */
-    static Component* CreateScriptComponent();
+    static Component* CreateScriptComponent(std::string type);
     static void RemoveScriptComponent(Component* component);
     
 private:

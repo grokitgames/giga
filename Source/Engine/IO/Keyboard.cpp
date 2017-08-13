@@ -18,7 +18,7 @@ void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
     keyboard->ProcessAction(key, action);
 }
 
-Variant* KeyboardEventData::GetKey(Variant *object) {
+Variant* KeyboardEventData::GetKey(std::string name, Variant *object) {
     // Get our keyboard object out
     KeyboardEventData* data = object->AsObject<KeyboardEventData>();
     return(new Variant(data->m_key));

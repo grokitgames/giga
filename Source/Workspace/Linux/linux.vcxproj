@@ -97,7 +97,6 @@
     <ClCompile Include="..\..\Engine\Render\CameraComponent.cpp" />
     <ClCompile Include="..\..\Engine\Render\Frustum.cpp" />
     <ClCompile Include="..\..\Engine\Render\LightComponent.cpp" />
-    <ClCompile Include="..\..\Engine\Render\LinuxRenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\Render\Plane.cpp" />
     <ClCompile Include="..\..\Engine\Render\Quaternion.cpp" />
     <ClCompile Include="..\..\Engine\Render\RenderComponent.cpp" />
@@ -161,11 +160,9 @@
     <ClInclude Include="..\..\Engine\Render\Bone.hpp" />
     <ClInclude Include="..\..\Engine\Render\BoundingBox.hpp" />
     <ClInclude Include="..\..\Engine\Render\CameraComponent.hpp" />
-    <ClInclude Include="..\..\Engine\Render\DeferredLightingPass.hpp" />
-    <ClInclude Include="..\..\Engine\Render\DeferredRenderPass.hpp" />
+    <ClInclude Include="..\..\Engine\Render\Color.hpp" />
     <ClInclude Include="..\..\Engine\Render\Framebuffer.hpp" />
     <ClInclude Include="..\..\Engine\Render\Frustum.hpp" />
-    <ClInclude Include="..\..\Engine\Render\GBufferPass.hpp" />
     <ClInclude Include="..\..\Engine\Render\IndexBuffer.hpp" />
     <ClInclude Include="..\..\Engine\Render\LightComponent.hpp" />
     <ClInclude Include="..\..\Engine\Render\Material.hpp" />
@@ -189,7 +186,7 @@
     <ClInclude Include="..\..\Engine\Render\Transform.hpp" />
     <ClInclude Include="..\..\Engine\Render\TransformComponent.hpp" />
     <ClInclude Include="..\..\Engine\Render\Vector3.hpp" />
-    <ClInclude Include="..\..\Engine\Render\VertexAttribObject.hpp" />
+    <ClInclude Include="..\..\Engine\Render\VertexAttributes.hpp" />
     <ClInclude Include="..\..\Engine\Render\VertexBuffer.hpp" />
     <ClInclude Include="..\..\Engine\Render\VertexFormat.hpp" />
     <ClInclude Include="..\..\Engine\Resource\Resource.hpp" />
@@ -209,11 +206,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux;./contrib/bullet/include;./contrib/fmod/include;./contrib/freetype/include;./contrib/glew/include;./contrib/glfw/include;./contrib/glm/include;./contrib/libcurl/include;./contrib/mysql/include;./contrib/openssl/include;./contrib/recast/include;./contrib/soil/include;./contrib/sqlite/include;./contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux;../contrib/bullet/include;../contrib/fmod/include;../contrib/freetype/include;../contrib/glew/include;../contrib/glfw/include;../contrib/glm/include;../contrib/libcurl/include;../contrib/mysql/include;../contrib/openssl/include;../contrib/recast/include;../contrib/soil/include;../contrib/sqlite/include;../contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GIGA_API=</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>/root/projects/linux/contrib/v8/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>/root/projects/contrib/v8/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LibraryDependencies>icui18n;icuuc;v8_base;v8_external_snapshot;v8_libbase;v8_libplatform;v8_libsampler;pthread;%(LibraryDependencies)</LibraryDependencies>
       <AdditionalDependencies>$(StlAdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

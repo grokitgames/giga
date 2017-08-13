@@ -147,6 +147,7 @@ typedef glm::mat4 matrix4;
 #include <Network/Messages/EntitySnapshotMessage.hpp>
 #include <Core/Application.hpp>
 
+#ifdef GIGA_USING_OPENGL
 #include <Render/OpenGL/OpenGLVertexBuffer.hpp>
 #include <Render/OpenGL/OpenGLIndexBuffer.hpp>
 #include <Render/OpenGL/OpenGLVertexAttributes.hpp>
@@ -159,5 +160,6 @@ typedef glm::mat4 matrix4;
 #include <Render/OpenGL/OpenGLDeferredRenderPass.hpp>
 #include <Render/OpenGL/OpenGLDeferredLightingPass.hpp>
 #include <Render/OpenGL/OpenGLRenderSystem.hpp>
+#endif
 
 #endif

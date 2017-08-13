@@ -162,9 +162,6 @@
     <ClCompile Include="..\..\Engine\Render\Vector3.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Render\LinuxRenderSystem.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Engine\Render\BoundingBox.cpp">
       <Filter>Render</Filter>
     </ClCompile>
@@ -342,19 +339,10 @@
     <ClInclude Include="..\..\Engine\Render\CameraComponent.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\DeferredLightingPass.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\DeferredRenderPass.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Framebuffer.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Frustum.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\GBufferPass.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\IndexBuffer.hpp">
@@ -366,16 +354,10 @@
     <ClInclude Include="..\..\Engine\Render\Material.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\MaterialSystem.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Mesh.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Plane.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\PostProcessPass.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\Quaternion.hpp">
@@ -426,13 +408,22 @@
     <ClInclude Include="..\..\Engine\Render\Vector3.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Engine\Render\VertexAttribObject.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Engine\Render\VertexBuffer.hpp">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\VertexFormat.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\VertexAttributes.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\Color.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\MaterialSystem.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\PostProcessPass.hpp">
       <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>

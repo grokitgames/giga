@@ -173,6 +173,10 @@
 		5EDCA3E51F3E8AFC00329733 /* ComponentTemplateType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3E31F3E8AFC00329733 /* ComponentTemplateType.hpp */; };
 		5EDCA3E81F3E9BE000329733 /* ComponentTemplate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3E61F3E9BE000329733 /* ComponentTemplate.cpp */; };
 		5EDCA3E91F3E9BE000329733 /* ComponentTemplate.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3E71F3E9BE000329733 /* ComponentTemplate.hpp */; };
+		5EDCA3EC1F41F2FD00329733 /* OpenGLShadowPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3EA1F41F2FD00329733 /* OpenGLShadowPass.cpp */; };
+		5EDCA3ED1F41F2FD00329733 /* OpenGLShadowPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3EB1F41F2FD00329733 /* OpenGLShadowPass.hpp */; };
+		5EDCA3F01F42053D00329733 /* ShadowPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3EE1F42053D00329733 /* ShadowPass.cpp */; };
+		5EDCA3F11F42053D00329733 /* ShadowPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -379,6 +383,10 @@
 		5EDCA3E31F3E8AFC00329733 /* ComponentTemplateType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ComponentTemplateType.hpp; path = ../../Engine/Core/ComponentTemplateType.hpp; sourceTree = "<group>"; };
 		5EDCA3E61F3E9BE000329733 /* ComponentTemplate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentTemplate.cpp; path = ../../Engine/Core/ComponentTemplate.cpp; sourceTree = "<group>"; };
 		5EDCA3E71F3E9BE000329733 /* ComponentTemplate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ComponentTemplate.hpp; path = ../../Engine/Core/ComponentTemplate.hpp; sourceTree = "<group>"; };
+		5EDCA3EA1F41F2FD00329733 /* OpenGLShadowPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLShadowPass.cpp; path = ../../Engine/Render/OpenGL/OpenGLShadowPass.cpp; sourceTree = "<group>"; };
+		5EDCA3EB1F41F2FD00329733 /* OpenGLShadowPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenGLShadowPass.hpp; path = ../../Engine/Render/OpenGL/OpenGLShadowPass.hpp; sourceTree = "<group>"; };
+		5EDCA3EE1F42053D00329733 /* ShadowPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShadowPass.cpp; path = ../../Engine/Render/ShadowPass.cpp; sourceTree = "<group>"; };
+		5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ShadowPass.hpp; path = ../../Engine/Render/ShadowPass.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -647,6 +655,8 @@
 				5E556B041F2961F100F6FB2E /* ShaderSystem.hpp */,
 				5E556AF31F2815E700F6FB2E /* ShaderVariation.cpp */,
 				5E556AF41F2815E700F6FB2E /* ShaderVariation.hpp */,
+				5EDCA3EE1F42053D00329733 /* ShadowPass.cpp */,
+				5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */,
 				5E6C65741F2EB9630089FD55 /* SpotLightComponent.cpp */,
 				5E6C65751F2EB9630089FD55 /* SpotLightComponent.hpp */,
 				5E556B1F1F2AB65000F6FB2E /* StaticMeshComponent.cpp */,
@@ -719,6 +729,8 @@
 				5E6C65FC1F3B5CDD0089FD55 /* OpenGLRenderSystem.hpp */,
 				5E6C65EF1F3B581A0089FD55 /* OpenGLShaderVariation.cpp */,
 				5E6C65F01F3B581A0089FD55 /* OpenGLShaderVariation.hpp */,
+				5EDCA3EA1F41F2FD00329733 /* OpenGLShadowPass.cpp */,
+				5EDCA3EB1F41F2FD00329733 /* OpenGLShadowPass.hpp */,
 				5E6C65EB1F3B573D0089FD55 /* OpenGLTexture.cpp */,
 				5E6C65EC1F3B573D0089FD55 /* OpenGLTexture.hpp */,
 				5E6C65E71F3B55CD0089FD55 /* OpenGLTexture2D.cpp */,
@@ -834,6 +846,7 @@
 				5E6C654B1F2CF26B0089FD55 /* RenderPass.hpp in Headers */,
 				5EFDFDC81F227023009FA81B /* File.hpp in Headers */,
 				5EDCA3CF1F3DF1E100329733 /* DataLoader.hpp in Headers */,
+				5EDCA3ED1F41F2FD00329733 /* OpenGLShadowPass.hpp in Headers */,
 				5EFDFDDC1F228C1A009FA81B /* Resource.hpp in Headers */,
 				5E6C65C91F354C030089FD55 /* MemoryWriter.hpp in Headers */,
 				5E556AA81F23C6CB00F6FB2E /* Command.hpp in Headers */,
@@ -893,6 +906,7 @@
 				5EFDFDEC1F22EB02009FA81B /* ResourceSystem.hpp in Headers */,
 				5E6C65471F2C04800089FD55 /* Frustum.hpp in Headers */,
 				5E556B2A1F2ABA6500F6FB2E /* Vector3.hpp in Headers */,
+				5EDCA3F11F42053D00329733 /* ShadowPass.hpp in Headers */,
 				5E556B2E1F2ABDFC00F6FB2E /* Quaternion.hpp in Headers */,
 				5E6C65731F2EB6A50089FD55 /* Texture3D.hpp in Headers */,
 				5E0523A01F20FBA40088C9BA /* Variant.hpp in Headers */,
@@ -991,6 +1005,7 @@
 				5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */,
 				5E556A9B1F23613300F6FB2E /* Script.cpp in Sources */,
 				5E6C65881F314AD30089FD55 /* NetworkMessage.cpp in Sources */,
+				5EDCA3EC1F41F2FD00329733 /* OpenGLShadowPass.cpp in Sources */,
 				5E6C65C01F3548F90089FD55 /* StorableObject.cpp in Sources */,
 				5E0523C51F216CAB0088C9BA /* Event.cpp in Sources */,
 				5E6C66051F3B5DFD0089FD55 /* OpenGLDeferredLightingPass.cpp in Sources */,
@@ -1050,6 +1065,7 @@
 				5EDCA3D21F3DF69F00329733 /* SQLiteDataLoader.cpp in Sources */,
 				5E0523CE1F2170410088C9BA /* ErrorSystem.cpp in Sources */,
 				5E6C65DD1F3B51BE0089FD55 /* OpenGLVertexAttributes.cpp in Sources */,
+				5EDCA3F01F42053D00329733 /* ShadowPass.cpp in Sources */,
 				5E6C654E1F2CF2CE0089FD55 /* Scene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1155,6 +1171,7 @@
 					"DEBUG=1",
 					"GIGA_API=",
 					"$(inherited)",
+					"GIGA_USING_OPENGL=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"../../ThirdParty/**",

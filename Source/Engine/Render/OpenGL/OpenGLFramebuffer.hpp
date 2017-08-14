@@ -26,6 +26,11 @@ public:
     void SetTexture(Texture2D* texture, int type);
     
     /**
+     * Set a texture to a specific slot (one-time, not permanent)
+     */
+    void SetTexture(Texture3D* texture, int type, int slot);
+    
+    /**
      * Use this framebuffer for rendering/output
      */
     void Use();

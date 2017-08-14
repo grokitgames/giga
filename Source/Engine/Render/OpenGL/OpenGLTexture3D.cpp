@@ -51,3 +51,7 @@ void OpenGLTexture3D::Bind(int slot) {
 void OpenGLTexture3D::Unbind() {
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }
+
+unsigned int OpenGLTexture3D::GetTarget(int slot) {
+    return GL_TEXTURE_CUBE_MAP_POSITIVE_X + slot;
+}

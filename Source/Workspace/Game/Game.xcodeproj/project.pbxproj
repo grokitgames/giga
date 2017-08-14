@@ -42,7 +42,6 @@
 		5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libplatform.a; path = ../../ThirdParty/v8/lib/libv8_libplatform.a; sourceTree = "<group>"; };
 		5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libsampler.a; path = ../../ThirdParty/v8/lib/libv8_libsampler.a; sourceTree = "<group>"; };
 		5EDCA3E01F3E7FAE00329733 /* input.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = input.js; path = ../../../../game/Resources/Scripts/input.js; sourceTree = "<group>"; };
-		5EDCA3E11F3E7FCB00329733 /* quest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = quest.js; path = ../../../../game/Resources/Scripts/quest.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				5EDCA3E01F3E7FAE00329733 /* input.js */,
-				5EDCA3E11F3E7FCB00329733 /* quest.js */,
 			);
 			name = JS;
 			sourceTree = "<group>";
@@ -274,6 +272,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 					"GIGA_API=",
+					"GIGA_USING_OPENGL=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					../../Engine/,

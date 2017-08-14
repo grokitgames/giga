@@ -33,6 +33,11 @@ public:
      */
     virtual void SetTexture(Texture2D* texture, int type) { }
     
+    /**
+     * Set a texture to a specific slot (one-time, not permanent)
+     */
+    virtual void SetTexture(Texture3D* texture, int type, int slot) { }
+    
     /** 
      * Get a texture back out
      */

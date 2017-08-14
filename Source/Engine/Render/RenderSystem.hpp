@@ -54,13 +54,14 @@ public:
     /**
      * Create objects
      */
-	virtual VertexBuffer* CreateVertexBuffer() { assert(false); return(0); }
-    virtual IndexBuffer* CreateIndexBuffer() { assert(false); return(0); }
-    virtual VertexAttributes* CreateVertexAttributes() { assert(false); return(0); }
-    virtual Texture2D* CreateTexture2D() { assert(false); return(0); }
-    virtual Texture3D* CreateTexture3D() { assert(false); return(0); }
-    virtual ShaderVariation* CreateShaderVariation() { assert(false); return(0); }
-    virtual Framebuffer* CreateFramebuffer() { assert(false); return(0); }
+	virtual VertexBuffer* CreateVertexBuffer() { return(0); }
+    virtual IndexBuffer* CreateIndexBuffer() { return(0); }
+    virtual VertexAttributes* CreateVertexAttributes() { return(0); }
+    virtual Texture2D* CreateTexture2D() { return(0); }
+    virtual Texture3D* CreateTexture3D() { return(0); }
+    virtual ShaderVariation* CreateShaderVariation() { return(0); }
+    virtual Framebuffer* CreateFramebuffer() { return(0); }
+    virtual ShadowPass* CreateShadowPass() { return(0); }
     
     /**
      * Scripting integration

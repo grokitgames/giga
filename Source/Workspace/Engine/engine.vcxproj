@@ -91,12 +91,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GIGA_EXPORTS;GIGA_USING_OPENGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Engine;..\..\ThirdParty\glew\include;..\..\ThirdParty\glfw\include;..\..\ThirdParty\glm\include;..\..\ThirdParty\soil\include;..\..\ThirdParty\v8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Engine;..\..\ThirdParty\glew\include;..\..\ThirdParty\glfw\include;..\..\ThirdParty\glm\include;..\..\ThirdParty\mysql\include;..\..\ThirdParty\soil\include;..\..\ThirdParty\sqlite\include;..\..\ThirdParty\v8\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\Engine;..\..\ThirdParty\glfw\lib;..\..\ThirdParty\soil\lib;..\..\ThirdParty\v8\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;SOIL.lib;icui18n.lib;icuuc.lib;v8_base_0.lib;v8_base_1.lib;v8_base_2.lib;v8_base_3.lib;v8_libbase.lib;v8_libplatform.lib;v8_libsampler.lib;v8_external_snapshot.lib;OpenGL32.lib;WS2_32.lib;WinMM.Lib;AdvAPI32.Lib;Crypt32.Lib;Dbghelp.lib;ShLwApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\Engine;..\..\ThirdParty\glfw\lib;..\..\ThirdParty\mysql\lib;..\..\ThirdParty\soil\lib;..\..\ThirdParty\v8\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;mysqlclient.lib;SOIL.lib;icui18n.lib;icuuc.lib;v8_base_0.lib;v8_base_1.lib;v8_base_2.lib;v8_base_3.lib;v8_libbase.lib;v8_libplatform.lib;v8_libsampler.lib;v8_external_snapshot.lib;OpenGL32.lib;WS2_32.lib;WinMM.Lib;AdvAPI32.Lib;Crypt32.Lib;Dbghelp.lib;ShLwApi.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,6 +146,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp" />
     <ClInclude Include="..\..\Engine\Core\Component.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplate.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplateType.hpp" />
     <ClInclude Include="..\..\Engine\Core\Entity.hpp" />
     <ClInclude Include="..\..\Engine\Core\EntitySystem.hpp" />
     <ClInclude Include="..\..\Engine\Core\Error.hpp" />
@@ -159,13 +161,16 @@
     <ClInclude Include="..\..\Engine\Core\Variant.hpp" />
     <ClInclude Include="..\..\Engine\giga-engine.h" />
     <ClInclude Include="..\..\Engine\IO\Command.hpp" />
+    <ClInclude Include="..\..\Engine\IO\DataLoader.hpp" />
     <ClInclude Include="..\..\Engine\IO\File.hpp" />
     <ClInclude Include="..\..\Engine\IO\InputDevice.hpp" />
     <ClInclude Include="..\..\Engine\IO\InputSystem.hpp" />
     <ClInclude Include="..\..\Engine\IO\Keyboard.hpp" />
     <ClInclude Include="..\..\Engine\IO\MemoryReader.hpp" />
     <ClInclude Include="..\..\Engine\IO\MemoryWriter.hpp" />
+    <ClInclude Include="..\..\Engine\IO\MySQLDataLoader.hpp" />
     <ClInclude Include="..\..\Engine\IO\Profiler.hpp" />
+    <ClInclude Include="..\..\Engine\IO\SQLiteDataLoader.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObject.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp" />
@@ -206,6 +211,7 @@
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLIndexBuffer.hpp" />
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLRenderSystem.hpp" />
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLShaderVariation.hpp" />
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLShadowPass.hpp" />
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLTexture.hpp" />
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLTexture2D.hpp" />
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLTexture3D.hpp" />
@@ -221,6 +227,7 @@
     <ClInclude Include="..\..\Engine\Render\Shader.hpp" />
     <ClInclude Include="..\..\Engine\Render\ShaderSystem.hpp" />
     <ClInclude Include="..\..\Engine\Render\ShaderVariation.hpp" />
+    <ClInclude Include="..\..\Engine\Render\ShadowPass.hpp" />
     <ClInclude Include="..\..\Engine\Render\SpotLightComponent.hpp" />
     <ClInclude Include="..\..\Engine\Render\StaticMeshComponent.hpp" />
     <ClInclude Include="..\..\Engine\Render\Texture.hpp" />
@@ -245,6 +252,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp" />
     <ClCompile Include="..\..\Engine\Core\Component.cpp" />
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplate.cpp" />
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplateType.cpp" />
     <ClCompile Include="..\..\Engine\Core\Entity.cpp" />
     <ClCompile Include="..\..\Engine\Core\EntitySystem.cpp" />
     <ClCompile Include="..\..\Engine\Core\ErrorSystem.cpp" />
@@ -253,13 +262,16 @@
     <ClCompile Include="..\..\Engine\Core\GigaObject.cpp" />
     <ClCompile Include="..\..\Engine\Core\Variant.cpp" />
     <ClCompile Include="..\..\Engine\IO\Command.cpp" />
+    <ClCompile Include="..\..\Engine\IO\DataLoader.cpp" />
     <ClCompile Include="..\..\Engine\IO\File.cpp" />
     <ClCompile Include="..\..\Engine\IO\InputDevice.cpp" />
     <ClCompile Include="..\..\Engine\IO\InputSystem.cpp" />
     <ClCompile Include="..\..\Engine\IO\Keyboard.cpp" />
     <ClCompile Include="..\..\Engine\IO\MemoryReader.cpp" />
     <ClCompile Include="..\..\Engine\IO\MemoryWriter.cpp" />
+    <ClCompile Include="..\..\Engine\IO\MySQLDataLoader.cpp" />
     <ClCompile Include="..\..\Engine\IO\Profiler.cpp" />
+    <ClCompile Include="..\..\Engine\IO\SQLiteDataLoader.cpp" />
     <ClCompile Include="..\..\Engine\IO\StorableObject.cpp" />
     <ClCompile Include="..\..\Engine\IO\StorableObjectType.cpp" />
     <ClCompile Include="..\..\Engine\Network\EntitySnapshot.cpp" />
@@ -292,6 +304,7 @@
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLRenderSystem.cpp" />
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLShaderVariation.cpp" />
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLShadowPass.cpp" />
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLTexture3D.cpp" />
@@ -307,6 +320,7 @@
     <ClCompile Include="..\..\Engine\Render\Shader.cpp" />
     <ClCompile Include="..\..\Engine\Render\ShaderSystem.cpp" />
     <ClCompile Include="..\..\Engine\Render\ShaderVariation.cpp" />
+    <ClCompile Include="..\..\Engine\Render\ShadowPass.cpp" />
     <ClCompile Include="..\..\Engine\Render\SpotLightComponent.cpp" />
     <ClCompile Include="..\..\Engine\Render\StaticMeshComponent.cpp" />
     <ClCompile Include="..\..\Engine\Render\Transform.cpp" />
@@ -323,6 +337,7 @@
     <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="..\..\ThirdParty\glew\src\glew.c" />
+    <ClCompile Include="..\..\ThirdParty\sqlite\src\sqlite3.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

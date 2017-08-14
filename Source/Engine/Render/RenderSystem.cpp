@@ -6,6 +6,14 @@ RenderSystem::RenderSystem() {
     m_scene = 0;
 }
 
+void RenderSystem::Initialize() {
+	if (m_scene) {
+		delete m_scene;
+	}
+
+	m_scene = new Scene();
+}
+
 void RenderSystem::AddRenderPass(RenderPass* pass) {
     m_passes.AddObject(pass);
 }

@@ -91,11 +91,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;USING_V8_SHARED;GIGA_USING_OPENGL;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Engine;..\..\ThirdParty\glew\include;..\..\ThirdParty\glfw\include;..\..\ThirdParty\glm\include;..\..\ThirdParty\soil\include;..\..\ThirdParty\v8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Engine;..\..\ThirdParty\glew\include;..\..\ThirdParty\glfw\include;..\..\ThirdParty\glm\include;..\..\ThirdParty\mysql\include;..\..\ThirdParty\soil\include;..\..\ThirdParty\sqlite\include;..\..\ThirdParty\v8\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\..\Bin;..\..\ThirdParty\glfw\lib;..\..\ThirdParty\soil\lib;..\..\ThirdParty\v8\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\Bin</AdditionalLibraryDirectories>
       <AdditionalDependencies>engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

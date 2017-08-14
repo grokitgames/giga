@@ -17,6 +17,11 @@ public:
      */
     void SetPosition(vector3 position) { m_position = position; }
 
+	/**
+	 * Render
+	 */
+	virtual void Render(Scene* scene) { }
+
 protected:
     // Frustum
     Frustum* m_frustum;

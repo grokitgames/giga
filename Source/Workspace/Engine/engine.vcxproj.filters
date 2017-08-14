@@ -325,6 +325,27 @@
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLVertexBuffer.hpp">
       <Filter>Render\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplate.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplateType.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\DataLoader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\MySQLDataLoader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\SQLiteDataLoader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\ShadowPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLShadowPass.hpp">
+      <Filter>Render\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -565,6 +586,30 @@
       <Filter>Render\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLVertexBuffer.cpp">
+      <Filter>Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplate.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplateType.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\sqlite\src\sqlite3.c">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\DataLoader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\MySQLDataLoader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\SQLiteDataLoader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\ShadowPass.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLShadowPass.cpp">
       <Filter>Render\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>

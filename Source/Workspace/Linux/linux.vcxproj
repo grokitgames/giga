@@ -62,9 +62,14 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RemoteLinkLocalCopyOutput>false</RemoteLinkLocalCopyOutput>
+  </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp" />
     <ClCompile Include="..\..\Engine\Core\Component.cpp" />
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplate.cpp" />
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplateType.cpp" />
     <ClCompile Include="..\..\Engine\Core\Entity.cpp" />
     <ClCompile Include="..\..\Engine\Core\EntitySystem.cpp" />
     <ClCompile Include="..\..\Engine\Core\ErrorSystem.cpp" />
@@ -73,12 +78,15 @@
     <ClCompile Include="..\..\Engine\Core\GigaObject.cpp" />
     <ClCompile Include="..\..\Engine\Core\Variant.cpp" />
     <ClCompile Include="..\..\Engine\IO\Command.cpp" />
+    <ClCompile Include="..\..\Engine\IO\DataLoader.cpp" />
     <ClCompile Include="..\..\Engine\IO\File.cpp" />
     <ClCompile Include="..\..\Engine\IO\InputDevice.cpp" />
     <ClCompile Include="..\..\Engine\IO\InputSystem.cpp" />
     <ClCompile Include="..\..\Engine\IO\MemoryReader.cpp" />
     <ClCompile Include="..\..\Engine\IO\MemoryWriter.cpp" />
+    <ClCompile Include="..\..\Engine\IO\MySQLDataLoader.cpp" />
     <ClCompile Include="..\..\Engine\IO\Profiler.cpp" />
+    <ClCompile Include="..\..\Engine\IO\SQLiteDataLoader.cpp" />
     <ClCompile Include="..\..\Engine\IO\StorableObject.cpp" />
     <ClCompile Include="..\..\Engine\IO\StorableObjectType.cpp" />
     <ClCompile Include="..\..\Engine\Network\EntitySnapshot.cpp" />
@@ -93,16 +101,33 @@
     <ClCompile Include="..\..\Engine\Network\UDPSocket.cpp" />
     <ClCompile Include="..\..\Engine\Platform\DateTime.cpp" />
     <ClCompile Include="..\..\Engine\Platform\Timer.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Animation.cpp" />
+    <ClCompile Include="..\..\Engine\Render\AnimationFrame.cpp" />
     <ClCompile Include="..\..\Engine\Render\BoundingBox.cpp" />
     <ClCompile Include="..\..\Engine\Render\CameraComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Framebuffer.cpp" />
     <ClCompile Include="..\..\Engine\Render\Frustum.cpp" />
     <ClCompile Include="..\..\Engine\Render\LightComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Linux\Color.cpp" />
+    <ClCompile Include="..\..\Engine\Render\MaterialSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Mesh.cpp" />
     <ClCompile Include="..\..\Engine\Render\Plane.cpp" />
+    <ClCompile Include="..\..\Engine\Render\PostProcessPass.cpp" />
     <ClCompile Include="..\..\Engine\Render\Quaternion.cpp" />
     <ClCompile Include="..\..\Engine\Render\RenderComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\RenderPass.cpp" />
+    <ClCompile Include="..\..\Engine\Render\RenderSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Scene.cpp" />
+    <ClCompile Include="..\..\Engine\Render\Shader.cpp" />
+    <ClCompile Include="..\..\Engine\Render\ShaderSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Render\ShaderVariation.cpp" />
+    <ClCompile Include="..\..\Engine\Render\ShadowPass.cpp" />
+    <ClCompile Include="..\..\Engine\Render\SpotLightComponent.cpp" />
+    <ClCompile Include="..\..\Engine\Render\StaticMeshComponent.cpp" />
     <ClCompile Include="..\..\Engine\Render\Transform.cpp" />
     <ClCompile Include="..\..\Engine\Render\TransformComponent.cpp" />
     <ClCompile Include="..\..\Engine\Render\Vector3.cpp" />
+    <ClCompile Include="..\..\Engine\Render\VertexFormat.cpp" />
     <ClCompile Include="..\..\Engine\Resource\Resource.cpp" />
     <ClCompile Include="..\..\Engine\Resource\ResourceObject.cpp" />
     <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp" />
@@ -112,10 +137,14 @@
     <ClCompile Include="..\..\Engine\Scripting\ScriptableVariant.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp" />
+    <ClCompile Include="..\..\Linux\main.cpp" />
+    <ClCompile Include="..\..\ThirdParty\sqlite\src\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp" />
     <ClInclude Include="..\..\Engine\Core\Component.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplate.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplateType.hpp" />
     <ClInclude Include="..\..\Engine\Core\Entity.hpp" />
     <ClInclude Include="..\..\Engine\Core\EntitySystem.hpp" />
     <ClInclude Include="..\..\Engine\Core\Error.hpp" />
@@ -129,13 +158,16 @@
     <ClInclude Include="..\..\Engine\Core\Variant.hpp" />
     <ClInclude Include="..\..\Engine\giga-engine.h" />
     <ClInclude Include="..\..\Engine\IO\Command.hpp" />
+    <ClInclude Include="..\..\Engine\IO\DataLoader.hpp" />
     <ClInclude Include="..\..\Engine\IO\File.hpp" />
     <ClInclude Include="..\..\Engine\IO\InputDevice.hpp" />
     <ClInclude Include="..\..\Engine\IO\InputSystem.hpp" />
     <ClInclude Include="..\..\Engine\IO\Keyboard.hpp" />
     <ClInclude Include="..\..\Engine\IO\MemoryReader.hpp" />
     <ClInclude Include="..\..\Engine\IO\MemoryWriter.hpp" />
+    <ClInclude Include="..\..\Engine\IO\MySQLDataLoader.hpp" />
     <ClInclude Include="..\..\Engine\IO\Profiler.hpp" />
+    <ClInclude Include="..\..\Engine\IO\SQLiteDataLoader.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObject.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp" />
@@ -178,6 +210,7 @@
     <ClInclude Include="..\..\Engine\Render\Shader.hpp" />
     <ClInclude Include="..\..\Engine\Render\ShaderSystem.hpp" />
     <ClInclude Include="..\..\Engine\Render\ShaderVariation.hpp" />
+    <ClInclude Include="..\..\Engine\Render\ShadowPass.hpp" />
     <ClInclude Include="..\..\Engine\Render\SpotLightComponent.hpp" />
     <ClInclude Include="..\..\Engine\Render\StaticMeshComponent.hpp" />
     <ClInclude Include="..\..\Engine\Render\Texture.hpp" />
@@ -206,13 +239,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux;../contrib/bullet/include;../contrib/fmod/include;../contrib/freetype/include;../contrib/glew/include;../contrib/glfw/include;../contrib/glm/include;../contrib/libcurl/include;../contrib/mysql/include;../contrib/openssl/include;../contrib/recast/include;../contrib/soil/include;../contrib/sqlite/include;../contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux/Engine;../contrib/bullet/include;../contrib/fmod/include;../contrib/freetype/include;../contrib/glew/include;../contrib/glfw/include;../contrib/glm/include;../contrib/libcurl/include;../contrib/mysql/include;../contrib/openssl/include;../contrib/recast/include;../contrib/soil/include;../contrib/sqlite/include;../contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GIGA_API=</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>/root/projects/contrib/v8/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LibraryDependencies>icui18n;icuuc;v8_base;v8_external_snapshot;v8_libbase;v8_libplatform;v8_libsampler;pthread;%(LibraryDependencies)</LibraryDependencies>
-      <AdditionalDependencies>$(StlAdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/root/projects/contrib/v8/lib;/usr/lib/x86_64-linux-gnu;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LibraryDependencies>pthread;mysqlclient;dl;%(LibraryDependencies)</LibraryDependencies>
+      <AdditionalDependencies>-lv8_base;-lv8_external_snapshot;-lv8_libplatform;-lv8_libbase;-lv8_libsampler;/root/projects/contrib/v8/lib/libicui18n.a;/root/projects/contrib/v8/lib/libicuuc.a;$(StlAdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

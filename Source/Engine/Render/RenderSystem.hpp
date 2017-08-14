@@ -10,12 +10,12 @@ public:
     RenderSystem();
     virtual ~RenderSystem() = default;
     
-    GIGA_CLASS_NAME("RenderSystem")
+	GIGA_CLASS_NAME("RenderSystem");
     
     /**
      * Initialize with width/height
      */
-    virtual void Initialize(int width, int height) { }
+    void Initialize();
     
     /**
      * Update (render)
@@ -54,14 +54,14 @@ public:
     /**
      * Create objects
      */
-	virtual VertexBuffer* CreateVertexBuffer() { return(0); }
-    virtual IndexBuffer* CreateIndexBuffer() { return(0); }
-    virtual VertexAttributes* CreateVertexAttributes() { return(0); }
-    virtual Texture2D* CreateTexture2D() { return(0); }
-    virtual Texture3D* CreateTexture3D() { return(0); }
-    virtual ShaderVariation* CreateShaderVariation() { return(0); }
-    virtual Framebuffer* CreateFramebuffer() { return(0); }
-    virtual ShadowPass* CreateShadowPass() { return(0); }
+	virtual VertexBuffer* CreateVertexBuffer() { return(new VertexBuffer()); }
+    virtual IndexBuffer* CreateIndexBuffer() { return(new IndexBuffer()); }
+    virtual VertexAttributes* CreateVertexAttributes() { return(new VertexAttributes()); }
+    virtual Texture2D* CreateTexture2D() { return(new Texture2D()); }
+    virtual Texture3D* CreateTexture3D() { return(new Texture3D()); }
+    virtual ShaderVariation* CreateShaderVariation() { return(new ShaderVariation()); }
+    virtual Framebuffer* CreateFramebuffer() { return(new Framebuffer()); }
+    virtual ShadowPass* CreateShadowPass() { return(new ShadowPass()); }
     
     /**
      * Scripting integration

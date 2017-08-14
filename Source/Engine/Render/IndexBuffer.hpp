@@ -33,7 +33,7 @@ public:
     /**
      * Read the buffer's contents
      */
-    virtual unsigned int* GetData(int& count) = 0;
+	virtual unsigned int* GetData(int& count) { count = 0; return(0); }
     
 protected:
     // Count of indices

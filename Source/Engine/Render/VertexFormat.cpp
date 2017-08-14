@@ -28,7 +28,7 @@ void VertexFormat::Bind() {
         RenderSystem* renderSystem = GetSystem<RenderSystem>();
         
         m_vertexArrayObject = renderSystem->CreateVertexAttributes();
-        m_vertexArrayObject->Create();
+		m_vertexArrayObject->Create();
     }
     m_vertexArrayObject->Bind();
 }

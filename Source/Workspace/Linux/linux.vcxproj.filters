@@ -25,6 +25,9 @@
     <Filter Include="Render">
       <UniqueIdentifier>{b17ecb07-2f27-45da-aa6f-211593d7b85d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{e54563c9-0577-4556-b032-ef6487de3830}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -172,6 +175,76 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Engine\Render\Plane.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplate.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\ComponentTemplateType.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\DataLoader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\MySQLDataLoader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\SQLiteDataLoader.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\sqlite\src\sqlite3.c">
+      <Filter>External</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Mesh.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\RenderSystem.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Animation.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\AnimationFrame.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Framebuffer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\MaterialSystem.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\PostProcessPass.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\RenderPass.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Scene.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Shader.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\ShaderSystem.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\ShaderVariation.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\SpotLightComponent.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\StaticMeshComponent.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\VertexFormat.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Render\Linux\Color.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Linux\main.cpp" />
+    <ClCompile Include="..\..\Engine\Render\ShadowPass.cpp">
       <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
@@ -424,6 +497,24 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\PostProcessPass.hpp">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplate.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ComponentTemplateType.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\DataLoader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\MySQLDataLoader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\SQLiteDataLoader.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Render\ShadowPass.hpp">
       <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>

@@ -122,3 +122,7 @@ ShaderVariation* OpenGLRenderSystem::CreateShaderVariation() {
 Framebuffer* OpenGLRenderSystem::CreateFramebuffer() {
     return(new OpenGLFramebuffer());
 }
+
+ShadowPass* OpenGLRenderSystem::CreateShadowPass() {
+    return(new OpenGLShadowPass());
+}

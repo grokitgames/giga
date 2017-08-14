@@ -115,3 +115,7 @@ void OpenGLTexture2D::Save(std::string filename) {
     free(data);
     free(pixels);
 }
+
+unsigned int OpenGLTexture2D::GetTarget(int slot) {
+    return GL_TEXTURE_2D;
+}

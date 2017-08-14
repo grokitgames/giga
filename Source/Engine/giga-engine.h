@@ -142,11 +142,12 @@ typedef glm::mat4 matrix4;
 #include <Render/Plane.hpp>
 #include <Render/Frustum.hpp>
 #include <Render/CameraComponent.hpp>
-#include <Render/LightComponent.hpp>
-#include <Render/SpotLightComponent.hpp>
-#include <Render/Scene.hpp>
 #include <Render/Framebuffer.hpp>
 #include <Render/RenderPass.hpp>
+#include <Render/ShadowPass.hpp>
+#include <Render/LightComponent.hpp>
+#include <Render/Scene.hpp>
+#include <Render/SpotLightComponent.hpp>
 #include <Render/PostProcessPass.hpp>
 #include <Render/RenderSystem.hpp>
 #include <Network/UDPSocket.hpp>
@@ -174,6 +175,7 @@ typedef glm::mat4 matrix4;
 #include <Render/OpenGL/OpenGLDeferredRenderPass.hpp>
 #include <Render/OpenGL/OpenGLDeferredLightingPass.hpp>
 #include <Render/OpenGL/OpenGLRenderSystem.hpp>
+#include <Render/OpenGL/OpenGLShadowPass.hpp>
 #endif
 
 #endif

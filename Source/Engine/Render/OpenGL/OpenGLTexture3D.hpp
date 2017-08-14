@@ -30,6 +30,11 @@ public:
      */
     void Bind(int slot);
     void Unbind();
+    
+    /**
+     * Get target (always GL_TEXTURE_2D for 2D textures)
+     */
+    unsigned int GetTarget(int slot);
 };
 
 #endif

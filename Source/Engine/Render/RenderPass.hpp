@@ -2,6 +2,8 @@
 #ifndef renderpass_hpp
 #define renderpass_hpp
 
+class Scene;
+
 class GIGA_API RenderPass {
 public:
     RenderPass() = default;

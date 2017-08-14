@@ -30,6 +30,7 @@ public:
     Texture3D* CreateTexture3D();
     ShaderVariation* CreateShaderVariation();
     Framebuffer* CreateFramebuffer();
+    ShadowPass* CreateShadowPass();
     
 protected:
     // Orthographic projection (for deferred rendering/post-processing)

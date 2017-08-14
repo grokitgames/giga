@@ -44,6 +44,7 @@ public:
     int GetHeight() { return m_height; }
     int GetChannels() { return m_channels; }
     virtual unsigned int GetTexture() = 0;
+    virtual unsigned int GetTarget(int slot) = 0;
     
 protected:
     // Width and height

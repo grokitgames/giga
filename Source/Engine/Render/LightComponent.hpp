@@ -7,7 +7,7 @@ class Scene;
 /**
  * Defines a light in our world/scene
  */
-class GIGA_API LightComponent : public Component {
+class GIGA_API LightComponent : public RenderComponent {
 public:
     virtual ~LightComponent() = default;
     
@@ -90,7 +90,22 @@ protected:
     /**
      * Shadow map texture
      */
-    std::vector<Texture*> m_depthTextures;
+    Texture* m_shadowMap;
+    
+    /**
+     * Depth texture
+     */
+    Texture2D* m_depthTexture;
+    
+    /**
+     * Framebuffer for doing depth pass
+     */
+    Framebuffer* m_framebuffer;
+    
+    /**
+     * Render pass for shadow passes
+     */
+    ShadowPass* m_shadowPass;
     
     /**
      * A renderable light volume to see where the light is

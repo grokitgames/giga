@@ -7,4 +7,7 @@ LightComponent::LightComponent() {
     m_passes = 1;
     m_debugLight = 0;
     m_mesh = 0;
+    m_shadowMap = 0;
+    m_depthTexture = 0;
+    m_shadowPass = 0;
 }

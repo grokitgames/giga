@@ -4,6 +4,7 @@
 NetworkMessage::NetworkMessage() {
     memset(&m_envelope, 0, sizeof(NetworkEnvelope));
     m_payload = 0;
+	m_payloadOffset = 0;
 }
 
 NetworkMessage::~NetworkMessage() {
@@ -82,7 +83,8 @@ unsigned char* NetworkMessage::GetPayload(int &size) {
 }
 
 void NetworkMessage::ReadPayload(void* bytes, int size) {
-    assert(m_payloadOffset + size <= m_envelope.bytes);
+	// printf("Bytes: %d, offset: %d, reading: %d\n", m_envelope.bytes, m_payloadOffset, size);
+    GIGA_ASSERT(m_payloadOffset + size <= m_envelope.bytes, "Cannot read more than size of packet.");
     
     memcpy(bytes, m_payload + m_payloadOffset, size);
     m_payloadOffset += size;

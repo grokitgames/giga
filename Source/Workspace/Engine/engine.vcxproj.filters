@@ -459,9 +459,6 @@
     <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Engine\Network\Win23UDPSocket.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ThirdParty\glew\src\glew.c">
       <Filter>External</Filter>
     </ClCompile>
@@ -611,6 +608,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Render\OpenGL\OpenGLShadowPass.cpp">
       <Filter>Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Win32UDPSocket.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

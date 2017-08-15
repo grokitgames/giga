@@ -40,7 +40,7 @@ bool PosixUDPSocket::Connect(std::string server, int port) {
     }
     
     m_addrlen = sizeof(m_sockaddr);
-    m_connected = true;
+	m_connected = false;
     
     return(true);
 }
@@ -107,7 +107,7 @@ void PosixUDPSocket::Accept(int socket) {
 
 void PosixUDPSocket::SetSocketAddress(sockaddr_in* sock, socklen_t length) {
     m_sockaddr.sin_family = sock->sin_family;
-    memcpy((void *)&m_sockaddr.sin_addr, (void*)&sock->sin_addr, sizeof(sockaddr_in));
+    memcpy((void *)&m_sockaddr.sin_addr, (void*)&sock->sin_addr, sizeof(in_addr));
     m_sockaddr.sin_port = sock->sin_port;
 }
 

@@ -63,6 +63,24 @@ void Application::Initialize() {
 	resourceSystem->RegisterResourceType<Texture2D>("Texture2D");
 	    
     Application::Log(MSGTYPE_DEBUG, "Registered resource types...");
+
+
+	/**
+	* Networking message types
+	*/
+
+	Application::Log(MSGTYPE_DEBUG, "Registering network message types...");
+
+	networkSystem->RegisterMessageType<EchoRequestMessage>(10);
+	networkSystem->RegisterMessageType<EchoResponseMessage>(20);
+	networkSystem->RegisterMessageType<EntitySnapshotMessage>(30);
+
+	Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
+
+	/**
+	 * Network messages
+	 */
+	
     
     /**
      * Register component types
@@ -242,19 +260,6 @@ void Application::Initialize() {
     scriptingSystem->RegisterScriptableObjectType<CameraComponent>(cameraType);
     
     Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
-    
-    /**
-     * Networking message types
-     */
-    
-    if(networkSystem != 0) {
-        Application::Log(MSGTYPE_DEBUG, "Registering network message types...");
-        
-        networkSystem->RegisterMessageType<EchoRequestMessage>(10);
-        networkSystem->RegisterMessageType<EchoResponseMessage>(20);
-        
-        Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
-    }
     
     Application::Log(MSGTYPE_INFO, "Initialization complete.");
 }

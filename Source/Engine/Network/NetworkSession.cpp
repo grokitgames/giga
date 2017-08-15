@@ -29,6 +29,8 @@ void NetworkSession::Write(NetworkMessage* msg) {
     unsigned char* message = msg->GetPayload(count);
     
     int written = socket->Write(message, count);
+
+	printf("Count: %d, written: %d, errno: %d\n", count, written, errno);
     assert(written == count); // Assert = message not sent in full
     free(message);
 }

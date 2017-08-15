@@ -3,6 +3,7 @@
 
 void EchoResponseMessage::OnSend() {
     // Send the server start time + current server time
+	m_envelope.type = 20;
     
     // Get the current server time
     timespec currentTime;

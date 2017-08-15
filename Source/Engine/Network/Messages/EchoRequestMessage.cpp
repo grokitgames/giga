@@ -3,6 +3,7 @@
 
 void EchoRequestMessage::OnSend() {
     // Send the current timestamp of our client so we can receive it back in a connect reply and get RTT
+	m_envelope.type = 10;
     
     // Get the current client time
     timespec currentTime;

@@ -39,6 +39,9 @@ void StartApplication() {
 	// Add to entity
 	crate->AddComponent(meshComponent);
 
+	// Set up server
+	networkSystem->Listen(8053);
+
 	// Create main loop timer
 	Timer* mainTimer = new Timer();
 	mainTimer->Start();

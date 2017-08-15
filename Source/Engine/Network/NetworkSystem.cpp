@@ -28,6 +28,7 @@ void NetworkSystem::Connect(std::string host, int port) {
     
     // Initialize player and session ID to null to start
     session->player = 0;
+	session->sessionID = 0;
     
     // Create socket
     session->socket = new UDPSocket();
@@ -138,6 +139,7 @@ NetworkSession* NetworkSystem::FindSession(int sessionID, UDPSocket* socket) {
     // Set it on new socket for future sending
     session->socket->SetSocketAddress(in, len);
     session->sessionID = sessionID;
+	session->socket->SetSocket(socket->GetSocket());
     
     // Add to list
     m_info.server_info->sessions.push_back(session);

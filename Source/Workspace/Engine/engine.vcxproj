@@ -283,7 +283,7 @@
     <ClCompile Include="..\..\Engine\Network\NetworkSystem.cpp" />
     <ClCompile Include="..\..\Engine\Network\ReplicationSystem.cpp" />
     <ClCompile Include="..\..\Engine\Network\UDPSocket.cpp" />
-    <ClCompile Include="..\..\Engine\Network\Win23UDPSocket.cpp" />
+    <ClCompile Include="..\..\Engine\Network\Win32UDPSocket.cpp" />
     <ClCompile Include="..\..\Engine\Platform\DateTime.cpp" />
     <ClCompile Include="..\..\Engine\Platform\Timer.cpp" />
     <ClCompile Include="..\..\Engine\Platform\Window.cpp" />

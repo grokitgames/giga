@@ -80,6 +80,9 @@ void StartApplication() {
     sc->Initialize(inputjs);
     
     camera->AddComponent(sc);
+	
+	// Connect to server
+	networkSystem->Connect("grokitgames.com", 8053);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

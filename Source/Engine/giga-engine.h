@@ -18,7 +18,7 @@
 #endif
 
 // Engine specific assertion that allows a message to be provided
-#define GIGA_ASSERT(test, message) { assert(test); }
+#define GIGA_ASSERT(test, message) { if((test) == false) printf(message); assert(test); }
 
 // Base math includes; _USE_MATH_DEFINES gives us constants like PI
 #define _USE_MATH_DEFINES

@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "engine", "Engine\engine.vcxproj", "{1C70D048-8077-4701-8676-979685BA7EFF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game", "Game\game.vcxproj", "{1F251BED-A92A-4816-A05E-C73D018E781A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C70D048-8077-4701-8676-979685BA7EFF} = {1C70D048-8077-4701-8676-979685BA7EFF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "linux", "Linux\linux.vcxproj", "{B4CD84EC-F250-4436-B017-6C7D393870A4}"
 EndProject

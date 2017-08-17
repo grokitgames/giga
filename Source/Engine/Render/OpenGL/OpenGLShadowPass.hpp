@@ -24,12 +24,6 @@ private:
     // Storage for combined view/proj matrix
     matrix4 m_viewproj;
     matrix4 m_view;
-    
-    // Frustum
-    Frustum* m_frustum;
-    
-    // Position of light
-    vector3 m_position;
 };
 
 #endif

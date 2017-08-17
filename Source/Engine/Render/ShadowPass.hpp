@@ -8,14 +8,9 @@ public:
     ~ShadowPass() = default;
     
     /**
-     * Set frustum
+     * Look at
      */
-    void SetFrustum(Frustum* frustum) { m_frustum = frustum; }
-    
-    /**
-     * Set position
-     */
-    void SetPosition(vector3 position) { m_position = position; }
+    void SetView(CameraComponent* camera) { m_camera = camera; }
 
 	/**
 	 * Render
@@ -23,11 +18,8 @@ public:
 	virtual void Render(Scene* scene) { }
 
 protected:
-    // Frustum
-    Frustum* m_frustum;
-    
-    // Position of light
-    vector3 m_position;
+    // View
+    CameraComponent* m_camera;
 };
 
 #endif

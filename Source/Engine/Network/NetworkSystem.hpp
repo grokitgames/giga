@@ -4,6 +4,8 @@
 
 #define NETWORK_MAX_PACKET_SIZE     8000
 #define NETWORK_TICKS_PER_SECOND    20
+#define NETWORK_ECHO_TICKS          10
+#define NETWORK_ECHO_TIMEOUT        60
 
 /**
  * Info specific to acting as a client
@@ -98,6 +100,11 @@ public:
      * Add a session to our tracked sessions (server)
      */
     NetworkSession* FindSession(int sessionID, UDPSocket* socket = 0);
+    
+    /**
+     * Remove a session
+     */
+    void RemoveSession(int sessionID);
     
     /**
      * Register a new message type (by class and unique ID)

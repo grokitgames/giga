@@ -25,16 +25,14 @@ void OpenGLShadowPass::Render(Scene* scene) {
     // Get our renderable mesh objects
     std::vector<StaticMeshComponent*> renderList = scene->GetMeshes();
     
-    GL_CHECK(glViewport(0, 0, 512, 512));
-    
     // Get matrices
-    matrix4 proj = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 100.0f);
-    m_view = glm::lookAt(m_position, m_position + vector3(0, 0, -1), vector3(0, 1, 0));
+    matrix4 proj = m_camera->GetProjectionMatrix();
+    m_view = m_camera->GetViewMatrix();
     m_viewproj = proj * m_view;
     
     // Get the viewing frustum of the camera
-    Frustum viewFrustum = *m_frustum;
-    vector3 cameraPosition = m_position;
+    Frustum viewFrustum = m_camera->GetViewFrustum();
+    vector3 cameraPosition = m_camera->GetWorldPosition();
     
     // Loop over scene's renderable list and render into g-buffer
     if (renderList.size() > 0) {

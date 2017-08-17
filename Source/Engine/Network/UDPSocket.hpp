@@ -45,6 +45,7 @@ public:
      * Get the raw socket
      */
     int GetSocket() { return m_socket; }
+    void SetSocket(int socket) { m_socket = socket; }
     
     /**
      * Create a listening socket

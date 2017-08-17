@@ -73,6 +73,12 @@ void CameraComponent::SetLookVector(vector3 point) {
     CalculateMatricesAndFrustum();
 }
 
+void CameraComponent::SetUpVector(vector3 up) {
+    m_up = up;
+    
+    CalculateMatricesAndFrustum();
+}
+
 void CameraComponent::SetViewport(int width, int height) {
     m_width = width;
     m_height = height;

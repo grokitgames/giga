@@ -78,14 +78,9 @@ protected:
     unsigned int m_passes;
     
     /**
-     * Light space matrix
+     * "Camera" for matrices and frustums
      */
-    std::vector<matrix4> m_lightSpaceMatrices;
-    
-    /**
-     * Bounding frustum for this light
-     */
-    std::vector<Frustum> m_lightFrustums;
+    CameraComponent* m_camera;
     
     /**
      * Shadow map texture

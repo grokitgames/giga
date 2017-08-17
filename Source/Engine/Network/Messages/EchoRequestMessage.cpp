@@ -44,4 +44,8 @@ void EchoRequestMessage::OnReceive() {
     // Server will send this back
     NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
     networkSystem->Send(response);
+    
+    // Update last ping time for session
+    NetworkSession* session = networkSystem->FindSession(m_envelope.session);
+    session->lastPing = networkSystem->GetCurrentTick();
 }

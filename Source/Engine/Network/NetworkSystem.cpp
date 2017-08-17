@@ -235,6 +235,13 @@ void NetworkSystem::Update(float delta) {
     }
     
     // Check for timed out clients
+    if(m_systemType == NETWORK_SYSTEM_SERVER) {
+        for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
+            if(m_info.server_info->sessions[i]->lastPing < (tick - NETWORK_ECHO_TIMEOUT)) {
+                RemoveSession(m_info.server_info->sessions[i]->sessionID);
+            }
+        }
+    }
 }
 
 int NetworkSystem::GetCurrentTick() {

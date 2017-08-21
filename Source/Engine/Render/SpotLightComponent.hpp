@@ -25,8 +25,17 @@ public:
     SpotLightComponent* Clone();
     
 protected:
+    struct LookVectors {
+        vector3 look;
+        vector3 up;
+    };
+    
+protected:
     // Re-calc matrices
     void RecalculateMatrices();
+    
+    // Set look vectors
+    LookVectors m_vectors[6];
 };
 
 #endif

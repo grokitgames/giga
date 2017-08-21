@@ -147,11 +147,31 @@ NetworkSession* NetworkSystem::FindSession(int sessionID, UDPSocket* socket) {
     return(session);
 }
 
+void NetworkSystem::RemoveSession(int sessionID) {
+    if(m_systemType == NETWORK_SYSTEM_CLIENT) {
+        delete m_info.client_info->session;
+        m_info.client_info->session = 0;
+    }
+    
+    std::vector<NetworkSession*>::iterator i = m_info.server_info->sessions.begin();
+    for(i; i != m_info.server_info->sessions.end(); i++) {
+        if((*i)->sessionID == sessionID) {
+            delete (*i);
+            m_info.server_info->sessions.erase(i);
+            
+            return;
+        }
+    }
+}
+
 void NetworkSystem::Update(float delta) {
     // Make sure we're initialized and have something to update
     if(m_systemType == 0) {
         return;
     }
+    
+    // Get current tick
+    int tick = GetCurrentTick();
     
     // Check if there is any data waiting
     timeval wait = {0, 0};
@@ -202,6 +222,25 @@ void NetworkSystem::Update(float delta) {
         
         // Free buffer data
         free(buffer);
+    }
+    
+    // Send echo packet (if client)
+    if(m_systemType == NETWORK_SYSTEM_CLIENT) {
+        if(m_info.client_info->session->lastPing < (tick - NETWORK_ECHO_TICKS)) {
+            EchoRequestMessage* request = new EchoRequestMessage();
+            m_info.client_info->session->Write(request);
+            
+            m_info.client_info->session->lastPing = tick;
+        }
+    }
+    
+    // Check for timed out clients
+    if(m_systemType == NETWORK_SYSTEM_SERVER) {
+        for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
+            if(m_info.server_info->sessions[i]->lastPing < (tick - NETWORK_ECHO_TIMEOUT)) {
+                RemoveSession(m_info.server_info->sessions[i]->sessionID);
+            }
+        }
     }
 }
 

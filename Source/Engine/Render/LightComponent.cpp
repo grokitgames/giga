@@ -10,4 +10,5 @@ LightComponent::LightComponent() {
     m_shadowMap = 0;
     m_depthTexture = 0;
     m_shadowPass = 0;
+    m_camera = 0;
 }

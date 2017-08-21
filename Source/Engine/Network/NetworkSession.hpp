@@ -38,6 +38,9 @@ public:
     
     // The player entity of this player in the world
     Entity* player;
+    
+    // Last ping time (in ticks)
+    int lastPing;
 };
 
 #endif

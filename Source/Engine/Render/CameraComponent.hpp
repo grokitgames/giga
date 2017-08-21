@@ -10,9 +10,10 @@ public:
     GIGA_CLASS_NAME("CameraComponent");
     
     /**
-     * Set the look vector
+     * Set vectors
      */
     void SetLookVector(vector3 point);
+    void SetUpVector(vector3 up);
     
     /**
      * Get vectors
@@ -33,10 +34,13 @@ public:
     matrix4 GetProjectionMatrix() { return m_projection; }
     
     /**
-     * Get near/far values
+     * Get/set near/far values
      */
     float GetNear() { return m_fnear; }
     float GetFar() { return m_ffar; }
+    
+    void SetNear(float fnear) { m_fnear = fnear; }
+    void SetFar(float ffar) { m_ffar = ffar; }
     
     /**
      * Set size of window viewport

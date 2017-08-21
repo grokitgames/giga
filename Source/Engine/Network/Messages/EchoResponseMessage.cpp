@@ -68,7 +68,7 @@ void EchoResponseMessage::OnReceive() {
     ping.tv_sec = pingSeconds;
     ping.tv_nsec = pingNsecond;
     
-    timespec delta = Timer::Diff(&now, &ping);
+    timespec delta = Timer::Diff(&ping, &now);
     float rtt = (float)delta.tv_sec + ((float)delta.tv_nsec / 1000000000.0f);
     
     // Get our session
@@ -84,11 +84,11 @@ void EchoResponseMessage::OnReceive() {
     serverTime.tv_nsec = currentNsecond;
     
     // Get the time difference from current server time to us
-    timespec offset = Timer::Diff(&now, &serverTime);
+    timespec offset = Timer::Diff(&serverTime, &now);
     float diff = (float)offset.tv_sec + ((float)offset.tv_nsec / 1000000000.0f);
     
     // Minus the ping time
-    float d = diff - session->info.pingTime;
+    float d = diff - rtt;
     session->info.clientTimeDiff = d;
     
     // Save the start time

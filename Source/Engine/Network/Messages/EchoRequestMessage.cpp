@@ -13,15 +13,26 @@ void EchoRequestMessage::OnSend() {
     uint32_t currentNsecond = (uint32_t)currentTime.tv_nsec;
     
     // Pack the current time
-    unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 2);
+    unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 3);
     
     int offset = 0;
     memcpy(message + offset, &currentSeconds, sizeof(uint32_t));
     
     offset += sizeof(uint32_t);
     memcpy(message + offset, &currentNsecond, sizeof(uint32_t));
+
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	NetworkSession* session = networkSystem->FindSession(0);
+	offset += sizeof(uint32_t);
+
+	uint32_t pingTime = floor(session->info.pingTime * 1000);
+	memcpy(message + offset, &pingTime, sizeof(uint32_t));
     
-    SetPayload(message, sizeof(uint32_t) * 2);
+	offset += sizeof(uint32_t);
+	uint32_t offsetTime = floor(session->info.clientTimeDiff * 1000);
+	memcpy(message + offset, &offsetTime, sizeof(uint32_t));
+
+    SetPayload(message, sizeof(uint32_t) * 4);
 }
 
 void EchoRequestMessage::OnReceive() {
@@ -29,9 +40,12 @@ void EchoRequestMessage::OnReceive() {
     
     // Read out the current timestamp of the client
     uint32_t clientSeconds, clientNsecond;
+	uint32_t clientPing, clientOffset;
     
     ReadPayload(&clientSeconds, sizeof(uint32_t));
     ReadPayload(&clientNsecond, sizeof(uint32_t));
+	ReadPayload(&clientPing, sizeof(uint32_t));
+	ReadPayload(&clientOffset, sizeof(uint32_t));
     
     timespec ts;
     ts.tv_sec = clientSeconds;
@@ -48,4 +62,8 @@ void EchoRequestMessage::OnReceive() {
     // Update last ping time for session
     NetworkSession* session = networkSystem->FindSession(m_envelope.session);
     session->lastPing = networkSystem->GetCurrentTick();
+	session->info.pingTime = (float)clientPing / 1000.0f;
+	session->info.clientTimeDiff = (float)clientOffset / 1000.0f;
+
+	printf("Client ping time: %d ms, offset %d ms\n", clientPing, clientOffset);
 }

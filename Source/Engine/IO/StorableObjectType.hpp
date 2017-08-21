@@ -34,7 +34,7 @@ public:
     /**
      * Set the name of this object type (table name in SQL)
      */
-    std::string& GetName() { return m_name; }
+    std::string GetName() { return m_name; }
     void SetName(std::string name);
     
     /**

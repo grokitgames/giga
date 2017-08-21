@@ -3,6 +3,7 @@
 
 StorableObject::StorableObject() {
     m_transient = false;
+	m_storableObjectType = 0;
 }
 
 void StorableObject::SetStorableObjectFieldMapping(std::string field, std::string* mapping) {
@@ -72,7 +73,8 @@ void StorableObject::UpdateStorableObjectFieldValue(std::string field, std::stri
     // Attempt to find the field type
     uint32_t type = 0;
     
-    std::vector<StorableObjectField*> fields = m_storableObjectType->GetFields();
+	StorableObjectType* storableType = GetStorableObjectType();
+    std::vector<StorableObjectField*> fields = storableType->GetFields();
     for (size_t i = 0; i < fields.size(); i++) {
         if (fields[i]->name == field) {
             type = fields[i]->type;
@@ -116,7 +118,8 @@ unsigned char* StorableObject::Serialize(int& size) {
     size = GetSerializedSize();
     
     // Loop over all fields and get total storage space required
-    std::vector<StorableObjectField*> fields = m_storableObjectType->GetFields();
+	StorableObjectType* type = GetStorableObjectType();
+    std::vector<StorableObjectField*> fields = type->GetFields();
         
     // Create some storage space
     unsigned char* buffer = (unsigned char*)malloc(size);
@@ -134,7 +137,7 @@ unsigned char* StorableObject::Serialize(int& size) {
         writer->Write(&length, sizeof(uint32_t));
         
         // Write field name
-        writer->Write((void*)fields[i]->name.data(), length + 1);
+		writer->Write((void*)fields[i]->name.data(), length + 1);
         
         // For string types
         if(fields[i]->type == StorableObjectField::FIELD_FILE ||
@@ -185,7 +188,8 @@ int StorableObject::GetSerializedSize() {
     int size = 0;
     
     // Loop over all fields and get total storage space required
-    std::vector<StorableObjectField*> fields = m_storableObjectType->GetFields();
+	StorableObjectType* type = GetStorableObjectType();
+    std::vector<StorableObjectField*> fields = type->GetFields();
     for (size_t i = 0; i < fields.size(); i++) {
         // For all fields, make room for the type
         size += sizeof(uint32_t);
@@ -224,15 +228,12 @@ int StorableObject::GetSerializedSize() {
     return(size);
 }
 
-void StorableObject::Deserialize(unsigned char* data, int size) {
-    GIGA_ASSERT(size != GetSerializedSize(), "Size in bytes is not expected.");
-    
-    // Initialize a new data reader
-    MemoryReader* reader = new MemoryReader();
-    reader->Initialize(data, size);
-    
-    int offset = 0;
-    while(offset < size) {
+void StorableObject::Deserialize(MemoryReader* reader) {
+	StorableObjectType* type = GetStorableObjectType();
+	int fieldCount = type->GetFieldCount();
+	int offset = 0;
+
+    while(offset < fieldCount) {
         // Read in type
         uint32_t type = 0;
         reader->Read(&type, sizeof(uint32_t));
@@ -245,12 +246,14 @@ void StorableObject::Deserialize(unsigned char* data, int size) {
         std::string name;
         name.resize(length + 1);
         reader->Read((void*)name.data(), length + 1);
-        
+       
         // Read in data
         switch (type) {
             case StorableObjectField::FIELD_FILE:
             case StorableObjectField::FIELD_TEXT:
                 reader->Read(&length, sizeof(uint32_t));
+				m_storableObjectStringFields[name]->resize(length);
+
                 reader->Read((void*)m_storableObjectStringFields[name]->data(), length);
                 break;
             case StorableObjectField::FIELD_FLOAT:
@@ -279,7 +282,7 @@ void StorableObject::Deserialize(unsigned char* data, int size) {
                 break;
         }
         
-        offset = reader->GetPosition();
+		offset++;
     }
 }
 
@@ -291,7 +294,8 @@ std::string StorableObject::GetStorableObjectFieldValue(std::string field) {
         value = m_storableRecordValues[field];
     }
     else {
-        std::vector<StorableObjectField*> fields = m_storableObjectType->GetFields();
+		StorableObjectType* type = GetStorableObjectType();
+        std::vector<StorableObjectField*> fields = type->GetFields();
         for (size_t i = 0; i < fields.size(); i++) {
             if (fields[i]->name == field) {
                 value = fields[i]->defaultValue;
@@ -301,4 +305,15 @@ std::string StorableObject::GetStorableObjectFieldValue(std::string field) {
     }
     
     return(value);
+}
+
+StorableObjectType* StorableObject::GetStorableObjectType() {
+	if (m_storableObjectType) {
+		return(m_storableObjectType);
+	}
+
+	m_storableObjectType = DataLoader::GetRecordType(this->GetStorableTypeName());
+
+	GIGA_ASSERT(m_storableObjectType != 0, "Storable object type not defined.");
+	return(m_storableObjectType);
 }

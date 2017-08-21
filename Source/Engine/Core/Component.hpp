@@ -81,9 +81,14 @@ public:
      */
     static Component* CreateComponent(int typeID);
     
-public:
+	/**
+	 * Get type ID
+	 */
+	int GetTypeID();
+
+protected:
     // Type ID
-    int typeID;
+    int m_typeID;
     
 protected:
     // Parent entity

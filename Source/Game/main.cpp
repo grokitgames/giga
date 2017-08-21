@@ -19,6 +19,7 @@ void StartApplication() {
     OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
     MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
     NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
     
     application->Initialize();
     
@@ -83,6 +84,9 @@ void StartApplication() {
 	
 	// Connect to server
 	networkSystem->Connect("grokitgames.com", 8053);
+
+	// Initialize replication system
+	replicationSystem->SetType(REPLICATION_CLIENT);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

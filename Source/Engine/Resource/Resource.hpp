@@ -15,7 +15,7 @@ public:
     /**
      * Get filename/full path
      */
-    std::string GetFilename() { return m_filename; }
+    std::string GetFilename() { return filename; }
     std::string GetFullPath() { return m_fullpath; }
     std::string GetExtension() { return m_extension; }
     
@@ -49,12 +49,13 @@ public:
     /**
      * Get resource as a string (filename)
      */
-    std::string ToString() { return m_filename; }
+    std::string ToString() { return filename; }
+    
+public:
+    // Filename
+    std::string filename;
     
 protected:
-    // Filename
-    std::string m_filename;
-    
     // Full path + filename
     std::string m_fullpath;
     

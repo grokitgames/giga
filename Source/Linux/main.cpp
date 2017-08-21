@@ -19,6 +19,7 @@ void StartApplication() {
 	RenderSystem* renderSystem = application->CreateSystem<RenderSystem>();
 	MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
 	NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
 
 	application->Initialize();
 
@@ -29,7 +30,7 @@ void StartApplication() {
 	resourceSystem->AddSearchPath("Resources/Scripts");
 
 	// Create a crate entity
-	Entity* crate = new Entity();
+	Entity* crate = entitySystem->CreateEntity("Crate");
 
 	// Load a mesh
 	Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->LoadResource("crate.g3d", "Mesh"));
@@ -42,6 +43,9 @@ void StartApplication() {
 	// Set up server
 	networkSystem->Listen(8053);
 
+	// Set up replication system
+	replicationSystem->SetType(REPLICATION_SERVER);
+
 	// Create main loop timer
 	Timer* mainTimer = new Timer();
 	mainTimer->Start();
@@ -50,6 +54,9 @@ void StartApplication() {
 	// Main loop
 	while (true) {
 		PROFILE_START_FRAME();
+
+		// TODO: Remove this, testing only
+		meshComponent->MarkUpdated(true);
 
 		application->Update(delta);
 

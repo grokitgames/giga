@@ -11,6 +11,7 @@ public:
     ~ComponentTemplate() = default;
     
     virtual std::string GetGigaName();
+	virtual std::string GetStorableTypeName();
     
     /**
      * Initialize when created from scripting system

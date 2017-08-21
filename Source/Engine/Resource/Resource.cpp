@@ -20,7 +20,7 @@ void Resource::SetFilename(std::string filename) {
     
     // Parse out the filename
     size_t loc = m_fullpath.find_last_of("/\\");
-    m_filename = m_fullpath.substr(loc + 1);
+    this->filename = m_fullpath.substr(loc + 1);
     
     // And the file extension
     loc = m_fullpath.find_last_of(".");
@@ -44,7 +44,7 @@ unsigned char* Resource::GetData() {
 
 void Resource::Load() {
     // Make sure we have a valid filename
-    assert(m_filename.length() > 0);
+    assert(this->filename.length() > 0);
     
     // If this is already loaded, return
     if(m_data) {
@@ -54,7 +54,7 @@ void Resource::Load() {
     // Try to open the file
     File* fp = new File();
     if(fp->Open(m_fullpath, FILEMODE_READ | FILEMODE_BINARY) == false) {
-        ErrorSystem::Process(new Error(ERROR_WARN, "Unable to open resource file", m_filename));
+        ErrorSystem::Process(new Error(ERROR_WARN, "Unable to open resource file", this->filename));
         return;
     }
     

@@ -65,6 +65,8 @@ protected:
     
     // The mesh object our component is based on
     Mesh* m_mesh;
+
+	// Mesh filename
     
     // Oriented bounding box
     BoundingBox m_obb;

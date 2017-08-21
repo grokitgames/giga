@@ -4,6 +4,7 @@
 NetworkSystem::NetworkSystem() {
     m_systemType = 0;
     m_lastMessageID = 0;
+	memset(&m_startupTime, 0, sizeof(timespec));
 }
 
 NetworkSystem::~NetworkSystem() {
@@ -143,6 +144,8 @@ NetworkSession* NetworkSystem::FindSession(int sessionID, UDPSocket* socket) {
     
     // Add to list
     m_info.server_info->sessions.push_back(session);
+
+	Application::Log(ERROR_DEBUG, "New session", std::to_string(sessionID));
     
     return(session);
 }
@@ -234,10 +237,12 @@ void NetworkSystem::Update(float delta) {
         }
     }
     
-    // Check for timed out clients
     if(m_systemType == NETWORK_SYSTEM_SERVER) {
+		// Check for timed out clients
         for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
             if(m_info.server_info->sessions[i]->lastPing < (tick - NETWORK_ECHO_TIMEOUT)) {
+				printf("Last ping: %d, current tick: %d\n", m_info.server_info->sessions[i]->lastPing, tick);
+				Application::Log(ERROR_DEBUG, "Disconnecting session", std::to_string(m_info.server_info->sessions[i]->sessionID));
                 RemoveSession(m_info.server_info->sessions[i]->sessionID);
             }
         }

@@ -46,7 +46,10 @@ public:
      * Set vertex/fragment shaders
      */
     void SetVertexShader(Shader* shader) { m_vertexShader = shader; }
+	Shader* GetVertexShader() { return m_vertexShader; }
+
     void SetFragmentShader(Shader* shader) { m_fragmentShader = shader; }
+	Shader* GetFragmentShader() { return m_fragmentShader; }
     
     /**
      * Add a definition

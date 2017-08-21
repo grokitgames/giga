@@ -7,7 +7,7 @@ Component::Component() {
     m_parent = 0;
     m_active = false;
     m_updated = false;
-    typeID = 0;
+    m_typeID = 0;
 }
 
 Component::~Component() {
@@ -42,7 +42,7 @@ Component* Component::CreateComponent(std::string type) {
     
     Component* component = i->second->createFunc(type);
     component->removeFunction = i->second->removeFunc;
-    component->typeID = i->second->typeID;
+    component->m_typeID = i->second->typeID;
     return(component);
 }
 
@@ -53,7 +53,7 @@ Component* Component::CreateComponent(int typeID) {
         if(i->second->typeID == typeID) {
             Component* component = i->second->createFunc(i->second->name);
             component->removeFunction = i->second->removeFunc;
-            component->typeID = i->second->typeID;
+            component->m_typeID = i->second->typeID;
             return(component);
         }
     }
@@ -66,15 +66,27 @@ void Component::MarkUpdated(bool updated) {
     if(m_updated == updated) {
         return;
     }
-    
+	    
     // If we're setting as updated and we're before, increment component update count on entity
-    if(updated == true && m_updated == false) {
-        m_parent->SetUpdated(1);
-    }
-    // Otherwise, decrement (we are no longer updated)
-    else {
-        m_parent->SetUpdated(-1);
-    }
+	if (m_parent) {
+		if (updated == true && m_updated == false) {
+			m_parent->SetUpdated(1);
+		}
+		// Otherwise, decrement (we are no longer updated)
+		else {
+			m_parent->SetUpdated(-1);
+		}
+	}
     
     m_updated = updated;
+}
+
+int Component::GetTypeID() {
+	if (m_typeID) {
+		return(m_typeID);
+	}
+
+	std::map<std::string, ComponentType*>::iterator i = m_componentTypes.find(this->GetGigaName());
+	GIGA_ASSERT(i != m_componentTypes.end(), "Component type not found.");
+	return(i->second->typeID);
 }

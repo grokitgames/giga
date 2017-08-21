@@ -58,11 +58,13 @@ void StaticMeshComponent::UpdateBoundingBox() {
 }
 
 void StaticMeshComponent::UpdateObjectDataMappings() {
-    /*SetStorableObjectFieldMapping("position", &m_transform.GetPosition());
-    SetStorableObjectFieldMapping("rotation", &m_transform.GetRotation());
-    SetStorableObjectFieldMapping("scaling", &m_transform.GetScaling());
-    SetStorableObjectFieldMapping("shader", &m_mesh->program->filename);
-    SetStorableObjectFieldMapping("mesh", &m_mesh->filename);*/
+    SetStorableObjectFieldMapping("position", &m_transform.position);
+    SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
+    SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
+
+	if (m_mesh) {
+		SetStorableObjectFieldMapping("mesh", &m_mesh->GetResource()->filename);
+	}
 }
 
 Variant* StaticMeshComponent::Instantiate(Variant* obj, int argc, Variant** argv) {

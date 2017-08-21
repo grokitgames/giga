@@ -67,7 +67,7 @@ std::string StorableObjectType::GetFieldList() {
 int StorableObjectType::GetFieldCount() {
     int count = 0;
     for (int i = 0; i < m_fields.size(); i++) {
-        if (m_fields[i]->name.compare(m_primaryKey)) {
+        if (m_fields[i]->name == m_primaryKey) {
             continue;
         }
         count++;

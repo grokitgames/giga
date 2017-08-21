@@ -11,6 +11,10 @@ std::string ComponentTemplate::GetGigaName() {
     return(std::string(m_type->GetName()));
 }
 
+std::string ComponentTemplate::GetStorableTypeName() {
+	return(std::string(m_type->GetName()));
+}
+
 Component* ComponentTemplate::CreateComponent(std::string name) {
     std::map<std::string, ComponentTemplateType*>::iterator i = m_types.find(name);
     GIGA_ASSERT(i != m_types.end(), "Unregisted type name");

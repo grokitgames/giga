@@ -19,11 +19,9 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
         // Iterate over components to get total size
         std::vector<Component*>& components = entities[i]->GetComponents();
         for(size_t j = 0; j < components.size(); j++) {
-            int size = 0;
-            unsigned char* data = components[j]->Serialize(size);
-            
+			components[j]->UpdateObjectDataMappings();
+			int size = components[j]->GetSerializedSize();
             projectedSize += size + sizeof(uint32_t);
-            free(data);
         }
         
         // If this entity won't fit, return
@@ -34,13 +32,22 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
         // Write entity ID
         uint32_t id = entities[i]->GetID();
         writer->Write(&id, sizeof(uint32_t));
+
+		printf("Entity ID %d\n", id);
+
+		// Write number of components
+		uint32_t numComponents = components.size();
+		writer->Write(&numComponents, sizeof(uint32_t));
+
+		printf("Component count %d\n", numComponents);
         
         // Write components
         for(size_t j = 0; j < components.size(); j++) {
             int size = 0;
             unsigned char* data = components[j]->Serialize(size);
             
-            uint32_t type = components[j]->typeID;
+            uint32_t type = components[j]->GetTypeID();
+			printf("Writing component type %d\n", type);
             writer->Write(&type, sizeof(uint32_t));
             writer->Write(data, size);
         }
@@ -80,13 +87,9 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
             Component* component = Component::CreateComponent(typeID);
             
             // Get our data block
-            int size = component->GetSerializedSize();
-            unsigned char* data = (unsigned char*)malloc(size);
-            reader->Read(data, size);
-            
-            component->Deserialize(data, size);
-            free(data);
-            
+			component->UpdateObjectDataMappings();
+            component->Deserialize(reader);
+			
             // Add to our entity
             entity->AddComponent(component);
         }

@@ -43,7 +43,7 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include <queue>
+#include <list>
 
 // GLM (math)
 #define GLM_FORCE_RADIANS       1

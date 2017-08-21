@@ -2,7 +2,7 @@
 #ifndef gigaobject_hpp
 #define gigaobject_hpp
 
-#define GIGA_CLASS_NAME(str) virtual std::string GetGigaName() { return str; }
+#define GIGA_CLASS_NAME(str) virtual std::string GetGigaName() { return str; } virtual std::string GetStorableTypeName() { return str; }
 
 /**
  * Base object class for almost all objects in the engine

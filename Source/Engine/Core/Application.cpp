@@ -76,11 +76,6 @@ void Application::Initialize() {
 	networkSystem->RegisterMessageType<EntitySnapshotMessage>(30);
 
 	Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
-
-	/**
-	 * Network messages
-	 */
-	
     
     /**
      * Register component types
@@ -260,6 +255,23 @@ void Application::Initialize() {
     scriptingSystem->RegisterScriptableObjectType<CameraComponent>(cameraType);
     
     Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
+
+	/**
+	 * Storable/serializable data types
+	 */
+	Application::Log(MSGTYPE_DEBUG, "Registering storable types...");
+
+	StorableObjectType* meshStorableType = new StorableObjectType();
+	meshStorableType->SetName("StaticMeshComponent");
+	meshStorableType->SetPrimaryKey("mesh_id");
+	meshStorableType->AddField("mesh", "Mesh", true, StorableObjectField::FIELD_FILE);
+	meshStorableType->AddField("position", "Position", true, StorableObjectField::FIELD_VECTOR3);
+	meshStorableType->AddField("rotation", "Rotation", true, StorableObjectField::FIELD_QUATERNION);
+	meshStorableType->AddField("scaling", "Scale", true, StorableObjectField::FIELD_VECTOR3);
+
+	DataLoader::RegisterRecordType<StaticMeshComponent>(meshStorableType);
+
+	Application::Log(MSGTYPE_DEBUG, "Registered storable types...");
     
     Application::Log(MSGTYPE_INFO, "Initialization complete.");
 }
@@ -326,6 +338,8 @@ void Application::Log(int type, std::string message, std::string details) {
         output += " (" + details + ")";
     }
     
+	printf("%s\n", output.c_str());
+
     application->m_outputLog->WriteLine(output);
     
     delete dt;

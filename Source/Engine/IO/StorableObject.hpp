@@ -2,6 +2,8 @@
 #ifndef storableobject_hpp
 #define storableobject_hpp
 
+class MemoryReader;
+
 class GIGA_API StorableObject {
 public:
     StorableObject();
@@ -11,6 +13,11 @@ public:
      * Initialize a newly created object
      */
     virtual void InitializeStorableObject(std::string name) { }
+
+	/**
+	 * Get type name
+	 */
+	virtual std::string GetStorableTypeName() = 0;
     
     /**
      * Update the data field mappings to bind to member variables
@@ -25,7 +32,7 @@ public:
     /**
      * Deserialize the object's field mappings from a binary format
      */
-    virtual void Deserialize(unsigned char* data, int size);
+    virtual void Deserialize(MemoryReader* reader);
     
     /**
      * Get serialized data size
@@ -40,7 +47,7 @@ public:
     /**
      * Get/set stored record type
      */
-    StorableObjectType* GetStorableObjectType() { return m_storableObjectType; }
+	StorableObjectType* GetStorableObjectType();
     void SetStorableObjectType(StorableObjectType* type) { m_storableObjectType = type; }
     
     /**

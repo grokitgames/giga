@@ -3,7 +3,7 @@
 #define replicationsystem_hpp
 
 // The number of seconds to maintain snapshot history for
-#define NETWORK_SNAPSHOT_HISTORY    NETWORK_TICKS_PER_SECOND * 1
+#define NETWORK_SNAPSHOT_HISTORY    NETWORK_TICKS_PER_SECOND * 3
 
 enum {
     REPLICATION_SERVER = 1,
@@ -29,10 +29,15 @@ public:
      * Set type
      */
     void SetType(int type) { m_type = type; }
+
+	/**
+	 * Add snapshot to stack
+	 */
+	void AddSnapshot(int tick, EntitySnapshot* snapshot);
     
 protected:
     // Historical (+ potential future) snapshots
-    std::queue<EntitySnapshot*> m_snapshots;
+    std::list<EntitySnapshot*> m_snapshots;
     
     // Last processed server tick
     int m_lastTick;

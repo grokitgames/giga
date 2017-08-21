@@ -15,5 +15,6 @@ StorableObjectType* DataLoader::GetRecordType(std::string type) {
         }
     }
     
+	GIGA_ASSERT(false, "Type not found");
     return(0);
 }

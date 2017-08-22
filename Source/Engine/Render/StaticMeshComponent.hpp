@@ -20,7 +20,12 @@ public:
     /**
      * Set data bindings
      */
-    virtual void UpdateObjectDataMappings();
+    virtual void SetDataMappings();
+    
+    /**
+     * Update object from data bindings
+     */
+    void UpdateFromDataMappings();
     
     /**
      * Clone this mesh component into another

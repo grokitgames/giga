@@ -13,6 +13,11 @@ public:
      * Initialize a newly created object
      */
     virtual void InitializeStorableObject(std::string name) { }
+    
+    /**
+     * Update object from data mappings
+     */
+    virtual void UpdateFromDataMappings() { }
 
 	/**
 	 * Get type name
@@ -22,7 +27,7 @@ public:
     /**
      * Update the data field mappings to bind to member variables
      */
-    virtual void UpdateObjectDataMappings() { }
+    virtual void SetDataMappings() { }
     
     /**
      * Serialize the object's field mappings into a binary format

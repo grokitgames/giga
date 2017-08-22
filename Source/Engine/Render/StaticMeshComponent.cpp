@@ -57,7 +57,7 @@ void StaticMeshComponent::UpdateBoundingBox() {
     }
 }
 
-void StaticMeshComponent::UpdateObjectDataMappings() {
+void StaticMeshComponent::SetDataMappings() {
     SetStorableObjectFieldMapping("position", &m_transform.position);
     SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
     SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
@@ -65,6 +65,10 @@ void StaticMeshComponent::UpdateObjectDataMappings() {
 	if (m_mesh) {
 		SetStorableObjectFieldMapping("mesh", &m_mesh->GetResource()->filename);
 	}
+}
+
+void StaticMeshComponent::UpdateFromDataMappings() {
+    if(m_storableObjectRes)
 }
 
 Variant* StaticMeshComponent::Instantiate(Variant* obj, int argc, Variant** argv) {

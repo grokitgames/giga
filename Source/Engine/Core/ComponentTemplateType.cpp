@@ -42,8 +42,8 @@ void ComponentTemplateType::InitializeComponent(ComponentTemplate* ct) {
             ct->m_objectIntFields[name] = 0;
             ct->SetStorableObjectFieldMapping(name, &ct->m_objectIntFields[name]);
         }
-        
-        if(type == StorableObjectField::FIELD_FILE || type == StorableObjectField::FIELD_TEXT) {
+
+        if(type == StorableObjectField::FIELD_TEXT) {
             ct->m_objectStringFields[name] = "";
             ct->SetStorableObjectFieldMapping(name, &ct->m_objectStringFields[name]);
         }

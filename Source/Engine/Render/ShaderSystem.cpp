@@ -18,7 +18,7 @@ ShaderVariation* ShaderSystem::Find(std::string vert, std::string frag, ShaderAt
             // Compare individual definitions
             bool match = true;
             
-            for(size_t j = 0; j < m_cache[i]->defines.size(); i++) {
+            for(size_t j = 0; j < m_cache[i]->defines.size(); j++) {
                 if(attribs->definitions.find(m_cache[i]->defines[j]) == attribs->definitions.end()) {
                     match = false;
                 }

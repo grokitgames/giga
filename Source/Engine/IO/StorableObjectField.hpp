@@ -17,7 +17,7 @@ public:
         FIELD_TEXT = 1,
         FIELD_INT,
         FIELD_FLOAT,
-        FIELD_FILE,
+        FIELD_RESOURCE,
         FIELD_VECTOR2,
         FIELD_VECTOR3,
         FIELD_QUATERNION

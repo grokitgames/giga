@@ -9,6 +9,8 @@ class GIGA_API Script : public ResourceObject {
 public:
     Script() = default;
     ~Script() = default;
+
+	GIGA_CLASS_NAME("Script");
 };
 
 #endif

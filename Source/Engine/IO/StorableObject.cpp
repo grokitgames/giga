@@ -10,6 +10,10 @@ void StorableObject::SetStorableObjectFieldMapping(std::string field, std::strin
     m_storableObjectStringFields[field] = mapping;
 }
 
+void StorableObject::SetStorableObjectFieldMapping(std::string field, ResourceObject* mapping) {
+	m_storableObjectResourceFields[field] = mapping;
+}
+
 void StorableObject::SetStorableObjectFieldMapping(std::string field, int* mapping) {
     m_storableObjectIntFields[field] = mapping;
 }
@@ -23,6 +27,8 @@ void StorableObject::SetStorableObjectFieldMapping(std::string field, vector2* m
 }
 
 void StorableObject::SetStorableObjectFieldMapping(std::string field, vector3* mapping) {
+	std::map<std::string, vector3*>::iterator i = m_storableObjectVector3Fields.find(field);
+	GIGA_ASSERT(i == m_storableObjectVector3Fields.end(), "Field mapping already exists.");
     m_storableObjectVector3Fields[field] = mapping;
 }
 
@@ -86,7 +92,8 @@ void StorableObject::UpdateStorableObjectFieldValue(std::string field, std::stri
     
     // Update the original source value (including type validation)
     switch (type) {
-        case StorableObjectField::FIELD_FILE:
+        case StorableObjectField::FIELD_RESOURCE:
+			break;
         case StorableObjectField::FIELD_TEXT:
             *m_storableObjectStringFields[field] = value;
             break;
@@ -139,17 +146,21 @@ unsigned char* StorableObject::Serialize(int& size) {
         // Write field name
 		writer->Write((void*)fields[i]->name.data(), length + 1);
         
-        // For string types
-        if(fields[i]->type == StorableObjectField::FIELD_FILE ||
-           fields[i]->type == StorableObjectField::FIELD_TEXT) {
-            // For file and text types, store length as int32 then actual string
-            length = m_storableObjectStringFields[fields[i]->name]->length();
-        }
-        
         // Write the data
         switch (fields[i]->type) {
-            case StorableObjectField::FIELD_FILE:
+            case StorableObjectField::FIELD_RESOURCE:
+				// Write type
+				length = m_storableObjectResourceFields[fields[i]->name]->GetGigaName().length();
+				writer->Write(&length, sizeof(uint32_t));
+				writer->Write((void*)m_storableObjectResourceFields[fields[i]->name]->GetGigaName().c_str(), length);
+				
+				// Write filename
+				length = m_storableObjectResourceFields[fields[i]->name]->GetResource()->filename.length();
+				writer->Write(&length, sizeof(uint32_t));
+				writer->Write((void*)m_storableObjectResourceFields[fields[i]->name]->GetResource()->filename.c_str(), length);
+				break;
             case StorableObjectField::FIELD_TEXT:
+				length = m_storableObjectStringFields[fields[i]->name]->length();
                 writer->Write(&length, sizeof(uint32_t));
                 writer->Write((void*)m_storableObjectStringFields[fields[i]->name]->data(), length);
                 break;
@@ -199,7 +210,12 @@ int StorableObject::GetSerializedSize() {
         size += fields[i]->name.length() + 1;
         
         switch (fields[i]->type) {
-            case StorableObjectField::FIELD_FILE:
+            case StorableObjectField::FIELD_RESOURCE:
+				size += sizeof(uint32_t); // Length of type string
+				size += m_storableObjectResourceFields[fields[i]->name]->GetGigaName().length();
+				size += sizeof(uint32_t);
+				size += m_storableObjectResourceFields[fields[i]->name]->GetResource()->filename.length();
+				break;
             case StorableObjectField::FIELD_TEXT:
                 // For file and text types, store length as int32 then actual string
                 size += sizeof(uint32_t) + m_storableObjectStringFields[fields[i]->name]->length();
@@ -246,10 +262,31 @@ void StorableObject::Deserialize(MemoryReader* reader) {
         std::string name;
         name.resize(length + 1);
         reader->Read((void*)name.data(), length + 1);
+		name.resize(length);
        
+		// placeholders
+		std::string p1;
+		std::string p2;
+
+		// Get resource system
+		ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+
         // Read in data
         switch (type) {
-            case StorableObjectField::FIELD_FILE:
+            case StorableObjectField::FIELD_RESOURCE:
+				// Read type
+				reader->Read(&length, sizeof(uint32_t));
+				p1.resize(length);
+				reader->Read((void*)p1.data(), length);
+
+				// Read filename
+				reader->Read(&length, sizeof(uint32_t));
+				p2.resize(length);
+				reader->Read((void*)p2.data(), length);
+
+				// Load resource
+				m_storableObjectResourceFields[name] = resourceSystem->LoadResource(p2, p1);
+				break;
             case StorableObjectField::FIELD_TEXT:
                 reader->Read(&length, sizeof(uint32_t));
 				m_storableObjectStringFields[name]->resize(length);

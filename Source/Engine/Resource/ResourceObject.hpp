@@ -10,8 +10,6 @@ public:
     ResourceObject();
     virtual ~ResourceObject();
     
-    GIGA_CLASS_NAME("ResourceObject");
-    
     /**
      * Get our binary file data from our resource object
      */

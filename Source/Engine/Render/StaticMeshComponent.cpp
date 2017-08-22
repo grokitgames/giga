@@ -63,7 +63,7 @@ void StaticMeshComponent::SetDataMappings() {
     SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
 
 	if (m_mesh) {
-		SetStorableObjectFieldMapping("mesh", &m_mesh->GetResource()->filename);
+		SetStorableObjectFieldMapping("mesh", m_mesh);
 	}
 }
 

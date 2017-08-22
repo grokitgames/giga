@@ -64,7 +64,7 @@ Component* ComponentTemplate::Clone() {
             ct->m_objectIntFields[name] = m_objectIntFields[name];
         }
         
-        if(type == StorableObjectField::FIELD_FILE || type == StorableObjectField::FIELD_TEXT) {
+        if(type == StorableObjectField::FIELD_TEXT) {
             ct->m_objectStringFields[name] = m_objectStringFields[name];
         }
         
@@ -101,7 +101,6 @@ void ComponentTemplate::Setter(std::string var, Variant* obj, Variant* val) {
         case StorableObjectField::FIELD_INT:
             t->m_objectIntFields[var] = val->AsInt();
             break;
-        case StorableObjectField::FIELD_FILE:
         case StorableObjectField::FIELD_TEXT:
             t->m_objectStringFields[var] = val->AsString();
             break;

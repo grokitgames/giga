@@ -139,7 +139,7 @@ void Application::Initialize() {
     
     // Component field types
     scriptingSystem->RegisterGlobal("FIELD_INT", new Variant(StorableObjectField::FIELD_INT));
-    scriptingSystem->RegisterGlobal("FIELD_FILE", new Variant(StorableObjectField::FIELD_FILE));
+    scriptingSystem->RegisterGlobal("FIELD_RESOURCE", new Variant(StorableObjectField::FIELD_RESOURCE));
     scriptingSystem->RegisterGlobal("FIELD_TEXT", new Variant(StorableObjectField::FIELD_TEXT));
     scriptingSystem->RegisterGlobal("FIELD_FLOAT", new Variant(StorableObjectField::FIELD_FLOAT));
     scriptingSystem->RegisterGlobal("FIELD_VECTOR2", new Variant(StorableObjectField::FIELD_VECTOR2));
@@ -184,10 +184,6 @@ void Application::Initialize() {
     /**
      * Resources
      */
-    
-    // Resource object
-    ScriptableObjectType* resourceObjectType = new ScriptableObjectType("ResourceObject");
-    scriptingSystem->RegisterScriptableObjectType<ResourceObject>(resourceObjectType);
     
     // Resource system
     ScriptableObjectType* resourceSystemType = new ScriptableObjectType("ResourceSystem");
@@ -264,7 +260,7 @@ void Application::Initialize() {
 	StorableObjectType* meshStorableType = new StorableObjectType();
 	meshStorableType->SetName("StaticMeshComponent");
 	meshStorableType->SetPrimaryKey("mesh_id");
-	meshStorableType->AddField("mesh", "Mesh", true, StorableObjectField::FIELD_FILE);
+	meshStorableType->AddField("mesh", "Mesh", true, StorableObjectField::FIELD_RESOURCE);
 	meshStorableType->AddField("position", "Position", true, StorableObjectField::FIELD_VECTOR3);
 	meshStorableType->AddField("rotation", "Rotation", true, StorableObjectField::FIELD_QUATERNION);
 	meshStorableType->AddField("scaling", "Scale", true, StorableObjectField::FIELD_VECTOR3);

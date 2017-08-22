@@ -9,6 +9,8 @@ class GIGA_API Mesh : public ResourceObject {
 public:
     Mesh();
     ~Mesh();
+
+	GIGA_CLASS_NAME("Mesh");
     
     /**
      * Load mesh data

@@ -9,6 +9,8 @@ class GIGA_API Texture2D : public Texture {
 public:
     Texture2D() = default;
     ~Texture2D() = default;
+
+	GIGA_CLASS_NAME("Texture2D");
 };
 
 #endif

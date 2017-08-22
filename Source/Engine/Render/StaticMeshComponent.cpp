@@ -61,14 +61,7 @@ void StaticMeshComponent::SetDataMappings() {
     SetStorableObjectFieldMapping("position", &m_transform.position);
     SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
     SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
-
-	if (m_mesh) {
-		SetStorableObjectFieldMapping("mesh", m_mesh);
-	}
-}
-
-void StaticMeshComponent::UpdateFromDataMappings() {
-    if(m_storableObjectRes)
+    SetStorableObjectFieldMapping("mesh", (ResourceObject**)&m_mesh);
 }
 
 Variant* StaticMeshComponent::Instantiate(Variant* obj, int argc, Variant** argv) {

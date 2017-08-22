@@ -23,11 +23,6 @@ public:
     virtual void SetDataMappings();
     
     /**
-     * Update object from data bindings
-     */
-    void UpdateFromDataMappings();
-    
-    /**
      * Clone this mesh component into another
      */
     virtual StaticMeshComponent* Clone();

@@ -245,7 +245,7 @@
     <Link>
       <AdditionalLibraryDirectories>/root/projects/contrib/v8/lib;/usr/lib/x86_64-linux-gnu;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LibraryDependencies>pthread;mysqlclient;dl;%(LibraryDependencies)</LibraryDependencies>
-      <AdditionalDependencies>-lv8_base;-lv8_external_snapshot;-lv8_libplatform;-lv8_libbase;-lv8_libsampler;/root/projects/contrib/v8/lib/libicui18n.a;/root/projects/contrib/v8/lib/libicuuc.a;$(StlAdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>-lv8_base;-lv8_external_snapshot;-lv8_libplatform;-lv8_libbase;-lv8_libsampler;-lv8_icui18n;-lv8_icuuc;$(StlAdditionalDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>
       </AdditionalOptions>
     </Link>

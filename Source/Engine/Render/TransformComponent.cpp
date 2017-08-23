@@ -1,7 +1,7 @@
 
 #include <giga-engine.h>
 
-void TransformComponent::UpdateObjectDataMappings() {
+void TransformComponent::SetDataMappings() {
     // SetStorableObjectFieldMapping("position", &m_transform.position);
     // SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
     // SetStorableObjectFieldMapping("scaling", &m_transform.scaling);

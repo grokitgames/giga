@@ -19,7 +19,7 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
         // Iterate over components to get total size
         std::vector<Component*>& components = entities[i]->GetComponents();
         for(size_t j = 0; j < components.size(); j++) {
-			components[j]->UpdateObjectDataMappings();
+			components[j]->SetDataMappings();
 			int size = components[j]->GetSerializedSize();
             projectedSize += size + sizeof(uint32_t);
         }
@@ -87,7 +87,7 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
             Component* component = Component::CreateComponent(typeID);
             
             // Get our data block
-			component->UpdateObjectDataMappings();
+			component->SetDataMappings();
             component->Deserialize(reader);
 			
             // Add to our entity

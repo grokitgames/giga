@@ -14,6 +14,11 @@ public:
      * Initialize a newly created object
      */
     virtual void InitializeStorableObject(std::string name) { }
+    
+    /**
+     * Update object from data mappings
+     */
+    virtual void UpdateFromDataMappings() { }
 
 	/**
 	 * Get type name
@@ -23,7 +28,7 @@ public:
     /**
      * Update the data field mappings to bind to member variables
      */
-    virtual void UpdateObjectDataMappings() { }
+    virtual void SetDataMappings() { }
     
     /**
      * Serialize the object's field mappings into a binary format
@@ -80,7 +85,7 @@ protected:
      * Set mappings
      */
     void SetStorableObjectFieldMapping(std::string field, std::string* mapping);
-	void SetStorableObjectFieldMapping(std::string field, ResourceObject* mapping);
+	void SetStorableObjectFieldMapping(std::string field, ResourceObject** mapping);
     void SetStorableObjectFieldMapping(std::string field, int* mapping);
     void SetStorableObjectFieldMapping(std::string field, float* mapping);
     void SetStorableObjectFieldMapping(std::string field, vector2* mapping);
@@ -102,7 +107,7 @@ private:
     
     // A list of mappings to data fields (based on type)
     std::map<std::string, std::string*> m_storableObjectStringFields;
-	std::map<std::string, ResourceObject*> m_storableObjectResourceFields;
+	std::map<std::string, ResourceObject**> m_storableObjectResourceFields;
     std::map<std::string, int*> m_storableObjectIntFields;
     std::map<std::string, float*> m_storableObjectFloatFields;
     std::map<std::string, vector2*> m_storableObjectVector2Fields;

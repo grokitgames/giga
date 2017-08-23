@@ -15,7 +15,7 @@ public:
     /**
      * Update the data field mappings to bind to member variables
      */
-    void UpdateObjectDataMappings();
+    void SetDataMappings();
     
     /**
      * Get our transform

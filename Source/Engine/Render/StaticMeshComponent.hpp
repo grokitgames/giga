@@ -21,6 +21,11 @@ public:
      * Set data bindings
      */
     virtual void SetDataMappings();
+
+	/**
+	 * Update once data is bound
+	 */
+	void UpdateFromDataMappings();
     
     /**
      * Clone this mesh component into another
@@ -66,7 +71,8 @@ protected:
     // The mesh object our component is based on
     Mesh* m_mesh;
 
-	// Mesh filename
+	// Mesh instantiated
+	bool m_initialized;
     
     // Oriented bounding box
     BoundingBox m_obb;

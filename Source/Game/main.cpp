@@ -43,17 +43,6 @@ void StartApplication() {
     // Initialize render system
     renderSystem->Initialize(width, height);
     
-    // Create a crate entity
-    Entity* crate = new Entity();
-    
-    // Load a mesh
-    Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->LoadResource("crate.g3d", "Mesh"));
-    StaticMeshComponent* meshComponent = dynamic_cast<StaticMeshComponent*>(Component::CreateComponent("StaticMeshComponent"));
-    meshComponent->Instantiate(mesh);
-
-    // Add to entity
-    crate->AddComponent(meshComponent);
-    
     // Create our camera
     Entity* camera = new Entity();
 

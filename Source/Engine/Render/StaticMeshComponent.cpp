@@ -4,6 +4,7 @@
 StaticMeshComponent::StaticMeshComponent() {
     m_mesh = 0;
     m_applyLighting = true;
+	m_initialized = false;
 }
 
 StaticMeshComponent* StaticMeshComponent::Clone() {
@@ -25,6 +26,10 @@ StaticMeshComponent* StaticMeshComponent::Clone() {
 }
 
 void StaticMeshComponent::Instantiate(Mesh *mesh) {
+	if (m_initialized && (m_mesh = mesh)) {
+		return;
+	}
+
     m_mesh = mesh;
     
     // Create static mesh components for child mesh objects (so they can be moved, rotated, etc.)
@@ -37,6 +42,7 @@ void StaticMeshComponent::Instantiate(Mesh *mesh) {
     }
     
     UpdateBoundingBox();
+	m_initialized = true;
 }
 
 void StaticMeshComponent::UpdateBoundingBox() {
@@ -62,6 +68,10 @@ void StaticMeshComponent::SetDataMappings() {
     SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
     SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
     SetStorableObjectFieldMapping("mesh", (ResourceObject**)&m_mesh);
+}
+
+void StaticMeshComponent::UpdateFromDataMappings() {
+	this->Instantiate(m_mesh);
 }
 
 Variant* StaticMeshComponent::Instantiate(Variant* obj, int argc, Variant** argv) {

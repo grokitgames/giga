@@ -119,6 +119,8 @@ void StorableObject::UpdateStorableObjectFieldValue(std::string field, std::stri
     
     // Save the value itself
     m_storableRecordValues[field] = value;
+
+	this->UpdateFromDataMappings();
 }
 
 unsigned char* StorableObject::Serialize(int& size) {
@@ -321,6 +323,8 @@ void StorableObject::Deserialize(MemoryReader* reader) {
         
 		offset++;
     }
+
+	this->UpdateFromDataMappings();
 }
 
 std::string StorableObject::GetStorableObjectFieldValue(std::string field) {

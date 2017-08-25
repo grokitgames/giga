@@ -66,6 +66,7 @@ void Resource::Load() {
     
     // Close the file
     fp->Close();
+    delete fp;
     
     m_loaded = true;
 }

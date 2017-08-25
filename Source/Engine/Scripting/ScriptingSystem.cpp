@@ -96,14 +96,21 @@ void ScriptingSystem::EventHandler(Event* event) {
 }
 
 void ScriptingSystem::Update(float delta) {
+    PROFILE_START_AREA("ScriptingSystem Update");
+    
     std::vector<ScriptComponent*> scripts = m_scripts.GetList();
     Variant* d = new Variant(delta);
     for(size_t i = 0; i < scripts.size(); i++) {
-        scripts[i]->SetGlobal("GameObject", new Variant(scripts[i]->GetParent()));
+        Variant* parent = new Variant(scripts[i]->GetParent());
+        scripts[i]->SetGlobal("GameObject", parent);
         scripts[i]->CallFunction("Update", 1, &d);
+        
+        delete parent;
     }
     
     delete d;
+    
+    PROFILE_END_AREA("ScriptingSystem Update");
 }
 
 Component* ScriptingSystem::CreateScriptComponent(std::string type) {

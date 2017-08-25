@@ -9,7 +9,12 @@ template<class T>
 class GIGA_API ObjectPool {
 public:
     ObjectPool() = default;
-    ~ObjectPool() = default;
+    ~ObjectPool() {
+        for(size_t i = 0; i < m_objects.size(); i++) {
+            delete m_objects[i];
+            m_objects[i] = 0;
+        }
+    }
     
     void AddObject(T* object) {
         for(size_t i = 0; i < m_objects.size(); i++) {
@@ -38,6 +43,11 @@ public:
     }
     
     void Clear() {
+        for(size_t i = 0; i < m_objects.size(); i++) {
+            delete m_objects[i];
+            m_objects[i] = 0;
+        }
+        
         m_objects.clear();
     }
     

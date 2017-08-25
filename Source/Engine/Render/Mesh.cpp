@@ -408,4 +408,6 @@ void Mesh::ProcessData() {
         
         reader->Read((unsigned char*)&sectionType, sizeof(uint32_t));
     }
+    
+    delete reader;
 }

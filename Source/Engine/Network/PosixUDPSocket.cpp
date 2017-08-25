@@ -40,7 +40,7 @@ bool PosixUDPSocket::Connect(std::string server, int port) {
     }
     
     m_addrlen = sizeof(m_sockaddr);
-	m_connected = false;
+	m_connected = true;
     
     return(true);
 }
@@ -56,6 +56,7 @@ int PosixUDPSocket::Write(unsigned char* buffer, int length) {
         ret = (int)sendto(m_socket, (void*)buffer, length, 0, (struct sockaddr*)&m_sockaddr, len);
     }
     
+    int err = errno;
     return(ret);
 }
 

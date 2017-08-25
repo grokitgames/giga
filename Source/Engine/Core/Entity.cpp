@@ -49,6 +49,16 @@ Entity* Entity::Clone() {
     return(entity);
 }
 
+Component* Entity::FindComponent(int type) {
+    for(size_t i = 0; i < m_components.size(); i++) {
+        if(m_components[i]->GetTypeID() == type) {
+            return(m_components[i]);
+        }
+    }
+    
+    return(0);
+}
+
 Variant* Entity::FindComponent(Variant* object, int argc, Variant** argv) {
     GIGA_ASSERT(argc == 1, "FindComponent expects one argument.");
     GIGA_ASSERT(argv[0]->IsString(), "Argument should be a string.");

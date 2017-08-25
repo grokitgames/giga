@@ -213,6 +213,8 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
         ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Invalid function name", function));
     }
     
+    free(args);
+    
     // Exit context
     context->Exit();
     

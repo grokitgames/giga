@@ -55,6 +55,11 @@ void ScriptableObjectType::New(const v8::FunctionCallbackInfo<v8::Value>& info) 
         GIGA_ASSERT(false, "The new operator is not supported on static global variables.");
     }
     
+    for (int i = 0; i < info.Length(); i++) {
+        delete args[i];
+    }
+    free(args);
+    
     return info.GetReturnValue().Set(info.This());
 }
 
@@ -213,6 +218,7 @@ void ScriptableObjectType::HandleObjectFunctionCallback(const v8::FunctionCallba
     }
     
     free(argv);
+    delete obj;
 }
 
 void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info) {
@@ -240,6 +246,8 @@ void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, co
             }
         }
     }
+    
+    delete obj;
 }
 
 void ScriptableObjectType::HandleObjectSetter(v8::Local<v8::String> property, v8::Local<v8::Value> value, const v8::PropertyCallbackInfo<void>& info) {
@@ -259,10 +267,14 @@ void ScriptableObjectType::HandleObjectSetter(v8::Local<v8::String> property, v8
             if (varList[i]->setter != 0) {
                 Variant* sv = new ScriptableVariant(value);
                 varList[i]->setter(strPropName, obj, sv);
-                return;
+                delete sv;
+                
+                break;
             }
         }
     }
+    
+    delete obj;
 }
 
 void ScriptableObjectType::HandleStaticGetter(v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info) {

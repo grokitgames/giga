@@ -64,6 +64,9 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
     MemoryReader* reader = new MemoryReader();
     reader->Initialize(buffer, bufferSize);
     
+    // Get a link to our entity system
+    EntitySystem* entitySystem = GetSystem<EntitySystem>();
+    
     int offset = 0;
     while(offset < bufferSize) {
         // First, entity ID
@@ -71,8 +74,11 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
         reader->Read(&entityID, sizeof(uint32_t));
         
         // Create a new entity
-        Entity* entity = new Entity();
-        entity->SetID(entityID);
+        Entity* entity = entitySystem->FindEntity(entityID);
+        if(entity == 0) {
+            entity = new Entity();
+            entity->SetID(entityID);
+        }
         
         // Then number of components
         uint32_t numComponents = 0;
@@ -84,10 +90,13 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
             reader->Read(&typeID, sizeof(uint32_t));
             
             // Create a component
-            Component* component = Component::CreateComponent(typeID);
+            Component* component = entity->FindComponent(typeID);
+            if(component == 0) {
+                component = Component::CreateComponent(typeID);
+                component->SetDataMappings();
+            }
             
             // Get our data block
-			component->SetDataMappings();
             component->Deserialize(reader);
 			
             // Add to our entity

@@ -208,6 +208,18 @@
 		5EFDFDEC1F22EB02009FA81B /* ResourceSystem.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFDEA1F22EB02009FA81B /* ResourceSystem.hpp */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5EDCA3F21F4F22F200329733 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5E05237C1F203ADF0088C9BA /* libEngine.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libEngine.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0523831F203B120088C9BA /* giga-engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "giga-engine.h"; path = "../../Engine/giga-engine.h"; sourceTree = "<group>"; };
@@ -932,6 +944,7 @@
 				5E0523781F203ADF0088C9BA /* Sources */,
 				5E0523791F203ADF0088C9BA /* Frameworks */,
 				5E05237A1F203ADF0088C9BA /* Headers */,
+				5EDCA3F21F4F22F200329733 /* CopyFiles */,
 			);
 			buildRules = (
 			);

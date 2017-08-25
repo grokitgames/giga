@@ -4,6 +4,7 @@
 NetworkSystem::NetworkSystem() {
     m_systemType = 0;
     m_lastMessageID = 0;
+    m_maxSocketID = 0;
 	memset(&m_startupTime, 0, sizeof(timespec));
 }
 
@@ -53,6 +54,7 @@ void NetworkSystem::Connect(std::string host, int port) {
     // Send first echo message request
     EchoRequestMessage* request = new EchoRequestMessage();
     session->Write(request);
+    delete request;
 }
 
 void NetworkSystem::Listen(int port) {
@@ -173,6 +175,8 @@ void NetworkSystem::Update(float delta) {
         return;
     }
     
+    PROFILE_START_AREA("NetworkSystem Update");
+    
     // Get current tick
     int tick = GetCurrentTick();
     
@@ -217,6 +221,8 @@ void NetworkSystem::Update(float delta) {
             
             // Get the next message
             bytes = socket->Read(buffer, NETWORK_MAX_PACKET_SIZE);
+            
+            delete msg;
         }
         
         if(bytes == 0) {
@@ -234,6 +240,7 @@ void NetworkSystem::Update(float delta) {
             m_info.client_info->session->Write(request);
             
             m_info.client_info->session->lastPing = tick;
+            delete request;
         }
     }
     
@@ -247,6 +254,8 @@ void NetworkSystem::Update(float delta) {
             }
         }
     }
+    
+    PROFILE_END_AREA("NetworkSystem Update");
 }
 
 int NetworkSystem::GetCurrentTick() {

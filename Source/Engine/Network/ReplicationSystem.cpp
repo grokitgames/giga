@@ -62,6 +62,7 @@ void ReplicationSystem::Update(float delta) {
 			msg->SetEntityPayload(buffer, actualSize);
 
 			networkSystem->Send(msg);
+            delete msg;
 		}
 
 		// Save

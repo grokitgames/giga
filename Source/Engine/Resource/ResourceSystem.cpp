@@ -36,6 +36,8 @@ ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string t
         
         resource->m_resource = rs;
         resource->ProcessData();
+        
+        AddResource(resource);
     }
     
     return(resource);

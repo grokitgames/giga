@@ -54,6 +54,11 @@ public:
     }
     
     /**
+     * Find a component by type identifier
+     */
+    Component* FindComponent(int type);
+    
+    /**
      * Clone entity
      */
     Entity* Clone();

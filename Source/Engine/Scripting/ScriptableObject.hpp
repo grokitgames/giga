@@ -53,7 +53,13 @@ public:
         
         inthandle->SetAlignedPointerInInternalField(0, this);
         m_jsHandle.Reset(v8::Isolate::GetCurrent(), inthandle);
+		m_jsHandle.SetWeak<ScriptableObject>(this, __GCCallback, v8::WeakCallbackType::kParameter);
     }
+
+	/**
+	 * Callback for garbage collected objects from V8
+	 */
+	static void __GCCallback(const v8::WeakCallbackInfo<ScriptableObject>& data);
     
 protected:
     // Protected constructor so we can't create these directly

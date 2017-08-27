@@ -23,9 +23,15 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
         v8::Local<v8::Object> jsobj = ret.As<v8::Object>();
         Wrap(jsobj);
         m_jsHandle.Reset(isolate, jsobj);
+		m_jsHandle.SetWeak<ScriptableObject>(this, __GCCallback, v8::WeakCallbackType::kParameter);
     }
     
     v8::Local<v8::Value> handle = m_jsHandle.Get(isolate);
     v8::Local<v8::Object> obj = handle.As<v8::Object>();
     return(handle_scope.Escape(obj));
+}
+
+void ScriptableObject::__GCCallback(const v8::WeakCallbackInfo<ScriptableObject>& data) {
+	ScriptableObject* obj = data.GetParameter();
+	delete obj;
 }

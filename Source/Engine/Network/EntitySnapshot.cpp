@@ -33,13 +33,9 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
         uint32_t id = entities[i]->GetID();
         writer->Write(&id, sizeof(uint32_t));
 
-		printf("Entity ID %d\n", id);
-
 		// Write number of components
 		uint32_t numComponents = components.size();
 		writer->Write(&numComponents, sizeof(uint32_t));
-
-		printf("Component count %d\n", numComponents);
         
         // Write components
         for(size_t j = 0; j < components.size(); j++) {
@@ -47,7 +43,6 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
             unsigned char* data = components[j]->Serialize(size);
             
             uint32_t type = components[j]->GetTypeID();
-			printf("Writing component type %d\n", type);
             writer->Write(&type, sizeof(uint32_t));
             writer->Write(data, size);
         }

@@ -13,7 +13,7 @@ void EchoRequestMessage::OnSend() {
     uint32_t currentNsecond = (uint32_t)currentTime.tv_nsec;
     
     // Pack the current time
-    unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 3);
+    unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 4);
     
     int offset = 0;
     memcpy(message + offset, &currentSeconds, sizeof(uint32_t));

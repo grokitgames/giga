@@ -44,8 +44,6 @@ void ReplicationSystem::Update(float delta) {
 					}
 				}
 
-				printf("Adding entity with %d updated component(s).\n", updatedComponents);
-
 				// Add entity to snapshot
 				snapshot->entities.push_back(entity);
 			}

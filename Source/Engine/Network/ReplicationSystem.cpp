@@ -69,7 +69,69 @@ void ReplicationSystem::Update(float delta) {
 		AddSnapshot(tick, snapshot);
 	}
 	else {
-		// If this is a client, process any updates that need to happen
+		// If this is a client, process any updates that need to happen (need at least 2 snapshots)
+
+        // Adjust our tick by a set amount of "render lag" so that we can interpolate
+        int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
+        
+        // Check which snapshots we have to interpolate between
+        int startTick = 0;
+        int endTick = renderTick;
+        std::list<EntitySnapshot*>::iterator i = m_snapshots.end();
+        std::list<EntitySnapshot*>::iterator i2 = m_snapshots.end();
+        
+        for(i; i != m_snapshots.begin(); i--) {
+            if((*i)->tick <= startTick) {
+                startTick = (*i)->tick;
+                break;
+            }
+            endTick = (*i)->tick;
+            i2 = i;
+        }
+        
+        if(startTick > 0) {
+            // Get the current offset from start tick
+            float startTime = startTick / NETWORK_TICKS_PER_SECOND;
+            float endTime = endTick / NETWORK_TICKS_PER_SECOND;
+            float currentPos = networkSystem->GetCurrentTime() - ((tick - renderTick) / NETWORK_TICKS_PER_SECOND) - startTime;
+            float interpolate = currentPos / (endTime - startTime);
+            
+            // Get link to entity system
+            EntitySystem* entitySystem = GetSystem<EntitySystem>();
+            
+            // Apply changes from the startTick (now in i)
+            for(size_t j = 0; j < (*i)->entities.size(); j++) {
+                Entity* entity = entitySystem->FindEntity((*i)->entities[j]->GetID());
+                if(entity == 0) {
+                    entity = new Entity();
+                    entity->SetID((*i)->entities[j]->GetID());
+                }
+                
+                std::vector<Component*> components = (*i)->entities[j]->GetComponents();
+                for(size_t k = 0; k < components.size(); k++) {
+                    Component* component = entity->FindComponent(components[k]->GetTypeID());
+                    if(component) {
+                        entity->RemoveComponent(component);
+                        delete component;
+                    }
+                    
+                    component = components[k]->Clone();
+                    component->SetDataMappings();
+                    
+                    // If this same entity is present in the next snapshot, interpolate
+                    for(size_t m = 0; m < (*i2)->entities.size(); m++) {
+                        if((*i2)->entities[m]->GetID() == (*i)->entities[j]->GetID()) {
+                            Component* updated = (*i2)->entities[m]->FindComponent(components[k]->GetTypeID());
+                            if(updated) {
+                                component->Interpolate(updated, interpolate);
+                            }
+                        }
+                    }
+                    
+                    entity->AddComponent(component);
+                }
+            }
+        }
 	}
 
 	// Finally, delete any "old" snapshots that are no longer needed
@@ -113,6 +175,6 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 		}
 	}
 
-	// If we get here, we nede to put it at the front of the list
+	// If we get here, we to put it at the front of the list
 	m_snapshots.push_front(snapshot);
 }

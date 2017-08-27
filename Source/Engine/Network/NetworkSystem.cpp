@@ -272,3 +272,18 @@ int NetworkSystem::GetCurrentTick() {
     
     return(floor(d * NETWORK_TICKS_PER_SECOND));
 }
+
+float NetworkSystem::GetCurrentTime() {
+    timespec t;
+    Timer::GetTimestamp(&t);
+    
+    timespec diff = Timer::Diff(&m_startupTime, &t);
+    double d = (double)diff.tv_sec + ((double)diff.tv_nsec / 1000000000);
+    
+    // If this is the client, add the offset in
+    if(m_systemType == NETWORK_SYSTEM_CLIENT) {
+        d += (double)m_info.client_info->timeOffset.tv_sec + ((double)m_info.client_info->timeOffset.tv_nsec / 1000000000);
+    }
+    
+    return(d);
+}

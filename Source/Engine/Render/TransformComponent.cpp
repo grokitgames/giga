@@ -2,9 +2,22 @@
 #include <giga-engine.h>
 
 void TransformComponent::SetDataMappings() {
-    // SetStorableObjectFieldMapping("position", &m_transform.position);
-    // SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
-    // SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
+    SetStorableObjectFieldMapping("position", &m_transform.position);
+    SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
+    SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
+}
+
+void TransformComponent::Interpolate(Component* component, float amount) {
+    Transform interpolated;
+    
+    TransformComponent* tc = dynamic_cast<TransformComponent*>(component);
+    Transform* newTransform = tc->GetTransform();
+
+    interpolated.position = m_transform.position + (newTransform->position * amount);
+    interpolated.rotation = glm::lerp(m_transform.rotation, newTransform->rotation, amount);
+    interpolated.scaling = m_transform.scaling + (newTransform->scaling * amount);
+    
+    SetTransform(&interpolated);
 }
 
 TransformComponent* TransformComponent::Clone() {

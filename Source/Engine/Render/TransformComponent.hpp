@@ -18,6 +18,11 @@ public:
     void SetDataMappings();
     
     /**
+     * Interpolate from another transform component
+     */
+    void Interpolate(Component* component, float amount);
+    
+    /**
      * Get our transform
      */
     Transform* GetTransform() { return &m_transform; }

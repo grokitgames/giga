@@ -91,6 +91,11 @@ public:
     int GetCurrentTick();
     
     /**
+     * Get current offset time since start
+     */
+    float GetCurrentTime();
+    
+    /**
      * Get/set server startup time
      */
     timespec GetStartupTime() { return m_startupTime; }

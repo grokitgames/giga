@@ -4,6 +4,7 @@
 
 // The number of seconds to maintain snapshot history for
 #define NETWORK_SNAPSHOT_HISTORY    NETWORK_TICKS_PER_SECOND * 3
+#define NETWORK_SNAPSHOT_RENDER_LAG 2
 
 enum {
     REPLICATION_SERVER = 1,

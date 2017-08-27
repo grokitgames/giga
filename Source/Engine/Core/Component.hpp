@@ -40,6 +40,11 @@ public:
     virtual Component* Clone() = 0;
     
     /**
+     * Interpolate from another component
+     */
+    virtual void Interpolate(Component* component, float amount) { }
+    
+    /**
      * Check whether this component is active or not
      */
     bool IsActive() { return m_active; }

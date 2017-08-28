@@ -3,6 +3,7 @@
 
 ScriptableObject::ScriptableObject() {
     m_scriptType = 0;
+	m_deleted = false;
 }
 
 v8::Local<v8::Object> ScriptableObject::GetJSObject() {
@@ -33,5 +34,6 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
 
 void ScriptableObject::__GCCallback(const v8::WeakCallbackInfo<ScriptableObject>& data) {
 	ScriptableObject* obj = data.GetParameter();
-	delete obj;
+	obj->m_deleted = true; // TODO: Need to find a way to delete these objects after we're done with them
+	obj->m_jsHandle.Reset();
 }

@@ -68,6 +68,9 @@ protected:
 protected:
     // Script type interface
     ScriptableObjectType* m_scriptType;
+
+	// Is deleted
+	bool m_deleted;
     
     // Internal V8 handle
     v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>> m_jsHandle;

@@ -38,7 +38,7 @@ void StartApplication() {
     resourceSystem->AddSearchPath("Resources/Meshes");
     resourceSystem->AddSearchPath("Resources/Textures");
     resourceSystem->AddSearchPath("Resources/Shaders");
-    resourceSystem->AddSearchPath("Resources/Scripts/Client");
+	resourceSystem->AddSearchPath("Resources/Scripts/Client");
     
     // Initialize render system
     renderSystem->Initialize(width, height);
@@ -63,15 +63,15 @@ void StartApplication() {
     Keyboard* keyboard = new Keyboard();
     keyboard->Initialize();
     inputSystem->RegisterInputDevice(keyboard);
-    
+
     // Add script to camera
-    ScriptComponent* sc = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
+    ScriptComponent* cameraScript = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
     Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("input.js", "Script"));
-    sc->Initialize(inputjs);
-	sc->SetActive(true);
-	sc->AddToSystem();
+	cameraScript->Initialize(inputjs);
+	cameraScript->SetActive(true);
+	cameraScript->AddToSystem();
     
-    camera->AddComponent(sc);
+    camera->AddComponent(cameraScript);
 	
 	// Connect to server
 	networkSystem->Connect("grokitgames.com", 8053);

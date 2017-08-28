@@ -12,8 +12,8 @@ public:
     /**
      * Getters
      */
-    std::vector<StaticMeshComponent*>& GetMeshes() { return m_meshes.GetList(); }
-    std::vector<LightComponent*>& GetLights() { return m_lights.GetList(); }
+    std::list<StaticMeshComponent*>& GetMeshes() { return m_meshes.GetList(); }
+    std::list<LightComponent*>& GetLights() { return m_lights.GetList(); }
     // std::vector<BillboardComponent*>& GetBillboards();
     
     /**

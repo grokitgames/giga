@@ -8,31 +8,15 @@ Component::Component() {
     m_active = false;
     m_updated = false;
     m_typeID = 0;
-	removeFunction = 0;
+	m_removeFunction = 0;
+	m_addFunction = 0;
 }
 
 Component::~Component() {
     // Call the necessary system to remove component from any lists
-	if (removeFunction) {
-		removeFunction(this);
+	if (m_removeFunction) {
+		m_removeFunction(this);
 	}
-}
-
-void Component::RegisterComponentType(std::string type, int typeID, ComponentCreateFunc f1, ComponentRemoveFunc f2) {
-    std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
-    for(i; i != m_componentTypes.end(); i++) {
-        if(i->second->name == type || i->second->typeID == typeID) {
-            GIGA_ASSERT(false, "Component name or type ID already registered.");
-        }
-    }
-    
-    ComponentType* ct = new ComponentType();
-    ct->name = type;
-    ct->typeID = typeID;
-    ct->createFunc = f1;
-    ct->removeFunc = f2;
-    
-    m_componentTypes[type] = ct;
 }
 
 Component* Component::CreateComponent(std::string type) {
@@ -43,8 +27,10 @@ Component* Component::CreateComponent(std::string type) {
         return(0);
     }
     
-    Component* component = i->second->createFunc(type);
-    component->removeFunction = i->second->removeFunc;
+    Component* component = i->second->createFunc();
+	component->InitializeComponent(type);
+	component->m_addFunction = i->second->addFunc;
+    component->m_removeFunction = i->second->removeFunc;
     component->m_typeID = i->second->typeID;
     return(component);
 }
@@ -54,14 +40,34 @@ Component* Component::CreateComponent(int typeID) {
     std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
     for(i; i != m_componentTypes.end(); i++) {
         if(i->second->typeID == typeID) {
-            Component* component = i->second->createFunc(i->second->name);
-            component->removeFunction = i->second->removeFunc;
+            Component* component = i->second->createFunc();
+			component->InitializeComponent(i->second->name);
+
+			component->m_addFunction = i->second->addFunc;
+            component->m_removeFunction = i->second->removeFunc;
             component->m_typeID = i->second->typeID;
             return(component);
         }
     }
     
     return(0);
+}
+
+void Component::AddToSystem() {
+	if (m_addFunction) {
+		m_addFunction(this);
+		return;
+	}
+
+	int typeID = this->GetTypeID();
+	std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
+	for (i; i != m_componentTypes.end(); i++) {
+		if (i->second->typeID == typeID) {
+			m_addFunction = i->second->addFunc;
+			m_addFunction(this);
+			return;
+		}
+	}
 }
 
 void Component::MarkUpdated(bool updated) {

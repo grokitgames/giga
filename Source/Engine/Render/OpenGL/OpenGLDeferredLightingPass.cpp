@@ -78,8 +78,9 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
     m_format->EnableVertexAttribs(VERTEX_ATTRIB_TEXCOORD0);
     
     // Loop through each light
-    std::vector<LightComponent*> lights = scene->GetLights();
-    for(size_t i = 0; i < lights.size(); i++) {
+    std::list<LightComponent*> lights = scene->GetLights();
+	std::list<LightComponent*>::iterator i = lights.begin();
+	for (i; i != lights.end(); i++) {
         // Render
         GL_CHECK(glDrawArrays(GL_TRIANGLE_STRIP, 0, 4));
         

@@ -47,9 +47,10 @@ void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
     m_globals[name] = variant;
     
     // Add to any existing script components
-    std::vector<ScriptComponent*> scripts = m_scripts.GetList();
-    for(size_t i = 0; i < scripts.size(); i++) {
-        scripts[i]->SetGlobal(name, value);
+    std::list<ScriptComponent*> scripts = m_scripts.GetList();
+	std::list<ScriptComponent*>::iterator i = scripts.begin();
+	for (i; i != scripts.end(); i++) {
+        (*i)->SetGlobal(name, value);
     }
 }
 
@@ -97,18 +98,19 @@ void ScriptingSystem::EventHandler(Event* event) {
 
 void ScriptingSystem::Update(float delta) {
     PROFILE_START_AREA("ScriptingSystem Update");
+	Variant* d = new Variant(delta);
     
-    std::vector<ScriptComponent*> scripts = m_scripts.GetList();
-    Variant* d = new Variant(delta);
-    for(size_t i = 0; i < scripts.size(); i++) {
+	std::list<ScriptComponent*> scripts = m_scripts.GetList();
+	std::list<ScriptComponent*>::iterator i = scripts.begin();
+	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
-		if (scripts[i]->IsActive() == false) {
+		if ((*i)->IsActive() == false) {
 			continue;
 		}
 
-        Variant* parent = new Variant(scripts[i]->GetParent());
-        scripts[i]->SetGlobal("GameObject", parent);
-        scripts[i]->CallFunction("Update", 1, &d);
+        Variant* parent = new Variant((*i)->GetParent());
+		(*i)->SetGlobal("GameObject", parent);
+		(*i)->CallFunction("Update", 1, &d);
         
         delete parent;
     }
@@ -118,16 +120,13 @@ void ScriptingSystem::Update(float delta) {
     PROFILE_END_AREA("ScriptingSystem Update");
 }
 
-Component* ScriptingSystem::CreateScriptComponent(std::string type) {
+void ScriptingSystem::AddScriptComponent(Component* component) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    
-    ScriptComponent* script = new ScriptComponent();
+	ScriptComponent* script = (ScriptComponent*)component;
     scriptingSystem->m_scripts.AddObject(script);
-    return(script);
 }
 
 void ScriptingSystem::RemoveScriptComponent(Component* component) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    
-    scriptingSystem->m_scripts.RemoveObject(dynamic_cast<ScriptComponent*>(component));
+    scriptingSystem->m_scripts.RemoveObject((ScriptComponent*)component);
 }

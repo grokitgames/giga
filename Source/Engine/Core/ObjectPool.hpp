@@ -10,51 +10,46 @@ class GIGA_API ObjectPool {
 public:
     ObjectPool() = default;
     ~ObjectPool() {
-        for(size_t i = 0; i < m_objects.size(); i++) {
-            delete m_objects[i];
-            m_objects[i] = 0;
+		typename std::list<T*>::reverse_iterator i = m_objects.rbegin();
+		for (i; i != m_objects.rend(); i++) {
+            delete (*i);
         }
     }
     
     void AddObject(T* object) {
-        for(size_t i = 0; i < m_objects.size(); i++) {
-            if(m_objects[i] == object) {
-                return;
-            }
-        }
-        
-        for(size_t i = 0; i < m_objects.size(); i++) {
-            if(m_objects[i] == 0) {
-                m_objects[i] = object;
-                return;
-            }
-        }
+		typename std::list<T*>::iterator i = m_objects.begin();
+		for (i; i != m_objects.end(); i++) {
+			if ((*i) == object) {
+				return;
+			}
+		}
         
         m_objects.push_back(object);
     }
     
     void RemoveObject(T* object) {
-        for(size_t i = 0; i < m_objects.size(); i++) {
-            if(m_objects[i] == object) {
-                m_objects[i] = 0;
-                return;
-            }
-        }
+		typename std::list<T*>::iterator i = m_objects.begin();
+		for (i; i != m_objects.end(); i++) {
+			if ((*i) == object) {
+				m_objects.erase(i);
+				return;
+			}
+		}
     }
     
     void Clear() {
-        for(size_t i = 0; i < m_objects.size(); i++) {
-            delete m_objects[i];
-            m_objects[i] = 0;
-        }
+		typename std::list<T*>::reverse_iterator i = m_objects.rbegin();
+		for (i; i != m_objects.rend(); i++) {
+			delete (*i);
+		}
         
         m_objects.clear();
     }
     
-    std::vector<T*>& GetList() { return m_objects; }
+    std::list<T*>& GetList() { return m_objects; }
     
 protected:
-    std::vector<T*> m_objects;
+    std::list<T*> m_objects;
 };
 
 #endif

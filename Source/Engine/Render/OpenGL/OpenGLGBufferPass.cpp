@@ -72,7 +72,7 @@ void OpenGLGBufferPass::Render(Scene* scene) {
     GL_CHECK(glClearBufferfv(GL_COLOR, 3, &fValue));
     
     // Get our renderable mesh objects
-    std::vector<StaticMeshComponent*> renderList = scene->GetMeshes();
+    std::list<StaticMeshComponent*> renderList = scene->GetMeshes();
     
     // Get the camera
     CameraComponent* camera = scene->GetActiveCamera();
@@ -91,31 +91,30 @@ void OpenGLGBufferPass::Render(Scene* scene) {
     vector3 cameraPosition = camera->GetWorldPosition();
     
     // Loop over scene's renderable list and render into g-buffer
-    if (renderList.size() > 0) {
-        for (size_t i = 0; i < renderList.size(); i++) {
-            if (renderList[i]) {
-                // If this object doesn't have lighting applied, skip it (will cover next loop)
-                if (renderList[i]->HasLighting() == false) {
-                    continue;
-                }
-
-				// Make sure this component is active
-				if (renderList[i]->IsActive() == false) {
-					continue;
-				}
-                
-                matrix4 model = renderList[i]->GetModelMatrix();
-                
-                // Check to ensure it is inside the view frustum
-                BoundingBox obb = renderList[i]->GetBoundingBox();
-                if ((viewFrustum.Intersects(obb) == 0) && (obb.Inside(cameraPosition) == false)) {
-                    continue;
-                }
-                
-                // Render recursively
-                RecursiveRender(renderList[i], model, scene, i);
-            }
+	std::list<StaticMeshComponent*>::iterator i = renderList.begin();
+	int counter = 0;
+	for (i; i != renderList.end(); i++) {
+		// If this object doesn't have lighting applied, skip it (will cover next loop)
+        if ((*i)->HasLighting() == false) {
+            continue;
         }
+
+		// Make sure this component is active
+		if ((*i)->IsActive() == false) {
+			continue;
+		}
+                
+        matrix4 model = (*i)->GetModelMatrix();
+                
+        // Check to ensure it is inside the view frustum
+        BoundingBox obb = (*i)->GetBoundingBox();
+        if ((viewFrustum.Intersects(obb) == 0) && (obb.Inside(cameraPosition) == false)) {
+            continue;
+        }
+                
+        // Render recursively
+        RecursiveRender((*i), model, scene, counter);
+		counter++;
     }
     
     GL_CHECK(glDisable(GL_DEPTH_TEST));

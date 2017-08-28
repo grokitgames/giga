@@ -20,23 +20,24 @@ void ReplicationSystem::Update(float delta) {
 	if (m_type == REPLICATION_SERVER) {
 		// Get all entities
 		EntitySystem* entitySystem = GetSystem<EntitySystem>();
-		std::vector<Entity*> entities = entitySystem->GetEntities();
+		std::list<Entity*> entities = entitySystem->GetEntities();
 
 		// Create an entity snapshot
 		EntitySnapshot* snapshot = new EntitySnapshot();
 		snapshot->tick = tick;
 
 		// Iterate over to find entities with updates
-		for (size_t i = 0; i < entities.size(); i++) {
-			if (entities[i]->HasUpdates() > 0) {
+		std::list<Entity*>::iterator i = entities.begin();
+		for (i; i != entities.end(); i++) {
+			if ((*i)->HasUpdates() > 0) {
 				// Create a replica of the entity
 				Entity* entity = new Entity();
-				entity->SetID(entities[i]->GetID());
-				entity->SetName(entities[i]->GetName());
+				entity->SetID((*i)->GetID());
+				entity->SetName((*i)->GetName());
 
 				// Find any updated components
 				int updatedComponents = 0;
-				std::vector<Component*> components = entities[i]->GetComponents();
+				std::vector<Component*> components = (*i)->GetComponents();
 				for (size_t j = 0; j < components.size(); j++) {
 					if (components[j]->HasUpdates()) {
 						entity->AddComponent(components[j]->Clone());
@@ -120,6 +121,7 @@ void ReplicationSystem::Update(float delta) {
                     component = components[k]->Clone();
                     component->SetDataMappings();
 					component->SetActive(true);
+					component->AddToSystem();
                     
                     // If this same entity is present in the next snapshot, interpolate
 					if (i2 != m_snapshots.end()) {

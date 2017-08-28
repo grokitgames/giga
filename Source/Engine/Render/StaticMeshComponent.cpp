@@ -19,7 +19,7 @@ StaticMeshComponent* StaticMeshComponent::Clone() {
     
     // Create new instances of child objects
     for (size_t i = 0; i < m_children.size(); i++) {
-        clone->m_children.push_back(dynamic_cast<StaticMeshComponent*>(m_children[i]->Clone()));
+        clone->m_children.push_back((StaticMeshComponent*)m_children[i]->Clone());
     }
     
     return(clone);
@@ -38,7 +38,7 @@ void StaticMeshComponent::Instantiate(Mesh *mesh) {
         StaticMeshComponent* m = new StaticMeshComponent();
         
         m->Instantiate(children[i]);
-        m_children.push_back(dynamic_cast<StaticMeshComponent*>(m));
+        m_children.push_back((StaticMeshComponent*)m);
     }
     
     UpdateBoundingBox();

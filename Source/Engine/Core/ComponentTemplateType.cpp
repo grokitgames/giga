@@ -92,7 +92,7 @@ void ComponentTemplateType::Register(int typeID) {
     DataLoader::RegisterRecordType<ComponentTemplate>(m_storableType);
     
     // Register as a component type
-    Component::RegisterComponentType(m_name, typeID, &ComponentTemplate::CreateComponent, &ComponentTemplate::RemoveComponent);
+    Component::RegisterComponentType<ComponentTemplate>(m_name, typeID, 0, 0);
     
     // Register as a template type
     ComponentTemplate::RegisterComponentTemplateType(m_name, this);

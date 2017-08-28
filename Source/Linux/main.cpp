@@ -27,7 +27,7 @@ void StartApplication() {
 	resourceSystem->AddSearchPath("Resources/Meshes");
 	resourceSystem->AddSearchPath("Resources/Textures");
 	resourceSystem->AddSearchPath("Resources/Shaders");
-	resourceSystem->AddSearchPath("Resources/Scripts");
+	resourceSystem->AddSearchPath("Resources/Scripts/Server");
 
 	// Create a crate entity
 	Entity* crate = entitySystem->CreateEntity("Crate");
@@ -36,6 +36,8 @@ void StartApplication() {
 	Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->LoadResource("crate.g3d", "Mesh"));
 	StaticMeshComponent* meshComponent = dynamic_cast<StaticMeshComponent*>(Component::CreateComponent("StaticMeshComponent"));
 	meshComponent->Instantiate(mesh);
+	meshComponent->SetActive(true);
+	meshComponent->AddToSystem();
 
 	// Add to entity
 	crate->AddComponent(meshComponent);

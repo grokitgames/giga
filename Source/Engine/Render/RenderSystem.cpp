@@ -22,43 +22,37 @@ void RenderSystem::RemoveRenderPass(RenderPass* pass) {
     m_passes.RemoveObject(pass);
 }
 
-Component* RenderSystem::CreateStaticMeshComponent(std::string type) {
+void RenderSystem::AddStaticMeshComponent(Component* component) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
-    
-    StaticMeshComponent* mesh = new StaticMeshComponent();
+	StaticMeshComponent* mesh = (StaticMeshComponent*)component;
     renderSystem->m_scene->m_meshes.AddObject(mesh);
-    return(mesh);
 }
 
 void RenderSystem::RemoveStaticMeshComponent(Component* component) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
-    renderSystem->m_scene->m_meshes.RemoveObject(dynamic_cast<StaticMeshComponent*>(component));
+    renderSystem->m_scene->m_meshes.RemoveObject((StaticMeshComponent*)component);
 }
 
-Component* RenderSystem::CreateCameraComponent(std::string type) {
+void RenderSystem::AddCameraComponent(Component* component) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
-    
-    CameraComponent* camera = new CameraComponent();
+	CameraComponent* camera = (CameraComponent*)component;
     renderSystem->m_scene->m_cameras.AddObject(camera);
-    return(camera);
 }
 
 void RenderSystem::RemoveCameraComponent(Component* component) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
-    renderSystem->m_scene->m_cameras.RemoveObject(dynamic_cast<CameraComponent*>(component));
+    renderSystem->m_scene->m_cameras.RemoveObject((CameraComponent*)component);
 }
 
-Component* RenderSystem::CreateSpotLightComponent(std::string type) {
+void RenderSystem::AddSpotLightComponent(Component* component) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
-    
-    SpotLightComponent* light = new SpotLightComponent();
+	SpotLightComponent* light = (SpotLightComponent*)component;
     renderSystem->m_scene->m_lights.AddObject(light);
-    return(light);
 }
 
 void RenderSystem::RemoveSpotLightComponent(Component* component) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
-    renderSystem->m_scene->m_lights.RemoveObject(dynamic_cast<SpotLightComponent*>(component));
+    renderSystem->m_scene->m_lights.RemoveObject((SpotLightComponent*)component);
 }
 
 Variant* RenderSystem::GetWindowWidth(Variant* obj, int argc, Variant** argv) {

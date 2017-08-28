@@ -8,8 +8,9 @@ class Component;
 /**
  * Internal typedefs for creating and removing components
  */
-typedef Component* (*ComponentCreateFunc)(std::string type);
-typedef void(*ComponentRemoveFunc)(Component* component);
+typedef void (*ComponentAddFunc)(Component* component);
+typedef void (*ComponentRemoveFunc)(Component* component);
+typedef Component* (*ComponentCreateFunc)();
 
 /**
  * Define a component type
@@ -17,7 +18,8 @@ typedef void(*ComponentRemoveFunc)(Component* component);
 struct GIGA_API ComponentType {
     std::string name;
     int typeID;
-    ComponentCreateFunc createFunc;
+	ComponentAddFunc addFunc;
+	ComponentCreateFunc createFunc;
     ComponentRemoveFunc removeFunc;
 };
 
@@ -27,6 +29,11 @@ struct GIGA_API ComponentType {
 class GIGA_API Component : public ScriptableObject, public StorableObject {
 public:
     virtual ~Component();
+
+	/**
+	 * Initialize a new component
+	 */
+	virtual void InitializeComponent(std::string name) { }
     
     /**
      * Set/get parent entity
@@ -55,6 +62,11 @@ public:
      */
     void MarkUpdated(bool updated);
     bool HasUpdates() { return m_updated; }
+
+	/**
+	 * Add this component to a registered system
+	 */
+	void AddToSystem();
     
     /**
      * Overridable callback functions
@@ -75,7 +87,24 @@ public:
     /**
      * Register a global component type that can be added to entities - create/remove likely in system
      */
-    static void RegisterComponentType(std::string type, int typeID, ComponentCreateFunc f1, ComponentRemoveFunc f2);
+	template<class T>
+    static void RegisterComponentType(std::string type, int typeID, ComponentAddFunc f1, ComponentRemoveFunc f2) {
+		std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
+		for (i; i != m_componentTypes.end(); i++) {
+			if (i->second->name == type || i->second->typeID == typeID) {
+				GIGA_ASSERT(false, "Component name or type ID already registered.");
+			}
+		}
+
+		ComponentType* ct = new ComponentType();
+		ct->name = type;
+		ct->typeID = typeID;
+		ct->addFunc = f1;
+		ct->createFunc = &InternalCreateComponent<T>;
+		ct->removeFunc = f2;
+
+		m_componentTypes[type] = ct;
+	}
     
     /**
      * Create a new component by string type
@@ -95,6 +124,10 @@ public:
 protected:
     // Type ID
     int m_typeID;
+
+protected:
+	// Create a new component from a class type
+	template<typename T> static Component* InternalCreateComponent() { return new T; }
     
 protected:
     // Parent entity
@@ -105,9 +138,12 @@ protected:
     
     // Whether this component has been updated (for networking mostly)
     bool m_updated;
+
+	// Add to system
+	ComponentAddFunc m_addFunction;
     
     // Removal function
-    ComponentRemoveFunc removeFunction;
+    ComponentRemoveFunc m_removeFunction;
     
 private:
     // Globally registered component types (and their creation functions)

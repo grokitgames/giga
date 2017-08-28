@@ -38,7 +38,7 @@ void StartApplication() {
     resourceSystem->AddSearchPath("Resources/Meshes");
     resourceSystem->AddSearchPath("Resources/Textures");
     resourceSystem->AddSearchPath("Resources/Shaders");
-    resourceSystem->AddSearchPath("Resources/Scripts");
+    resourceSystem->AddSearchPath("Resources/Scripts/Client");
     
     // Initialize render system
     renderSystem->Initialize(width, height);
@@ -69,6 +69,7 @@ void StartApplication() {
     Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("input.js", "Script"));
     sc->Initialize(inputjs);
 	sc->SetActive(true);
+	sc->AddToSystem();
     
     camera->AddComponent(sc);
 	

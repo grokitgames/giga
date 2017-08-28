@@ -36,19 +36,19 @@ public:
     /**
      * Static mesh creation/removal
      */
-    static Component* CreateStaticMeshComponent(std::string type);
+    static void AddStaticMeshComponent(Component* component);
     static void RemoveStaticMeshComponent(Component* component);
     
     /**
      * Camera creation/removal
      */
-    static Component* CreateCameraComponent(std::string type);
+    static void AddCameraComponent(Component* component);
     static void RemoveCameraComponent(Component* component);
     
     /**
      * Spot light creation/removal
      */
-    static Component* CreateSpotLightComponent(std::string type);
+    static void AddSpotLightComponent(Component* component);
     static void RemoveSpotLightComponent(Component* component);
     
     /**

@@ -36,10 +36,11 @@ void EntitySystem::Clear() {
 }
 
 Entity* EntitySystem::FindEntity(int id) {
-    std::vector<Entity*> entities = m_entities.GetList();
-    for(size_t i = 0; i < entities.size(); i++) {
-        if(entities[i]->GetID() == id) {
-            return(entities[i]);
+    std::list<Entity*> entities = m_entities.GetList();
+	std::list<Entity*>::iterator i = entities.begin();
+	for (i; i != entities.end(); i++) {
+        if((*i)->GetID() == id) {
+            return((*i));
         }
     }
     
@@ -47,10 +48,11 @@ Entity* EntitySystem::FindEntity(int id) {
 }
 
 Entity* EntitySystem::FindEntity(std::string name) {
-    std::vector<Entity*> entities = m_entities.GetList();
-    for(size_t i = 0; i < entities.size(); i++) {
-        if(entities[i]->GetName() == name) {
-            return(entities[i]);
+	std::list<Entity*> entities = m_entities.GetList();
+	std::list<Entity*>::iterator i = entities.begin();
+	for (i; i != entities.end(); i++) {
+        if((*i)->GetName() == name) {
+            return((*i));
         }
     }
     

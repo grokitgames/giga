@@ -45,10 +45,11 @@ ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string t
 
 ResourceObject* ResourceSystem::Find(std::string name) {
     // See if we've already loaded it
-    std::vector<ResourceObject*> resources = m_resources.GetList();
-    for(size_t i = 0; i < resources.size(); i++) {
-        if(resources[i]->m_resource->GetFilename() == name) {
-            return(resources[i]);
+    std::list<ResourceObject*> resources = m_resources.GetList();
+	std::list<ResourceObject*>::iterator i = resources.begin();
+	for (i; i != resources.end(); i++) {
+        if((*i)->m_resource->GetFilename() == name) {
+            return((*i));
         }
     }
     
@@ -100,9 +101,10 @@ void ResourceSystem::Update(double delta) {
     DateTime* current = DateTime::GetCurrent();
     time_t timestamp = current->GetTimestamp();
     
-    std::vector<ResourceObject*> resources = m_resources.GetList();
-    for(size_t i = 0; i < resources.size(); i++) {
-        Resource* resource = resources[i]->m_resource;
+	std::list<ResourceObject*> resources = m_resources.GetList();
+	std::list<ResourceObject*>::iterator i = resources.begin();
+	for (i; i != resources.end(); i++) {
+        Resource* resource = (*i)->m_resource;
         if(timestamp - resource->GetLastAccess() > RESOURCE_DELETION_TIME) {
             resource->Unload();
         }

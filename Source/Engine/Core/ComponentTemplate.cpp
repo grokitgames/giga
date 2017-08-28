@@ -15,18 +15,13 @@ std::string ComponentTemplate::GetStorableTypeName() {
 	return(std::string(m_type->GetName()));
 }
 
-Component* ComponentTemplate::CreateComponent(std::string name) {
-    std::map<std::string, ComponentTemplateType*>::iterator i = m_types.find(name);
-    GIGA_ASSERT(i != m_types.end(), "Unregisted type name");
-    
-    // Once we have a new component type, we need to set it up
-    ComponentTemplate* ct = new ComponentTemplate();
-    i->second->InitializeComponent(ct);
-    return(ct);
-}
+void ComponentTemplate::InitializeComponent(std::string name) {
+	std::map<std::string, ComponentTemplateType*>::iterator i = m_types.find(name);
+	GIGA_ASSERT(i != m_types.end(), "Unregisted type name");
 
-void ComponentTemplate::RemoveComponent(Component* component) {
-    
+	// Once we have a new component type, we need to set it up
+	ComponentTemplate* ct = new ComponentTemplate();
+	i->second->InitializeComponent(ct);
 }
 
 void ComponentTemplate::InitializeScriptableObject(std::string name) {

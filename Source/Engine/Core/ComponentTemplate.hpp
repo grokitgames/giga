@@ -12,6 +12,11 @@ public:
     
     virtual std::string GetGigaName();
 	virtual std::string GetStorableTypeName();
+
+	/**
+	 * Initialize a component by string name
+	 */
+	void InitializeComponent(std::string name);
     
     /**
      * Initialize when created from scripting system
@@ -32,12 +37,6 @@ public:
      * Clone
      */
     Component* Clone();
-    
-    /**
-     * Create a new C++ object based on a registered script interface type
-     */
-    static Component* CreateComponent(std::string name);
-    static void RemoveComponent(Component* component);
     
     /**
      * Register a new component template type

@@ -41,7 +41,7 @@ public:
     /**
      * Get all entities
      */
-    std::vector<Entity*>& GetEntities() { return m_entities.GetList(); }
+    std::list<Entity*>& GetEntities() { return m_entities.GetList(); }
     
     /**
      * Scripting integration

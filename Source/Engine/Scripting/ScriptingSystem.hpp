@@ -81,6 +81,11 @@ public:
      */
     static void AddScriptComponent(Component* component);
     static void RemoveScriptComponent(Component* component);
+
+	/**
+	 * Add a transient JS object (can be garbage collected)
+	 */
+	void AddTransient(ScriptableObject* object);
     
 private:
     // The storage of an event handler
@@ -110,6 +115,9 @@ protected:
     
     // List of running script components
     ObjectPool<ScriptComponent> m_scripts;
+
+	// List of transient JS objects
+	ObjectPool<ScriptableObject> m_transients;
 };
 
 #endif

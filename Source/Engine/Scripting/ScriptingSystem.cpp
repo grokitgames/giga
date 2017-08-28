@@ -116,6 +116,16 @@ void ScriptingSystem::Update(float delta) {
     }
     
     delete d;
+
+	// Remove any transient variables marked for deletion
+	std::list<ScriptableObject*> transients = m_transients.GetList();
+	std::list<ScriptableObject*>::iterator i2 = transients.begin();
+	for (i2; i2 != transients.end(); i2++) {
+		if ((*i2)->IsDeleted() == true) {
+			m_transients.RemoveObject(*i2);
+			delete (*i2);
+		}
+	}
     
     PROFILE_END_AREA("ScriptingSystem Update");
 }
@@ -129,4 +139,8 @@ void ScriptingSystem::AddScriptComponent(Component* component) {
 void ScriptingSystem::RemoveScriptComponent(Component* component) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->m_scripts.RemoveObject((ScriptComponent*)component);
+}
+
+void ScriptingSystem::AddTransient(ScriptableObject* object) {
+	m_transients.AddObject(object);
 }

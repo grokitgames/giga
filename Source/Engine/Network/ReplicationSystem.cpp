@@ -97,6 +97,12 @@ void ReplicationSystem::Update(float delta) {
             float endTime = (float)endTick / NETWORK_TICKS_PER_SECOND;
             float currentPos = networkSystem->GetCurrentTime() - (((float)tick - renderTick) / NETWORK_TICKS_PER_SECOND) - startTime;
             float interpolate = currentPos / (endTime - startTime);
+			if (interpolate < 0) {
+				interpolate = 0;
+			}
+			if (interpolate > 1) {
+				interpolate = 1;
+			}
             
             // Get link to entity system
             EntitySystem* entitySystem = GetSystem<EntitySystem>();

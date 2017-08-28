@@ -79,6 +79,11 @@ public:
      * Identify whether this template is for a static global that won't have a "this" pointer
      */
     void SetStatic(bool global) { m_static = global; }
+
+	/**
+	 * Set an object as transient (delete after JS is done with it)
+	 */
+	void SetTransient(bool transient) { m_transient = transient; }
     
     /**
      * Add this template to a new context
@@ -181,6 +186,9 @@ protected:
     
     // Define whether this class is a static global only (New should never be called)
     bool m_static;
+
+	// Whether the type is transient (should be garbage collected after V8 is done with it)
+	bool m_transient;
 };
 
 #endif

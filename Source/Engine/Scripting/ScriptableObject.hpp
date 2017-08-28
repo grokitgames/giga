@@ -28,6 +28,11 @@ public:
      * Return this object as a Javascript object
      */
     v8::Local<v8::Object> GetJSObject();
+
+	/**
+	 * Whether an object can be deleted
+	 */
+	bool IsDeleted() { return m_deleted; }
     
 public:
     /**

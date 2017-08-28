@@ -59,6 +59,11 @@ void ScriptableObjectType::New(const v8::FunctionCallbackInfo<v8::Value>& info) 
         delete args[i];
     }
     free(args);
+
+	// If this object is transient, register it
+	if (interface->m_transient == true) {
+		ss->AddTransient(obj);
+	}
     
     return info.GetReturnValue().Set(info.This());
 }

@@ -212,6 +212,7 @@ void Application::Initialize() {
     vector3Type->AddObjectVariable("x", &Vector3::GetX, &Vector3::SetX);
     vector3Type->AddObjectVariable("y", &Vector3::GetY, &Vector3::SetY);
     vector3Type->AddObjectVariable("z", &Vector3::GetZ, &Vector3::SetZ);
+	vector3Type->SetTransient(true);
     
     scriptingSystem->RegisterScriptableObjectType<Vector3>(vector3Type);
     
@@ -221,6 +222,7 @@ void Application::Initialize() {
     quaternionType->AddObjectVariable("y", &Quaternion::GetY, &Quaternion::SetY);
     quaternionType->AddObjectVariable("z", &Quaternion::GetZ, &Quaternion::SetZ);
     quaternionType->AddObjectVariable("w", &Quaternion::GetW, &Quaternion::SetW);
+	quaternionType->SetTransient(true);
     
     scriptingSystem->RegisterScriptableObjectType<Quaternion>(quaternionType);
     

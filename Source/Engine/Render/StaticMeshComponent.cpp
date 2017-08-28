@@ -8,7 +8,7 @@ StaticMeshComponent::StaticMeshComponent() {
 }
 
 StaticMeshComponent* StaticMeshComponent::Clone() {
-    StaticMeshComponent* clone = new StaticMeshComponent();
+	StaticMeshComponent* clone = (StaticMeshComponent*)Component::CreateComponent(this->GetTypeID());
     
     // Copy data
     clone->m_applyLighting = m_applyLighting;
@@ -43,6 +43,19 @@ void StaticMeshComponent::Instantiate(Mesh *mesh) {
     
     UpdateBoundingBox();
 	m_initialized = true;
+}
+
+void StaticMeshComponent::Interpolate(Component* component, float amount) {
+	Transform interpolated;
+
+	StaticMeshComponent* tc = dynamic_cast<StaticMeshComponent*>(component);
+	Transform* newTransform = tc->GetTransform();
+
+	interpolated.position = (m_transform.position * (1.0f - amount)) + (newTransform->position * amount);
+	interpolated.rotation = glm::lerp(m_transform.rotation, newTransform->rotation, amount);
+	interpolated.scaling = (m_transform.scaling * (1.0f - amount)) + (newTransform->scaling * amount);
+
+	SetTransform(&interpolated);
 }
 
 void StaticMeshComponent::UpdateBoundingBox() {

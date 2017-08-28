@@ -101,6 +101,11 @@ void ScriptingSystem::Update(float delta) {
     std::vector<ScriptComponent*> scripts = m_scripts.GetList();
     Variant* d = new Variant(delta);
     for(size_t i = 0; i < scripts.size(); i++) {
+		// Make sure this component is active
+		if (scripts[i]->IsActive() == false) {
+			continue;
+		}
+
         Variant* parent = new Variant(scripts[i]->GetParent());
         scripts[i]->SetGlobal("GameObject", parent);
         scripts[i]->CallFunction("Update", 1, &d);

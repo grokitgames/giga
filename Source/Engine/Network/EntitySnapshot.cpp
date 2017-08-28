@@ -93,5 +93,7 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
         }
         
         offset = reader->GetPosition();
+
+		entities.push_back(entity);
     }
 }

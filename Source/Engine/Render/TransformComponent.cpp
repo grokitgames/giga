@@ -13,9 +13,9 @@ void TransformComponent::Interpolate(Component* component, float amount) {
     TransformComponent* tc = dynamic_cast<TransformComponent*>(component);
     Transform* newTransform = tc->GetTransform();
 
-    interpolated.position = m_transform.position + (newTransform->position * amount);
-    interpolated.rotation = glm::lerp(m_transform.rotation, newTransform->rotation, amount);
-    interpolated.scaling = m_transform.scaling + (newTransform->scaling * amount);
+	interpolated.position = (m_transform.position * (1.0f - amount)) + (newTransform->position * amount);
+	interpolated.rotation = glm::lerp(m_transform.rotation, newTransform->rotation, amount);
+	interpolated.scaling = (m_transform.scaling * (1.0f - amount)) + (newTransform->scaling * amount);
     
     SetTransform(&interpolated);
 }

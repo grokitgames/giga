@@ -12,6 +12,7 @@ void EntitySnapshotMessage::OnSend() {
 
 void EntitySnapshotMessage::OnReceive() {
 	EntitySnapshot* snapshot = new EntitySnapshot();
+	snapshot->tick = m_envelope.tick;
 	snapshot->Deserialize(m_payload, m_envelope.bytes);
 
 	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();

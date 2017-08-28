@@ -16,6 +16,11 @@ public:
      * Instantiate an instance from a mesh
      */
     virtual void Instantiate(Mesh* mesh);
+
+	/**
+	* Interpolate from another static mesh component
+	*/
+	void Interpolate(Component* component, float amount);
     
     /**
      * Set data bindings

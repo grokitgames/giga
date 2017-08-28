@@ -8,11 +8,14 @@ Component::Component() {
     m_active = false;
     m_updated = false;
     m_typeID = 0;
+	removeFunction = 0;
 }
 
 Component::~Component() {
     // Call the necessary system to remove component from any lists
-    removeFunction(this);
+	if (removeFunction) {
+		removeFunction(this);
+	}
 }
 
 void Component::RegisterComponentType(std::string type, int typeID, ComponentCreateFunc f1, ComponentRemoveFunc f2) {
@@ -88,5 +91,6 @@ int Component::GetTypeID() {
 
 	std::map<std::string, ComponentType*>::iterator i = m_componentTypes.find(this->GetGigaName());
 	GIGA_ASSERT(i != m_componentTypes.end(), "Component type not found.");
-	return(i->second->typeID);
+	m_typeID = i->second->typeID;
+	return(m_typeID);
 }

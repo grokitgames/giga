@@ -42,6 +42,11 @@ void OpenGLShadowPass::Render(Scene* scene) {
                 if (renderList[i]->HasLighting() == false) {
                     continue;
                 }
+
+				// Make sure this component is active
+				if (renderList[i]->IsActive() == false) {
+					continue;
+				}
                 
                 matrix4 model = renderList[i]->GetModelMatrix();
                 

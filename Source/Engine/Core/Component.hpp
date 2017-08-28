@@ -48,6 +48,7 @@ public:
      * Check whether this component is active or not
      */
     bool IsActive() { return m_active; }
+	void SetActive(bool active) { m_active = active; }
     
     /**
      * Set network update state

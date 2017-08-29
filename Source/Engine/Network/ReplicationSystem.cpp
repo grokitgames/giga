@@ -1,6 +1,13 @@
 
 #include <giga-engine.h>
 
+ReplicationSystem::~ReplicationSystem() {
+    std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+    for(i; i != m_snapshots.end(); i++) {
+        delete (*i);
+    }
+}
+
 void ReplicationSystem::Update(float delta) {
 	// Make sure the type is set
 	if (m_type == 0) {
@@ -63,6 +70,8 @@ void ReplicationSystem::Update(float delta) {
 			networkSystem->Send(msg);
             delete msg;
 		}
+        
+        free(buffer);
 
 		// Save
 		AddSnapshot(tick, snapshot);
@@ -154,6 +163,8 @@ void ReplicationSystem::Update(float delta) {
 			for (i; i != m_snapshots.end(); i++) {
 				if ((*i)->tick > (tick - NETWORK_SNAPSHOT_HISTORY))
 					break;
+                else
+                    delete (*i);
 			}
 
 			m_snapshots.erase(m_snapshots.begin(), i);

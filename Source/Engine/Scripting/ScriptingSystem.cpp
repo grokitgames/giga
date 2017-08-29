@@ -18,6 +18,9 @@ ScriptingSystem::~ScriptingSystem() {
     for(size_t i = 0; i < m_eventHandlers.size(); i++) {
         delete m_eventHandlers[i];
     }
+    
+    m_isolate->Dispose();
+    v8::V8::ShutdownPlatform();
 }
 
 void ScriptingSystem::Initialize() {

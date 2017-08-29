@@ -1,6 +1,10 @@
 
 #include <giga-engine.h>
 
+ResourceSystem::~ResourceSystem() {
+    
+}
+
 void ResourceSystem::AddResource(ResourceObject *resource) {
     m_resources.AddObject(resource);
 }
@@ -24,7 +28,7 @@ ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string t
         // First, get the full path by searching out search paths
         std::string fullpath = FindResourcePath(filename);
         if(fullpath.empty()) {
-            ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to locate script file", filename));
+            ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to locate resource file", filename));
             return(0);
         }
         

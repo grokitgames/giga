@@ -17,13 +17,6 @@ public:
     }
     
     void AddObject(T* object) {
-		typename std::list<T*>::iterator i = m_objects.begin();
-		for (i; i != m_objects.end(); i++) {
-			if ((*i) == object) {
-				return;
-			}
-		}
-        
         m_objects.push_back(object);
     }
     

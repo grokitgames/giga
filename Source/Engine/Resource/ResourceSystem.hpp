@@ -10,7 +10,7 @@
 class GIGA_API ResourceSystem : public System {
 public:
     ResourceSystem() = default;
-    ~ResourceSystem() = default;
+    ~ResourceSystem();
     
     GIGA_CLASS_NAME("ResourceSystem");
 

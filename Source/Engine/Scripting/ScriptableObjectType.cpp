@@ -3,6 +3,7 @@
 
 ScriptableObjectType::ScriptableObjectType(std::string name) {
     m_static = false;
+    m_transient = false;
     
     SetName(name);
     StartTemplate();

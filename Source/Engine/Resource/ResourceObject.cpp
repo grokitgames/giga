@@ -19,12 +19,10 @@ unsigned char* ResourceObject::GetData() {
 std::string ResourceObject::GetString() {
     assert(m_resource != 0);
     
-    std::string retval = "";
     unsigned char* data = m_resource->GetData();
     int length = m_resource->GetFileSize();
     
-    retval = (char*)data;
-    retval.resize(length + 1);
-    retval[length] = '\0';
+    std::string retval = (char*)data;
+    retval.resize(length);
     return(retval);
 }

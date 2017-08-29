@@ -104,4 +104,6 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
 
 		entities.push_back(entity);
     }
+    
+    delete reader;
 }

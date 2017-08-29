@@ -177,6 +177,7 @@
 		5EDCA3ED1F41F2FD00329733 /* OpenGLShadowPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3EB1F41F2FD00329733 /* OpenGLShadowPass.hpp */; };
 		5EDCA3F01F42053D00329733 /* ShadowPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3EE1F42053D00329733 /* ShadowPass.cpp */; };
 		5EDCA3F11F42053D00329733 /* ShadowPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */; };
+		5EDCA3F41F550A2600329733 /* libEngine.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5E05237C1F203ADF0088C9BA /* libEngine.dylib */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -212,9 +213,10 @@
 		5EDCA3F21F4F22F200329733 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
+			dstPath = /usr/local/lib;
+			dstSubfolderSpec = 0;
 			files = (
+				5EDCA3F41F550A2600329733 /* libEngine.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

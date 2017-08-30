@@ -11,13 +11,13 @@ void ReplicationSystem::Update(float delta) {
 	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
 	int tick = networkSystem->GetCurrentTick();
 
-	// Make sure we're in a new tick
-	if (tick <= m_lastTick) {
-		return;
-	}
-
 	// If this is the server, prepare a sync to be sent to clients
 	if (m_type == REPLICATION_SERVER) {
+		// Make sure we're in a new tick
+		if (tick <= m_lastTick) {
+			return;
+		}
+
 		// Get all entities
 		EntitySystem* entitySystem = GetSystem<EntitySystem>();
 		std::list<Entity*> entities = entitySystem->GetEntities();

@@ -67,9 +67,9 @@ void StartApplication() {
     // Add script to camera
     ScriptComponent* cameraScript = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
     Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("input.js", "Script"));
+	cameraScript->AddToSystem();
 	cameraScript->Initialize(inputjs);
 	cameraScript->SetActive(true);
-	cameraScript->AddToSystem();
     
     camera->AddComponent(cameraScript);
 	

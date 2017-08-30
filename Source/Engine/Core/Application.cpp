@@ -74,6 +74,7 @@ void Application::Initialize() {
 	networkSystem->RegisterMessageType<EchoRequestMessage>(10);
 	networkSystem->RegisterMessageType<EchoResponseMessage>(20);
 	networkSystem->RegisterMessageType<EntitySnapshotMessage>(30);
+	networkSystem->RegisterMessageType<CommandMessage>(40);
 
 	Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
     
@@ -103,6 +104,7 @@ void Application::Initialize() {
     // Entity
     ScriptableObjectType* entityType = new ScriptableObjectType("Entity");
     entityType->AddObjectFunction("FindComponent", &Entity::FindComponent);
+	entityType->AddObjectVariable("ID", &Entity::GetID, 0);
     
     scriptingSystem->RegisterScriptableObjectType<Entity>(entityType);
     
@@ -163,7 +165,33 @@ void Application::Initialize() {
     scriptingSystem->RegisterGlobal("INPUTDEVICE_KEYBOARD", new Variant(INPUTDEVICE_KEYBOARD));
     scriptingSystem->RegisterGlobal("INPUTDEVICE_MOUSE", new Variant(INPUTDEVICE_MOUSE));
     scriptingSystem->RegisterGlobal("INPUTDEVICE_JOYSTICK", new Variant(INPUTDEVICE_JOYSTICK));
+
+	// Commands
+	ScriptableObjectType* commandType = new ScriptableObjectType("Command");
+	commandType->SetTransient(true);
+	commandType->AddStaticFunction("RegisterCommandType", &Command::RegisterCommandType);
+	commandType->AddObjectFunction("Start", &Command::Start);
+	commandType->AddObjectFunction("End", &Command::End);
     
+	scriptingSystem->RegisterScriptableObjectType<Command>(commandType);
+
+	/**
+	 * Networking
+	 */
+
+	// Network system
+	ScriptableObjectType* networkSystemType = new ScriptableObjectType("NetworkSystem");
+	networkSystemType->SetStatic(true);
+	networkSystemType->AddStaticFunction("Send", &NetworkSystem::Send);
+
+	scriptingSystem->RegisterScriptableObjectType<NetworkSystem>(networkSystemType);
+
+	// Command messages
+	ScriptableObjectType* commandMsgType = new ScriptableObjectType("CommandMessage");
+	commandMsgType->SetTransient(true);
+	
+	scriptingSystem->RegisterScriptableObjectType<CommandMessage>(commandMsgType);
+
     /**
      * Platform
      */

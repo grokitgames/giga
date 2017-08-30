@@ -17,8 +17,6 @@ public:
     }
     
     void AddObject(T* object) {
-
-        
         m_objects.push_back(object);
     }
     

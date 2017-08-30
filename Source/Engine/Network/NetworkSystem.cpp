@@ -287,3 +287,22 @@ float NetworkSystem::GetCurrentTime() {
     
     return(d);
 }
+
+Variant* NetworkSystem::Send(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1 || argc == 2, "Send expects one or two arguments.");
+
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	if (argc == 1) {
+		GIGA_ASSERT(argv[0]->IsObject(), "Expecting first parameter to be a message object.");
+		NetworkMessage* msg = argv[0]->AsObject<NetworkMessage>();
+		networkSystem->Send(msg);
+	}
+	else {
+		GIGA_ASSERT(argv[0]->IsInt(), "Expecting first parameter to be a session ID.");
+		GIGA_ASSERT(argv[1]->IsObject(), "Expecting second parameter to be a message object.");
+
+		networkSystem->Send(argv[0]->AsInt(), argv[1]->AsObject<NetworkMessage>());
+	}
+
+	return(new Variant(0));
+}

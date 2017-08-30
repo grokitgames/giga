@@ -17,7 +17,7 @@ enum {
 class GIGA_API ReplicationSystem : public System {
 public:
     ReplicationSystem() : m_lastTick(0), m_type(0) { }
-    ~ReplicationSystem() = default;
+    ~ReplicationSystem();
     
     GIGA_CLASS_NAME("ReplicationSystem");
     

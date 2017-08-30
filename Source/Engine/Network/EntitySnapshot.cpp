@@ -1,6 +1,12 @@
 
 #include <giga-engine.h>
 
+EntitySnapshot::~EntitySnapshot() {
+    for(size_t i = 0; i < entities.size(); i++) {
+        delete entities[i];
+    }
+}
+
 void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offset) {
     // Keep track of our current buffersize in a memory writer
     MemoryWriter* writer = new MemoryWriter();
@@ -45,13 +51,15 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
             uint32_t type = components[j]->GetTypeID();
             writer->Write(&type, sizeof(uint32_t));
             writer->Write(data, size);
+            
+            free(data);
         }
         
         offset++;
     }
     
-    delete writer;
     bufferSize = writer->GetPosition();
+    delete writer;
 }
 
 void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
@@ -96,4 +104,6 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
 
 		entities.push_back(entity);
     }
+    
+    delete reader;
 }

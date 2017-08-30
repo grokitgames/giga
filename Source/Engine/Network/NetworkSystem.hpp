@@ -123,6 +123,11 @@ public:
         // Register it (by message ID for faster lookup on incoming packets)
         m_messageTypes[messageID] = &CreateMessage<T>;
     }
+
+	/**
+	 * Scripting integration
+	 */
+	static Variant* Send(Variant* object, int argc, Variant** argv);
     
 protected:
     // Create a new message from a class type

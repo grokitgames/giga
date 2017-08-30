@@ -8,7 +8,7 @@
 class GIGA_API EntitySnapshot {
 public:
     EntitySnapshot() = default;
-    ~EntitySnapshot() = default;
+    ~EntitySnapshot();
     
     /**
      * Serialize entities and components into a byte stream, providing a buffer of bufferSize

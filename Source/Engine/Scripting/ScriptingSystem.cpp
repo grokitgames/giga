@@ -18,6 +18,9 @@ ScriptingSystem::~ScriptingSystem() {
     for(size_t i = 0; i < m_eventHandlers.size(); i++) {
         delete m_eventHandlers[i];
     }
+    
+    m_isolate->Dispose();
+    v8::V8::ShutdownPlatform();
 }
 
 void ScriptingSystem::Initialize() {
@@ -89,8 +92,11 @@ void ScriptingSystem::EventHandler(Event* event) {
         if(scriptingSystem->m_eventHandlers[i]->type == type) {
             if(scriptingSystem->m_eventHandlers[i]->sender == 0 || scriptingSystem->m_eventHandlers[i]->sender == event->GetSender()) {
                 Variant* v = new Variant(event);
+				Variant* parent = new Variant(scriptingSystem->m_eventHandlers[i]->script->GetParent());
+				scriptingSystem->m_eventHandlers[i]->script->SetGlobal("GameObject", parent);
                 scriptingSystem->m_eventHandlers[i]->script->CallFunction(scriptingSystem->m_eventHandlers[i]->func, 1, &v);
                 delete v;
+				delete parent;
             }
         }
     }

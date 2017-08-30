@@ -7,6 +7,12 @@ StaticMeshComponent::StaticMeshComponent() {
 	m_initialized = false;
 }
 
+StaticMeshComponent::~StaticMeshComponent() {
+    for(size_t i = 0; i < m_children.size(); i++) {
+        delete m_children[i];
+    }
+}
+
 StaticMeshComponent* StaticMeshComponent::Clone() {
 	StaticMeshComponent* clone = (StaticMeshComponent*)Component::CreateComponent(this->GetTypeID());
     

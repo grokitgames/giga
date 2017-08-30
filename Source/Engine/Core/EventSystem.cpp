@@ -21,7 +21,7 @@ void EventSystem::Update(float delta) {
     for(std::vector<Event*>::iterator i = m_events.begin(); i != m_events.end(); i++) {
         std::string type = (*i)->GetType();
         for(size_t j = 0; j < m_handlers.size(); j++) {
-            if(m_handlers[j]->type == type) {
+            if(m_handlers[j]->type == type || m_handlers[j]->type == "all") {
                 if(m_handlers[j]->sender == 0 || m_handlers[j]->sender == (*i)->GetSender())
                     m_handlers[j]->func(*i);
             }

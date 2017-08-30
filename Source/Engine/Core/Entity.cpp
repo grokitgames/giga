@@ -76,3 +76,8 @@ Variant* Entity::FindComponent(Variant* object, int argc, Variant** argv) {
     
     return(new Variant(0));
 }
+
+Variant* Entity::GetID(std::string prop, Variant* obj) {
+	Entity* entity = obj->AsObject<Entity>();
+	return(new Variant(entity->GetID()));
+}

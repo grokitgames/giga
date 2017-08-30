@@ -8,7 +8,7 @@
 class StaticMeshComponent : public RenderComponent {
 public:
     StaticMeshComponent();
-    ~StaticMeshComponent() = default;
+    ~StaticMeshComponent();
     
     GIGA_CLASS_NAME("StaticMeshComponent");
     

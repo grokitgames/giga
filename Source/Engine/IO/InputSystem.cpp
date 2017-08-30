@@ -90,7 +90,7 @@ Variant* InputSystem::RegisterInputMapping(Variant* object, int argc, Variant** 
 }
 
 Variant* InputSystem::FindInputMapping(Variant* object, int argc, Variant** argv) {
-    GIGA_ASSERT(argc == 3, "FindInputMapping expects 2 arguments.");
+    GIGA_ASSERT(argc == 2, "FindInputMapping expects 2 arguments.");
     GIGA_ASSERT(argv[0]->IsObject(), "First parameter should be an InputDevice object.");
     GIGA_ASSERT(argv[1]->IsInt(), "Second parameter should be a key or button binding.");
     

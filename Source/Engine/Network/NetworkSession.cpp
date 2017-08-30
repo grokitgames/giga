@@ -6,6 +6,7 @@ NetworkSession::NetworkSession() {
     socket = 0;
     player = 0;
     memset(&info, 0, sizeof(NetworkConnectionInfo));
+    lastPing = 0;
 }
 
 NetworkSession::~NetworkSession() {

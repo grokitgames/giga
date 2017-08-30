@@ -10,9 +10,17 @@
 class GIGA_API ResourceSystem : public System {
 public:
     ResourceSystem() = default;
-    ~ResourceSystem() = default;
+    ~ResourceSystem();
     
     GIGA_CLASS_NAME("ResourceSystem");
+    
+    // Internal function to call a C++ constructor
+    typedef ResourceObject* (*ResourceObjectCreateFunc)();
+    
+    struct ResourceObjectType {
+        std::string name;
+        ResourceObjectCreateFunc createFunc;
+    };
 
 	/**
 	 * Initialize
@@ -54,7 +62,20 @@ public:
      */
     template<class T>
     void RegisterResourceType(std::string className) {
-        m_resourceTypes[className] = &CreateResourceObject<T>;
+		// If this type is already registered, remove it and override with this new type
+		if (m_resourceTypes.size() > 0) {
+			for (int i = (int)m_resourceTypes.size() - 1; i >= 0; i--) {
+				if (m_resourceTypes[i]->name == className) {
+					delete (m_resourceTypes[i]);
+					m_resourceTypes.erase(m_resourceTypes.begin() + i);
+				}
+			}
+		}
+
+        ResourceObjectType* type = new ResourceObjectType();
+        type->name = className;
+        type->createFunc = &CreateResourceObject<T>;
+        m_resourceTypes.push_back(type);
     }
     
     /**
@@ -68,9 +89,6 @@ protected:
      */
     std::string FindResourcePath(std::string filename);
     
-    // Internal function to call a C++ constructor
-    typedef ResourceObject* (*ResourceObjectCreateFunc)();
-    
     // Create a new C++ object based on a registered script interface type
     template<typename T> static ResourceObject* CreateResourceObject() { return new T; }
     
@@ -82,7 +100,7 @@ protected:
     ObjectPool<ResourceObject> m_resources;
     
     // A map of class names to create functions
-    std::map<std::string, ResourceObjectCreateFunc> m_resourceTypes;
+    std::vector<ResourceObjectType*> m_resourceTypes;
 };
 
 #endif

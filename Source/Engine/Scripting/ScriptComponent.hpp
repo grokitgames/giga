@@ -7,7 +7,7 @@
  */
 class GIGA_API ScriptComponent : public Component {
 public:
-    ScriptComponent() = default;
+    ScriptComponent();
     ~ScriptComponent();
     
     GIGA_CLASS_NAME("ScriptComponent");
@@ -17,7 +17,7 @@ public:
      */
     struct ScriptFunction {
         std::string name;
-        v8::Persistent<v8::Function> func;
+        v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> func;
     };
     
     /**
@@ -60,6 +60,9 @@ protected:
     
     // List of accessible (undefined) global variables
     std::vector<std::string> m_globals;
+
+	// Whether this script has been initialized yet
+	bool m_initialized;
 };
 
 #endif

@@ -346,6 +346,9 @@
     <ClInclude Include="..\..\Engine\Render\OpenGL\OpenGLShadowPass.hpp">
       <Filter>Render\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\CommandMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -611,6 +614,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Network\Win32UDPSocket.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\CommandMessage.cpp">
+      <Filter>Network\Messages</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

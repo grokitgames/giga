@@ -34,6 +34,18 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
 
 void ScriptableObject::__GCCallback(const v8::WeakCallbackInfo<ScriptableObject>& data) {
 	ScriptableObject* obj = data.GetParameter();
-	obj->m_deleted = true; // TODO: Need to find a way to delete these objects after we're done with them
+	
+	// Mark deleted and add to transient queue for removal
+	obj->m_deleted = true;
+	if (obj->m_scriptType == 0) {
+		ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+		obj->m_scriptType = scriptingSystem->GetScriptableObjectType(obj->GetGigaName());
+	}
+
+	if (obj->m_scriptType->IsTransient()) {
+		ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+		scriptingSystem->AddTransient(obj);
+	}
+
 	obj->m_jsHandle.Reset();
 }

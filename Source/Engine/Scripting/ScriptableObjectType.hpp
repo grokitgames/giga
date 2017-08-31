@@ -84,6 +84,7 @@ public:
 	 * Set an object as transient (delete after JS is done with it)
 	 */
 	void SetTransient(bool transient) { m_transient = transient; }
+	bool IsTransient() { return m_transient; }
     
     /**
      * Add this template to a new context

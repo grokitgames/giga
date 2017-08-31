@@ -33,9 +33,26 @@ void ReplicationSystem::Update(float delta) {
 		EntitySnapshot* snapshot = new EntitySnapshot();
 		snapshot->tick = tick;
 
+		EntitySnapshot* fullSnapshot = new EntitySnapshot();
+		fullSnapshot->tick = tick;
+
 		// Iterate over to find entities with updates
 		std::list<Entity*>::iterator i = entities.begin();
 		for (i; i != entities.end(); i++) {
+			// First, take full entity snapshot
+			Entity* e1 = new Entity();
+			e1->SetID((*i)->GetID());
+			e1->SetName((*i)->GetName());
+
+			// Add all components
+			std::vector<Component*> components = (*i)->GetComponents();
+			for (size_t j = 0; j < components.size(); j++) {
+				e1->AddComponent(components[j]->Clone());
+			}
+
+			fullSnapshot->entities.push_back(e1);
+
+			// Then do delta snapshot
 			if ((*i)->HasUpdates() > 0) {
 				// Create a replica of the entity
 				Entity* entity = new Entity();
@@ -44,7 +61,6 @@ void ReplicationSystem::Update(float delta) {
 
 				// Find any updated components
 				int updatedComponents = 0;
-				std::vector<Component*> components = (*i)->GetComponents();
 				for (size_t j = 0; j < components.size(); j++) {
 					if (components[j]->HasUpdates()) {
 						entity->AddComponent(components[j]->Clone());
@@ -73,6 +89,7 @@ void ReplicationSystem::Update(float delta) {
         
 		// Save
 		AddSnapshot(tick, snapshot);
+		AddFullSnapshot(tick, fullSnapshot);
 	}
 	else {
 		// If this is a client, process any updates that need to happen (need at least 2 snapshots)
@@ -169,6 +186,21 @@ void ReplicationSystem::Update(float delta) {
 		}
 	}
 
+	// Same thing with full snapshots, delete any "old" snapshots that are no longer needed
+	if (m_fullSnapshots.size()) {
+		std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
+		if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
+			for (i; i != m_fullSnapshots.end(); i++) {
+				if ((*i)->tick >(tick - NETWORK_SNAPSHOT_HISTORY))
+					break;
+				else
+					delete (*i);
+			}
+
+			m_fullSnapshots.erase(m_fullSnapshots.begin(), i);
+		}
+	}
+
 	// Save current tick as most recent processed
 	m_lastTick = tick;
 }
@@ -199,4 +231,54 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 
 	// If we get here, we to put it at the front of the list
 	m_snapshots.push_front(snapshot);
+}
+
+void ReplicationSystem::AddFullSnapshot(int tick, EntitySnapshot* snapshot) {
+	// Check for empty list
+	if (m_fullSnapshots.size() == 0) {
+		m_fullSnapshots.push_back(snapshot);
+		return;
+	}
+
+	// Check if this snapshot just goes at the end
+	std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.end();
+	i--;
+
+	if ((*i)->tick < tick) {
+		m_fullSnapshots.push_back(snapshot);
+		return;
+	}
+
+	// Otherwise, go through the list and find out where to insert
+	for (i; i != m_fullSnapshots.begin(); i--) {
+		if (tick >(*i)->tick) {
+			m_fullSnapshots.insert(i, snapshot);
+			return;
+		}
+	}
+
+	// If we get here, we to put it at the front of the list
+	m_fullSnapshots.push_front(snapshot);
+}
+
+EntitySnapshot* ReplicationSystem::GetEntitySnapshot(int tick) {
+	std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+	for (i; i != m_snapshots.end(); i++) {
+		if ((*i)->tick == tick) {
+			return(*i);
+		}
+	}
+	
+	return(0);
+}
+
+EntitySnapshot* ReplicationSystem::GetFullEntitySnapshot(int tick) {
+	std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
+	for (i; i != m_fullSnapshots.end(); i++) {
+		if ((*i)->tick == tick) {
+			return(*i);
+		}
+	}
+
+	return(0);
 }

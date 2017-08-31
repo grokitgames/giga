@@ -172,6 +172,7 @@ void Application::Initialize() {
 	commandType->AddStaticFunction("RegisterCommandType", &Command::RegisterCommandType);
 	commandType->AddObjectFunction("Start", &Command::Start);
 	commandType->AddObjectFunction("End", &Command::End);
+	commandType->AddObjectVariable("type", &Command::Type, 0);
     
 	scriptingSystem->RegisterScriptableObjectType<Command>(commandType);
 

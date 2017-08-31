@@ -58,6 +58,7 @@ void Command::Initialize(Variant** argv, int argc) {
 
 	GIGA_ASSERT(type > 0, "Unregistered command type.");
 
+	EntitySystem* entitySystem = GetSystem<EntitySystem>();
 	Entity* entity = argv[0]->AsObject<Entity>();
 	entityID = entity->GetID();
 }
@@ -85,5 +86,17 @@ Variant* Command::End(Variant* object, int argc, Variant** argv) {
 
 	Command* command = object->AsObject<Command>();
 	command->End();
+	return(new Variant(0));
+}
+
+Variant* Command::Type(std::string prop, Variant* obj) {
+	Command* command = obj->AsObject<Command>();
+	for (size_t i = 0; i < m_commandTypes.size(); i++) {
+		if (m_commandTypes[i]->typeID == command->type) {
+			return(new Variant(m_commandTypes[i]->name));
+		}
+	}
+
+	GIGA_ASSERT(false, "Unknown command type.");
 	return(new Variant(0));
 }

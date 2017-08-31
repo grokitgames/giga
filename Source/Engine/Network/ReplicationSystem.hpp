@@ -35,10 +35,20 @@ public:
 	 * Add snapshot to stack
 	 */
 	void AddSnapshot(int tick, EntitySnapshot* snapshot);
+	void AddFullSnapshot(int tick, EntitySnapshot* snapshot);
+
+	/**
+	 * Get previous snapshot
+	 */
+	EntitySnapshot* GetEntitySnapshot(int tick);
+	EntitySnapshot* GetFullEntitySnapshot(int tick);
     
 protected:
     // Historical (+ potential future) snapshots
     std::list<EntitySnapshot*> m_snapshots;
+
+	// Full historical snapshots
+	std::list<EntitySnapshot*> m_fullSnapshots;
     
     // Last processed server tick
     int m_lastTick;

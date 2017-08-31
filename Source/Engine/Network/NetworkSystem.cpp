@@ -267,7 +267,7 @@ int NetworkSystem::GetCurrentTick() {
     
     // If this is the client, add the offset in
     if(m_systemType == NETWORK_SYSTEM_CLIENT) {
-		d += m_info.client_info->session->info.clientTimeDiff;
+		d -= m_info.client_info->session->info.clientTimeDiff;
     }
     
     return(floor(d * NETWORK_TICKS_PER_SECOND));
@@ -282,7 +282,7 @@ float NetworkSystem::GetCurrentTime() {
     
     // If this is the client, add the offset in
     if(m_systemType == NETWORK_SYSTEM_CLIENT) {
-		d += m_info.client_info->session->info.clientTimeDiff;
+		d -= m_info.client_info->session->info.clientTimeDiff;
     }
     
     return(d);

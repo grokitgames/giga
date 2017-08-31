@@ -123,14 +123,22 @@ void ScriptingSystem::Update(float delta) {
     
     delete d;
 
+	// Garbage collection
+	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+	isolate->IdleNotification(1.0f / NETWORK_TICKS_PER_SECOND / 2.0f);
+
 	// Remove any transient variables marked for deletion
 	std::list<ScriptableObject*> transients = m_transients.GetList();
 	std::list<ScriptableObject*>::iterator i2 = transients.begin();
+	int counter = 0;
 	for (i2; i2 != transients.end(); i2++) {
-		if ((*i2)->IsDeleted() == true) {
-			m_transients.RemoveObject(*i2);
-			delete (*i2);
-		}
+		m_transients.RemoveObject(*i2);
+		delete (*i2);
+		counter++;
+	}
+
+	if (counter) {
+		printf("Garbage collected %d JS objects.\n", counter);
 	}
     
     PROFILE_END_AREA("ScriptingSystem Update");

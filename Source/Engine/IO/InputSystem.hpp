@@ -59,6 +59,9 @@ protected:
     
     // List of registered input mappings
     std::vector<InputMapping*> m_mappings;
+
+	// History of commands
+	std::vector<Command*> m_commands;
 };
 
 #endif

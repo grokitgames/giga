@@ -1,6 +1,10 @@
 
 #include <giga-engine.h>
 
+ScriptComponent::ScriptComponent() {
+	m_initialized = false;
+}
+
 ScriptComponent::~ScriptComponent() {
     for(size_t i = 0; i < m_functions.size(); i++) {
         delete m_functions[i];
@@ -8,6 +12,9 @@ ScriptComponent::~ScriptComponent() {
 }
 
 void ScriptComponent::Initialize(Script* script) {
+	if (m_initialized) return;
+	m_initialized = true;
+
     m_scriptSource = script;
     
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
@@ -21,13 +28,16 @@ void ScriptComponent::Initialize(Script* script) {
     // Catch any errors the script might throw
     v8::TryCatch try_catch(isolate);
     
-    // Create a global object template
-    v8::Local<v8::ObjectTemplate> global = v8::ObjectTemplate::New(isolate);
-    
-    // Get our context
-    v8::Local<v8::Context> context = v8::Context::New(isolate, NULL, global);
-    m_context.Reset(isolate, context);
-    
+	v8::Local<v8::ObjectTemplate> global;
+	v8::Local<v8::Context> context;
+
+	// Create a global object template
+	global = v8::ObjectTemplate::New(isolate);
+
+	// Get our context
+	context = v8::Context::New(isolate, NULL, global);
+	m_context.Reset(isolate, context);
+	    
     context->Enter();
     
     // Get our global object space and start adding stuff to it
@@ -117,6 +127,10 @@ void ScriptComponent::Initialize(Script* script) {
 }
 
 void ScriptComponent::AddToContext(ScriptableObjectType* type) {
+	if (m_initialized == false) {
+		this->Initialize(m_scriptSource);
+	}
+
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
@@ -140,6 +154,10 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
 }
 
 void ScriptComponent::SetGlobal(std::string name, Variant* value) {
+	if (m_initialized == false) {
+		this->Initialize(m_scriptSource);
+	}
+
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
@@ -168,6 +186,10 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
 }
 
 void ScriptComponent::CallFunction(std::string function, int argc, Variant** argv) {
+	if (m_initialized == false) {
+		this->Initialize(m_scriptSource);
+	}
+
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
@@ -223,6 +245,22 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 
 ScriptComponent* ScriptComponent::Clone() {
     ScriptComponent* clone = new ScriptComponent();
-    clone->Initialize(m_scriptSource);
+	clone->m_scriptSource = m_scriptSource;
+	clone->m_context = m_context;
+	clone->m_script = m_script;
+	clone->m_initialized = m_initialized;
+
+	for (size_t i = 0; i < m_globals.size(); i++) {
+		clone->m_globals.push_back(m_globals[i]);
+	}
+
+	for (size_t i = 0; i < m_functions.size(); i++) {
+		ScriptFunction* func = new ScriptFunction();
+		func->func = m_functions[i]->func;
+		func->name = m_functions[i]->name;
+
+		clone->m_functions.push_back(func);
+	}
+
     return(clone);
 }

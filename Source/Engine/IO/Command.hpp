@@ -2,7 +2,7 @@
 #ifndef command_hpp
 #define command_hpp
 
-class GIGA_API Command : public ScriptableObject {
+class GIGA_API Command : public EventData {
 public:
     Command();
     ~Command() = default;
@@ -31,6 +31,7 @@ public:
 	static Variant* RegisterCommandType(Variant* object, int argc, Variant** argv);
 	static Variant* Start(Variant* object, int argc, Variant** argv);
 	static Variant* End(Variant* object, int argc, Variant** argv);
+	static Variant* Type(std::string prop, Variant* obj);
     
 public:
 	// The integer type (from the registration for serialization)

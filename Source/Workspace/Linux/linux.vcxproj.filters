@@ -247,6 +247,9 @@
     <ClCompile Include="..\..\Engine\Render\ShadowPass.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\CommandMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp">
@@ -516,6 +519,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Render\ShadowPass.hpp">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\CommandMessage.hpp">
+      <Filter>Network\Messages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,6 +9,9 @@ ScriptComponent::~ScriptComponent() {
     for(size_t i = 0; i < m_functions.size(); i++) {
         delete m_functions[i];
     }
+    
+    m_script.Reset();
+    m_context.Reset();
 }
 
 void ScriptComponent::Initialize(Script* script) {

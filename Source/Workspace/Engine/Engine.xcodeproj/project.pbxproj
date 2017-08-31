@@ -178,6 +178,8 @@
 		5EDCA3F01F42053D00329733 /* ShadowPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3EE1F42053D00329733 /* ShadowPass.cpp */; };
 		5EDCA3F11F42053D00329733 /* ShadowPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */; };
 		5EDCA3F41F550A2600329733 /* libEngine.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5E05237C1F203ADF0088C9BA /* libEngine.dylib */; };
+		5EDCA3F71F56FB6A00329733 /* CommandMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3F51F56FB6A00329733 /* CommandMessage.cpp */; };
+		5EDCA3F81F56FB6A00329733 /* CommandMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -401,6 +403,8 @@
 		5EDCA3EB1F41F2FD00329733 /* OpenGLShadowPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenGLShadowPass.hpp; path = ../../Engine/Render/OpenGL/OpenGLShadowPass.hpp; sourceTree = "<group>"; };
 		5EDCA3EE1F42053D00329733 /* ShadowPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShadowPass.cpp; path = ../../Engine/Render/ShadowPass.cpp; sourceTree = "<group>"; };
 		5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ShadowPass.hpp; path = ../../Engine/Render/ShadowPass.hpp; sourceTree = "<group>"; };
+		5EDCA3F51F56FB6A00329733 /* CommandMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandMessage.cpp; path = ../../Engine/Network/Messages/CommandMessage.cpp; sourceTree = "<group>"; };
+		5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandMessage.hpp; path = ../../Engine/Network/Messages/CommandMessage.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -714,6 +718,8 @@
 		5E6C658E1F314C960089FD55 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				5EDCA3F51F56FB6A00329733 /* CommandMessage.cpp */,
+				5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */,
 				5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */,
 				5E6C65A81F3376240089FD55 /* EchoResponseMessage.hpp */,
 				5E6C65A31F3374620089FD55 /* EchoRequestMessage.cpp */,
@@ -879,6 +885,7 @@
 				5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */,
 				5E556AF21F2813E000F6FB2E /* Shader.hpp in Headers */,
 				5E6C659E1F32A2760089FD55 /* NetworkSystem.hpp in Headers */,
+				5EDCA3F81F56FB6A00329733 /* CommandMessage.hpp in Headers */,
 				5E556B0E1F2A6B9300F6FB2E /* Bone.hpp in Headers */,
 				5E6C65431F2C041F0089FD55 /* Plane.hpp in Headers */,
 				5E556B161F2A6C8600F6FB2E /* AnimationTransform.hpp in Headers */,
@@ -1018,6 +1025,7 @@
 				5E6C653E1F2C02F20089FD55 /* CameraComponent.cpp in Sources */,
 				5E6C65B81F3545D10089FD55 /* EntitySnapshot.cpp in Sources */,
 				5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */,
+				5EDCA3F71F56FB6A00329733 /* CommandMessage.cpp in Sources */,
 				5E556A9B1F23613300F6FB2E /* Script.cpp in Sources */,
 				5E6C65881F314AD30089FD55 /* NetworkMessage.cpp in Sources */,
 				5EDCA3EC1F41F2FD00329733 /* OpenGLShadowPass.cpp in Sources */,

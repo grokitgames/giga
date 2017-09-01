@@ -41,7 +41,8 @@
 		5EDCA3C21F3BECB500329733 /* libv8_libbase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libbase.a; path = ../../ThirdParty/v8/lib/libv8_libbase.a; sourceTree = "<group>"; };
 		5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libplatform.a; path = ../../ThirdParty/v8/lib/libv8_libplatform.a; sourceTree = "<group>"; };
 		5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libsampler.a; path = ../../ThirdParty/v8/lib/libv8_libsampler.a; sourceTree = "<group>"; };
-		5EDCA3F31F54F26D00329733 /* input.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = input.js; path = ../../../../game/Resources/Scripts/Client/input.js; sourceTree = "<group>"; };
+		5EDCA3F31F54F26D00329733 /* camera.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = camera.js; path = ../../../../game/Resources/Scripts/Client/camera.js; sourceTree = "<group>"; };
+		5EDCA3F91F58927D00329733 /* game.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = game.js; path = ../../../../game/game.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +108,8 @@
 		5EDCA3DF1F3E7F9D00329733 /* JS */ = {
 			isa = PBXGroup;
 			children = (
-				5EDCA3F31F54F26D00329733 /* input.js */,
+				5EDCA3F31F54F26D00329733 /* camera.js */,
+				5EDCA3F91F58927D00329733 /* game.js */,
 			);
 			name = JS;
 			sourceTree = "<group>";

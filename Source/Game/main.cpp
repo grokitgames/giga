@@ -35,6 +35,7 @@ void StartApplication() {
     int height = window->GetFramebufferHeight();
     
     // Set up resource system
+    resourceSystem->AddSearchPath("./");
     resourceSystem->AddSearchPath("Resources/Meshes");
     resourceSystem->AddSearchPath("Resources/Textures");
     resourceSystem->AddSearchPath("Resources/Shaders");
@@ -42,6 +43,14 @@ void StartApplication() {
     
     // Initialize render system
     renderSystem->Initialize(width, height);
+    
+    // Load game.js file
+    Script* gamejs = dynamic_cast<Script*>(resourceSystem->LoadResource("game.js", "Script"));
+    ScriptComponent* gameComponent = new ScriptComponent();
+    
+    // Call Init() inside JS file
+    gameComponent->AddToSystem();
+    gameComponent->Initialize(gamejs);
     
     // Create our camera
     Entity* camera = new Entity();
@@ -66,7 +75,7 @@ void StartApplication() {
 
     // Add script to camera
     ScriptComponent* cameraScript = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
-    Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("input.js", "Script"));
+    Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("camera.js", "Script"));
 	cameraScript->AddToSystem();
 	cameraScript->Initialize(inputjs);
 	cameraScript->SetActive(true);

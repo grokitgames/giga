@@ -24,10 +24,19 @@ void StartApplication() {
 	application->Initialize();
 
 	// Set up resource system
+    resourceSystem->AddSearchPath("./");
 	resourceSystem->AddSearchPath("Resources/Meshes");
 	resourceSystem->AddSearchPath("Resources/Textures");
 	resourceSystem->AddSearchPath("Resources/Shaders");
 	resourceSystem->AddSearchPath("Resources/Scripts/Server");
+    
+    // Load game.js file
+    Script* gamejs = dynamic_cast<Script*>(resourceSystem->LoadResource("game.js", "Script"));
+    ScriptComponent* gameComponent = new ScriptComponent();
+    
+    // Call Init() inside JS file
+    gameComponent->AddToSystem();
+    gameComponent->Initialize(gamejs);
 
 	// Create a crate entity
 	Entity* crate = entitySystem->CreateEntity("Crate");

@@ -60,16 +60,9 @@ float Timer::Duration() {
     Timer::GetTimestamp(&ts);
     
     float seconds, nanoseconds;
-    if(ts.tv_nsec - m_startTime.tv_nsec < 0) {
-        seconds = ts.tv_sec - m_startTime.tv_sec - 1;
-        nanoseconds = ((1000000000 + ts.tv_nsec - m_startTime.tv_nsec) / 1000000000.0f);
-    }
-    else {
-        seconds = (float)ts.tv_sec - m_startTime.tv_sec;
-        nanoseconds = ((ts.tv_nsec - m_startTime.tv_nsec) / 1000000000.0f);
-    }
+    timespec delta = Diff(&m_startTime, &ts);
     
-    return(seconds + nanoseconds);
+    return(delta.tv_sec + (delta.tv_nsec / 1000000000.0f));
 }
 
 timespec Timer::Diff(timespec* start, timespec* end) {
@@ -90,11 +83,10 @@ float Timer::Reset() {
     timespec ts;
     Timer::GetTimestamp(&ts);
     
-    float seconds = ((float)ts.tv_sec - m_startTime.tv_sec - 1);
-    float nanoseconds = ((1000000000 + ts.tv_nsec - m_startTime.tv_nsec) / 1000000000.0f);
+    timespec delta = Diff(&m_startTime, &ts);
     
     m_startTime = ts;
-    return(seconds + nanoseconds);
+    return(delta.tv_sec + (delta.tv_nsec / 1000000000.0f));
 }
 
 void Timer::End() {

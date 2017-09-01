@@ -6,6 +6,8 @@
 #define NETWORK_TICKS_PER_SECOND    20
 #define NETWORK_ECHO_TICKS          10
 #define NETWORK_ECHO_TIMEOUT        60
+#define NETWORK_RESEND_MULTIPLE     2
+#define NETWORK_RESEND_HISTORY      60
 
 /**
  * Info specific to acting as a client
@@ -38,6 +40,31 @@ struct GIGA_API NetworkServerInfo {
 union NetworkSystemInfo {
     NetworkClientInfo* client_info;
     NetworkServerInfo* server_info;
+};
+
+/**
+ * Partial messages
+ */
+class GIGA_API NetworkMessagePart {
+public:
+    NetworkMessagePart();
+    ~NetworkMessagePart();
+    
+public:
+    // Master message; all concatenated parts
+    NetworkMessage* master;
+    
+    // Parts of the message (for tracking)
+    std::list<NetworkMessage*> parts;
+    
+    // Last tick we received message in
+    uint32_t lastTick;
+    
+    // Network session this is attached to
+    NetworkSession* session;
+    
+    // Whether this message has already been processed (in case of receiving partials twice)
+    bool processed;
 };
 
 /**
@@ -151,6 +178,9 @@ protected:
     
     // Last message ID sent
     int m_lastMessageID;
+    
+    // Map of message IDs to incomplete message parts
+    std::map<uint32_t, NetworkMessagePart*> m_partials;
 };
 
 #endif

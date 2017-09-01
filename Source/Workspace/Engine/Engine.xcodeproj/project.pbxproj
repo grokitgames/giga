@@ -180,6 +180,8 @@
 		5EDCA3F41F550A2600329733 /* libEngine.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5E05237C1F203ADF0088C9BA /* libEngine.dylib */; };
 		5EDCA3F71F56FB6A00329733 /* CommandMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3F51F56FB6A00329733 /* CommandMessage.cpp */; };
 		5EDCA3F81F56FB6A00329733 /* CommandMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */; };
+		5EDCA3FC1F59AC2A00329733 /* ResendRequestMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3FA1F59AC2A00329733 /* ResendRequestMessage.cpp */; };
+		5EDCA3FD1F59AC2A00329733 /* ResendRequestMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3FB1F59AC2A00329733 /* ResendRequestMessage.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -405,6 +407,8 @@
 		5EDCA3EF1F42053D00329733 /* ShadowPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ShadowPass.hpp; path = ../../Engine/Render/ShadowPass.hpp; sourceTree = "<group>"; };
 		5EDCA3F51F56FB6A00329733 /* CommandMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandMessage.cpp; path = ../../Engine/Network/Messages/CommandMessage.cpp; sourceTree = "<group>"; };
 		5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandMessage.hpp; path = ../../Engine/Network/Messages/CommandMessage.hpp; sourceTree = "<group>"; };
+		5EDCA3FA1F59AC2A00329733 /* ResendRequestMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResendRequestMessage.cpp; path = ../../Engine/Network/Messages/ResendRequestMessage.cpp; sourceTree = "<group>"; };
+		5EDCA3FB1F59AC2A00329733 /* ResendRequestMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ResendRequestMessage.hpp; path = ../../Engine/Network/Messages/ResendRequestMessage.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -726,6 +730,8 @@
 				5E6C65A41F3374620089FD55 /* EchoRequestMessage.hpp */,
 				5E6C65B31F353E230089FD55 /* EntitySnapshotMessage.cpp */,
 				5E6C65B41F353E230089FD55 /* EntitySnapshotMessage.hpp */,
+				5EDCA3FA1F59AC2A00329733 /* ResendRequestMessage.cpp */,
+				5EDCA3FB1F59AC2A00329733 /* ResendRequestMessage.hpp */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -898,6 +904,7 @@
 				5E0523E21F21837D0088C9BA /* ScriptingSystem.hpp in Headers */,
 				5E556B0A1F29736000F6FB2E /* MaterialSystem.hpp in Headers */,
 				5E6C65531F2CF4480089FD55 /* Framebuffer.hpp in Headers */,
+				5EDCA3FD1F59AC2A00329733 /* ResendRequestMessage.hpp in Headers */,
 				5E6C652E1F2B9E610089FD55 /* TransformComponent.hpp in Headers */,
 				5EFDFDB21F21A0B4009FA81B /* Keyboard.hpp in Headers */,
 				5E0523C61F216CAB0088C9BA /* Event.hpp in Headers */,
@@ -1035,6 +1042,7 @@
 				5E6C657F1F31485A0089FD55 /* PosixUDPSocket.cpp in Sources */,
 				5E6C65521F2CF4480089FD55 /* Framebuffer.cpp in Sources */,
 				5E556B051F2961F100F6FB2E /* ShaderSystem.cpp in Sources */,
+				5EDCA3FC1F59AC2A00329733 /* ResendRequestMessage.cpp in Sources */,
 				5EFDFDE31F22986B009FA81B /* Timer.cpp in Sources */,
 				5E6C65D11F3B4F4E0089FD55 /* OpenGLVertexBuffer.cpp in Sources */,
 				5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */,

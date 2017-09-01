@@ -10,22 +10,33 @@ public:
     NetworkMessage();
     ~NetworkMessage();
     
+    enum Flags {
+        FLAG_ACK = 1,
+    };
+    
     /**
      * A network message header/envelope
      */
     struct NetworkEnvelope {
         uint32_t tick;
         uint32_t id;
-        uint32_t type;
+        uint16_t type;
         uint32_t session;
         uint32_t bytes;
-        uint32_t ack;
+        uint16_t chunkID;
+        uint16_t end;
+        uint16_t flags;
     };
     
     /**
      * Read a message in from a packet
      */
     void Initialize(unsigned char* buffer, int size);
+    
+    /**
+     * Append new data to an existing buffer
+     */
+    void Append(unsigned char* data, int start, int size);
     
     /**
      * Parse an existing message out of the payload (called on receive)
@@ -50,7 +61,7 @@ public:
     /**
      * Does this message require an ack?
      */
-    void Ack(bool ack) { m_envelope.ack = ack; }
+    void Ack(bool ack) { m_envelope.flags &= (ack == true) ? ack : ~ack; }
     
 protected:
     /**

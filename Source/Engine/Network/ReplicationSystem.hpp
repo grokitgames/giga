@@ -16,7 +16,7 @@ enum {
  */
 class GIGA_API ReplicationSystem : public System {
 public:
-    ReplicationSystem() : m_lastTick(0), m_type(0) { }
+    ReplicationSystem();
     ~ReplicationSystem();
     
     GIGA_CLASS_NAME("ReplicationSystem");
@@ -44,6 +44,12 @@ public:
 	EntitySnapshot* GetFullEntitySnapshot(int tick);
     
 protected:
+    /**
+     * Internal application of snapshot
+     */
+    void ApplySnapshot(EntitySnapshot* current, EntitySnapshot* next, float interpolate);
+    
+protected:
     // Historical (+ potential future) snapshots
     std::list<EntitySnapshot*> m_snapshots;
 
@@ -55,6 +61,9 @@ protected:
     
     // Type
     int m_type;
+    
+    // Whether we have applied a full snapshot yet
+    bool m_initialized;
 };
 
 #endif

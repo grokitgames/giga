@@ -1,6 +1,12 @@
 
 #include <giga-engine.h>
 
+ReplicationSystem::ReplicationSystem() {
+    m_lastTick = 0;
+    m_type = 0;
+    m_initialized = false;
+}
+
 ReplicationSystem::~ReplicationSystem() {
     std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
     for(i; i != m_snapshots.end(); i++) {
@@ -92,7 +98,19 @@ void ReplicationSystem::Update(float delta) {
 		AddFullSnapshot(tick, fullSnapshot);
 	}
 	else {
-		// If this is a client, process any updates that need to happen (need at least 2 snapshots)
+		// If this is a client, process any updates that need to happen
+        
+        // If we are not yet initialized, check for a full snapshot first
+        if(m_initialized == false) {
+            std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+            for(i; i != m_snapshots.end(); i++) {
+                if((*i)->type == EntitySnapshot::SNAPSHOT_FULL) {
+                    ApplySnapshot(*i, 0, 0);
+                }
+            }
+            
+            return;
+        }
 
         // Adjust our tick by a set amount of "render lag" so that we can interpolate
         int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
@@ -128,46 +146,7 @@ void ReplicationSystem::Update(float delta) {
 				interpolate = 1;
 			}
             
-            // Get link to entity system
-            EntitySystem* entitySystem = GetSystem<EntitySystem>();
-            
-            // Apply changes from the startTick (now in i)
-            for(size_t j = 0; j < (*i)->entities.size(); j++) {
-                Entity* entity = entitySystem->FindEntity((*i)->entities[j]->GetID());
-                if(entity == 0) {
-                    entity = new Entity();
-                    entity->SetID((*i)->entities[j]->GetID());
-					entitySystem->AddEntity(entity);
-                }
-                
-                std::vector<Component*> components = (*i)->entities[j]->GetComponents();
-                for(size_t k = 0; k < components.size(); k++) {
-                    Component* component = entity->FindComponent(components[k]->GetTypeID());
-                    if(component) {
-                        entity->RemoveComponent(component);
-                        delete component;
-                    }
-                    
-                    component = components[k]->Clone();
-                    component->SetDataMappings();
-					component->SetActive(true);
-					component->AddToSystem();
-                    
-                    // If this same entity is present in the next snapshot, interpolate
-					if (i2 != m_snapshots.end()) {
-						for (size_t m = 0; m < (*i2)->entities.size(); m++) {
-							if ((*i2)->entities[m]->GetID() == (*i)->entities[j]->GetID()) {
-								Component* updated = (*i2)->entities[m]->FindComponent(components[k]->GetTypeID());
-								if (updated) {
-									component->Interpolate(updated, interpolate);
-								}
-							}
-						}
-					}
-                    
-                    entity->AddComponent(component);
-                }
-            }
+            ApplySnapshot(*i, *i2, interpolate);
         }
 	}
 
@@ -205,6 +184,49 @@ void ReplicationSystem::Update(float delta) {
 	m_lastTick = tick;
 }
 
+void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* next, float interpolate) {
+    // Get link to entity system
+    EntitySystem* entitySystem = GetSystem<EntitySystem>();
+    
+    // Apply changes from the startTick (now in i)
+    for(size_t j = 0; j < current->entities.size(); j++) {
+        Entity* entity = entitySystem->FindEntity(current->entities[j]->GetID());
+        if(entity == 0) {
+            entity = new Entity();
+            entity->SetID(current->entities[j]->GetID());
+            entitySystem->AddEntity(entity);
+        }
+        
+        std::vector<Component*> components = current->entities[j]->GetComponents();
+        for(size_t k = 0; k < components.size(); k++) {
+            Component* component = entity->FindComponent(components[k]->GetTypeID());
+            if(component) {
+                entity->RemoveComponent(component);
+                delete component;
+            }
+            
+            component = components[k]->Clone();
+            component->SetDataMappings();
+            component->SetActive(true);
+            component->AddToSystem();
+            
+            // If this same entity is present in the next snapshot, interpolate
+            if (next) {
+                for (size_t m = 0; m < next->entities.size(); m++) {
+                    if (next->entities[m]->GetID() == next->entities[j]->GetID()) {
+                        Component* updated = next->entities[m]->FindComponent(components[k]->GetTypeID());
+                        if (updated) {
+                            component->Interpolate(updated, interpolate);
+                        }
+                    }
+                }
+            }
+            
+            entity->AddComponent(component);
+        }
+    }
+}
+
 void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 	// Check for empty list
 	if (m_snapshots.size() == 0) {
@@ -223,6 +245,13 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 
 	// Otherwise, go through the list and find out where to insert
 	for (i; i != m_snapshots.begin(); i--) {
+        if(tick == (*i)->tick) {
+            // If we get an exact match, add to existing list
+            (*i)->entities.insert((*i)->entities.end(), snapshot->entities.begin(), snapshot->entities.end());
+            delete snapshot;
+            return;
+        }
+        
 		if (tick > (*i)->tick) {
 			m_snapshots.insert(i, snapshot);
 			return;

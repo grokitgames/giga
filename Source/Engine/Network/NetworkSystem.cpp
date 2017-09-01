@@ -1,6 +1,22 @@
 
 #include <giga-engine.h>
 
+NetworkMessagePart::NetworkMessagePart() {
+    lastTick = 0;
+    master = 0;
+    session = 0;
+    processed = false;
+}
+
+NetworkMessagePart::~NetworkMessagePart() {
+    std::list<NetworkMessage*>::iterator i = parts.begin();
+    for(; i != parts.end(); i++) {
+        delete (*i);
+    }
+    
+    parts.clear();
+}
+
 NetworkSystem::NetworkSystem() {
     m_systemType = 0;
     m_lastMessageID = 0;
@@ -216,13 +232,49 @@ void NetworkSystem::Update(float delta) {
             NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
             NetworkSession* session = FindSession(env->session, socket);
             
-            // Parse the message
-            msg->OnReceive();
+            if(env->bytes == (env->end - (NETWORK_MAX_PACKET_SIZE * env->chunkID))) {
+                // If this message is a full message, just parse it
+                msg->OnReceive();
+                delete msg;
+            }
+            else {
+                // If this packet is a partial, store it to be actioned later
+                std::map<uint32_t, NetworkMessagePart*>::iterator i = m_partials.find(env->id);
+                if(i == m_partials.end()) {
+                    NetworkMessagePart* part = new NetworkMessagePart();
+                    part->master = msg;
+                    part->parts.push_back(msg);
+                    part->lastTick = tick;
+                    part->session = session;
+                    
+                    // Store this message
+                    m_partials[env->id] = part;
+                }
+                else {
+                    // If this is for a packet we've already processed, move on
+                    if((*i).second->processed == true) {
+                        delete msg;
+                    }
+                    else {
+                        // Append it to the existing message and discard
+                        uint32_t envelopeID = env->id;
+                        m_partials[envelopeID]->master->Append(buffer, env->chunkID * NETWORK_MAX_PACKET_SIZE, env->bytes);
+                    
+                        // Note timing
+                        m_partials[envelopeID]->lastTick = tick;
+                    
+                        // Check again for a complete packet
+                        NetworkMessage::NetworkEnvelope* env = m_partials[envelopeID]->master->GetEnvelope();
+                        if(env->bytes == env->end) {
+                            m_partials[envelopeID]->master->OnReceive();
+                            m_partials[envelopeID]->processed = true;
+                        }
+                    }
+                }
+            }
             
             // Get the next message
             bytes = socket->Read(buffer, NETWORK_MAX_PACKET_SIZE);
-            
-            delete msg;
         }
         
         if(bytes == 0) {
@@ -232,6 +284,64 @@ void NetworkSystem::Update(float delta) {
         // Free buffer data
         free(buffer);
     }
+    
+    // TODO: Send ack packets
+    
+    // Re-request missing partial messages or ack requests
+    ResendRequestMessage* resendMsg = new ResendRequestMessage();
+    bool sendResend = false;
+    std::map<uint32_t, NetworkMessagePart*>::iterator i = m_partials.begin();
+    for(; i != m_partials.end(); i++) {
+        NetworkMessagePart* part = (*i).second;
+        
+        // Figure out latency using RTT
+        float latency = part->session->info.pingTime * 2;
+        float diff = (tick - part->lastTick) / NETWORK_TICKS_PER_SECOND;
+        
+        // If we have gone past twice our average latency, re-request pieces
+        NetworkMessage::NetworkEnvelope* env = part->master->GetEnvelope();
+        
+        if(diff > latency && part->processed == false) {
+            // Determine total chunks
+            int totalChunks = ceil((float)env->bytes / NETWORK_MAX_PACKET_SIZE);
+            
+            // Map which ones have been received
+            std::map<int, bool> received;
+            for(int j = 1; j <= totalChunks; j++) {
+                received[j] = false;
+            }
+            
+            // Check which have been received
+            std::list<NetworkMessage*>::iterator m = part->parts.begin();
+            for(; m != part->parts.end(); m++) {
+                received[((*m)->GetEnvelope())->chunkID] = true;
+            }
+            
+            // Add missing items
+            std::map<int, bool>::iterator r = received.begin();
+            for(; r != received.end(); r++) {
+                if(r->second == false) {
+                    resendMsg->AddPacket(env->id, r->first);
+                    sendResend = true;
+                }
+            }
+        }
+        
+        // Delete any partials that have already been processed afer a certain time
+        if(part->lastTick < (tick - NETWORK_RESEND_HISTORY) && part->processed == true) {
+            int envelopeID = (*i).first;
+            m_partials.erase(envelopeID);
+            i--;
+            
+            delete part;
+        }
+    }
+    
+    if(sendResend) {
+        Send(resendMsg);
+    }
+    
+    delete resendMsg;
     
     // Send echo packet (if client)
     if(m_systemType == NETWORK_SYSTEM_CLIENT) {

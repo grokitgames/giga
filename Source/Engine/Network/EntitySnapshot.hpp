@@ -10,6 +10,11 @@ public:
     EntitySnapshot() = default;
     ~EntitySnapshot();
     
+    enum {
+        SNAPSHOT_FULL = 1,
+        SNAPSHOT_DELTA,
+    };
+    
     /**
      * Serialize entities and components into a byte stream, providing a buffer of bufferSize
      * Starting from offset entities in, updated to reflect current offset at completion
@@ -27,6 +32,9 @@ public:
     
     // Snapshot time (in ticks)
     int tick;
+    
+    // Snapshot type
+    int type;
 };
 
 #endif

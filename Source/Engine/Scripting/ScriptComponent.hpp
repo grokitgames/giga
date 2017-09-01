@@ -44,6 +44,11 @@ public:
      * Set a global variable inside our context
      */
     void SetGlobal(std::string name, Variant* value);
+
+	/**
+	* Set data bindings
+	*/
+	void SetDataMappings();
     
 protected:
     // Our script

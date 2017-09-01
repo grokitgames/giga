@@ -7,6 +7,7 @@ ScriptComponent::ScriptComponent() {
 
 ScriptComponent::~ScriptComponent() {
     for(size_t i = 0; i < m_functions.size(); i++) {
+		m_functions[i]->func.Reset();
         delete m_functions[i];
     }
     
@@ -266,4 +267,8 @@ ScriptComponent* ScriptComponent::Clone() {
 	}
 
     return(clone);
+}
+
+void ScriptComponent::SetDataMappings() {
+	SetStorableObjectFieldMapping("script", (ResourceObject**)&m_scriptSource);
 }

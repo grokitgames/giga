@@ -22,7 +22,10 @@ std::string ResourceObject::GetString() {
     unsigned char* data = m_resource->GetData();
     int length = m_resource->GetFileSize();
     
-    std::string retval = (char*)data;
+	std::string retval = "";
+	if (data) {
+		retval += (char*)data;
+	}
     retval.resize(length);
     return(retval);
 }

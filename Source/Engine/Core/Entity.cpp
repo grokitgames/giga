@@ -14,6 +14,7 @@ Entity::~Entity() {
 
 void Entity::AddComponent(Component* component) {
     component->SetParent(this);
+	component->MarkUpdated(true);
     component->OnEntityUpdate();
     
     for (size_t i = 0; i < m_components.size(); i++) {

@@ -298,6 +298,13 @@ void Application::Initialize() {
 
 	DataLoader::RegisterRecordType<StaticMeshComponent>(meshStorableType);
 
+	StorableObjectType* scriptStorableType = new StorableObjectType();
+	scriptStorableType->SetName("ScriptComponent");
+	scriptStorableType->SetPrimaryKey("script_id");
+	scriptStorableType->AddField("script", "Script", true, StorableObjectField::FIELD_RESOURCE);
+
+	DataLoader::RegisterRecordType<ScriptComponent>(scriptStorableType);
+
 	Application::Log(MSGTYPE_DEBUG, "Registered storable types...");
     
     Application::Log(MSGTYPE_INFO, "Initialization complete.");

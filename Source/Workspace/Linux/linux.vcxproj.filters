@@ -250,6 +250,9 @@
     <ClCompile Include="..\..\Engine\Network\Messages\CommandMessage.cpp">
       <Filter>Network\Messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\Messages\ResendRequestMessage.cpp">
+      <Filter>Network\Messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp">
@@ -521,6 +524,9 @@
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Engine\Network\Messages\CommandMessage.hpp">
+      <Filter>Network\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\Messages\ResendRequestMessage.hpp">
       <Filter>Network\Messages</Filter>
     </ClInclude>
   </ItemGroup>

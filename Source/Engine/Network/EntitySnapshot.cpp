@@ -11,6 +11,10 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
     // Keep track of our current buffersize in a memory writer
     MemoryWriter* writer = new MemoryWriter();
     writer->Initialize(buffer, bufferSize);
+
+	// Write type
+	uint32_t t = type;
+	writer->Write(&t, sizeof(uint32_t));
     
     // Iterate over entities and serialize their components
     for(size_t i = offset; i < entities.size(); i++) {
@@ -69,6 +73,11 @@ void EntitySnapshot::Deserialize(unsigned char* buffer, int bufferSize) {
     
     // Get a link to our entity system
     EntitySystem* entitySystem = GetSystem<EntitySystem>();
+
+	// Read type
+	uint32_t t = type;
+	reader->Read(&t, sizeof(uint32_t));
+	type = t;
     
     int offset = 0;
     while(offset < bufferSize) {

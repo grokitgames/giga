@@ -25,6 +25,11 @@ void NetworkSession::Write(NetworkMessage* msg) {
     // Create payload
     msg->OnSend();
     
+	if (env->chunkID == 0) {
+		env->chunkID = 1;
+		env->end = env->bytes;
+	}
+
     // Get our payload and message and write to socket
     int count = 0;
     unsigned char* message = msg->GetPayload(count);

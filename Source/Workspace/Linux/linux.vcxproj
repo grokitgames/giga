@@ -53,6 +53,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
+    <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -94,6 +95,7 @@
     <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.cpp" />
+    <ClCompile Include="..\..\Engine\Network\Messages\ResendRequestMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\NetworkMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\NetworkSession.cpp" />
     <ClCompile Include="..\..\Engine\Network\NetworkSystem.cpp" />
@@ -177,6 +179,7 @@
     <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\EntitySnapshotMessage.hpp" />
+    <ClInclude Include="..\..\Engine\Network\Messages\ResendRequestMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\NetworkMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\NetworkSession.hpp" />
     <ClInclude Include="..\..\Engine\Network\NetworkSystem.hpp" />

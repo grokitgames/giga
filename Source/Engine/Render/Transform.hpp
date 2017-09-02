@@ -4,7 +4,7 @@
 
 class GIGA_API Transform : public ScriptableObject {
 public:
-    Transform() : position(0, 0, 0), rotation(1, 0, 0, 0), scaling(1, 1, 1) { }
+    Transform() : position(0, 0, 0), rotation(1, 0, 0, 0), scaling(1, 1, 1), m_component(0) { }
     ~Transform() = default;
     
     GIGA_CLASS_NAME("Transform");
@@ -20,6 +20,11 @@ public:
      * Get model matrix
      */
     matrix4 GetModelMatrix();
+
+	/**
+	 * Set component
+	 */
+	void SetComponent(Component* component) { m_component = component; }
     
     /**
      * Scripting integration
@@ -44,6 +49,9 @@ public:
     
 protected:
     matrix4 m_modelMatrix;
+
+	// Component this transform is attached to (if applicable)
+	Component* m_component;
     
 private:
     void UpdateModelMatrix();

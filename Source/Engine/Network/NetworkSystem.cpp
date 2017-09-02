@@ -69,7 +69,7 @@ void NetworkSystem::Connect(std::string host, int port) {
     
     // Send first echo message request
     EchoRequestMessage* request = new EchoRequestMessage();
-    session->Write(request);
+	Send(request);
     delete request;
 }
 
@@ -95,34 +95,72 @@ void NetworkSystem::Listen(int port) {
     m_maxSocketID = std::max(m_maxSocketID, info->socket->GetSocket());
 }
 
+void NetworkSystem::Send(NetworkSession* session, NetworkMessage* msg) {
+	// Fill in message ID and tick
+	NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
+	env->tick = GetCurrentTick();
+	env->id = ++m_lastMessageID;
+
+	int written = 0;
+
+	if (env->bytes > NETWORK_MAX_PACKET_SIZE) {
+		// Populate payload on original message
+		msg->OnSend();
+
+		// Get the original envelope
+		NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
+
+		// Find the constructor for the message type
+		std::map<int, NetworkMessage*(*)()>::iterator it = m_messageTypes.find(env->type);
+
+		// Get raw payload
+		unsigned char* rawPayload = msg->GetRawPayload();
+
+		// Break up into smaller messages
+		int totalPackets = ceil((float)env->bytes / NETWORK_MAX_PACKET_SIZE);
+		for (int i = 0; i < totalPackets; i++) {
+			NetworkMessage* newMsg = it->second();
+			NetworkMessage::NetworkEnvelope* newEnv = newMsg->GetEnvelope();
+
+			// Get the number of bytes in this packet
+			newEnv->chunkID = i + 1;
+			int bytes = (newEnv->chunkID * NETWORK_MAX_PACKET_SIZE > env->bytes) ? env->bytes - (newEnv->chunkID * NETWORK_MAX_PACKET_SIZE) : NETWORK_MAX_PACKET_SIZE;
+
+			newEnv->tick = env->tick;
+			newEnv->id = env->id;
+			newEnv->bytes = env->bytes;
+			newEnv->end = bytes;
+			newEnv->flags = env->flags;
+
+			newMsg->SetPayload(rawPayload + (i * NETWORK_MAX_PACKET_SIZE), bytes);
+
+			session->Write(newMsg);
+			delete newMsg;
+		}
+
+		return;
+	}
+
+	session->Write(msg);
+}
+
 void NetworkSystem::Send(NetworkMessage* msg) {
-    // Fill in message ID and tick
-    NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
-    env->tick = GetCurrentTick();
-    env->id = ++m_lastMessageID;
-    
-    // Send to all connected sessions
-    if(m_systemType == NETWORK_SYSTEM_CLIENT) {
-        m_info.client_info->session->Write(msg);
-    }
-    else {
-        for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
-            m_info.server_info->sessions[i]->Write(msg);
-        }
-    }
+	if (m_systemType == NETWORK_SYSTEM_CLIENT) {
+		Send(m_info.client_info->session, msg);
+	}
+	else {
+		for (size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
+			Send(m_info.server_info->sessions[i], msg);
+		}
+	}
 }
 
 void NetworkSystem::Send(int sessionID, NetworkMessage* msg) {
-    GIGA_ASSERT(m_systemType == NETWORK_SYSTEM_SERVER, "This function should only be called on servers.")
-
-    // Fill in message ID and tick
-    NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
-    env->tick = GetCurrentTick();
-    env->id = ++m_lastMessageID;
+	GIGA_ASSERT(m_systemType == NETWORK_SYSTEM_SERVER, "This function should only be called on servers.");
     
     for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
         if(m_info.server_info->sessions[i]->sessionID == sessionID) {
-            m_info.server_info->sessions[i]->Write(msg);
+            Send(m_info.server_info->sessions[i], msg);
             return;
         }
     }
@@ -164,6 +202,10 @@ NetworkSession* NetworkSystem::FindSession(int sessionID, UDPSocket* socket) {
     m_info.server_info->sessions.push_back(session);
 
 	Application::Log(ERROR_DEBUG, "New session", std::to_string(sessionID));
+
+	// Queue up the session for a full sync
+	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
+	replicationSystem->SendFullSnapshot(sessionID);
     
     return(session);
 }
@@ -232,7 +274,7 @@ void NetworkSystem::Update(float delta) {
             NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
             NetworkSession* session = FindSession(env->session, socket);
             
-            if(env->bytes == (env->end - (NETWORK_MAX_PACKET_SIZE * env->chunkID))) {
+            if(env->bytes == env->end && env->chunkID == 1) {
                 // If this message is a full message, just parse it
                 msg->OnReceive();
                 delete msg;
@@ -347,7 +389,7 @@ void NetworkSystem::Update(float delta) {
     if(m_systemType == NETWORK_SYSTEM_CLIENT) {
         if(m_info.client_info->session->lastPing < (tick - NETWORK_ECHO_TICKS)) {
             EchoRequestMessage* request = new EchoRequestMessage();
-            m_info.client_info->session->Write(request);
+            Send(request);
             
             m_info.client_info->session->lastPing = tick;
             delete request;
@@ -357,7 +399,7 @@ void NetworkSystem::Update(float delta) {
     if(m_systemType == NETWORK_SYSTEM_SERVER) {
 		// Check for timed out clients
         for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {
-            if(m_info.server_info->sessions[i]->lastPing < (tick - NETWORK_ECHO_TIMEOUT)) {
+            if(m_info.server_info->sessions[i]->lastPing < (tick - NETWORK_ECHO_TIMEOUT) && m_info.server_info->sessions[i]->lastPing > 0) {
 				printf("Last ping: %d, current tick: %d\n", m_info.server_info->sessions[i]->lastPing, tick);
 				Application::Log(ERROR_DEBUG, "Disconnecting session", std::to_string(m_info.server_info->sessions[i]->sessionID));
                 RemoveSession(m_info.server_info->sessions[i]->sessionID);

@@ -3,15 +3,21 @@
 
 void Transform::Move(vector3 translation) {
     position += translation;
+	
+	if (m_component) m_component->MarkUpdated(true);
 }
 
 void Transform::Rotate(float degrees, vector3 axis) {
     quaternion delta = glm::angleAxis(glm::radians(degrees), axis);
-    rotation = rotation * delta;;
+    rotation = rotation * delta;
+
+	if (m_component) m_component->MarkUpdated(true);
 }
 
 void Transform::Scale(vector3 scale) {
     scaling *= scale;
+
+	if (m_component) m_component->MarkUpdated(true);
 }
 
 matrix4 Transform::GetModelMatrix() {
@@ -38,6 +44,8 @@ void Transform::SetPosition(std::string var, Variant* obj, Variant* val) {
     Transform* tc = obj->AsObject<Transform>();
     Vector3* sv = val->AsObject<Vector3>();
     tc->position = sv->Get();
+
+	if (tc->m_component) tc->m_component->MarkUpdated(true);
 }
 
 Variant* Transform::GetRotation(std::string var, Variant* obj) {
@@ -50,6 +58,8 @@ void Transform::SetRotation(std::string var, Variant* obj, Variant* val) {
     Transform* tc = obj->AsObject<Transform>();
     Quaternion* sq = val->AsObject<Quaternion>();
     tc->rotation = sq->Get();
+
+	if (tc->m_component) tc->m_component->MarkUpdated(true);
 }
 
 Variant* Transform::GetScaling(std::string var, Variant* obj) {
@@ -62,6 +72,8 @@ void Transform::SetScaling(std::string var, Variant* obj, Variant* val) {
     Transform* tc = obj->AsObject<Transform>();
     Vector3* sv = val->AsObject<Vector3>();
     tc->scaling = sv->Get();
+
+	if (tc->m_component) tc->m_component->MarkUpdated(true);
 }
 
 Variant* Transform::Translate(Variant* obj, int argc, Variant** argv) {

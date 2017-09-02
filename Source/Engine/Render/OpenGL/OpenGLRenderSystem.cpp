@@ -79,6 +79,8 @@ void OpenGLRenderSystem::Initialize(int width, int height) {
 }
 
 void OpenGLRenderSystem::Update(float delta) {
+	PROFILE_START_AREA("RenderSystem Update");
+
     // Depth first pass
     
     // Gbuffer pass
@@ -93,6 +95,8 @@ void OpenGLRenderSystem::Update(float delta) {
     // Un-lit objects / debug data / billboards / skybox
     
     // Post processing passes
+
+	PROFILE_END_AREA("RenderSystem Update");
 }
 
 VertexBuffer* OpenGLRenderSystem::CreateVertexBuffer() {

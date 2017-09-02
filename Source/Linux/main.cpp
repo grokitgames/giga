@@ -75,9 +75,6 @@ void StartApplication() {
 	while (true) {
 		PROFILE_START_FRAME();
 
-		// TODO: Remove this, testing only
-		meshComponent->MarkUpdated(true);
-
 		application->Update(delta);
 
 		delta = mainTimer->Duration();

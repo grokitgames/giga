@@ -15,6 +15,8 @@ ReplicationSystem::~ReplicationSystem() {
 }
 
 void ReplicationSystem::Update(float delta) {
+	PROFILE_START_AREA("ReplicationSystem Update");
+
 	// Make sure the type is set
 	if (m_type == 0) {
 		return;
@@ -28,6 +30,7 @@ void ReplicationSystem::Update(float delta) {
 	if (m_type == REPLICATION_SERVER) {
 		// Make sure we're in a new tick
 		if (tick <= m_lastTick) {
+			PROFILE_END_AREA("ReplicationSystem Update");
 			return;
 		}
 
@@ -38,9 +41,11 @@ void ReplicationSystem::Update(float delta) {
 		// Create an entity snapshot
 		EntitySnapshot* snapshot = new EntitySnapshot();
 		snapshot->tick = tick;
+		snapshot->type = EntitySnapshot::SNAPSHOT_DELTA;
 
 		EntitySnapshot* fullSnapshot = new EntitySnapshot();
 		fullSnapshot->tick = tick;
+		fullSnapshot->type = EntitySnapshot::SNAPSHOT_FULL;
 
 		// Iterate over to find entities with updates
 		std::list<Entity*>::iterator i = entities.begin();
@@ -70,6 +75,7 @@ void ReplicationSystem::Update(float delta) {
 				for (size_t j = 0; j < components.size(); j++) {
 					if (components[j]->HasUpdates()) {
 						entity->AddComponent(components[j]->Clone());
+						components[j]->MarkUpdated(false);
 						updatedComponents++;
 					}
 				}
@@ -96,24 +102,59 @@ void ReplicationSystem::Update(float delta) {
 		// Save
 		AddSnapshot(tick, snapshot);
 		AddFullSnapshot(tick, fullSnapshot);
+
+		// Send our full snapshot to any sessions that need it
+		if (m_sessionIDs.size()) {
+			EntitySnapshotMessage* msg = new EntitySnapshotMessage();
+			unsigned char* packet = (unsigned char*)malloc(NETWORK_MAX_PACKET_SIZE);
+
+			int size = NETWORK_MAX_PACKET_SIZE;
+			int offset = 0;
+			fullSnapshot->Serialize(packet, size, offset);
+
+			msg->SetEntityPayload(packet, size);
+			printf("Sending full snapshot of size %d with %d entities.\n", size, fullSnapshot->entities.size());
+
+			std::list<int>::iterator s = m_sessionIDs.begin();
+			for (; s != m_sessionIDs.end(); s++) {
+				networkSystem->Send(*s, msg);
+			}
+
+			delete msg;
+			m_sessionIDs.clear();
+		}
 	}
 	else {
 		// If this is a client, process any updates that need to happen
+
+		// Adjust our tick by a set amount of "render lag" so that we can interpolate
+		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
         
         // If we are not yet initialized, check for a full snapshot first
-        if(m_initialized == false) {
+        if(m_initialized == false && m_snapshots.size() > 0) {
             std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
             for(i; i != m_snapshots.end(); i++) {
                 if((*i)->type == EntitySnapshot::SNAPSHOT_FULL) {
                     ApplySnapshot(*i, 0, 0);
+					m_initialized = true;
                 }
+
+				if (m_initialized == true) {
+					// Apply next snapshots up to expected render tick
+					if ((*i)->tick < renderTick) {
+						ApplySnapshot(*i, 0, 0);
+					}
+				}
             }
             
+			PROFILE_END_AREA("ReplicationSystem Update");
             return;
         }
 
-        // Adjust our tick by a set amount of "render lag" so that we can interpolate
-        int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
+		if (m_initialized == false) {
+			PROFILE_END_AREA("ReplicationSystem Update");
+			return;
+		}
         
         // Check which snapshots we have to interpolate between
         int startTick = 0;
@@ -146,7 +187,9 @@ void ReplicationSystem::Update(float delta) {
 				interpolate = 1;
 			}
             
-            ApplySnapshot(*i, *i2, interpolate);
+			if (i2 != m_snapshots.end()) {
+				ApplySnapshot(*i, *i2, interpolate);
+			}
         }
 	}
 
@@ -182,6 +225,8 @@ void ReplicationSystem::Update(float delta) {
 
 	// Save current tick as most recent processed
 	m_lastTick = tick;
+
+	PROFILE_END_AREA("ReplicationSystem Update");
 }
 
 void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* next, float interpolate) {
@@ -310,4 +355,8 @@ EntitySnapshot* ReplicationSystem::GetFullEntitySnapshot(int tick) {
 	}
 
 	return(0);
+}
+
+void ReplicationSystem::SendFullSnapshot(int sessionID) {
+	m_sessionIDs.push_back(sessionID);
 }

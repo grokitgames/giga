@@ -3,6 +3,7 @@
 
 RenderComponent::RenderComponent() {
     m_transformComponent = 0;
+	m_transform.SetComponent(this);
 }
 
 void RenderComponent::OnEntitySet() {

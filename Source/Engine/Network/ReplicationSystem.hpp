@@ -42,6 +42,11 @@ public:
 	 */
 	EntitySnapshot* GetEntitySnapshot(int tick);
 	EntitySnapshot* GetFullEntitySnapshot(int tick);
+
+	/**
+	 * Queue up a session to receive a full snapshot
+	 */
+	void SendFullSnapshot(int sessionID);
     
 protected:
     /**
@@ -64,6 +69,9 @@ protected:
     
     // Whether we have applied a full snapshot yet
     bool m_initialized;
+
+	// Sessions that we need to send a full snapshot to next tick
+	std::list<int> m_sessionIDs;
 };
 
 #endif

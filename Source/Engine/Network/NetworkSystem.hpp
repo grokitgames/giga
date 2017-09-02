@@ -157,6 +157,10 @@ public:
 	static Variant* Send(Variant* object, int argc, Variant** argv);
     
 protected:
+	// Internal send function
+	void Send(NetworkSession* session, NetworkMessage* msg);
+
+protected:
     // Create a new message from a class type
     template<typename T> static NetworkMessage* CreateMessage() { return new T; }
     

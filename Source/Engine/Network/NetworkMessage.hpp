@@ -52,6 +52,11 @@ public:
      * Get a packet with envelope + payload to be sent
      */
     unsigned char* GetPayload(int& size);
+
+	/**
+	 * Get a part of the payload
+	 */
+	unsigned char* GetRawPayload() { return m_payload; }
     
     /**
      * Get our envelope
@@ -61,18 +66,19 @@ public:
     /**
      * Does this message require an ack?
      */
-    void Ack(bool ack) { m_envelope.flags &= (ack == true) ? ack : ~ack; }
+	void SetFlags(int flags) { m_envelope.flags = flags; }
+	int GetFlags() { return m_envelope.flags; }
+
+	/**
+	* Helper function to set payload (sets envelope size)
+	*/
+	void SetPayload(unsigned char* bytes, int size);
     
 protected:
     /**
      * Helper function to go through payload, reading bytes (keeps track of offset)
      */
     void ReadPayload(void* bytes, int size);
-    
-    /**
-     * Helper function to set payload (sets envelope size)
-     */
-    void SetPayload(unsigned char* bytes, int size);
     
 protected:
     // The envelope/header

@@ -1,6 +1,10 @@
 
 #include <giga-engine.h>
 
+ResendRequestMessage::ResendRequestMessage() {
+	m_envelope.type = 50;
+}
+
 ResendRequestMessage::~ResendRequestMessage() {
     std::list<ResendRequestInfo*>::iterator i = m_packets.begin();
     for(; i != m_packets.end(); i++) {

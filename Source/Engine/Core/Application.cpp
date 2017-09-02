@@ -75,6 +75,7 @@ void Application::Initialize() {
 	networkSystem->RegisterMessageType<EchoResponseMessage>(20);
 	networkSystem->RegisterMessageType<EntitySnapshotMessage>(30);
 	networkSystem->RegisterMessageType<CommandMessage>(40);
+	networkSystem->RegisterMessageType<ResendRequestMessage>(50);
 
 	Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
     

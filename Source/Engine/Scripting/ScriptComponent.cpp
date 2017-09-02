@@ -194,6 +194,16 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 		this->Initialize(m_scriptSource);
 	}
 
+	// Check to ensure this function exists
+	bool exists = false;
+	for (size_t i = 0; i < m_functions.size(); i++) {
+		if (m_functions[i]->name == function) {
+			exists = true;
+		}
+	}
+
+	if (exists == false) return;
+
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     

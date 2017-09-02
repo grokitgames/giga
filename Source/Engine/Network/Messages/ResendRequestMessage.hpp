@@ -4,7 +4,7 @@
 
 class GIGA_API ResendRequestMessage : public NetworkMessage {
 public:
-    ResendRequestMessage() = default;
+    ResendRequestMessage();
     ~ResendRequestMessage();
     
     struct ResendRequestInfo {

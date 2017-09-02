@@ -39,7 +39,12 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
     
     // Get active camera
     CameraComponent* camera = scene->GetActiveCamera();
-    
+	if (camera == 0) {
+		m_shader->Unbind();
+		PROFILE_END_AREA("Deferred Lighting Pass");
+		return;
+	}
+
     // Get view matrix
     matrix4 view = camera->GetViewMatrix();
     matrix4 worldViewInverse = glm::inverse(view);

@@ -105,6 +105,7 @@ void Application::Initialize() {
     // Entity
     ScriptableObjectType* entityType = new ScriptableObjectType("Entity");
     entityType->AddObjectFunction("FindComponent", &Entity::FindComponent);
+	entityType->AddObjectFunction("CreateComponent", &Entity::CreateComponent);
 	entityType->AddObjectVariable("ID", &Entity::GetID, 0);
     
     scriptingSystem->RegisterScriptableObjectType<Entity>(entityType);
@@ -169,7 +170,6 @@ void Application::Initialize() {
 
 	// Commands
 	ScriptableObjectType* commandType = new ScriptableObjectType("Command");
-	commandType->SetTransient(true);
 	commandType->AddStaticFunction("RegisterCommandType", &Command::RegisterCommandType);
 	commandType->AddObjectFunction("Start", &Command::Start);
 	commandType->AddObjectFunction("End", &Command::End);

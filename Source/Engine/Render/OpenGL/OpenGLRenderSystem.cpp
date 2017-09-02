@@ -74,6 +74,7 @@ void OpenGLRenderSystem::Initialize(int width, int height) {
     renderSystemType->SetStatic(true);
     renderSystemType->AddStaticFunction("GetWindowWidth", &RenderSystem::GetWindowWidth);
     renderSystemType->AddStaticFunction("GetWindowHeight", &RenderSystem::GetWindowHeight);
+	renderSystemType->AddStaticFunction("SetActiveCamera", &RenderSystem::SetActiveCamera);
     
     scriptingSystem->RegisterScriptableObjectType<OpenGLRenderSystem>(renderSystemType);
 }

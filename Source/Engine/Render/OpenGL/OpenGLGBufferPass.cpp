@@ -76,6 +76,10 @@ void OpenGLGBufferPass::Render(Scene* scene) {
     
     // Get the camera
     CameraComponent* camera = scene->GetActiveCamera();
+	if (camera == 0) {
+		PROFILE_END_AREA("Gbuffer Pass");
+		return;
+	}
     
     // Update camera
     camera->SetViewport(m_windowWidth, m_windowHeight);

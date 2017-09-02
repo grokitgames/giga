@@ -38,6 +38,17 @@ void Entity::RemoveComponent(Component* component) {
     }
 }
 
+Variant* Entity::CreateComponent(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1, "CreateComponent expects one argument.");
+	GIGA_ASSERT(argv[0]->IsString(), "First argument should be string component type.");
+
+	Entity* entity = object->AsObject<Entity>();
+	Component* component = Component::CreateComponent(argv[0]->AsString());
+	entity->AddComponent(component);
+
+	return(new Variant(component));
+}
+
 Entity* Entity::Clone() {
     Entity* entity = new Entity();
     entity->m_id = m_id;

@@ -258,7 +258,7 @@ void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* n
             // If this same entity is present in the next snapshot, interpolate
             if (next) {
                 for (size_t m = 0; m < next->entities.size(); m++) {
-                    if (next->entities[m]->GetID() == next->entities[j]->GetID()) {
+                    if (next->entities[m]->GetID() == current->entities[j]->GetID()) {
                         Component* updated = next->entities[m]->FindComponent(components[k]->GetTypeID());
                         if (updated) {
                             component->Interpolate(updated, interpolate);

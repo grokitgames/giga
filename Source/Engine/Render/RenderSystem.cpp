@@ -64,3 +64,12 @@ Variant* RenderSystem::GetWindowHeight(Variant* obj, int argc, Variant** argv) {
     RenderSystem* renderSystem = GetSystem<RenderSystem>();
     return(new Variant(renderSystem->m_windowHeight));
 }
+
+Variant* RenderSystem::SetActiveCamera(Variant* obj, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1, "SetActiveCamera expects one argument.");
+	GIGA_ASSERT(argv[0]->IsObject(), "First argument should be CameraComponent.");
+
+	RenderSystem* renderSystem = GetSystem<RenderSystem>();
+	renderSystem->m_scene->SetActiveCamera(argv[0]->AsObject<CameraComponent>());
+	return(new Variant(0));
+}

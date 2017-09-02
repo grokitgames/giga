@@ -52,35 +52,14 @@ void StartApplication() {
     gameComponent->AddToSystem();
     gameComponent->Initialize(gamejs);
     
-    // Create our camera
-    Entity* camera = new Entity();
-
-    // Create a camera
-    CameraComponent* cc = dynamic_cast<CameraComponent*>(Component::CreateComponent("CameraComponent"));
-    camera->AddComponent(cc);
-    
-    cc->SetViewport(width, height);
-    cc->SetWorldPosition(vector3(0, 1.25, 3));
-    cc->SetLookVector(vector3(0, -0.1, -1.0));
-    
     // Set camera as active
     Scene* scene = renderSystem->GetScene();
-    scene->SetActiveCamera(cc);
     scene->SetAmbientLight(vector3(1, 1, 1));
     
     // Create keyboard
     Keyboard* keyboard = new Keyboard();
     keyboard->Initialize();
     inputSystem->RegisterInputDevice(keyboard);
-
-    // Add script to camera
-    ScriptComponent* cameraScript = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
-    Script* inputjs = dynamic_cast<Script*>(resourceSystem->LoadResource("camera.js", "Script"));
-	cameraScript->AddToSystem();
-	cameraScript->Initialize(inputjs);
-	cameraScript->SetActive(true);
-    
-    camera->AddComponent(cameraScript);
 	
 	// Connect to server
 	networkSystem->Connect("grokitgames.com", 8053);

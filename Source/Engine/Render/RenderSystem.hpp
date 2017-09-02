@@ -68,6 +68,7 @@ public:
      */
     static Variant* GetWindowWidth(Variant* obj, int argc, Variant** argv);
     static Variant* GetWindowHeight(Variant* obj, int argc, Variant** argv);
+	static Variant* SetActiveCamera(Variant* obj, int argc, Variant** argv);
     
 protected:
     // Current window (framebuffer) width/height

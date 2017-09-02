@@ -84,6 +84,13 @@ void ScriptComponent::Initialize(Script* script) {
     // Get the init function
     v8::Local<v8::Value> value = globalSpace->Get(v8::String::NewFromUtf8(isolate, "Init"));
     if(value->IsFunction()) {
+		if (this->m_parent) {
+			Variant* parent = new Variant(this->m_parent);
+			SetGlobal("GameObject", parent);
+		}
+
+		scriptingSystem->SetCurrentScript(this);
+
         // Call the Init function if there is one
         v8::Local<v8::Function> initFunc = value.As<v8::Function>();
         result = initFunc->Call(globalSpace, 0, 0);

@@ -4,10 +4,12 @@
 
 class RenderSystem;
 
-class GIGA_API Scene {
+class GIGA_API Scene : public ScriptableObject {
 public:
     Scene() = default;
     ~Scene() = default;
+
+	GIGA_CLASS_NAME("Scene");
     
     /**
      * Getters

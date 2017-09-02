@@ -78,6 +78,7 @@ public:
      * Scripting integration
      */
     static Variant* FindComponent(Variant* object, int argc, Variant** argv);
+	static Variant* CreateComponent(Variant* object, int argc, Variant** argv);
 	static Variant* GetID(std::string prop, Variant* obj);
     
 private:

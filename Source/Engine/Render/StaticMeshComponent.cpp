@@ -13,8 +13,8 @@ StaticMeshComponent::~StaticMeshComponent() {
     }
 }
 
-StaticMeshComponent* StaticMeshComponent::Clone() {
-	StaticMeshComponent* clone = (StaticMeshComponent*)Component::CreateComponent(this->GetTypeID());
+void StaticMeshComponent::Copy(Component* component) {
+	StaticMeshComponent* clone = (StaticMeshComponent*)component;
     
     // Copy data
     clone->m_applyLighting = m_applyLighting;
@@ -24,11 +24,22 @@ StaticMeshComponent* StaticMeshComponent::Clone() {
     clone->m_mesh = m_mesh;
     
     // Create new instances of child objects
-    for (size_t i = 0; i < m_children.size(); i++) {
-        clone->m_children.push_back((StaticMeshComponent*)m_children[i]->Clone());
-    }
-    
-    return(clone);
+	if (clone->m_children.size() != m_children.size()) {
+		for (size_t i = 0; i < clone->m_children.size(); i++) {
+			delete clone->m_children[i];
+		}
+		clone->m_children.clear();
+
+		for (size_t i = 0; i < m_children.size(); i++) {
+			clone->m_children.push_back((StaticMeshComponent*)m_children[i]->Clone());
+		}
+		
+	}
+	else {
+		for (size_t i = 0; i < m_children.size(); i++) {
+			m_children[i]->Copy(clone->m_children[i]);
+		}
+	}
 }
 
 void StaticMeshComponent::Instantiate(Mesh *mesh) {

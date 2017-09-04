@@ -63,7 +63,10 @@ void EchoRequestMessage::OnReceive() {
     NetworkSession* session = networkSystem->FindSession(m_envelope.session);
     session->lastPing = networkSystem->GetCurrentTick();
 	session->info.pingTime = (float)clientPing / 1000.0f;
-	session->info.clientTimeDiff = (float)clientOffset / 1000.0f;
+	
+	if (session->info.clientTimeDiff == 0) {
+		session->info.clientTimeDiff = (float)clientOffset / 1000.0f;
+	}
 
 	printf("Client ping time: %d ms, offset %d ms\n", clientPing, clientOffset);
 }

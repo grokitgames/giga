@@ -70,9 +70,19 @@ void StartApplication() {
 	Timer* mainTimer = new Timer();
 	mainTimer->Start();
 	float delta = 0.1f;
+	
+	int tick = networkSystem->GetCurrentTick();
 
 	// Main loop
 	while (true) {
+		int current = networkSystem->GetCurrentTick();
+		if (current <= tick) {
+			Timer::Sleep(1);
+			continue;
+		}
+
+		tick = current;
+
 		PROFILE_START_FRAME();
 
 		application->Update(delta);

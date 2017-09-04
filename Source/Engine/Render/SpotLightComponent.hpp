@@ -20,9 +20,9 @@ public:
     void CreateDepthTextures(Scene* scene);
     
     /**
-     * Clone spotlight
+     * Copy spotlight
      */
-    SpotLightComponent* Clone();
+	void Copy(Component* component);
     
 protected:
     struct LookVectors {

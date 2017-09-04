@@ -27,7 +27,7 @@ void EntitySnapshot::Serialize(unsigned char* buffer, int& bufferSize, int& offs
         int projectedSize = writer->GetPosition() + sizeof(uint32_t);
         
         // Iterate over components to get total size
-        std::vector<Component*>& components = entities[i]->GetComponents();
+        std::vector<Component*> components = entities[i]->GetComponents();
         for(size_t j = 0; j < components.size(); j++) {
 			components[j]->SetDataMappings();
 			int size = components[j]->GetSerializedSize();

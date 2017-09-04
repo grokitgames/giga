@@ -68,6 +68,8 @@ void Component::AddToSystem() {
 			return;
 		}
 	}
+
+	GIGA_ASSERT(false, "Unable to add component to system.");
 }
 
 void Component::MarkUpdated(bool updated) {
@@ -99,4 +101,13 @@ int Component::GetTypeID() {
 	GIGA_ASSERT(i != m_componentTypes.end(), "Component type not found.");
 	m_typeID = i->second->typeID;
 	return(m_typeID);
+}
+
+Component* Component::Clone() {
+	Component* component = Component::CreateComponent(this->GetTypeID());
+	component->m_active = m_active;
+	component->m_updated = m_updated;
+
+	this->Copy(component);
+	return(component);
 }

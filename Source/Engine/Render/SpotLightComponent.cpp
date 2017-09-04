@@ -79,17 +79,15 @@ void SpotLightComponent::CreateDepthTextures(Scene* scene) {
     }
 }
 
-SpotLightComponent* SpotLightComponent::Clone() {
-    SpotLightComponent* sc = new SpotLightComponent();
+void SpotLightComponent::Copy(Component* component) {
+    SpotLightComponent* sc = (SpotLightComponent*)component;
     sc->m_attenuation = m_attenuation;
     sc->m_type = m_type;
     sc->m_color = m_color;
     sc->m_passes = m_passes;
-    sc->m_camera = m_camera->Clone();
+    sc->m_camera = (CameraComponent*)m_camera->Clone();
     
     sc->RecalculateMatrices();
-    
-    return(sc);
 }
 
 void SpotLightComponent::RecalculateMatrices() {

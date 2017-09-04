@@ -19,6 +19,11 @@ public:
         std::string name;
         v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> func;
     };
+
+	struct ScriptVariable {
+		std::string name;
+		v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>> value;
+	};
     
     /**
      * Initialize a ScriptComponent from a Script
@@ -31,9 +36,9 @@ public:
     void AddToContext(ScriptableObjectType* type);
     
     /**
-     * Clone into another component
+     * Copy into another component
      */
-    ScriptComponent* Clone();
+    void Copy(Component* component);
     
     /**
      * Call a function inside this component
@@ -64,7 +69,7 @@ protected:
     std::vector<ScriptFunction*> m_functions;
     
     // List of accessible (undefined) global variables
-    std::vector<std::string> m_globals;
+    std::vector<ScriptVariable*> m_globals;
 
 	// Whether this script has been initialized yet
 	bool m_initialized;

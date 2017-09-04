@@ -94,20 +94,19 @@ void CameraComponent::SetAspectRatio(float ratio) {
     CalculateMatricesAndFrustum();
 }
 
-CameraComponent* CameraComponent::Clone() {
-    CameraComponent* cc = new CameraComponent();
-    cc->m_aspect = m_aspect;
-    cc->m_fov = m_fov;
-    cc->m_up = m_up;
-    cc->m_ffar = m_ffar;
-    cc->m_fnear = m_fnear;
-    cc->m_look = m_look;
-    cc->m_right = m_right;
-    cc->m_width = m_width;
-    cc->m_height = m_height;
-    cc->CalculateMatricesAndFrustum();
-    
-    return(cc);
+void CameraComponent::Copy(Component* component) {
+	CameraComponent* cc = (CameraComponent*)component;
+
+	cc->m_aspect = m_aspect;
+	cc->m_fov = m_fov;
+	cc->m_up = m_up;
+	cc->m_ffar = m_ffar;
+	cc->m_fnear = m_fnear;
+	cc->m_look = m_look;
+	cc->m_right = m_right;
+	cc->m_width = m_width;
+	cc->m_height = m_height;
+	cc->CalculateMatricesAndFrustum();
 }
 
 Variant* CameraComponent::GetFOV(std::string var, Variant* obj) {

@@ -20,11 +20,9 @@ void TransformComponent::Interpolate(Component* component, float amount) {
     SetTransform(&interpolated);
 }
 
-TransformComponent* TransformComponent::Clone() {
-    TransformComponent* tc = new TransformComponent();
+void TransformComponent::Copy(Component* component) {
+    TransformComponent* tc = (TransformComponent*)component;
     tc->SetTransform(&m_transform);
-    
-    return(tc);
 }
 
 void TransformComponent::SetTransform(Transform* transform) {

@@ -80,7 +80,7 @@ Variant* Entity::FindComponent(Variant* object, int argc, Variant** argv) {
     std::string name = argv[0]->AsString();
     
     std::vector<Component*> components = entity->GetComponents();
-    for(size_t i = 0; components.size(); i++) {
+    for(size_t i = 0; i < components.size(); i++) {
         if(components[i]->GetGigaName() == name) {
             return(new Variant(components[i]));
         }

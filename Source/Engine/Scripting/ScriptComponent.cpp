@@ -3,6 +3,7 @@
 
 ScriptComponent::ScriptComponent() {
 	m_initialized = false;
+	m_scriptSource = 0;
 }
 
 ScriptComponent::~ScriptComponent() {
@@ -54,8 +55,10 @@ void ScriptComponent::Initialize(Script* script) {
     
     // Register stuff into our script's context
     std::vector<ScriptableObjectType*> interfaces = scriptingSystem->GetRegisteredTypes();
+	std::vector<std::string> interfaceNames;
     for(int i = 0; i < interfaces.size(); i++) {
         interfaces[i]->AddToContext(context);
+		interfaceNames.push_back(interfaces[i]->GetName());
     }
     
     // Copy source
@@ -109,16 +112,32 @@ void ScriptComponent::Initialize(Script* script) {
         v8::Local<v8::Value> var = vars->Get(i);
         
         v8::String::Utf8Value name(var->ToString(isolate));
-        char* typeStr = (char*)*name;
+        std::string typeStr = *name;
         
-        v8::Local<v8::Value> actual = globalSpace->Get(context, v8::String::NewFromUtf8(isolate, typeStr)).ToLocalChecked();
+        v8::Local<v8::Value> actual = globalSpace->Get(context, v8::String::NewFromUtf8(isolate, typeStr.c_str())).ToLocalChecked();
         
         v8::String::Utf8Value type(actual->TypeOf(isolate));
-        typeStr = (char*)*type;
+        typeStr = *type;
         
         // If an undefined variable, add to our list
-        if(strcmp(typeStr, "undefined") == 0) {
-            m_globals.push_back(std::string(typeStr));
+		std::map<std::string, ScriptableVariant*>::iterator g = globals.find(*name);
+		std::vector<std::string>::iterator ii = std::find(interfaceNames.begin(), interfaceNames.end(), *name);
+        if(g == globals.end() && ii == interfaceNames.end() && typeStr != "function") {
+			ScriptVariable* var = 0;
+			for (size_t i = 0; i < m_globals.size(); i++) {
+				if (m_globals[i]->name == *name) {
+					var = m_globals[i];
+				}
+			}
+
+			if (var == 0) {
+				var = new ScriptVariable();
+				var->name = *name;
+			}
+
+			var->value.Reset(isolate, actual);
+
+			m_globals.push_back(var);
         }
         
         if(actual->IsFunction()) {
@@ -187,9 +206,22 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     // Get into our global namespace
     v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
     
-    // Set
-    ScriptableVariant* variant = (ScriptableVariant*)value;
-    globalSpace->Set(v8::String::NewFromUtf8(isolate, name.c_str()), variant->GetValue());
+	ScriptVariable* var = 0;
+	for (size_t i = 0; i < m_globals.size(); i++) {
+		if (m_globals[i]->name == name) {
+			var = m_globals[i];
+		}
+	}
+
+	if (var == 0) {
+		var = new ScriptVariable();
+		var->name = name;
+		m_globals.push_back(var);
+	}
+
+	ScriptableVariant* sv = (ScriptableVariant*)value;
+	var->value.Reset(isolate, sv->GetValue());
+	globalSpace->Set(v8::String::NewFromUtf8(isolate, name.c_str()), sv->GetValue());
     
     // Exit
     context->Exit();
@@ -237,6 +269,11 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
         ScriptableVariant* variant = (ScriptableVariant*)(argv[i]);
         args[i] = variant->GetValue();
     }
+
+	// Set globals
+	for (size_t i = 0; i < m_globals.size(); i++) {
+		globalSpace->Set(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()), m_globals[i]->value.Get(isolate));
+	}
     
     // Attempt to call the function
     v8::Local<v8::Value> value = globalSpace->Get(v8::String::NewFromUtf8(isolate, function.c_str()));
@@ -255,6 +292,12 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
     else {
         ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Invalid function name", function));
     }
+
+	// Get globals, reset
+	for (size_t i = 0; i < m_globals.size(); i++) {
+		v8::Local<v8::Value> value = globalSpace->Get(context, v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str())).ToLocalChecked();
+		m_globals[i]->value.Reset(isolate, value);
+	}
     
     free(args);
     
@@ -264,15 +307,57 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
     scriptingSystem->SetCurrentScript(0);
 }
 
-ScriptComponent* ScriptComponent::Clone() {
-    ScriptComponent* clone = new ScriptComponent();
+void ScriptComponent::Copy(Component* component) {
+    ScriptComponent* clone = (ScriptComponent*)component;
+
+	if(clone->m_scriptSource && m_scriptSource) {
+		if (clone->m_scriptSource->GetResource()->filename == m_scriptSource->GetResource()->filename) {
+			return;
+		}
+	}
+
 	clone->m_scriptSource = m_scriptSource;
 	clone->m_context = m_context;
 	clone->m_script = m_script;
 	clone->m_initialized = m_initialized;
 
+	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+	scriptingSystem->SetCurrentScript(this);
+
+	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+	// Create a stack-allocated handle scope.
+	v8::HandleScope handle_scope(isolate);
+
+	// Catch any errors the script might throw
+	v8::TryCatch try_catch(isolate);
+
 	for (size_t i = 0; i < m_globals.size(); i++) {
+		// Get our context
+		v8::Local<v8::Context> context = m_context.Get(isolate);
+
+		// Enter our context
+		context->Enter();
+
+		// Get our global object space and start adding stuff to it
+		v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
+
 		clone->m_globals.push_back(m_globals[i]);
+		v8::Local<v8::Value> value = globalSpace->Get(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()));
+
+		// Exit context
+		context->Exit();
+
+		context = clone->m_context.Get(isolate);
+
+		// Enter our context
+		context->Enter();
+		globalSpace = isolate->GetCurrentContext()->Global();
+
+		// Set
+		globalSpace->Set(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()), value);
+
+		context->Exit();
 	}
 
 	for (size_t i = 0; i < m_functions.size(); i++) {
@@ -283,7 +368,7 @@ ScriptComponent* ScriptComponent::Clone() {
 		clone->m_functions.push_back(func);
 	}
 
-    return(clone);
+	scriptingSystem->SetCurrentScript(0);
 }
 
 void ScriptComponent::SetDataMappings() {

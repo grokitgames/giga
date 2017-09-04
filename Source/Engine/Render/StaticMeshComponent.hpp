@@ -33,9 +33,9 @@ public:
 	void UpdateFromDataMappings();
     
     /**
-     * Clone this mesh component into another
+     * Copy this mesh component into another
      */
-    virtual StaticMeshComponent* Clone();
+    void Copy(Component* component);
     
     /**
      * Enable/disable lighting on this mesh

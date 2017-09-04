@@ -40,47 +40,46 @@ void ComponentTemplate::SetupFromType(std::string name) {
     i->second->InitializeComponent(this);
 }
 
-Component* ComponentTemplate::Clone() {
-    // Create
-    ComponentTemplate* ct = new ComponentTemplate();
-    m_type->InitializeComponent(ct);
-    
-    // Set fields
-    std::map<std::string, int>::iterator i = m_fieldTypes.begin();
-    for(i; i != m_fieldTypes.end(); i++) {
-        int type = i->second;
-        std::string name = i->first;
-        
-        // Add to lookup
-        ct->m_fieldTypes[name] = type;
-        
-        // Set value based on type
-        if(type == StorableObjectField::FIELD_INT) {
-            ct->m_objectIntFields[name] = m_objectIntFields[name];
-        }
-        
-        if(type == StorableObjectField::FIELD_TEXT) {
-            ct->m_objectStringFields[name] = m_objectStringFields[name];
-        }
-        
-        if(type == StorableObjectField::FIELD_FLOAT) {
-            ct->m_objectFloatFields[name] = m_objectFloatFields[name];
-        }
-        
-        if(type == StorableObjectField::FIELD_VECTOR2) {
-            ct->m_objectVector2Fields[name] = m_objectVector2Fields[name];
-        }
-        
-        if(type == StorableObjectField::FIELD_VECTOR3) {
-            ct->m_objectVector3Fields[name] = m_objectVector3Fields[name];
-        }
-        
-        if(type == StorableObjectField::FIELD_QUATERNION) {
-            ct->m_objectQuaternionFields[name] = m_objectQuaternionFields[name];
-        }
-    }
-    
-    return(ct);
+void ComponentTemplate::Copy(Component* component) {
+	ComponentTemplate* ct = (ComponentTemplate*)component;
+	ct->m_type = m_type;
+
+	m_type->InitializeComponent(ct);
+
+	// Set fields
+	std::map<std::string, int>::iterator i = m_fieldTypes.begin();
+	for (i; i != m_fieldTypes.end(); i++) {
+		int type = i->second;
+		std::string name = i->first;
+
+		// Add to lookup
+		ct->m_fieldTypes[name] = type;
+
+		// Set value based on type
+		if (type == StorableObjectField::FIELD_INT) {
+			ct->m_objectIntFields[name] = m_objectIntFields[name];
+		}
+
+		if (type == StorableObjectField::FIELD_TEXT) {
+			ct->m_objectStringFields[name] = m_objectStringFields[name];
+		}
+
+		if (type == StorableObjectField::FIELD_FLOAT) {
+			ct->m_objectFloatFields[name] = m_objectFloatFields[name];
+		}
+
+		if (type == StorableObjectField::FIELD_VECTOR2) {
+			ct->m_objectVector2Fields[name] = m_objectVector2Fields[name];
+		}
+
+		if (type == StorableObjectField::FIELD_VECTOR3) {
+			ct->m_objectVector3Fields[name] = m_objectVector3Fields[name];
+		}
+
+		if (type == StorableObjectField::FIELD_QUATERNION) {
+			ct->m_objectQuaternionFields[name] = m_objectQuaternionFields[name];
+		}
+	}
 }
 
 Variant* ComponentTemplate::Getter(std::string var, Variant* obj) {

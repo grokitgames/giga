@@ -177,6 +177,10 @@ void Application::Initialize() {
     
 	scriptingSystem->RegisterScriptableObjectType<Command>(commandType);
 
+	// Command types
+	scriptingSystem->RegisterGlobal("COMMAND_START", new Variant(COMMAND_START));
+	scriptingSystem->RegisterGlobal("COMMAND_END", new Variant(COMMAND_END));
+
 	/**
 	 * Networking
 	 */

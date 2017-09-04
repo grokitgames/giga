@@ -44,7 +44,12 @@ public:
     /**
      * Clone this component into another
      */
-    virtual Component* Clone() = 0;
+    Component* Clone();
+
+	/**
+	 * Copy the properties of another component into this one
+	 */
+	virtual void Copy(Component* component) = 0;
     
     /**
      * Interpolate from another component

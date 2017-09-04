@@ -22,6 +22,7 @@ NetworkSystem::NetworkSystem() {
     m_lastMessageID = 0;
     m_maxSocketID = 0;
 	memset(&m_startupTime, 0, sizeof(timespec));
+	m_overrideTick = 0;
 }
 
 NetworkSystem::~NetworkSystem() {
@@ -411,6 +412,10 @@ void NetworkSystem::Update(float delta) {
 }
 
 int NetworkSystem::GetCurrentTick() {
+	if (m_overrideTick) {
+		return(m_overrideTick);
+	}
+
     timespec t;
     Timer::GetTimestamp(&t);
     

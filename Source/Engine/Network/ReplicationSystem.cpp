@@ -5,6 +5,8 @@ ReplicationSystem::ReplicationSystem() {
     m_lastTick = 0;
     m_type = 0;
     m_initialized = false;
+	m_replay = false;
+	m_commandTick = 0;
 }
 
 ReplicationSystem::~ReplicationSystem() {
@@ -28,12 +30,6 @@ void ReplicationSystem::Update(float delta) {
 
 	// If this is the server, prepare a sync to be sent to clients
 	if (m_type == REPLICATION_SERVER) {
-		// Make sure we're in a new tick
-		if (tick <= m_lastTick) {
-			PROFILE_END_AREA("ReplicationSystem Update");
-			return;
-		}
-
 		// Get all entities
 		EntitySystem* entitySystem = GetSystem<EntitySystem>();
 		std::list<Entity*> entities = entitySystem->GetEntities();
@@ -58,13 +54,14 @@ void ReplicationSystem::Update(float delta) {
 			// Add all components
 			std::vector<Component*> components = (*i)->GetComponents();
 			for (size_t j = 0; j < components.size(); j++) {
-				e1->AddComponent(components[j]->Clone());
+				Component* component = components[j]->Clone();
+				e1->AddComponent(component);
 			}
 
 			fullSnapshot->entities.push_back(e1);
 
 			// Then do delta snapshot
-			if ((*i)->HasUpdates() > 0) {
+			if (true) {
 				// Create a replica of the entity
 				Entity* entity = new Entity();
 				entity->SetID((*i)->GetID());
@@ -84,44 +81,123 @@ void ReplicationSystem::Update(float delta) {
 				snapshot->entities.push_back(entity);
 			}
 		}
-
-		// Serialize
-		unsigned char* buffer = (unsigned char*)malloc(NETWORK_MAX_PACKET_SIZE);
-		int actualSize = NETWORK_MAX_PACKET_SIZE;
-		int offset = 0;
-
-		while (offset < snapshot->entities.size()) {
-			EntitySnapshotMessage* msg = new EntitySnapshotMessage();
-			snapshot->Serialize(buffer, actualSize, offset);
-			msg->SetEntityPayload(buffer, actualSize);
-
-			networkSystem->Send(msg);
-            delete msg;
-		}
-        
+  
 		// Save
 		AddSnapshot(tick, snapshot);
 		AddFullSnapshot(tick, fullSnapshot);
 
-		// Send our full snapshot to any sessions that need it
-		if (m_sessionIDs.size()) {
-			EntitySnapshotMessage* msg = new EntitySnapshotMessage();
-			unsigned char* packet = (unsigned char*)malloc(NETWORK_MAX_PACKET_SIZE);
-
-			int size = NETWORK_MAX_PACKET_SIZE;
+		if (m_replay == false) {
+			// Serialize
+			unsigned char* buffer = (unsigned char*)malloc(NETWORK_MAX_PACKET_SIZE);
+			int actualSize = NETWORK_MAX_PACKET_SIZE;
 			int offset = 0;
-			fullSnapshot->Serialize(packet, size, offset);
 
-			msg->SetEntityPayload(packet, size);
-			printf("Sending full snapshot of size %d with %d entities.\n", size, fullSnapshot->entities.size());
+			while (offset < snapshot->entities.size()) {
+				EntitySnapshotMessage* msg = new EntitySnapshotMessage();
+				snapshot->Serialize(buffer, actualSize, offset);
+				msg->SetEntityPayload(buffer, actualSize);
 
-			std::list<int>::iterator s = m_sessionIDs.begin();
-			for (; s != m_sessionIDs.end(); s++) {
-				networkSystem->Send(*s, msg);
+				networkSystem->Send(msg);
+				delete msg;
 			}
 
-			delete msg;
-			m_sessionIDs.clear();
+			// Send our full snapshot to any sessions that need it
+			if (m_sessionIDs.size()) {
+				EntitySnapshotMessage* msg = new EntitySnapshotMessage();
+				unsigned char* packet = (unsigned char*)malloc(NETWORK_MAX_PACKET_SIZE);
+
+				int size = NETWORK_MAX_PACKET_SIZE;
+				int offset = 0;
+				fullSnapshot->Serialize(packet, size, offset);
+
+				msg->SetEntityPayload(packet, size);
+
+				std::list<int>::iterator s = m_sessionIDs.begin();
+				for (; s != m_sessionIDs.end(); s++) {
+					networkSystem->Send(*s, msg);
+				}
+
+				delete msg;
+				m_sessionIDs.clear();
+			}
+
+			// Do we have commands that need to be replayed?
+			if (m_commandTick > 0) {
+				// Delete all entities
+				printf("Deleting all entities.\n");
+
+				// Reset back to previous tick
+				entitySystem->Clear();
+
+				// Re-populate the entity system with the state as it existed in the full snapshot from that tick
+				EntitySnapshot* snapshot = GetFullEntitySnapshot(m_commandTick);
+				for (size_t i = 0; i < snapshot->entities.size(); i++) {
+					Entity* entity = new Entity();
+					entity->SetID(snapshot->entities[i]->GetID());
+					entity->SetName(snapshot->entities[i]->GetName());
+
+					std::vector<Component*> components = snapshot->entities[i]->GetComponents();
+					for (size_t j = 0; j < components.size(); j++) {
+						Component* component = components[j]->Clone();
+						component->SetDataMappings();
+						component->AddToSystem();
+
+						entity->AddComponent(component);
+					}
+
+					entitySystem->AddEntity(entity);
+				}
+
+				// Loop over all ticks since then, replaying events
+				m_replay = true;
+				Application* application = Application::GetInstance();
+				for (int t = m_commandTick; t <= tick; t++) {
+					std::map<int, CommandTick*>::iterator ct = m_commandHistory.find(t);
+
+					if (ct != m_commandHistory.end()) {
+						std::list<Command*>::iterator c = m_commandHistory[t]->commands.begin();
+						for (; c != m_commandHistory[t]->commands.end(); c++) {
+							// Get our entity
+							Entity* entity = entitySystem->FindEntity((*c)->entityID);
+							GIGA_ASSERT(entity != 0, "Entity not found.");
+
+							std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
+							EventSystem::Process(new Event(eventStr, (*c), entity));
+						}
+					}
+
+					networkSystem->SetTick(t);
+					float newDelta = (1.0f / NETWORK_TICKS_PER_SECOND);
+
+					printf("Current tick: %d, replaying tick %d with delta %f.\n", tick, t, newDelta);
+					application->Update(newDelta);
+					
+					networkSystem->SetTick(0);
+					tick = networkSystem->GetCurrentTick();
+				}
+
+				m_replay = false;
+				m_commandTick = 0;
+				networkSystem->SetTick(0);
+				printf("Replay complete.\n");
+			}
+
+			// Clean up old command history
+			std::map<int, CommandTick*>::iterator ct = m_commandHistory.begin();
+			for (; ct != m_commandHistory.end(); ct++) {
+				if ((*ct).first > (tick - NETWORK_SNAPSHOT_HISTORY)) {
+					break;
+				}
+
+				std::list<Command*>::iterator c = (*ct).second->commands.begin();
+				for (; c != (*ct).second->commands.end(); c++) {
+					delete (*c);
+				}
+				(*ct).second->commands.clear();
+
+				delete (*ct).second;
+				m_commandHistory.erase((*ct).first);
+			}
 		}
 	}
 	else {
@@ -129,7 +205,8 @@ void ReplicationSystem::Update(float delta) {
 
 		// Adjust our tick by a set amount of "render lag" so that we can interpolate
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
-        
+		
+
         // If we are not yet initialized, check for a full snapshot first
         if(m_initialized == false && m_snapshots.size() > 0) {
             std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
@@ -193,33 +270,35 @@ void ReplicationSystem::Update(float delta) {
         }
 	}
 
-	// Finally, delete any "old" snapshots that are no longer needed
-	if (m_snapshots.size()) {
-		std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
-		if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
-			for (i; i != m_snapshots.end(); i++) {
-				if ((*i)->tick > (tick - NETWORK_SNAPSHOT_HISTORY))
-					break;
-                else
-                    delete (*i);
-			}
+	if (m_replay == false) {
+		// Finally, delete any "old" snapshots that are no longer needed
+		if (m_snapshots.size()) {
+			std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+			if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
+				for (i; i != m_snapshots.end(); i++) {
+					if ((*i)->tick > (tick - NETWORK_SNAPSHOT_HISTORY))
+						break;
+					else
+						delete (*i);
+				}
 
-			m_snapshots.erase(m_snapshots.begin(), i);
+				m_snapshots.erase(m_snapshots.begin(), i);
+			}
 		}
-	}
 
-	// Same thing with full snapshots, delete any "old" snapshots that are no longer needed
-	if (m_fullSnapshots.size()) {
-		std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
-		if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
-			for (i; i != m_fullSnapshots.end(); i++) {
-				if ((*i)->tick >(tick - NETWORK_SNAPSHOT_HISTORY))
-					break;
-				else
-					delete (*i);
+		// Same thing with full snapshots, delete any "old" snapshots that are no longer needed
+		if (m_fullSnapshots.size()) {
+			std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
+			if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
+				for (i; i != m_fullSnapshots.end(); i++) {
+					if ((*i)->tick > (tick - NETWORK_SNAPSHOT_HISTORY))
+						break;
+					else 
+						delete (*i);
+				}
+
+				m_fullSnapshots.erase(m_fullSnapshots.begin(), i);
 			}
-
-			m_fullSnapshots.erase(m_fullSnapshots.begin(), i);
 		}
 	}
 
@@ -245,15 +324,15 @@ void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* n
         std::vector<Component*> components = current->entities[j]->GetComponents();
         for(size_t k = 0; k < components.size(); k++) {
             Component* component = entity->FindComponent(components[k]->GetTypeID());
-            if(component) {
-                entity->RemoveComponent(component);
-                delete component;
+            if(component == 0) {
+				component = components[k]->Clone();
+				component->SetDataMappings();
+				component->SetActive(true);
+				component->AddToSystem();
             }
-            
-            component = components[k]->Clone();
-            component->SetDataMappings();
-            component->SetActive(true);
-            component->AddToSystem();
+			else {
+				components[k]->Copy(component);
+			}
             
             // If this same entity is present in the next snapshot, interpolate
             if (next) {
@@ -284,6 +363,28 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 	i--;
 
 	if ((*i)->tick < tick) {
+		for (int t = (*i)->tick; t < tick; t++) {
+			EntitySnapshot* newSnapshot = new EntitySnapshot();
+			newSnapshot->type = snapshot->type;
+			newSnapshot->tick = t;
+
+			for (size_t j = 0; j < snapshot->entities.size(); j++) {
+				Entity* entity = new Entity();
+				entity->SetID(snapshot->entities[j]->GetID());
+				entity->SetName(snapshot->entities[j]->GetName());
+
+				std::vector<Component*> components = snapshot->entities[j]->GetComponents();
+				for (size_t k = 0; k < components.size(); k++) {
+					Component* component = components[k]->Clone();
+					entity->AddComponent(component);
+				}
+
+				newSnapshot->entities.push_back(entity);
+			}
+
+			m_snapshots.push_back(newSnapshot);
+		}
+
 		m_snapshots.push_back(snapshot);
 		return;
 	}
@@ -291,9 +392,10 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 	// Otherwise, go through the list and find out where to insert
 	for (i; i != m_snapshots.begin(); i--) {
         if(tick == (*i)->tick) {
-            // If we get an exact match, add to existing list
-            (*i)->entities.insert((*i)->entities.end(), snapshot->entities.begin(), snapshot->entities.end());
-            delete snapshot;
+            // If we get an exact match, replace
+            delete (*i);
+			auto p = m_snapshots.erase(i);
+			m_snapshots.insert(p, snapshot);
             return;
         }
         
@@ -319,12 +421,44 @@ void ReplicationSystem::AddFullSnapshot(int tick, EntitySnapshot* snapshot) {
 	i--;
 
 	if ((*i)->tick < tick) {
+		// If we're missing some snapshots in between, insert this one
+		if ((*i)->tick < (tick - 1)) {
+			for (int t = (*i)->tick; t < tick; t++) {
+				EntitySnapshot* newSnapshot = new EntitySnapshot();
+				newSnapshot->type = snapshot->type;
+				newSnapshot->tick = t;
+			
+				for (size_t j = 0; j < snapshot->entities.size(); j++) {
+					Entity* entity = new Entity();
+					entity->SetID(snapshot->entities[j]->GetID());
+					entity->SetName(snapshot->entities[j]->GetName());
+
+					std::vector<Component*> components = snapshot->entities[j]->GetComponents();
+					for (size_t k = 0; k < components.size(); k++) {
+						Component* component = components[k]->Clone();
+						entity->AddComponent(component);
+					}
+
+					newSnapshot->entities.push_back(entity);
+				}
+
+				m_fullSnapshots.push_back(newSnapshot);
+			}
+		}
 		m_fullSnapshots.push_back(snapshot);
 		return;
 	}
 
 	// Otherwise, go through the list and find out where to insert
 	for (i; i != m_fullSnapshots.begin(); i--) {
+		if (tick == (*i)->tick) {
+			// If we get an exact match, replace
+			delete (*i);
+			auto p = m_fullSnapshots.erase(i);
+			m_fullSnapshots.insert(p, snapshot);
+			return;
+		}
+
 		if (tick >(*i)->tick) {
 			m_fullSnapshots.insert(i, snapshot);
 			return;
@@ -359,4 +493,26 @@ EntitySnapshot* ReplicationSystem::GetFullEntitySnapshot(int tick) {
 
 void ReplicationSystem::SendFullSnapshot(int sessionID) {
 	m_sessionIDs.push_back(sessionID);
+}
+
+void ReplicationSystem::AddCommand(Command* command) {
+	int tick = (command->end > 0) ? command->end : command->start;
+	if (m_commandTick == 0) {
+		m_commandTick = tick;
+	}
+	else {
+		m_commandTick = std::min(m_commandTick, tick);
+	}
+
+	printf("Setting command to %d\n", m_commandTick);
+	
+	std::map<int, CommandTick*>::iterator i = m_commandHistory.find(tick);
+	if (i == m_commandHistory.end()) {
+		CommandTick* ct = new CommandTick();
+		ct->commands.push_back(command);
+		m_commandHistory[tick] = ct;
+	}
+	else {
+		(*i).second->commands.push_back(command);
+	}
 }

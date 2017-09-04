@@ -89,7 +89,9 @@ void EchoResponseMessage::OnReceive() {
     
     // Minus the ping time
     float d = diff - rtt;
-    session->info.clientTimeDiff = d;
+	if (session->info.clientTimeDiff == 0) {
+		session->info.clientTimeDiff = d;
+	}
     
     // Save the start time
     timespec startTime;

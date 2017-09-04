@@ -32,11 +32,11 @@ public:
      * Setup from type
      */
     void SetupFromType(std::string name);
-    
-    /**
-     * Clone
-     */
-    Component* Clone();
+
+	/**
+	 * Copy
+	 */
+	void Copy(Component* component);
     
     /**
      * Register a new component template type

@@ -29,9 +29,9 @@ public:
     void SetTransform(Transform* transform);
     
     /**
-     * Clone this component into another copy
+     * Copy this component into another copy
      */
-    TransformComponent* Clone();
+    void Copy(Component* component);
     
     /**
      * Scripting integration

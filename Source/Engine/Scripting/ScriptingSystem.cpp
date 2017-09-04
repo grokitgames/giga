@@ -108,6 +108,7 @@ void ScriptingSystem::Update(float delta) {
     
 	std::list<ScriptComponent*> scripts = m_scripts.GetList();
 	std::list<ScriptComponent*>::iterator i = scripts.begin();
+
 	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
 		if ((*i)->IsActive() == false) {

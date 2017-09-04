@@ -58,11 +58,11 @@ public:
      * Calculate a frustum with a near and far set of numbers with our aspect ratio and fov
      */
     Frustum CalculateFrustum(float near, float far);
-    
-    /**
-     * Clone this camera
-     */
-    CameraComponent* Clone();
+
+	/**
+	 * Copy properties
+	 */
+	void Copy(Component* component);
     
     /**
      * Scripting integration

@@ -72,6 +72,8 @@ void StartApplication() {
     mainTimer->Start();
     float delta = 0.1f;
     
+	int tick = networkSystem->GetCurrentTick();
+
     // Main loop
     while(window->IsClosing() == false) {
         PROFILE_START_FRAME();

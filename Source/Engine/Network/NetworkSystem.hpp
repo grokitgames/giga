@@ -137,6 +137,11 @@ public:
      * Remove a session
      */
     void RemoveSession(int sessionID);
+
+	/**
+	 * Set a manual "tick offset" for replaying
+	 */
+	void SetTick(int tick) { m_overrideTick = tick; }
     
     /**
      * Register a new message type (by class and unique ID)
@@ -185,6 +190,9 @@ protected:
     
     // Map of message IDs to incomplete message parts
     std::map<uint32_t, NetworkMessagePart*> m_partials;
+
+	// Manual tick offset for replaying
+	int m_overrideTick;
 };
 
 #endif

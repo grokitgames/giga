@@ -2,6 +2,11 @@
 #ifndef command_hpp
 #define command_hpp
 
+enum {
+	COMMAND_START = 1,
+	COMMAND_END
+};
+
 class GIGA_API Command : public EventData {
 public:
     Command();

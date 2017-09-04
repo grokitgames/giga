@@ -47,6 +47,11 @@ public:
 	 * Queue up a session to receive a full snapshot
 	 */
 	void SendFullSnapshot(int sessionID);
+
+	/**
+	 * Add command to history
+	 */
+	void AddCommand(Command* command);
     
 protected:
     /**
@@ -60,7 +65,17 @@ protected:
 
 	// Full historical snapshots
 	std::list<EntitySnapshot*> m_fullSnapshots;
-    
+
+	// Command history
+	struct CommandTick {
+		std::list<Command*> commands;
+	};
+
+	std::map<int, CommandTick*> m_commandHistory;
+	
+	// The tick we need to roll back to for any new commands
+	int m_commandTick;
+
     // Last processed server tick
     int m_lastTick;
     
@@ -72,6 +87,9 @@ protected:
 
 	// Sessions that we need to send a full snapshot to next tick
 	std::list<int> m_sessionIDs;
+
+	// Whether the replication system is currently in "replay" mode
+	bool m_replay;
 };
 
 #endif

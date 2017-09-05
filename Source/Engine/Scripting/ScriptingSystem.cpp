@@ -67,11 +67,11 @@ ScriptableObjectType* ScriptingSystem::GetScriptableObjectType(std::string name)
     return(0);
 }
 
-void ScriptingSystem::RegisterEventHandler(std::string type, std::string func, GigaObject* sender) {
+void ScriptingSystem::RegisterEventHandler(std::string type, std::string func, int entityID) {
     // Create a new event handler
     struct EventHandler* handler = new struct EventHandler();
     handler->type = type;
-    handler->sender = sender;
+    handler->entityID = entityID;
     handler->func = func;
     handler->script = m_currentScript;
     
@@ -90,7 +90,7 @@ void ScriptingSystem::EventHandler(Event* event) {
     std::string type = event->GetType();
     for(size_t i = 0; i < scriptingSystem->m_eventHandlers.size(); i++) {
         if(scriptingSystem->m_eventHandlers[i]->type == type) {
-            if(scriptingSystem->m_eventHandlers[i]->sender == 0 || scriptingSystem->m_eventHandlers[i]->sender == event->GetSender()) {
+            if(scriptingSystem->m_eventHandlers[i]->entityID == 0 || scriptingSystem->m_eventHandlers[i]->entityID == event->GetEntityID()) {
                 Variant* v = new Variant(event);
 				Variant* parent = new Variant(scriptingSystem->m_eventHandlers[i]->script->GetParent());
 				scriptingSystem->m_eventHandlers[i]->script->SetGlobal("GameObject", parent);

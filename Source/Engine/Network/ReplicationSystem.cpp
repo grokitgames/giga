@@ -162,7 +162,7 @@ void ReplicationSystem::Update(float delta) {
 							GIGA_ASSERT(entity != 0, "Entity not found.");
 
 							std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
-							EventSystem::Process(new Event(eventStr, (*c), entity));
+							EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
 						}
 					}
 

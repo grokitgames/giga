@@ -19,9 +19,8 @@ Variant* Event::GetData(std::string var, Variant* object) {
     return(new Variant(event->GetData()));
 }
 
-Variant* Event::GetSender(std::string var, Variant* object) {
+Variant* Event::GetEntityID(std::string var, Variant* object) {
     // Cast to event object
     Event* event = object->AsObject<Event>();
-    
-    return(new Variant(event->GetSender()));
+    return(new Variant(event->GetEntityID()));
 }

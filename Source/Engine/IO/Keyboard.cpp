@@ -122,10 +122,10 @@ void Keyboard::Initialize() {
 
 void Keyboard::ProcessAction(int key, int action) {
     if (action == GLFW_PRESS) {
-        EventSystem::Process(new Event("KEY_PRESS", new KeyboardEventData(key), this));
+        EventSystem::Process(new Event("KEY_PRESS", new KeyboardEventData(key)));
     }
     
     if (action == GLFW_RELEASE) {
-        EventSystem::Process(new Event("KEY_RELEASE", new KeyboardEventData(key), this));
+        EventSystem::Process(new Event("KEY_RELEASE", new KeyboardEventData(key)));
     }
 }

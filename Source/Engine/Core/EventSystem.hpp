@@ -30,7 +30,7 @@ public:
     /**
      * Register a general (global) event handler
      */
-    void RegisterEventHandler(std::string type, EventHandlerFn func, GigaObject* sender = 0);
+    void RegisterEventHandler(std::string type, EventHandlerFn func, int entityID = 0);
     
     /**
      * Scripting integration
@@ -46,7 +46,7 @@ private:
     // The storage of an event handler
     struct EventHandler {
         std::string type;
-        GigaObject* sender;
+        int entityID;
         EventHandlerFn func;
     };
     

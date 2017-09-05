@@ -69,7 +69,7 @@ public:
     /**
      * Register a scripted event handler
      */
-    void RegisterEventHandler(std::string type, std::string func, GigaObject* sender = 0);
+    void RegisterEventHandler(std::string type, std::string func, int entityID = 0);
     
     /**
      * Generic callback fo registered events from the event system
@@ -91,7 +91,7 @@ private:
     // The storage of an event handler
     struct EventHandler {
         std::string type;
-        GigaObject* sender;
+        int entityID;
         std::string func;
         ScriptComponent* script;
     };

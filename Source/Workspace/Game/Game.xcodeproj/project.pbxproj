@@ -41,8 +41,9 @@
 		5EDCA3C21F3BECB500329733 /* libv8_libbase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libbase.a; path = ../../ThirdParty/v8/lib/libv8_libbase.a; sourceTree = "<group>"; };
 		5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libplatform.a; path = ../../ThirdParty/v8/lib/libv8_libplatform.a; sourceTree = "<group>"; };
 		5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libv8_libsampler.a; path = ../../ThirdParty/v8/lib/libv8_libsampler.a; sourceTree = "<group>"; };
-		5EDCA3F31F54F26D00329733 /* camera.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = camera.js; path = ../../../../game/Resources/Scripts/Client/camera.js; sourceTree = "<group>"; };
 		5EDCA3F91F58927D00329733 /* game.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = game.js; path = ../../../../game/game.js; sourceTree = "<group>"; };
+		5EDCA4001F5EF7C200329733 /* crate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = crate.js; path = ../../../../game/Resources/Scripts/Client/crate.js; sourceTree = "<group>"; };
+		5EDCA4011F5EF7CE00329733 /* crate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = crate.js; path = ../../../../game/Resources/Scripts/Server/crate.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,10 +109,27 @@
 		5EDCA3DF1F3E7F9D00329733 /* JS */ = {
 			isa = PBXGroup;
 			children = (
-				5EDCA3F31F54F26D00329733 /* camera.js */,
+				5EDCA3FE1F5EF78300329733 /* Client */,
+				5EDCA3FF1F5EF78B00329733 /* Server */,
 				5EDCA3F91F58927D00329733 /* game.js */,
 			);
 			name = JS;
+			sourceTree = "<group>";
+		};
+		5EDCA3FE1F5EF78300329733 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				5EDCA4001F5EF7C200329733 /* crate.js */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		5EDCA3FF1F5EF78B00329733 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				5EDCA4011F5EF7CE00329733 /* crate.js */,
+			);
+			name = Server;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

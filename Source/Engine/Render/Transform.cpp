@@ -10,6 +10,10 @@ void Transform::Move(vector3 translation) {
 void Transform::Rotate(float degrees, vector3 axis) {
     quaternion delta = glm::angleAxis(glm::radians(degrees), axis);
     rotation = rotation * delta;
+    
+    look = rotation * glm::vec3(0.0f, 0.0f, -1.0f);
+    right = rotation * glm::vec3(1.0f, 0.0f, 0.0f);
+    up = rotation * glm::vec3(0.0f, 1.0f, 0.0f);
 
 	if (m_component) m_component->MarkUpdated(true);
 }
@@ -59,6 +63,10 @@ void Transform::SetRotation(std::string var, Variant* obj, Variant* val) {
     Quaternion* sq = val->AsObject<Quaternion>();
     tc->rotation = sq->Get();
 
+    tc->look = tc->rotation * glm::vec3(0.0f, 0.0f, -1.0f);
+    tc->right = tc->rotation * glm::vec3(1.0f, 0.0f, 0.0f);
+    tc->up = tc->rotation * glm::vec3(0.0f, 1.0f, 0.0f);
+    
 	if (tc->m_component) tc->m_component->MarkUpdated(true);
 }
 
@@ -114,4 +122,22 @@ Variant* Transform::Scale(Variant* obj, int argc, Variant** argv) {
     
     sv->Set(tc->scaling);
     return(new Variant(sv));
+}
+
+Variant* Transform::GetLook(std::string var, Variant* obj) {
+    Transform* tc = obj->AsObject<Transform>();
+    Vector3* lv = new Vector3(tc->look);
+    return(new Variant(lv));
+}
+
+Variant* Transform::GetUp(std::string var, Variant* obj) {
+    Transform* tc = obj->AsObject<Transform>();
+    Vector3* lv = new Vector3(tc->up);
+    return(new Variant(lv));
+}
+
+Variant* Transform::GetRight(std::string var, Variant* obj) {
+    Transform* tc = obj->AsObject<Transform>();
+    Vector3* lv = new Vector3(tc->right);
+    return(new Variant(lv));
 }

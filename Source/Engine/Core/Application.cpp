@@ -121,7 +121,7 @@ void Application::Initialize() {
     ScriptableObjectType* eventType = new ScriptableObjectType("Event");
     eventType->AddObjectVariable("type", &Event::GetType, 0);
     eventType->AddObjectVariable("data", &Event::GetData, 0);
-    eventType->AddObjectVariable("sender", &Event::GetSender, 0);
+    eventType->AddObjectVariable("entityID", &Event::GetEntityID, 0);
     
     scriptingSystem->RegisterScriptableObjectType<Event>(eventType);
     
@@ -235,6 +235,9 @@ void Application::Initialize() {
     transformType->AddObjectVariable("position", &Transform::GetPosition, &Transform::SetPosition);
     transformType->AddObjectVariable("rotation", &Transform::GetRotation, &Transform::SetRotation);
     transformType->AddObjectVariable("scaling", &Transform::GetScaling, &Transform::SetScaling);
+    transformType->AddObjectVariable("look", &Transform::GetLook, 0);
+    transformType->AddObjectVariable("up", &Transform::GetUp, 0);
+    transformType->AddObjectVariable("right", &Transform::GetRight, 0);
     transformType->AddObjectFunction("Translate", &Transform::Translate);
     transformType->AddObjectFunction("Rotate", &Transform::Rotate);
     transformType->AddObjectFunction("Scale", &Transform::Scale);

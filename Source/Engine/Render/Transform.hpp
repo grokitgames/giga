@@ -38,6 +38,10 @@ public:
     static Variant* GetScaling(std::string var, Variant* obj);
     static void SetScaling(std::string var, Variant* obj, Variant* val);
     
+    static Variant* GetLook(std::string var, Variant* obj);
+    static Variant* GetUp(std::string var, Variant* obj);
+    static Variant* GetRight(std::string var, Variant* obj);
+    
     static Variant* Translate(Variant* obj, int argc, Variant** argv);
     static Variant* Rotate(Variant* obj, int argc, Variant** argv);
     static Variant* Scale(Variant* obj, int argc, Variant** argv);
@@ -46,6 +50,10 @@ public:
     vector3 position;
     quaternion rotation;
     vector3 scaling;
+    
+    vector3 look;
+    vector3 up;
+    vector3 right;
     
 protected:
     matrix4 m_modelMatrix;

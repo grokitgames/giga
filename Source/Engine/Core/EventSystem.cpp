@@ -22,7 +22,7 @@ void EventSystem::Update(float delta) {
         std::string type = (*i)->GetType();
         for(size_t j = 0; j < m_handlers.size(); j++) {
             if(m_handlers[j]->type == type || m_handlers[j]->type == "all") {
-                if(m_handlers[j]->sender == 0 || m_handlers[j]->sender == (*i)->GetSender())
+                if(m_handlers[j]->entityID == 0 || m_handlers[j]->entityID == (*i)->GetEntityID())
                     m_handlers[j]->func(*i);
             }
         }
@@ -31,17 +31,17 @@ void EventSystem::Update(float delta) {
     m_events.clear();
 }
 
-void EventSystem::RegisterEventHandler(std::string type, EventHandlerFn func, GigaObject* sender) {
+void EventSystem::RegisterEventHandler(std::string type, EventHandlerFn func, int entityID) {
     // Make sure this combination doesn't already exist
     for(size_t j = 0; j < m_handlers.size(); j++) {
-        if(m_handlers[j]->type == type && m_handlers[j]->func == func && m_handlers[j]->sender == sender)
+        if(m_handlers[j]->type == type && m_handlers[j]->func == func && m_handlers[j]->entityID == entityID)
             return;
     }
     
     // Create a new event handler
     EventHandler* handler = new EventHandler();
     handler->type = type;
-    handler->sender = sender;
+    handler->entityID = entityID;
     handler->func = func;
     
     m_handlers.push_back(handler);
@@ -69,15 +69,15 @@ Variant* EventSystem::RegisterEventHandler(Variant* object, int argc, Variant** 
     GIGA_ASSERT(argv[1]->IsString(), "Second parameter should be a function name.");
     
     // Get our sender object out if necessary
-    GigaObject* sender = 0;
+    int entityID = 0;
     if(argc > 2) {
-        GIGA_ASSERT(argv[2]->IsObject(), "Third parameter should be a sender object.");
-        sender = argv[2]->AsObject<GigaObject>();
+        GIGA_ASSERT(argv[2]->IsObject(), "Third parameter should be an entity ID.");
+        entityID = argv[2]->AsInt();
     }
     
     // Pass to scripting system to handle
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    scriptingSystem->RegisterEventHandler(argv[0]->AsString(), argv[1]->AsString(), sender);
+    scriptingSystem->RegisterEventHandler(argv[0]->AsString(), argv[1]->AsString(), entityID);
     
     return(new Variant(0));
 }

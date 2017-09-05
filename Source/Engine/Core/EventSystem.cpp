@@ -71,7 +71,7 @@ Variant* EventSystem::RegisterEventHandler(Variant* object, int argc, Variant** 
     // Get our sender object out if necessary
     int entityID = 0;
     if(argc > 2) {
-        GIGA_ASSERT(argv[2]->IsObject(), "Third parameter should be an entity ID.");
+        GIGA_ASSERT(argv[2]->IsInt(), "Third parameter should be an entity ID.");
         entityID = argv[2]->AsInt();
     }
     

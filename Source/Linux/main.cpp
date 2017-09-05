@@ -54,11 +54,11 @@ void StartApplication() {
 	// Add script to crate
 	ScriptComponent* crateScript = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
 	Script* cratejs = dynamic_cast<Script*>(resourceSystem->LoadResource("crate.js", "Script"));
+	crate->AddComponent(crateScript);
+
 	crateScript->Initialize(cratejs);
 	crateScript->SetActive(true);
 	crateScript->AddToSystem();
-
-	crate->AddComponent(crateScript);
 
 	// Set up server
 	networkSystem->Listen(8053);

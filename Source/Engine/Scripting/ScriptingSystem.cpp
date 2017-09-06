@@ -14,11 +14,6 @@ ScriptingSystem::~ScriptingSystem() {
         delete i->second;
     }
     
-    // Delete event handlers
-    for(size_t i = 0; i < m_eventHandlers.size(); i++) {
-        delete m_eventHandlers[i];
-    }
-    
     m_isolate->Dispose();
     v8::V8::ShutdownPlatform();
 }
@@ -68,14 +63,7 @@ ScriptableObjectType* ScriptingSystem::GetScriptableObjectType(std::string name)
 }
 
 void ScriptingSystem::RegisterEventHandler(std::string type, std::string func, int entityID) {
-    // Create a new event handler
-    struct EventHandler* handler = new struct EventHandler();
-    handler->type = type;
-    handler->entityID = entityID;
-    handler->func = func;
-    handler->script = m_currentScript;
-    
-    m_eventHandlers.push_back(handler);
+	m_currentScript->RegisterEventHandler(type, func, entityID);
     
     // Register our callback for this type of event
     EventSystem* eventSystem = GetSystem<EventSystem>();
@@ -87,19 +75,11 @@ void ScriptingSystem::EventHandler(Event* event) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     
     // Iterate over event handlers
-    std::string type = event->GetType();
-    for(size_t i = 0; i < scriptingSystem->m_eventHandlers.size(); i++) {
-        if(scriptingSystem->m_eventHandlers[i]->type == type) {
-            if(scriptingSystem->m_eventHandlers[i]->entityID == 0 || scriptingSystem->m_eventHandlers[i]->entityID == event->GetEntityID()) {
-                Variant* v = new Variant(event);
-				Variant* parent = new Variant(scriptingSystem->m_eventHandlers[i]->script->GetParent());
-				scriptingSystem->m_eventHandlers[i]->script->SetGlobal("GameObject", parent);
-                scriptingSystem->m_eventHandlers[i]->script->CallFunction(scriptingSystem->m_eventHandlers[i]->func, 1, &v);
-                delete v;
-				delete parent;
-            }
-        }
-    }
+	std::list<ScriptComponent*> scripts = scriptingSystem->m_scripts.GetList();
+	std::list<ScriptComponent*>::iterator i = scripts.begin();
+	for (; i != scripts.end(); i++) {
+		(*i)->ProcessEvent(event);
+	}
 }
 
 void ScriptingSystem::Update(float delta) {

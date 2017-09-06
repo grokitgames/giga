@@ -11,6 +11,11 @@ ScriptComponent::~ScriptComponent() {
 		m_functions[i]->func.Reset();
         delete m_functions[i];
     }
+
+	// Delete event handlers
+	for (size_t i = 0; i < m_eventHandlers.size(); i++) {
+		delete m_eventHandlers[i];
+	}
     
     m_script.Reset();
     m_context.Reset();
@@ -368,9 +373,44 @@ void ScriptComponent::Copy(Component* component) {
 		clone->m_functions.push_back(func);
 	}
 
+	for (size_t i = 0; i < m_eventHandlers.size(); i++) {
+		ScriptEventHandler* handler = new ScriptEventHandler();
+		handler->type = m_eventHandlers[i]->type;
+		handler->entityID = m_eventHandlers[i]->entityID;
+		handler->func = m_eventHandlers[i]->func;
+
+		clone->m_eventHandlers.push_back(handler);
+	}
+
 	scriptingSystem->SetCurrentScript(0);
 }
 
 void ScriptComponent::SetDataMappings() {
 	SetStorableObjectFieldMapping("script", (ResourceObject**)&m_scriptSource);
+}
+
+void ScriptComponent::RegisterEventHandler(std::string type, std::string func, int entityID) {
+	// Create a new event handler
+	ScriptEventHandler* handler = new ScriptEventHandler();
+	handler->type = type;
+	handler->entityID = entityID;
+	handler->func = func;
+
+	m_eventHandlers.push_back(handler);
+}
+
+void ScriptComponent::ProcessEvent(Event* ev) {
+	std::string type = ev->GetType();
+	for (size_t i = 0; i < m_eventHandlers.size(); i++) {
+		if (m_eventHandlers[i]->type == type) {
+			if (m_eventHandlers[i]->entityID == 0 || m_eventHandlers[i]->entityID == ev->GetEntityID()) {
+				Variant* v = new Variant(ev);
+				Variant* parent = new Variant(this->GetParent());
+				SetGlobal("GameObject", parent);
+				CallFunction(m_eventHandlers[i]->func, 1, &v);
+				delete v;
+				delete parent;
+			}
+		}
+	}
 }

@@ -87,15 +87,6 @@ public:
 	 */
 	void AddTransient(ScriptableObject* object);
     
-private:
-    // The storage of an event handler
-    struct EventHandler {
-        std::string type;
-        int entityID;
-        std::string func;
-        ScriptComponent* script;
-    };
-    
 protected:
     // V8 stuff
     v8::Platform* m_platform;
@@ -109,9 +100,6 @@ protected:
     
     // Our currently executing script
     ScriptComponent* m_currentScript;
-    
-    // Registered event handlers from scripts
-    std::vector<struct EventHandler*> m_eventHandlers;
     
     // List of running script components
     ObjectPool<ScriptComponent> m_scripts;

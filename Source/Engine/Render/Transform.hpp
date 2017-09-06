@@ -4,7 +4,7 @@
 
 class GIGA_API Transform : public ScriptableObject {
 public:
-    Transform() : position(0, 0, 0), rotation(1, 0, 0, 0), scaling(1, 1, 1), m_component(0) { }
+	Transform();
     ~Transform() = default;
     
     GIGA_CLASS_NAME("Transform");

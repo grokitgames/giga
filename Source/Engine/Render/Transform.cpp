@@ -1,9 +1,19 @@
 
 #include <giga-engine.h>
 
+Transform::Transform() {
+	position = vector3(0, 0, 0);
+	rotation = quaternion(1, 0, 0, 0);
+	scaling = vector3(1, 1, 1);
+	m_component = 0;
+	look = vector3(0, 0, -1);
+	up = vector3(0, 1, 0);
+	right = vector3(1, 0, 0);
+}
+
 void Transform::Move(vector3 translation) {
     position += translation;
-	
+
 	if (m_component) m_component->MarkUpdated(true);
 }
 

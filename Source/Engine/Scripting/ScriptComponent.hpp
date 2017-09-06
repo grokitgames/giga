@@ -24,6 +24,13 @@ public:
 		std::string name;
 		v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>> value;
 	};
+
+	// The storage of an event handler
+	struct ScriptEventHandler {
+		std::string type;
+		int entityID;
+		std::string func;
+	};
     
     /**
      * Initialize a ScriptComponent from a Script
@@ -54,6 +61,16 @@ public:
 	* Set data bindings
 	*/
 	void SetDataMappings();
+
+	/**
+	 * Add event handler
+	 */
+	void RegisterEventHandler(std::string type, std::string func, int entityID = 0);
+
+	/**
+	 * Handle event
+	 */
+	void ProcessEvent(Event* ev);
     
 protected:
     // Our script
@@ -70,6 +87,9 @@ protected:
     
     // List of accessible (undefined) global variables
     std::vector<ScriptVariable*> m_globals;
+
+	// Registered event handlers from scripts
+	std::vector<ScriptEventHandler*> m_eventHandlers;
 
 	// Whether this script has been initialized yet
 	bool m_initialized;

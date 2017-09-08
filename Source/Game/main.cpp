@@ -11,10 +11,10 @@ void StartApplication() {
     
     // Register systems
     EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
-	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>(60);
     EventSystem* eventSystem = application->CreateSystem<EventSystem>();
-    ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>();
-    InputSystem* inputSystem = application->CreateSystem<InputSystem>();
+    ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(60);
+    InputSystem* inputSystem = application->CreateSystem<InputSystem>(60);
     ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
     ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
     OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();

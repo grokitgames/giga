@@ -326,17 +326,17 @@ void Application::Initialize() {
 void Application::Update(float delta) {
     std::list<RegisteredSystem*>::iterator i = m_systems.begin();
 
-    /*for(; i != m_systems.end(); i++) {
+    for(; i != m_systems.end(); i++) {
         if((*i)->tickRate > 0) {
             (*i)->accumulator += delta;
             
-            if((*i)->accumulator > (1.0f / (*i)->tickRate)) {
+            while((*i)->accumulator > (1.0f / (*i)->tickRate)) {
                 float theta = (1.0f / (*i)->tickRate);
-                (*i)->accumulator -= (1.0f / (*i)->tickRate);
+                (*i)->accumulator -= theta;
                 (*i)->system->Update(theta);
             }
         }
-    }*/
+    }
     
     i = m_systems.begin();
     for(; i != m_systems.end(); i++) {

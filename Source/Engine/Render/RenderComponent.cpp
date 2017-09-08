@@ -21,6 +21,8 @@ void RenderComponent::SetTransform(Transform* transform) {
     m_transform.scaling = transform->scaling;
     m_transform.position = transform->position;
     m_transform.rotation = transform->rotation;
+
+	m_transform.GetModelMatrix();
     
     MarkUpdated(true);
 }

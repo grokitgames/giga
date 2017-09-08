@@ -97,6 +97,7 @@ void StaticMeshComponent::SetDataMappings() {
     SetStorableObjectFieldMapping("position", &m_transform.position);
     SetStorableObjectFieldMapping("rotation", &m_transform.rotation);
     SetStorableObjectFieldMapping("scaling", &m_transform.scaling);
+
     SetStorableObjectFieldMapping("mesh", (ResourceObject**)&m_mesh);
 }
 

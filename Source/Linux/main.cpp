@@ -11,6 +11,7 @@ void StartApplication() {
 
 	// Register systems
 	EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
 	EventSystem* eventSystem = application->CreateSystem<EventSystem>();
 	ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>();
 	InputSystem* inputSystem = application->CreateSystem<InputSystem>();
@@ -19,7 +20,6 @@ void StartApplication() {
 	RenderSystem* renderSystem = application->CreateSystem<RenderSystem>();
 	MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
 	NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
-	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
 
 	application->Initialize();
 
@@ -69,7 +69,7 @@ void StartApplication() {
 	// Create main loop timer
 	Timer* mainTimer = new Timer();
 	mainTimer->Start();
-	float delta = 0.1f;
+	float delta = 0.0f;
 	
 	int tick = networkSystem->GetCurrentTick();
 
@@ -81,14 +81,17 @@ void StartApplication() {
 			continue;
 		}
 
+		delta = mainTimer->Duration();
+		mainTimer->Reset();
+
+		delta = (1.0f / NETWORK_TICKS_PER_SECOND) - delta;
+		delta = std::max(delta, 0.0f);
+
 		tick = current;
 
 		PROFILE_START_FRAME();
 
-		application->Update(delta);
-
-		delta = mainTimer->Duration();
-		mainTimer->Reset();
+		application->Update(1.0f / NETWORK_TICKS_PER_SECOND);
 
 		PROFILE_END_FRAME();
 		Timer::Sleep(1);

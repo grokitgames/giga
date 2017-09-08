@@ -140,13 +140,14 @@ unsigned char* StorableObject::Serialize(int& size) {
         // Write the type
         uint32_t type = fields[i]->type;
         writer->Write(&type, sizeof(uint32_t));
-        
+		uint32_t length = 0;
+
         // Write field name length
-        uint32_t length = fields[i]->name.length();
-        writer->Write(&length, sizeof(uint32_t));
+        // uint32_t length = fields[i]->name.length();
+        // writer->Write(&length, sizeof(uint32_t));
         
         // Write field name
-		writer->Write((void*)fields[i]->name.data(), length + 1);
+		// writer->Write((void*)fields[i]->name.data(), length + 1);
         
         // Write the data
         switch (fields[i]->type) {
@@ -208,8 +209,8 @@ int StorableObject::GetSerializedSize() {
         size += sizeof(uint32_t);
         
         // Then store the field name length + name (including null byte)
-        size += sizeof(uint32_t);
-        size += fields[i]->name.length() + 1;
+        // size += sizeof(uint32_t);
+        // size += fields[i]->name.length() + 1;
         
         switch (fields[i]->type) {
             case StorableObjectField::FIELD_RESOURCE:
@@ -251,20 +252,25 @@ void StorableObject::Deserialize(MemoryReader* reader) {
 	int fieldCount = type->GetFieldCount();
 	int offset = 0;
 
+	std::vector<StorableObjectField*> fields = type->GetFields();
+	std::vector<StorableObjectField*>::iterator i = fields.begin();
+
     while(offset < fieldCount) {
         // Read in type
         uint32_t type = 0;
         reader->Read(&type, sizeof(uint32_t));
+		uint32_t length = 0;
         
         // Read in field name length
-        uint32_t length = 0;
-        reader->Read(&length, sizeof(uint32_t));
+        // uint32_t length = 0;
+        // reader->Read(&length, sizeof(uint32_t));
         
-        // Read in field name (including null byte)
+        /* Read in field name (including null byte)
         std::string name;
         name.resize(length + 1);
         reader->Read((void*)name.data(), length + 1);
-		name.resize(length);
+		name.resize(length);*/
+		std::string name = (*i)->name;
        
 		// placeholders
 		std::string p1;
@@ -322,6 +328,7 @@ void StorableObject::Deserialize(MemoryReader* reader) {
         }
         
 		offset++;
+		i++;
     }
 
 	this->UpdateFromDataMappings();

@@ -43,6 +43,10 @@ void Transform::UpdateModelMatrix() {
     matrix4 t = glm::translate(glm::mat4(1.0), position);
     matrix4 s = glm::scale(glm::mat4(1.0), scaling);
     matrix4 r = glm::mat4_cast(rotation);
+
+	look = rotation * glm::vec3(0.0f, 0.0f, -1.0f);
+	right = rotation * glm::vec3(1.0f, 0.0f, 0.0f);
+	up = rotation * glm::vec3(0.0f, 1.0f, 0.0f);
     
     m_modelMatrix = t * r * s;
 }

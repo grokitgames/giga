@@ -11,6 +11,7 @@ void StartApplication() {
     
     // Register systems
     EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
     EventSystem* eventSystem = application->CreateSystem<EventSystem>();
     ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>();
     InputSystem* inputSystem = application->CreateSystem<InputSystem>();
@@ -19,7 +20,6 @@ void StartApplication() {
     OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
     MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
     NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
-	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
     
     application->Initialize();
     

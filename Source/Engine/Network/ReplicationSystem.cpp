@@ -206,7 +206,6 @@ void ReplicationSystem::Update(float delta) {
 
 		// Adjust our tick by a set amount of "render lag" so that we can interpolate
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
-		
 
         // If we are not yet initialized, check for a full snapshot first
         if(m_initialized == false && m_snapshots.size() > 0) {
@@ -268,6 +267,24 @@ void ReplicationSystem::Update(float delta) {
 			if (i2 != m_snapshots.end()) {
 				ApplySnapshot(*i, *i2, interpolate);
 			}
+        }
+        
+        // If this tick is incremented, send new commands
+        int commandTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
+        std::map<int, CommandTick*>::iterator ct = m_commandHistory.find(commandTick);
+        if(tick > m_lastTick && ct != m_commandHistory.end()) {
+            EntitySystem* entitySystem = GetSystem<EntitySystem>();
+            
+            std::list<Command*>::iterator c = m_commandHistory[commandTick]->commands.begin();
+            for (; c != m_commandHistory[commandTick]->commands.end(); c++) {
+                // Get our entity
+                Entity* entity = entitySystem->FindEntity((*c)->entityID);
+                GIGA_ASSERT(entity != 0, "Entity not found.");
+                    
+                std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
+                printf("Firing %s on entity %d.\n", eventStr.c_str(), (*c)->entityID);
+                EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
+            }
         }
 	}
 
@@ -504,8 +521,6 @@ void ReplicationSystem::AddCommand(Command* command) {
 	else {
 		m_commandTick = std::min(m_commandTick, tick);
 	}
-
-	printf("Setting command to %d\n", m_commandTick);
 	
 	std::map<int, CommandTick*>::iterator i = m_commandHistory.find(tick);
 	if (i == m_commandHistory.end()) {
@@ -516,4 +531,21 @@ void ReplicationSystem::AddCommand(Command* command) {
 	else {
 		(*i).second->commands.push_back(command);
 	}
+}
+
+Variant* ReplicationSystem::SendCommand(Variant* object, int argc, Variant** argv) {
+    GIGA_ASSERT(argc == 1, "SendComand expects one argument.");
+    GIGA_ASSERT(argv[0]->IsObject(), "First argument should be a command object.");
+    
+    ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
+    replicationSystem->AddCommand(argv[0]->AsObject<Command>());
+    
+    CommandMessage* commandMessage = new CommandMessage();
+    commandMessage->SetCommand(argv[0]->AsObject<Command>());
+    
+    NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+    networkSystem->Send(commandMessage);
+    
+    delete commandMessage;
+    return(new Variant(0));
 }

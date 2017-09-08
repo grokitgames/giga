@@ -16,6 +16,12 @@ public:
     Application();
     ~Application();
     
+    struct RegisteredSystem {
+        int tickRate;
+        float accumulator;
+        System* system;
+    };
+    
     /**
      * Initialize our application's default systems (must be called at the beginning of application)
      */
@@ -36,19 +42,26 @@ public:
      * Register a new sub-system
      */
     template<class T>
-    T* CreateSystem() {
+    T* CreateSystem(int tickRate = 0) {
         T* obj = new T();
         System* sys = dynamic_cast<System*>(obj);
         GIGA_ASSERT(sys != 0, "Class must be inherited from System type.");
         
-        for(size_t i = 0; i < m_systems.size(); i++) {
-            if(m_systems[i]->GetGigaName() == sys->GetGigaName()) {
+        std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+        for(; i != m_systems.end(); i++) {
+            if((*i)->system->GetGigaName() == sys->GetGigaName()) {
                 GIGA_ASSERT(false, "System type already registed.");
             }
         }
         
         sys->Initialize();
-        m_systems.push_back(sys);
+        
+        RegisteredSystem* rs = new RegisteredSystem();
+        rs->tickRate = tickRate;
+        rs->system = sys;
+        rs->accumulator = 0;
+        m_systems.push_back(rs);
+        
         return(obj);
     }
     
@@ -77,17 +90,13 @@ public:
     void Update(float delta);
     
     /**
-     * Get sub-systems
-     */
-    std::vector<System*>& GetSystems() { return m_systems; }
-    
-    /**
      * Find a specific subsystem by class type
      */
     template<class T>
     T* GetSystem() {
-        for (size_t i = 0; i < m_systems.size(); i++) {
-            T* object = dynamic_cast<T*>(m_systems[i]);
+        std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+        for (; i != m_systems.end(); i++) {
+            T* object = dynamic_cast<T*>((*i)->system);
             if (object) {
                 return(object);
             }
@@ -133,7 +142,7 @@ public:
     
 protected:
     // List of registered sub-systems
-    std::vector<System*> m_systems;
+    std::list<RegisteredSystem*> m_systems;
     
     // List of registered data loaders
     std::vector<DataLoader*> m_loaders;

@@ -53,6 +53,11 @@ public:
 	 */
 	void AddCommand(Command* command);
     
+    /**
+     * Scripting integration
+     */
+    static Variant* SendCommand(Variant* object, int argc, Variant** argv);
+    
 protected:
     /**
      * Internal application of snapshot

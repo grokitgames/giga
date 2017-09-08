@@ -10,9 +10,13 @@ Application::Application() {
 }
 
 Application::~Application() {
-    for(size_t i = 0; i < m_systems.size(); i++) {
-        delete m_systems[i];
+    std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+    for(; i != m_systems.end(); i++) {
+        delete (*i)->system;
+        delete (*i);
     }
+    
+    m_systems.clear();
 }
 
 void Application::Initialize() {
@@ -192,11 +196,12 @@ void Application::Initialize() {
 
 	scriptingSystem->RegisterScriptableObjectType<NetworkSystem>(networkSystemType);
 
-	// Command messages
-	ScriptableObjectType* commandMsgType = new ScriptableObjectType("CommandMessage");
-	commandMsgType->SetTransient(true);
+	// Replication system
+    ScriptableObjectType* replicationSystemType = new ScriptableObjectType("ReplicationSystem");
+    replicationSystemType->SetStatic(true);
+    replicationSystemType->AddStaticFunction("SendCommand", &ReplicationSystem::SendCommand);
 	
-	scriptingSystem->RegisterScriptableObjectType<CommandMessage>(commandMsgType);
+	scriptingSystem->RegisterScriptableObjectType<ReplicationSystem>(replicationSystemType);
 
     /**
      * Platform
@@ -319,8 +324,25 @@ void Application::Initialize() {
 }
 
 void Application::Update(float delta) {
-    for(size_t i = 0; i < m_systems.size(); i++) {
-        m_systems[i]->Update(delta);
+    std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+
+    /*for(; i != m_systems.end(); i++) {
+        if((*i)->tickRate > 0) {
+            (*i)->accumulator += delta;
+            
+            if((*i)->accumulator > (1.0f / (*i)->tickRate)) {
+                float theta = (1.0f / (*i)->tickRate);
+                (*i)->accumulator -= (1.0f / (*i)->tickRate);
+                (*i)->system->Update(theta);
+            }
+        }
+    }*/
+    
+    i = m_systems.begin();
+    for(; i != m_systems.end(); i++) {
+        if((*i)->tickRate == 0) {
+            (*i)->system->Update(delta);
+        }
     }
 }
 
@@ -335,8 +357,9 @@ Application* Application::GetInstance() {
 void Application::Shutdown() {
     Application::Log(MSGTYPE_INFO, "Shutting down...");
     
-    for(size_t i = 0; i < m_systems.size(); i++) {
-        m_systems[i]->Shutdown();
+    std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+    for(; i != m_systems.end(); i++) {
+        (*i)->system->Shutdown();
     }
     
     Application::Log(MSGTYPE_INFO, "Shut down complete.");

@@ -9,6 +9,11 @@ public:
 
 	GIGA_CLASS_NAME("CommandMessage");
 
+    /**
+     * Set command
+     */
+    void SetCommand(Command* command) { m_command = command; }
+    
 	/**
 	* Send a connection request (client)
 	*/

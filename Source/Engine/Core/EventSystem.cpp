@@ -18,17 +18,21 @@ void EventSystem::Process(Event* event) {
 }
 
 void EventSystem::Update(float delta) {
-    for(std::vector<Event*>::iterator i = m_events.begin(); i != m_events.end(); i++) {
-        std::string type = (*i)->GetType();
-        for(size_t j = 0; j < m_handlers.size(); j++) {
-            if(m_handlers[j]->type == type || m_handlers[j]->type == "all") {
-                if(m_handlers[j]->entityID == 0 || m_handlers[j]->entityID == (*i)->GetEntityID())
-                    m_handlers[j]->func(*i);
-            }
-        }
-    }
+	PROFILE_START_AREA("EventSystem Update");
+
+	int events = m_events.size();
+	for (int i = 0; i < events; i++) {
+		std::string type = m_events[i]->GetType();
+		for (size_t j = 0; j < m_handlers.size(); j++) {
+			if (m_handlers[j]->type == type || m_handlers[j]->type == "all") {
+				if (m_handlers[j]->entityID == 0 || m_handlers[j]->entityID == m_events[i]->GetEntityID())
+					m_handlers[j]->func(m_events[i]);
+			}
+		}
+	}
     
-    m_events.clear();
+	m_events.erase(m_events.begin(), m_events.begin() + events);
+	PROFILE_END_AREA("EventSystem Update");
 }
 
 void EventSystem::RegisterEventHandler(std::string type, EventHandlerFn func, int entityID) {

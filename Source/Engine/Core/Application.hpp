@@ -11,10 +11,12 @@
 /**
  * Application class that serves as a service locator
  */
-class GIGA_API Application {
+class GIGA_API Application : public ScriptableObject {
 public:
     Application();
     ~Application();
+
+	GIGA_CLASS_NAME("Application");
     
     struct RegisteredSystem {
         int tickRate;
@@ -139,6 +141,11 @@ public:
      * Set minimum debug level (should probably be ERROR_WARN for maybe ERROR_INFO for production)
      */
     void SetLoggingLevel(int level) { m_loggingLevel = level; }
+
+	/**
+	* Scripting integration
+	*/
+	static Variant* Log(Variant* object, int argc, Variant** argv);
     
 protected:
     // List of registered sub-systems

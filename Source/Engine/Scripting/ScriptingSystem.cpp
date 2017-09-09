@@ -106,7 +106,7 @@ void ScriptingSystem::Update(float delta) {
 
 	// Garbage collection
 	v8::Isolate* isolate = v8::Isolate::GetCurrent();
-	isolate->IdleNotification(1.0f / NETWORK_TICKS_PER_SECOND / 2.0f);
+	isolate->IdleNotification(1.0f / NETWORK_TICKS_PER_SECOND * 1000.0f);
 
 	// Remove any transient variables marked for deletion
 	std::list<ScriptableObject*> transients = m_transients.GetList();

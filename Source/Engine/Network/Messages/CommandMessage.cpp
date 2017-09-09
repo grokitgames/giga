@@ -33,6 +33,19 @@ void CommandMessage::OnReceive() {
 	reader->Read(&start, sizeof(uint32_t));
 	reader->Read(&end, sizeof(uint32_t));
 
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	NetworkSession* session = networkSystem->FindSession(m_envelope.session);
+	int tick = networkSystem->GetCurrentTick();
+
+	if (end == 0) {
+		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG;
+		printf("Current tick: %d, setting start to %d\n", tick, start);
+	}
+	else {
+		end = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG + 1;
+		printf("Current tick: %d, setting end to %d\n", tick, end);
+	}
+
 	delete reader;
 
 	// Make sure the replication system has been run for this tick

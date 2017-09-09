@@ -10,15 +10,15 @@ void StartApplication() {
 	Application* application = Application::GetInstance();
 
 	// Register systems
-	EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
-	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
-	EventSystem* eventSystem = application->CreateSystem<EventSystem>();
-	ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>();
-	InputSystem* inputSystem = application->CreateSystem<InputSystem>();
-	ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
-	ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
-	RenderSystem* renderSystem = application->CreateSystem<RenderSystem>();
-	MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
+	EntitySystem* entitySystem = application->CreateSystem<EntitySystem>(20);
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>(20);
+	EventSystem* eventSystem = application->CreateSystem<EventSystem>(20);
+	ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(20);
+	InputSystem* inputSystem = application->CreateSystem<InputSystem>(20);
+	ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>(20);
+	ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>(20);
+	RenderSystem* renderSystem = application->CreateSystem<RenderSystem>(20);
+	MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>(20);
 	NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
 
 	application->Initialize();
@@ -71,27 +71,14 @@ void StartApplication() {
 	mainTimer->Start();
 	float delta = 0.0f;
 	
-	int tick = networkSystem->GetCurrentTick();
-
 	// Main loop
 	while (true) {
-		int current = networkSystem->GetCurrentTick();
-		if (current <= tick) {
-			Timer::Sleep(1);
-			continue;
-		}
-
 		delta = mainTimer->Duration();
 		mainTimer->Reset();
 
-		delta = (1.0f / NETWORK_TICKS_PER_SECOND) - delta;
-		delta = std::max(delta, 0.0f);
-
-		tick = current;
-
 		PROFILE_START_FRAME();
 
-		application->Update(1.0f / NETWORK_TICKS_PER_SECOND);
+		application->Update(delta);
 
 		PROFILE_END_FRAME();
 		Timer::Sleep(1);

@@ -11,10 +11,10 @@ void StartApplication() {
     
     // Register systems
     EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
-	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>(60);
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
     EventSystem* eventSystem = application->CreateSystem<EventSystem>();
-    ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(60);
-    InputSystem* inputSystem = application->CreateSystem<InputSystem>(60);
+    ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(20);
+    InputSystem* inputSystem = application->CreateSystem<InputSystem>(20);
     ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
     ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
     OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
@@ -70,14 +70,12 @@ void StartApplication() {
     // Create main loop timer
     Timer* mainTimer = new Timer();
     mainTimer->Start();
-    float delta = 0.1f;
-    
-	int tick = networkSystem->GetCurrentTick();
+    float delta = 0.0f;
 
     // Main loop
     while(window->IsClosing() == false) {
         PROFILE_START_FRAME();
-        
+
         application->Update(delta);
         
         window->SwapBuffer();

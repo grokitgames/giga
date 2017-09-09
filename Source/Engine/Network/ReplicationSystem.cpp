@@ -114,6 +114,7 @@ void ReplicationSystem::Update(float delta) {
 
 				std::list<int>::iterator s = m_sessionIDs.begin();
 				for (; s != m_sessionIDs.end(); s++) {
+					printf("Sending full snapshot to session ID %d.\n", *s);
 					networkSystem->Send(*s, msg);
 				}
 
@@ -121,10 +122,10 @@ void ReplicationSystem::Update(float delta) {
 				m_sessionIDs.clear();
 			}
 
-			// Do we have commands that need to be replayed?
+			// Do we have commands that need to be replayed? 
 			if (m_commandTick > 0) {
 				// Delete all entities
-				printf("Deleting all entities.\n");
+				printf("Command tick %d, deleting all entities.\n", m_commandTick);
 
 				// Reset back to previous tick
 				entitySystem->Clear();
@@ -163,7 +164,7 @@ void ReplicationSystem::Update(float delta) {
 
 							std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
 							printf("Firing %s on entity %d.\n", eventStr.c_str(), (*c)->entityID);
-							EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
+							//EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
 						}
 					}
 

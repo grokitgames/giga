@@ -6,7 +6,7 @@ Application* Application::m_instance = 0;
 Application::Application() {
     m_window = 0;
     m_outputLog = 0;
-    m_loggingLevel = MSGTYPE_DEBUG;
+    m_loggingLevel = 0;
 }
 
 Application::~Application() {
@@ -105,6 +105,13 @@ void Application::Initialize() {
     /**
      * Base
      */
+
+	 // Application
+	ScriptableObjectType* applicationType = new ScriptableObjectType("Application");
+	applicationType->SetStatic(true);
+	applicationType->AddStaticFunction("Log", &Application::Log);
+
+	scriptingSystem->RegisterScriptableObjectType<Application>(applicationType);
     
     // Entity
     ScriptableObjectType* entityType = new ScriptableObjectType("Entity");
@@ -330,7 +337,7 @@ void Application::Update(float delta) {
         if((*i)->tickRate > 0) {
             (*i)->accumulator += delta;
             
-            while((*i)->accumulator > (1.0f / (*i)->tickRate)) {
+            if((*i)->accumulator > (1.0f / (*i)->tickRate)) {
                 float theta = (1.0f / (*i)->tickRate);
                 (*i)->accumulator -= theta;
                 (*i)->system->Update(theta);
@@ -405,6 +412,10 @@ void Application::Log(int type, std::string message, std::string details) {
     
 	printf("%s\n", output.c_str());
 
+#ifdef WIN32
+	OutputDebugString(output.c_str());
+#endif
+	
     application->m_outputLog->WriteLine(output);
     
     delete dt;
@@ -412,4 +423,14 @@ void Application::Log(int type, std::string message, std::string details) {
 
 void Application::LogError(Error* error) {
     Application::Log(error->GetType(), error->GetMsg(), error->GetDetails());
+}
+
+Variant* Application::Log(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1, "Log expects one argument.");
+	GIGA_ASSERT(argv[0]->IsString(), "First parameter should be string log line output.");
+
+	Application* application = Application::GetInstance();
+	application->Log(MSGTYPE_DEBUG, argv[0]->AsString());
+
+	return(new Variant(0));
 }

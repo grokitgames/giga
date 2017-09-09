@@ -88,7 +88,7 @@ void EchoResponseMessage::OnReceive() {
     float diff = (float)offset.tv_sec + ((float)offset.tv_nsec / 1000000000.0f);
     
     // Minus the ping time
-    float d = diff - rtt;
+    float d = diff - session->info.pingTime;
 	if (session->info.clientTimeDiff == 0) {
 		session->info.clientTimeDiff = d;
 	}

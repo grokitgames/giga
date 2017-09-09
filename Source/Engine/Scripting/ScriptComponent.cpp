@@ -277,7 +277,7 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 
 	// Set globals
 	for (size_t i = 0; i < m_globals.size(); i++) {
-		globalSpace->Set(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()), m_globals[i]->value.Get(isolate));
+		//globalSpace->Set(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()), m_globals[i]->value.Get(isolate));
 	}
     
     // Attempt to call the function

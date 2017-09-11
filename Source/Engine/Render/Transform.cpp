@@ -13,7 +13,6 @@ Transform::Transform() {
 
 void Transform::Move(vector3 translation) {
     position += translation;
-
 	if (m_component) m_component->MarkUpdated(true);
 }
 

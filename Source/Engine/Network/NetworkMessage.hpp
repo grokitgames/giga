@@ -73,6 +73,11 @@ public:
 	* Helper function to set payload (sets envelope size)
 	*/
 	void SetPayload(unsigned char* bytes, int size);
+
+	/**
+	 * Create a copy of the message
+	 */
+	void Copy(NetworkMessage* copy);
     
 protected:
     /**

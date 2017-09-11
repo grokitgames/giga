@@ -1,9 +1,13 @@
 
 #include <giga-engine.h>
 
-void CommandMessage::OnSend() {
+CommandMessage::CommandMessage() {
+	m_command = 0;
+	m_envelope.flags |= NetworkMessage::Flags::FLAG_ACK;
 	m_envelope.type = 40;
+}
 
+void CommandMessage::OnSend() {
 	GIGA_ASSERT(m_command != 0, "Command object not set.");
 
 	unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 4);
@@ -38,7 +42,7 @@ void CommandMessage::OnReceive() {
 	int tick = networkSystem->GetCurrentTick();
 
 	if (end == 0) {
-		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG;
+		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG - 1;
 		printf("Current tick: %d, setting start to %d\n", tick, start);
 	}
 	else {

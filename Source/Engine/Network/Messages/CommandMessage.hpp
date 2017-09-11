@@ -4,7 +4,7 @@
 */
 class GIGA_API CommandMessage : public NetworkMessage, public ScriptableObject {
 public:
-	CommandMessage() : m_command(0) { }
+	CommandMessage();
 	~CommandMessage() = default;
 
 	GIGA_CLASS_NAME("CommandMessage");

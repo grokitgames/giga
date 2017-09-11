@@ -7,6 +7,8 @@ ReplicationSystem::ReplicationSystem() {
     m_initialized = false;
 	m_replay = false;
 	m_commandTick = 0;
+	m_clientAuthoritative = false;
+	m_nextValidFrame = 0;
 }
 
 ReplicationSystem::~ReplicationSystem() {
@@ -14,6 +16,11 @@ ReplicationSystem::~ReplicationSystem() {
     for(i; i != m_snapshots.end(); i++) {
         delete (*i);
     }
+}
+
+void ReplicationSystem::Initialize() {
+	EventSystem* eventSystem = GetSystem<EventSystem>();
+	eventSystem->RegisterEventHandler("COMMAND_END", &ReplicationSystem::CommandEndHandler);
 }
 
 void ReplicationSystem::Update(float delta) {
@@ -114,7 +121,6 @@ void ReplicationSystem::Update(float delta) {
 
 				std::list<int>::iterator s = m_sessionIDs.begin();
 				for (; s != m_sessionIDs.end(); s++) {
-					printf("Sending full snapshot to session ID %d.\n", *s);
 					networkSystem->Send(*s, msg);
 				}
 
@@ -164,7 +170,7 @@ void ReplicationSystem::Update(float delta) {
 
 							std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
 							printf("Firing %s on entity %d.\n", eventStr.c_str(), (*c)->entityID);
-							//EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
+							EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
 						}
 					}
 
@@ -207,6 +213,9 @@ void ReplicationSystem::Update(float delta) {
 
 		// Adjust our tick by a set amount of "render lag" so that we can interpolate
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
+		if (renderTick > m_nextValidFrame) {
+			m_clientAuthoritative = false;
+		}
 
         // If we are not yet initialized, check for a full snapshot first
         if(m_initialized == false && m_snapshots.size() > 0) {
@@ -264,28 +273,10 @@ void ReplicationSystem::Update(float delta) {
 			if (interpolate > 1) {
 				interpolate = 1;
 			}
-            
+
 			if (i2 != m_snapshots.end()) {
 				ApplySnapshot(*i, *i2, interpolate);
 			}
-        }
-        
-        // If this tick is incremented, send new commands
-        int commandTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
-        std::map<int, CommandTick*>::iterator ct = m_commandHistory.find(commandTick);
-        if(tick > m_lastTick && ct != m_commandHistory.end()) {
-            EntitySystem* entitySystem = GetSystem<EntitySystem>();
-            
-            std::list<Command*>::iterator c = m_commandHistory[commandTick]->commands.begin();
-            for (; c != m_commandHistory[commandTick]->commands.end(); c++) {
-                // Get our entity
-                Entity* entity = entitySystem->FindEntity((*c)->entityID);
-                GIGA_ASSERT(entity != 0, "Entity not found.");
-                    
-                std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
-                printf("Firing %s on entity %d.\n", eventStr.c_str(), (*c)->entityID);
-                EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
-            }
         }
 	}
 
@@ -330,9 +321,18 @@ void ReplicationSystem::Update(float delta) {
 void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* next, float interpolate) {
     // Get link to entity system
     EntitySystem* entitySystem = GetSystem<EntitySystem>();
-    
+
+	// Get our player entity ID
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	NetworkSession* session = networkSystem->FindSession(0);
+	int playerID = session->playerID;
+
     // Apply changes from the startTick (now in i)
     for(size_t j = 0; j < current->entities.size(); j++) {
+		if (m_clientAuthoritative && current->entities[j]->GetID() == playerID) {
+			continue;
+		}
+
         Entity* entity = entitySystem->FindEntity(current->entities[j]->GetID());
         if(entity == 0) {
             entity = new Entity();
@@ -549,4 +549,21 @@ Variant* ReplicationSystem::SendCommand(Variant* object, int argc, Variant** arg
     
     delete commandMessage;
     return(new Variant(0));
+}
+
+void ReplicationSystem::CommandEndHandler(Event* event) {
+	// When a command ends on the client, don't process any more snapshots until we receive another full snapshot
+	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
+	if (replicationSystem->m_type == REPLICATION_SERVER) {
+		return;
+	}
+
+	replicationSystem->m_clientAuthoritative = true;
+
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	NetworkSession* session = networkSystem->FindSession(0);
+
+	// Get the command object
+	std::list<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
+	replicationSystem->m_nextValidFrame = (*i)->tick + ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime);
 }

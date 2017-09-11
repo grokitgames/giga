@@ -37,7 +37,7 @@ public:
     NetworkConnectionInfo info;
     
     // The player entity of this player in the world
-    Entity* player;
+    int playerID;
     
     // Last ping time (in ticks)
     int lastPing;

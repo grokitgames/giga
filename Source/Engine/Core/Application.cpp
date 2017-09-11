@@ -80,6 +80,7 @@ void Application::Initialize() {
 	networkSystem->RegisterMessageType<EntitySnapshotMessage>(30);
 	networkSystem->RegisterMessageType<CommandMessage>(40);
 	networkSystem->RegisterMessageType<ResendRequestMessage>(50);
+	networkSystem->RegisterMessageType<AckMessage>(60);
 
 	Application::Log(MSGTYPE_DEBUG, "Registered network message types...");
     

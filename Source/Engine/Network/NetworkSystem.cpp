@@ -44,11 +44,7 @@ void NetworkSystem::Connect(std::string host, int port) {
     
     // Create a new network session
     NetworkSession* session = new NetworkSession();
-    
-    // Initialize player and session ID to null to start
-    session->player = 0;
-	session->sessionID = 0;
-    
+
     // Create socket
     session->socket = new UDPSocket();
     if(session->socket->Connect(host, port) == false) {
@@ -68,10 +64,10 @@ void NetworkSystem::Connect(std::string host, int port) {
     m_maxSocketID = std::max(m_maxSocketID, session->socket->GetSocket());
     FD_SET(session->socket->GetSocket(), &info->sockets);
     
-    // Send first echo message request
+    /* Send first echo message request
     EchoRequestMessage* request = new EchoRequestMessage();
 	Send(request);
-    delete request;
+    delete request;*/
 }
 
 void NetworkSystem::Listen(int port) {
@@ -101,6 +97,15 @@ void NetworkSystem::Send(NetworkSession* session, NetworkMessage* msg) {
 	NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
 	env->tick = GetCurrentTick();
 	env->id = ++m_lastMessageID;
+
+	// If this message requires an ack response, save a copy
+	if (env->flags & NetworkMessage::Flags::FLAG_ACK) {
+		std::map<int, NetworkMessage*(*)()>::iterator it = m_messageTypes.find(env->type);
+		NetworkMessage* copy = it->second();
+		msg->Copy(copy);
+
+		m_acks.push_back(copy);
+	}
 
 	int written = 0;
 
@@ -260,8 +265,8 @@ void NetworkSystem::Update(float delta) {
         
         while(bytes > 0) {
             // Read in the message type (first thing in envelope)
-            uint32_t type = 0;
-            memcpy(&type, buffer, sizeof(uint32_t));
+            uint16_t type = 0;
+            memcpy(&type, buffer, sizeof(uint16_t));
             
             NetworkMessage* msg = 0;
             std::map<int, NetworkMessage*(*)()>::iterator it = m_messageTypes.find((int)type);
@@ -274,47 +279,58 @@ void NetworkSystem::Update(float delta) {
             // If we're in server mode, check to see if this is a new session
             NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
             NetworkSession* session = FindSession(env->session, socket);
+
+			// If we need an ack, send it
+			if (env->flags & NetworkMessage::Flags::FLAG_ACK) {
+				AckMessage* ack = new AckMessage();
+				ack->messageID = env->id;
+				Send(session, ack);
+
+				printf("Sending ack for message ID %d on session ID %d.\n", env->id, env->session);
+
+				delete ack;
+			}
             
             if(env->bytes == env->end && env->chunkID == 1) {
                 // If this message is a full message, just parse it
                 msg->OnReceive();
                 delete msg;
             }
-            else {
-                // If this packet is a partial, store it to be actioned later
-                std::map<uint32_t, NetworkMessagePart*>::iterator i = m_partials.find(env->id);
-                if(i == m_partials.end()) {
-                    NetworkMessagePart* part = new NetworkMessagePart();
-                    part->master = msg;
-                    part->parts.push_back(msg);
-                    part->lastTick = tick;
-                    part->session = session;
-                    
-                    // Store this message
-                    m_partials[env->id] = part;
-                }
-                else {
-                    // If this is for a packet we've already processed, move on
-                    if((*i).second->processed == true) {
-                        delete msg;
-                    }
-                    else {
-                        // Append it to the existing message and discard
-                        uint32_t envelopeID = env->id;
-                        m_partials[envelopeID]->master->Append(buffer, env->chunkID * NETWORK_MAX_PACKET_SIZE, env->bytes);
-                    
-                        // Note timing
-                        m_partials[envelopeID]->lastTick = tick;
-                    
-                        // Check again for a complete packet
-                        NetworkMessage::NetworkEnvelope* env = m_partials[envelopeID]->master->GetEnvelope();
-                        if(env->bytes == env->end) {
-                            m_partials[envelopeID]->master->OnReceive();
-                            m_partials[envelopeID]->processed = true;
-                        }
-                    }
-                }
-            }
+			else {
+				// If this packet is a partial, store it to be actioned later
+				std::map<uint32_t, NetworkMessagePart*>::iterator i = m_partials.find(env->id);
+				if (i == m_partials.end()) {
+					NetworkMessagePart* part = new NetworkMessagePart();
+					part->master = msg;
+					part->parts.push_back(msg);
+					part->lastTick = tick;
+					part->session = session;
+
+					// Store this message
+					m_partials[env->id] = part;
+				}
+				else {
+					// If this is for a packet we've already processed, move on
+					if ((*i).second->processed == true) {
+						delete msg;
+					}
+					else {
+						// Append it to the existing message and discard
+						uint32_t envelopeID = env->id;
+						m_partials[envelopeID]->master->Append(buffer, env->chunkID * NETWORK_MAX_PACKET_SIZE, env->bytes);
+
+						// Note timing
+						m_partials[envelopeID]->lastTick = tick;
+
+						// Check again for a complete packet
+						NetworkMessage::NetworkEnvelope* env = m_partials[envelopeID]->master->GetEnvelope();
+						if (env->bytes == env->end) {
+							m_partials[envelopeID]->master->OnReceive();
+							m_partials[envelopeID]->processed = true;
+						}
+					}
+				}
+			}
             
             // Get the next message
             bytes = socket->Read(buffer, NETWORK_MAX_PACKET_SIZE);
@@ -407,6 +423,8 @@ void NetworkSystem::Update(float delta) {
             }
         }
     }
+
+	// Re-request any ack packets
     
     PROFILE_END_AREA("NetworkSystem Update");
 }
@@ -443,6 +461,19 @@ float NetworkSystem::GetCurrentTime() {
     }
     
     return(d);
+}
+
+void NetworkSystem::MarkReceived(int sessionID, int messageID) {
+	std::list<NetworkMessage*>::iterator i = m_acks.begin();
+	for (; i != m_acks.end(); i++) {
+		NetworkMessage::NetworkEnvelope* env = (*i)->GetEnvelope();
+		if (env->session == sessionID && env->id == messageID) {
+			delete (*i);
+			m_acks.erase(i);
+
+			return;
+		}
+	}
 }
 
 Variant* NetworkSystem::Send(Variant* object, int argc, Variant** argv) {

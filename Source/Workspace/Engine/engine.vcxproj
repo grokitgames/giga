@@ -175,6 +175,7 @@
     <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp" />
     <ClInclude Include="..\..\Engine\Network\EntitySnapshot.hpp" />
+    <ClInclude Include="..\..\Engine\Network\Messages\AckMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\CommandMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\EchoRequestMessage.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\EchoResponseMessage.hpp" />
@@ -277,6 +278,7 @@
     <ClCompile Include="..\..\Engine\IO\StorableObject.cpp" />
     <ClCompile Include="..\..\Engine\IO\StorableObjectType.cpp" />
     <ClCompile Include="..\..\Engine\Network\EntitySnapshot.cpp" />
+    <ClCompile Include="..\..\Engine\Network\Messages\AckMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\Messages\CommandMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\Messages\EchoRequestMessage.cpp" />
     <ClCompile Include="..\..\Engine\Network\Messages\EchoResponseMessage.cpp" />

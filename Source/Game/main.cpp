@@ -8,12 +8,12 @@ GIGA_APPLICATION(StartApplication);
 void StartApplication() {
     // Get application
     Application* application = Application::GetInstance();
-    
+	    
     // Register systems
     EntitySystem* entitySystem = application->CreateSystem<EntitySystem>();
+	EventSystem* eventSystem = application->CreateSystem<EventSystem>(20);
 	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>();
-    EventSystem* eventSystem = application->CreateSystem<EventSystem>();
-    ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(20);
+	ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(20);
     InputSystem* inputSystem = application->CreateSystem<InputSystem>(20);
     ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
     ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
@@ -63,6 +63,10 @@ void StartApplication() {
 	
 	// Connect to server
 	networkSystem->Connect("grokitgames.com", 8053);
+
+	NetworkSession* session = networkSystem->FindSession(0);
+	session->playerID = 1;
+	session->sessionID = 1;
 
 	// Initialize replication system
 	replicationSystem->SetType(REPLICATION_CLIENT);

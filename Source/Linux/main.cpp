@@ -11,8 +11,8 @@ void StartApplication() {
 
 	// Register systems
 	EntitySystem* entitySystem = application->CreateSystem<EntitySystem>(20);
-	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>(20);
 	EventSystem* eventSystem = application->CreateSystem<EventSystem>(20);
+	ReplicationSystem* replicationSystem = application->CreateSystem<ReplicationSystem>(20);
 	ScriptingSystem* scriptingSystem = application->CreateSystem<ScriptingSystem>(20);
 	InputSystem* inputSystem = application->CreateSystem<InputSystem>(20);
 	ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>(20);

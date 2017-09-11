@@ -78,3 +78,10 @@ void NetworkMessage::SetPayload(unsigned char* bytes, int size) {
     m_payload = bytes;
     m_envelope.bytes = size;
 }
+
+void NetworkMessage::Copy(NetworkMessage* copy) {
+	memcpy(&copy->m_envelope, &m_envelope, sizeof(NetworkEnvelope));
+
+	unsigned char* payload = (unsigned char*)malloc(m_envelope.bytes);
+	memcpy(payload, m_payload, m_envelope.bytes);
+}

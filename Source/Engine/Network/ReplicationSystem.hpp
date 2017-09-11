@@ -21,6 +21,11 @@ public:
     
     GIGA_CLASS_NAME("ReplicationSystem");
     
+	/**
+	* Overridable initialization function
+	*/
+	void Initialize();
+
     /**
      * Update (remove old snapshots and create current)
      */
@@ -63,6 +68,11 @@ protected:
      * Internal application of snapshot
      */
     void ApplySnapshot(EntitySnapshot* current, EntitySnapshot* next, float interpolate);
+
+	/**
+	 * Event handler for command end
+	 */
+	static void CommandEndHandler(Event* event);
     
 protected:
     // Historical (+ potential future) snapshots
@@ -95,6 +105,10 @@ protected:
 
 	// Whether the replication system is currently in "replay" mode
 	bool m_replay;
+
+	// Whether the client is authoritative for the player entity for the time being
+	bool m_clientAuthoritative;
+	int m_nextValidFrame;
 };
 
 #endif

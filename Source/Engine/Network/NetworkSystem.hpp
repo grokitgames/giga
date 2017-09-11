@@ -21,6 +21,12 @@ struct GIGA_API NetworkClientInfo {
     
     // Our network session with the server
     NetworkSession* session;
+
+	// Session ID (set before session object is created)
+	int sessionID;
+
+	// Player entity ID
+	int playerID;
 };
 
 /**
@@ -157,6 +163,16 @@ public:
     }
 
 	/**
+	 * Mark a message as received (ack)
+	 */
+	void MarkReceived(int sessionID, int messageID);
+
+	/**
+	 * Get network system info
+	 */
+	NetworkSystemInfo* GetSystemInfo() { return &m_info; }
+
+	/**
 	 * Scripting integration
 	 */
 	static Variant* Send(Variant* object, int argc, Variant** argv);
@@ -193,6 +209,9 @@ protected:
 
 	// Manual tick offset for replaying
 	int m_overrideTick;
+
+	// Network messages waiting for an ack response
+	std::list<NetworkMessage*> m_acks;
 };
 
 #endif

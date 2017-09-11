@@ -162,6 +162,7 @@ typedef glm::mat4 matrix4;
 #include <Network/Messages/EntitySnapshotMessage.hpp>
 #include <Network/Messages/CommandMessage.hpp>
 #include <Network/Messages/ResendRequestMessage.hpp>
+#include <Network/Messages/AckMessage.hpp>
 #include <Core/Application.hpp>
 
 #ifdef GIGA_USING_OPENGL

@@ -1,10 +1,6 @@
 
 #include <giga-engine.h>
 
-ResendRequestMessage::ResendRequestMessage() {
-	m_envelope.type = 50;
-}
-
 ResendRequestMessage::~ResendRequestMessage() {
     std::list<ResendRequestInfo*>::iterator i = m_packets.begin();
     for(; i != m_packets.end(); i++) {
@@ -23,6 +19,8 @@ void ResendRequestMessage::AddPacket(int messageID, int chunkID) {
 }
 
 void ResendRequestMessage::OnSend() {
+	m_envelope.type = 50;
+
     int size = sizeof(uint32_t) + (sizeof(uint32_t) * 2 * m_packets.size());
     unsigned char* buffer = (unsigned char*)malloc(size);
     MemoryWriter* writer = new MemoryWriter();

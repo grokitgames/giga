@@ -4,7 +4,7 @@
 NetworkSession::NetworkSession() {
     sessionID = 0;
     socket = 0;
-    player = 0;
+    playerID = 0;
     memset(&info, 0, sizeof(NetworkConnectionInfo));
     lastPing = 0;
 }

@@ -11,6 +11,10 @@ struct GIGA_API NetworkConnectionInfo {
     
     // Current ping time (one way - in seconds)
     float pingTime;
+
+	// Last few ping times
+	float pingTimes[10];
+	int pingIndex;
 };
 
 /**

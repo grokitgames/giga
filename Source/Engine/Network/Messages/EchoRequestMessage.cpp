@@ -62,13 +62,28 @@ void EchoRequestMessage::OnReceive() {
     // Update last ping time for session
     NetworkSession* session = networkSystem->FindSession(m_envelope.session);
     session->lastPing = networkSystem->GetCurrentTick();
-	session->info.pingTime = (float)clientPing / 1000.0f;
-	
+
+	float pingTime = (float)clientPing / 1000.0f;
+	session->info.pingTimes[session->info.pingIndex] = pingTime;
+	session->info.pingIndex = (session->info.pingIndex + 1) % 10;
+
+	// Determine average ping time
+	float avgPingTime = 0.0f;
+	int counter = 0;
+	for(int i = 0; i < 10; i++) {
+		if (session->info.pingTimes[i] > 0) {
+			avgPingTime += session->info.pingTimes[i];
+			counter++;
+		}
+	}
+	avgPingTime /= counter;
+	session->info.pingTime = avgPingTime;
+
 	if (session->info.clientTimeDiff == 0) {
 		session->info.clientTimeDiff = (float)clientOffset / 1000.0f;
 	}
 
-	printf("Client ping time: %d ms, offset %d ms\n", clientPing, clientOffset);
+	printf("Client ping time: %d ms (%f avg), offset %d ms\n", clientPing, avgPingTime * 1000.0f, clientOffset);
 
 	// Queue up a full snapshot
 	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();

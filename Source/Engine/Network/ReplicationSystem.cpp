@@ -565,5 +565,5 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 
 	// Get the command object
 	std::list<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
-	replicationSystem->m_nextValidFrame = (*i)->tick + ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime);
+	replicationSystem->m_nextValidFrame = (*i)->tick + (ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime) * 2);
 }

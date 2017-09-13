@@ -47,8 +47,10 @@ unsigned char* HttpRequest::Execute() {
 		postvars += "&" + i->first + "=" + curl_easy_escape(m_handle, i->second.c_str(), (int)i->second.length());
 	}
 
+    std::string cadir = Directory::GetCurrentDirectory() + "/cacert.pem";
+    
 	curl_easy_setopt(m_handle, CURLOPT_POSTFIELDS, postvars.c_str());
-	curl_easy_setopt(m_handle, CURLOPT_CAINFO, "C:\\Users\\Smith\\Documents\\Projects\\game\\cacert.pem");
+    curl_easy_setopt(m_handle, CURLOPT_CAINFO, cadir.c_str());
 
 	// Execute
 	int success = curl_easy_perform(m_handle);

@@ -182,6 +182,15 @@
 		5EDCA3F81F56FB6A00329733 /* CommandMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */; };
 		5EDCA3FC1F59AC2A00329733 /* ResendRequestMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3FA1F59AC2A00329733 /* ResendRequestMessage.cpp */; };
 		5EDCA3FD1F59AC2A00329733 /* ResendRequestMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3FB1F59AC2A00329733 /* ResendRequestMessage.hpp */; };
+		5EDCA4041F66BB7F00329733 /* AckMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA4021F66BB7F00329733 /* AckMessage.cpp */; };
+		5EDCA4051F66BB7F00329733 /* AckMessage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA4031F66BB7F00329733 /* AckMessage.hpp */; };
+		5EDCA4081F6967C700329733 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA4061F6967C600329733 /* HttpRequest.cpp */; };
+		5EDCA4091F6967C700329733 /* HttpRequest.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA4071F6967C700329733 /* HttpRequest.hpp */; };
+		5EDCA40B1F69684C00329733 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA40A1F69684C00329733 /* libcurl.a */; };
+		5EDCA40E1F6969BD00329733 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA40C1F6969BD00329733 /* libcrypto.a */; };
+		5EDCA40F1F6969BD00329733 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA40D1F6969BD00329733 /* libssl.a */; };
+		5EDCA4121F69708000329733 /* Directory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA4101F69708000329733 /* Directory.cpp */; };
+		5EDCA4131F69708000329733 /* Directory.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA4111F69708000329733 /* Directory.hpp */; };
 		5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFD861F2194D8009FA81B /* InputDevice.cpp */; };
 		5EFDFD891F2194D8009FA81B /* InputDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDFD871F2194D8009FA81B /* InputDevice.hpp */; };
 		5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDFDAB1F219AC0009FA81B /* InputSystem.cpp */; };
@@ -409,6 +418,15 @@
 		5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandMessage.hpp; path = ../../Engine/Network/Messages/CommandMessage.hpp; sourceTree = "<group>"; };
 		5EDCA3FA1F59AC2A00329733 /* ResendRequestMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResendRequestMessage.cpp; path = ../../Engine/Network/Messages/ResendRequestMessage.cpp; sourceTree = "<group>"; };
 		5EDCA3FB1F59AC2A00329733 /* ResendRequestMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ResendRequestMessage.hpp; path = ../../Engine/Network/Messages/ResendRequestMessage.hpp; sourceTree = "<group>"; };
+		5EDCA4021F66BB7F00329733 /* AckMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AckMessage.cpp; path = ../../Engine/Network/Messages/AckMessage.cpp; sourceTree = "<group>"; };
+		5EDCA4031F66BB7F00329733 /* AckMessage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AckMessage.hpp; path = ../../Engine/Network/Messages/AckMessage.hpp; sourceTree = "<group>"; };
+		5EDCA4061F6967C600329733 /* HttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequest.cpp; path = ../../Engine/Network/HttpRequest.cpp; sourceTree = "<group>"; };
+		5EDCA4071F6967C700329733 /* HttpRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = HttpRequest.hpp; path = ../../Engine/Network/HttpRequest.hpp; sourceTree = "<group>"; };
+		5EDCA40A1F69684C00329733 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../ThirdParty/libcurl/lib/libcurl.a; sourceTree = "<group>"; };
+		5EDCA40C1F6969BD00329733 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../ThirdParty/openssl/lib/libcrypto.a; sourceTree = "<group>"; };
+		5EDCA40D1F6969BD00329733 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../ThirdParty/openssl/lib/libssl.a; sourceTree = "<group>"; };
+		5EDCA4101F69708000329733 /* Directory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Directory.cpp; path = ../../Engine/IO/Directory.cpp; sourceTree = "<group>"; };
+		5EDCA4111F69708000329733 /* Directory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Directory.hpp; path = ../../Engine/IO/Directory.hpp; sourceTree = "<group>"; };
 		5EFDFD861F2194D8009FA81B /* InputDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputDevice.cpp; path = ../../Engine/IO/InputDevice.cpp; sourceTree = "<group>"; };
 		5EFDFD871F2194D8009FA81B /* InputDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InputDevice.hpp; path = ../../Engine/IO/InputDevice.hpp; sourceTree = "<group>"; };
 		5EFDFD8B1F2195D7009FA81B /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../../../../../Downloads/depot_tools/v8/out/x64.release/libicui18n.dylib; sourceTree = "<group>"; };
@@ -476,6 +494,9 @@
 				5EDCA3BC1F3BE76600329733 /* libv8_libplatform.a in Frameworks */,
 				5EDCA3BD1F3BE76600329733 /* libv8_libsampler.a in Frameworks */,
 				5EDCA3DE1F3DFB8300329733 /* libmysqlclient.a in Frameworks */,
+				5EDCA40B1F69684C00329733 /* libcurl.a in Frameworks */,
+				5EDCA40E1F6969BD00329733 /* libcrypto.a in Frameworks */,
+				5EDCA40F1F6969BD00329733 /* libssl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +586,8 @@
 				5E556AA61F23C6CB00F6FB2E /* Command.hpp */,
 				5EDCA3CC1F3DF1E100329733 /* DataLoader.cpp */,
 				5EDCA3CD1F3DF1E100329733 /* DataLoader.hpp */,
+				5EDCA4101F69708000329733 /* Directory.cpp */,
+				5EDCA4111F69708000329733 /* Directory.hpp */,
 				5EFDFDC51F227023009FA81B /* File.cpp */,
 				5EFDFDC61F227023009FA81B /* File.hpp */,
 				5EFDFD861F2194D8009FA81B /* InputDevice.cpp */,
@@ -598,6 +621,8 @@
 				5E6C658E1F314C960089FD55 /* Messages */,
 				5E6C65B71F3545D10089FD55 /* EntitySnapshot.cpp */,
 				5E6C65B01F353AF20089FD55 /* EntitySnapshot.hpp */,
+				5EDCA4061F6967C600329733 /* HttpRequest.cpp */,
+				5EDCA4071F6967C700329733 /* HttpRequest.hpp */,
 				5E6C65861F314AD30089FD55 /* NetworkMessage.cpp */,
 				5E6C65871F314AD30089FD55 /* NetworkMessage.hpp */,
 				5E6C659F1F32A2D60089FD55 /* NetworkSession.cpp */,
@@ -722,6 +747,8 @@
 		5E6C658E1F314C960089FD55 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				5EDCA4021F66BB7F00329733 /* AckMessage.cpp */,
+				5EDCA4031F66BB7F00329733 /* AckMessage.hpp */,
 				5EDCA3F51F56FB6A00329733 /* CommandMessage.cpp */,
 				5EDCA3F61F56FB6A00329733 /* CommandMessage.hpp */,
 				5E6C65A71F3376240089FD55 /* EchoResponseMessage.cpp */,
@@ -782,6 +809,9 @@
 		5EFDFD8A1F2195D6009FA81B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5EDCA40C1F6969BD00329733 /* libcrypto.a */,
+				5EDCA40D1F6969BD00329733 /* libssl.a */,
+				5EDCA40A1F69684C00329733 /* libcurl.a */,
 				5EDCA3DD1F3DFB8300329733 /* libmysqlclient.a */,
 				5EDCA3D41F3DF73C00329733 /* sqlite3.c */,
 				5EDCA3AD1F3BD58600329733 /* libicui18n.dylib */,
@@ -854,6 +884,7 @@
 				5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */,
 				5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */,
 				5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */,
+				5EDCA4051F66BB7F00329733 /* AckMessage.hpp in Headers */,
 				5EDCA3D31F3DF69F00329733 /* SQLiteDataLoader.hpp in Headers */,
 				5EFDFDE41F22986B009FA81B /* Timer.hpp in Headers */,
 				5E556B021F295A4200F6FB2E /* MemoryReader.hpp in Headers */,
@@ -878,6 +909,7 @@
 				5E556AA81F23C6CB00F6FB2E /* Command.hpp in Headers */,
 				5E0523D71F217EF90088C9BA /* ScriptableObject.hpp in Headers */,
 				5E0523CB1F216EC10088C9BA /* Error.hpp in Headers */,
+				5EDCA4091F6967C700329733 /* HttpRequest.hpp in Headers */,
 				5E6C65631F2EA40F0089FD55 /* PostProcessPass.hpp in Headers */,
 				5E0523CF1F2170410088C9BA /* ErrorSystem.hpp in Headers */,
 				5E0523901F203F7E0088C9BA /* Component.hpp in Headers */,
@@ -947,6 +979,7 @@
 				5E0523941F2046750088C9BA /* Entity.hpp in Headers */,
 				5E556AC41F2431A000F6FB2E /* BoundingBox.hpp in Headers */,
 				5E6C65891F314AD30089FD55 /* NetworkMessage.hpp in Headers */,
+				5EDCA4131F69708000329733 /* Directory.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,11 +1043,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E556AF11F2813E000F6FB2E /* Shader.cpp in Sources */,
+				5EDCA4041F66BB7F00329733 /* AckMessage.cpp in Sources */,
 				5E6C65421F2C041F0089FD55 /* Plane.cpp in Sources */,
 				5E6C65E11F3B53A50089FD55 /* OpenGLTexture3D.cpp in Sources */,
 				5E556B111F2A6BE400F6FB2E /* AnimationFrame.cpp in Sources */,
 				5EFDFDEB1F22EB02009FA81B /* ResourceSystem.cpp in Sources */,
 				5E0523DD1F2181110088C9BA /* ScriptableVariant.cpp in Sources */,
+				5EDCA4121F69708000329733 /* Directory.cpp in Sources */,
 				5E556B211F2AB65000F6FB2E /* StaticMeshComponent.cpp in Sources */,
 				5E6C654A1F2CF26B0089FD55 /* RenderPass.cpp in Sources */,
 				5E556ABB1F242D7A00F6FB2E /* VertexFormat.cpp in Sources */,
@@ -1030,6 +1065,7 @@
 				5E6C65FD1F3B5CDD0089FD55 /* OpenGLRenderSystem.cpp in Sources */,
 				5E6C65C81F354C030089FD55 /* MemoryWriter.cpp in Sources */,
 				5E6C653E1F2C02F20089FD55 /* CameraComponent.cpp in Sources */,
+				5EDCA4081F6967C700329733 /* HttpRequest.cpp in Sources */,
 				5E6C65B81F3545D10089FD55 /* EntitySnapshot.cpp in Sources */,
 				5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */,
 				5EDCA3F71F56FB6A00329733 /* CommandMessage.cpp in Sources */,

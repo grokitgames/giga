@@ -106,6 +106,7 @@ typedef glm::mat4 matrix4;
 #include <IO/DataLoader.hpp>
 #include <IO/SQLiteDataLoader.hpp>
 #include <IO/MySQLDataLoader.hpp>
+#include <IO/Directory.hpp>
 #include <Platform/DateTime.hpp>
 #include <Platform/Window.hpp>
 #include <Platform/Timer.hpp>

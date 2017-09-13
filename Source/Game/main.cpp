@@ -60,13 +60,6 @@ void StartApplication() {
     Keyboard* keyboard = new Keyboard();
     keyboard->Initialize();
     inputSystem->RegisterInputDevice(keyboard);
-	
-	// Connect to server
-	networkSystem->Connect("grokitgames.com", 8053);
-
-	NetworkSession* session = networkSystem->FindSession(0);
-	session->playerID = 1;
-	session->sessionID = 1;
 
 	// Initialize replication system
 	replicationSystem->SetType(REPLICATION_CLIENT);

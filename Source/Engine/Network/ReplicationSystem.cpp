@@ -565,5 +565,7 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 
 	// Get the command object
 	std::list<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
+
+	// Set the next valid received frame to the last tick received + 1 round-trip time (RTT)
 	replicationSystem->m_nextValidFrame = (*i)->tick + (ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime) * 2);
 }

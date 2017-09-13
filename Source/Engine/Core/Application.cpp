@@ -200,7 +200,10 @@ void Application::Initialize() {
 	// Network system
 	ScriptableObjectType* networkSystemType = new ScriptableObjectType("NetworkSystem");
 	networkSystemType->SetStatic(true);
+	networkSystemType->AddStaticFunction("Connect", &NetworkSystem::Connect);
 	networkSystemType->AddStaticFunction("Send", &NetworkSystem::Send);
+	networkSystemType->AddStaticFunction("SetSessionID", &NetworkSystem::SetSessionID);
+	networkSystemType->AddStaticFunction("SetPlayerID", &NetworkSystem::SetPlayerID);
 
 	scriptingSystem->RegisterScriptableObjectType<NetworkSystem>(networkSystemType);
 
@@ -210,6 +213,13 @@ void Application::Initialize() {
     replicationSystemType->AddStaticFunction("SendCommand", &ReplicationSystem::SendCommand);
 	
 	scriptingSystem->RegisterScriptableObjectType<ReplicationSystem>(replicationSystemType);
+
+	// HttpRequest
+	ScriptableObjectType* httpRequestType = new ScriptableObjectType("HttpRequest");
+	httpRequestType->AddObjectFunction("Execute", &HttpRequest::Execute);
+	httpRequestType->AddObjectFunction("AddPostData", &HttpRequest::AddPostData);
+
+	scriptingSystem->RegisterScriptableObjectType<HttpRequest>(httpRequestType);
 
     /**
      * Platform

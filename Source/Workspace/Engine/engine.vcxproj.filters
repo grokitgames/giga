@@ -355,6 +355,9 @@
     <ClInclude Include="..\..\Engine\Network\Messages\AckMessage.hpp">
       <Filter>Network\Messages</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\HttpRequest.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -629,6 +632,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Network\Messages\AckMessage.cpp">
       <Filter>Network\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Network\HttpRequest.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

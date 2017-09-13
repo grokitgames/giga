@@ -176,7 +176,10 @@ public:
 	 * Scripting integration
 	 */
 	static Variant* Send(Variant* object, int argc, Variant** argv);
-    
+	static Variant* SetSessionID(Variant* object, int argc, Variant** argv);
+	static Variant* SetPlayerID(Variant* object, int argc, Variant** argv);
+	static Variant* Connect(Variant* object, int argc, Variant** argv);
+	    
 protected:
 	// Internal send function
 	void Send(NetworkSession* session, NetworkMessage* msg);

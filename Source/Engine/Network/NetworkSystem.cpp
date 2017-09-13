@@ -494,3 +494,36 @@ Variant* NetworkSystem::Send(Variant* object, int argc, Variant** argv) {
 
 	return(new Variant(0));
 }
+
+Variant* NetworkSystem::SetSessionID(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1, "SetSessionID expects one argument.");
+	GIGA_ASSERT(argv[0]->IsInt(), "First parameter should be integer session ID.");
+
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	NetworkSession* session = networkSystem->FindSession(0);
+	session->sessionID = argv[0]->AsInt();
+
+	return(new Variant(0));
+}
+
+Variant* NetworkSystem::SetPlayerID(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1, "SetSessionID expects one argument.");
+	GIGA_ASSERT(argv[0]->IsInt(), "First parameter should be integer player ID.");
+
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	NetworkSession* session = networkSystem->FindSession(0);
+	session->playerID = argv[0]->AsInt();
+
+	return(new Variant(0));
+}
+
+Variant* NetworkSystem::Connect(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 2, "Connect expects two arguments.");
+	GIGA_ASSERT(argv[0]->IsString(), "First parameter should be string host name.");
+	GIGA_ASSERT(argv[1]->IsInt(), "Second parameter should be interger port.");
+
+	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+	networkSystem->Connect(argv[0]->AsString(), argv[1]->AsInt());
+
+	return(new Variant(0));
+}

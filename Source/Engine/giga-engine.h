@@ -72,6 +72,9 @@ typedef glm::mat4 matrix4;
 #include <my_global.h>
 #include <mysql.h>
 
+// libcurl (HTTP)
+#include <curl/curl.h>
+
 // Engine includes
 #include <Core/GigaObject.hpp>
 #include <Core/Variant.hpp>
@@ -163,6 +166,7 @@ typedef glm::mat4 matrix4;
 #include <Network/Messages/CommandMessage.hpp>
 #include <Network/Messages/ResendRequestMessage.hpp>
 #include <Network/Messages/AckMessage.hpp>
+#include <Network/HttpRequest.hpp>
 #include <Core/Application.hpp>
 
 #ifdef GIGA_USING_OPENGL

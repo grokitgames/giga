@@ -16,6 +16,7 @@ void ComponentTemplateType::SetName(std::string name) {
     
     m_storableType = new StorableObjectType();
     m_storableType->SetName(name);
+	m_storableType->SetPrimaryKey(name + "_id");
     
     if(m_scriptableType) {
         delete m_scriptableType;

@@ -109,5 +109,17 @@ Component* Component::Clone() {
 	component->m_updated = m_updated;
 
 	this->Copy(component);
+	component->CopyStorableObject(this);
+	component->SetDataMappings();
 	return(component);
+}
+
+std::vector<std::string> Component::GetComponentTypes() {
+	std::vector<std::string> list;
+	std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
+	for (; i != m_componentTypes.end(); i++) {
+		list.push_back(i->first);
+	}
+
+	return(list);
 }

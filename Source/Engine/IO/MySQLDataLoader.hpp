@@ -15,12 +15,12 @@ public:
     /**
      * Return a list of stored records
      */
-    std::vector<StorableObject*> GetRecords(StorableObjectType* type, int sceneID);
+    std::vector<StorableObject*> GetRecords(std::string typeName, int sceneID);
     
     /**
      * Save (includes updates, additions and deletions) records
      */
-    void SaveRecords();
+    void SaveRecord(StorableObject* record);
     
     /**
      * Add a new record

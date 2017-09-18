@@ -44,6 +44,11 @@ public:
      * Get serialized data size
      */
     virtual int GetSerializedSize();
+
+	/**
+	 * Clone from another StorableObject
+	 */
+	void CopyStorableObject(StorableObject* other);
     
     /**
      * Update the data fields (based on member fields)
@@ -113,7 +118,8 @@ private:
     std::map<std::string, vector2*> m_storableObjectVector2Fields;
     std::map<std::string, vector3*> m_storableObjectVector3Fields;
     std::map<std::string, quaternion*> m_storableObjectQuaternionFields;
-    
+	std::map<std::string, int> m_foreignKeyFields;
+
     // Mark the record as deleted
     bool m_recordDeleted;
 };

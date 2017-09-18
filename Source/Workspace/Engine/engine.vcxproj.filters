@@ -358,6 +358,9 @@
     <ClInclude Include="..\..\Engine\Network\HttpRequest.hpp">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\Directory.hpp">
+      <Filter>IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -635,6 +638,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Network\HttpRequest.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\Directory.cpp">
+      <Filter>IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

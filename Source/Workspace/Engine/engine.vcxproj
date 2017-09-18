@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\Engine\giga-engine.h" />
     <ClInclude Include="..\..\Engine\IO\Command.hpp" />
     <ClInclude Include="..\..\Engine\IO\DataLoader.hpp" />
+    <ClInclude Include="..\..\Engine\IO\Directory.hpp" />
     <ClInclude Include="..\..\Engine\IO\File.hpp" />
     <ClInclude Include="..\..\Engine\IO\InputDevice.hpp" />
     <ClInclude Include="..\..\Engine\IO\InputSystem.hpp" />
@@ -267,6 +268,7 @@
     <ClCompile Include="..\..\Engine\Core\Variant.cpp" />
     <ClCompile Include="..\..\Engine\IO\Command.cpp" />
     <ClCompile Include="..\..\Engine\IO\DataLoader.cpp" />
+    <ClCompile Include="..\..\Engine\IO\Directory.cpp" />
     <ClCompile Include="..\..\Engine\IO\File.cpp" />
     <ClCompile Include="..\..\Engine\IO\InputDevice.cpp" />
     <ClCompile Include="..\..\Engine\IO\InputSystem.cpp" />

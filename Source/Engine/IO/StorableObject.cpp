@@ -4,6 +4,7 @@
 StorableObject::StorableObject() {
     m_transient = false;
 	m_storableObjectType = 0;
+	m_recordDeleted = false;
 }
 
 void StorableObject::SetStorableObjectFieldMapping(std::string field, std::string* mapping) {
@@ -27,9 +28,7 @@ void StorableObject::SetStorableObjectFieldMapping(std::string field, vector2* m
 }
 
 void StorableObject::SetStorableObjectFieldMapping(std::string field, vector3* mapping) {
-	std::map<std::string, vector3*>::iterator i = m_storableObjectVector3Fields.find(field);
-	GIGA_ASSERT(i == m_storableObjectVector3Fields.end(), "Field mapping already exists.");
-    m_storableObjectVector3Fields[field] = mapping;
+	m_storableObjectVector3Fields[field] = mapping;
 }
 
 void StorableObject::SetStorableObjectFieldMapping(std::string field, quaternion* mapping) {
@@ -37,8 +36,8 @@ void StorableObject::SetStorableObjectFieldMapping(std::string field, quaternion
 }
 
 void StorableObject::UpdateStorableObjectFieldValues() {
-    for (std::map<std::string, std::string*>::iterator i = m_storableObjectStringFields.begin(); i != m_storableObjectStringFields.end(); i++) {
-        m_storableRecordValues[i->first] = *(i->second);
+	for (std::map<std::string, std::string*>::iterator i = m_storableObjectStringFields.begin(); i != m_storableObjectStringFields.end(); i++) {
+        m_storableRecordValues[i->first] = (i->second)->c_str();
     }
     
     for (std::map<std::string, int*>::iterator i = m_storableObjectIntFields.begin(); i != m_storableObjectIntFields.end(); i++) {
@@ -73,6 +72,18 @@ void StorableObject::UpdateStorableObjectFieldValues() {
         sprintf(value, "(%.2f, %.2f, %.2f, %.2f)", quat.x, quat.y, quat.z, quat.w);
         m_storableRecordValues[i->first] = value;
     }
+
+	for (std::map<std::string, ResourceObject**>::iterator i = m_storableObjectResourceFields.begin(); i != m_storableObjectResourceFields.end(); i++) {
+		char value[500];
+		sprintf(value, "%s:%s", (*i->second)->GetResource()->GetType().c_str(), (*i->second)->GetResource()->filename.c_str());
+		m_storableRecordValues[i->first] = value;
+	}
+
+	for (std::map<std::string, int>::iterator i = m_foreignKeyFields.begin(); i != m_foreignKeyFields.end(); i++) {
+		char value[50];
+		sprintf(value, "%d", i->second);
+		m_storableRecordValues[i->first] = value;
+	}
 }
 
 void StorableObject::UpdateStorableObjectFieldValue(std::string field, std::string value) {
@@ -89,10 +100,17 @@ void StorableObject::UpdateStorableObjectFieldValue(std::string field, std::stri
     }
     
     assert(type > 0); // Field not found
+
+	ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+	std::string p1, p2;
     
     // Update the original source value (including type validation)
     switch (type) {
         case StorableObjectField::FIELD_RESOURCE:
+			// Resource types are stored as type:filename
+			p1 = value.substr(value.find(":") + 1);
+			p2 = value.substr(0, value.find(":"));
+			*m_storableObjectResourceFields[field] = resourceSystem->LoadResource(p1, p2);
 			break;
         case StorableObjectField::FIELD_TEXT:
             *m_storableObjectStringFields[field] = value;
@@ -111,7 +129,10 @@ void StorableObject::UpdateStorableObjectFieldValue(std::string field, std::stri
             break;
         case StorableObjectField::FIELD_QUATERNION:
             assert(sscanf(value.c_str(), "(%f, %f, %f, %f)", &m_storableObjectQuaternionFields[field]->x, &m_storableObjectQuaternionFields[field]->y, &m_storableObjectQuaternionFields[field]->z, &m_storableObjectQuaternionFields[field]->w) == 4); // Invalid value format
-            break;
+			break;
+		case StorableObjectField::FIELD_FOREIGNKEY:
+			m_foreignKeyFields[field] = atoi(value.c_str());
+			break;
         default:
             assert(false); // Field type undefined
             break;
@@ -188,6 +209,8 @@ unsigned char* StorableObject::Serialize(int& size) {
                 writer->Write(&m_storableObjectQuaternionFields[fields[i]->name]->z, sizeof(uint32_t));
                 writer->Write(&m_storableObjectQuaternionFields[fields[i]->name]->w, sizeof(uint32_t));
                 break;
+			case StorableObjectField::FIELD_FOREIGNKEY:
+				break;
             default:
                 assert(false); // Field type undefined
                 break;
@@ -238,6 +261,8 @@ int StorableObject::GetSerializedSize() {
             case StorableObjectField::FIELD_QUATERNION:
                 size += sizeof(uint32_t) * 4;
                 break;
+			case StorableObjectField::FIELD_FOREIGNKEY:
+				break;
             default:
                 assert(false); // Field type undefined
                 break;
@@ -322,6 +347,8 @@ void StorableObject::Deserialize(MemoryReader* reader) {
                 reader->Read(&m_storableObjectQuaternionFields[name]->z, sizeof(uint32_t));
                 reader->Read(&m_storableObjectQuaternionFields[name]->w, sizeof(uint32_t));
                 break;
+			case StorableObjectField::FIELD_FOREIGNKEY:
+				break;
             default:
                 assert(false); // Field type undefined
                 break;
@@ -337,8 +364,8 @@ void StorableObject::Deserialize(MemoryReader* reader) {
 std::string StorableObject::GetStorableObjectFieldValue(std::string field) {
     // Attempt to find the field 
     std::string value = "";
-    
-    if (m_storableRecordValues.find(field) != m_storableRecordValues.end()) {
+	std::map<std::string, std::string>::iterator it = m_storableRecordValues.find(field);
+    if (it != m_storableRecordValues.end()) {
         value = m_storableRecordValues[field];
     }
     else {
@@ -364,4 +391,21 @@ StorableObjectType* StorableObject::GetStorableObjectType() {
 
 	GIGA_ASSERT(m_storableObjectType != 0, "Storable object type not defined.");
 	return(m_storableObjectType);
+}
+
+void StorableObject::CopyStorableObject(StorableObject* other) {
+	m_storableObjectType = other->m_storableObjectType;
+
+	// Stored record ID (primary key value)
+	m_storableObjectID = other->m_storableObjectID;
+
+	// Whether this record is transient or not (non-savable)
+	m_transient = other->m_transient;
+
+	for (std::map<std::string, int>::iterator i = other->m_foreignKeyFields.begin(); i != other->m_foreignKeyFields.end(); i++) {
+		m_foreignKeyFields[i->first] = other->m_foreignKeyFields[i->first];
+	}
+
+	// Mark the record as deleted
+	m_recordDeleted = other->m_recordDeleted;
 }

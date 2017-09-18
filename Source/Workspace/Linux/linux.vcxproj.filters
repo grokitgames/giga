@@ -259,6 +259,9 @@
     <ClCompile Include="..\..\Engine\Network\HttpRequest.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\IO\Directory.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp">
@@ -540,6 +543,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\Network\HttpRequest.hpp">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\IO\Directory.hpp">
+      <Filter>IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

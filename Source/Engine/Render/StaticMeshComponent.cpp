@@ -102,7 +102,9 @@ void StaticMeshComponent::SetDataMappings() {
 }
 
 void StaticMeshComponent::UpdateFromDataMappings() {
-	this->Instantiate(m_mesh);
+	if (m_mesh) {
+		this->Instantiate(m_mesh);
+	}
 }
 
 Variant* StaticMeshComponent::Instantiate(Variant* obj, int argc, Variant** argv) {

@@ -5,7 +5,7 @@
 /**
  * Base entity class that holds component objects
  */
-class GIGA_API Entity : public ScriptableObject {
+class GIGA_API Entity : public ScriptableObject, public StorableObject {
 public:
     Entity();
     ~Entity();
@@ -68,6 +68,11 @@ public:
      */
     void SetUpdated(int updated) { m_updates += updated; }
     int HasUpdates() { return m_updates; }
+
+	/**
+	* Update the data field mappings to bind to member variables
+	*/
+	void SetDataMappings();
     
     /**
      * Reset network state

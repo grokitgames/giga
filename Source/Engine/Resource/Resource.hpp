@@ -50,6 +50,12 @@ public:
      * Get resource as a string (filename)
      */
     std::string ToString() { return filename; }
+
+	/**
+	 * Get/set type
+	 */
+	void SetType(std::string type) { m_type = type; }
+	std::string GetType() { return m_type; }
     
 public:
     // Filename
@@ -73,6 +79,9 @@ protected:
     
     // Last access time
     time_t m_lastAccessTime;
+
+	// Type
+	std::string m_type;
 };
 
 #endif

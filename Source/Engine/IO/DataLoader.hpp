@@ -13,12 +13,12 @@ public:
     /**
      * Return a list of stored records
      */
-    virtual std::vector<StorableObject*> GetRecords(StorableObjectType* type, int sceneID);
+	virtual std::vector<StorableObject*> GetRecords(std::string type , int sceneID);
     
     /**
      * Save (includes updates, additions and deletions) records
      */
-    virtual void SaveRecords() { }
+    virtual void SaveRecord(StorableObject* record) { }
     
     /**
      * Add a new record
@@ -39,6 +39,8 @@ public:
     }
     
     static StorableObjectType* GetRecordType(std::string type);
+
+	static std::vector<StorableObjectType*>& GetRecordTypes() { return m_recordTypes; }
     
 protected:
     // Our internal pointer to records

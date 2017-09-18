@@ -319,9 +319,20 @@ void Application::Initialize() {
 	 */
 	Application::Log(MSGTYPE_DEBUG, "Registering storable types...");
 
+	StorableObjectType* entityStorableType = new StorableObjectType();
+	entityStorableType->SetName("Entity");
+	entityStorableType->SetPrimaryKey("entity_id");
+	entityStorableType->AddField("scene_id", StorableObjectField::FIELD_FOREIGNKEY);
+	entityStorableType->AddField("entity_name", StorableObjectField::FIELD_TEXT);
+	//entityStorableType->AddField("status", StorableObjectField::FIELD_INT);
+
+	DataLoader::RegisterRecordType<Entity>(entityStorableType);
+
 	StorableObjectType* meshStorableType = new StorableObjectType();
 	meshStorableType->SetName("StaticMeshComponent");
 	meshStorableType->SetPrimaryKey("mesh_id");
+	meshStorableType->AddField("scene_id", StorableObjectField::FIELD_FOREIGNKEY);
+	meshStorableType->AddField("entity_id", StorableObjectField::FIELD_FOREIGNKEY);
 	meshStorableType->AddField("mesh", "Mesh", true, StorableObjectField::FIELD_RESOURCE);
 	meshStorableType->AddField("position", "Position", true, StorableObjectField::FIELD_VECTOR3);
 	meshStorableType->AddField("rotation", "Rotation", true, StorableObjectField::FIELD_QUATERNION);
@@ -332,6 +343,8 @@ void Application::Initialize() {
 	StorableObjectType* scriptStorableType = new StorableObjectType();
 	scriptStorableType->SetName("ScriptComponent");
 	scriptStorableType->SetPrimaryKey("script_id");
+	scriptStorableType->AddField("scene_id", StorableObjectField::FIELD_FOREIGNKEY);
+	scriptStorableType->AddField("entity_id", StorableObjectField::FIELD_FOREIGNKEY);
 	scriptStorableType->AddField("script", "Script", true, StorableObjectField::FIELD_RESOURCE);
 
 	DataLoader::RegisterRecordType<ScriptComponent>(scriptStorableType);

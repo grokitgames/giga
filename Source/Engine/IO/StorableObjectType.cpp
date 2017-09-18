@@ -41,8 +41,8 @@ std::string StorableObjectType::GetFieldList() {
         return(retval);
     }
     
-    int i = 1;
-    retval = m_fields[0]->name;
+    int i = 0;
+    /*retval = m_fields[0]->name;
     if (m_fields[0]->name.compare(m_primaryKey) == 0) {
         if (m_fields.size() > 1) {
             retval = m_fields[1]->name;
@@ -51,7 +51,7 @@ std::string StorableObjectType::GetFieldList() {
         else {
             retval = "";
         }
-    }
+    }*/
     
     for (; i < m_fields.size(); i++) {
         if (m_fields[i]->name.compare(m_primaryKey) == 0) {
@@ -61,7 +61,7 @@ std::string StorableObjectType::GetFieldList() {
         retval += "," + m_fields[i]->name;
     }
     
-    return(retval);
+    return(retval.substr(1));
 }
 
 int StorableObjectType::GetFieldCount() {

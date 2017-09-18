@@ -38,27 +38,38 @@ void StartApplication() {
     gameComponent->AddToSystem();
     gameComponent->Initialize(gamejs);
 
-	// Create a crate entity
-	Entity* crate = entitySystem->CreateEntity("Crate");
+	// Create our data loader
+	MySQLDataLoader* loader = application->CreateDataLoader<MySQLDataLoader>();
+	loader->Connect("localhost", "mmorpg", "password01!", "mmorpg");
 
-	// Load a mesh
-	Mesh* mesh = dynamic_cast<Mesh*>(resourceSystem->LoadResource("crate.g3d", "Mesh"));
-	StaticMeshComponent* meshComponent = dynamic_cast<StaticMeshComponent*>(Component::CreateComponent("StaticMeshComponent"));
-	meshComponent->Instantiate(mesh);
-	meshComponent->SetActive(true);
-	meshComponent->AddToSystem();
+	// Load all entities in scene
+	std::vector<StorableObject*> entities = loader->GetRecords("Entity", 1);
+	for (int i = 0; i < entities.size(); i++) {
+		// Add entity to system
+		entitySystem->AddEntity((Entity*)entities[i]);
+	}
 
-	// Add to entity
-	crate->AddComponent(meshComponent);
+	// Get and add all component types
+	std::vector<std::string> componentTypes = Component::GetComponentTypes();
+	for (int i = 0; i < componentTypes.size(); i++) {
+		StorableObjectType* type = DataLoader::GetRecordType(componentTypes[i]);
+		if (type == 0) {
+			continue;
+		}
 
-	// Add script to crate
-	ScriptComponent* crateScript = dynamic_cast<ScriptComponent*>(Component::CreateComponent("ScriptComponent"));
-	Script* cratejs = dynamic_cast<Script*>(resourceSystem->LoadResource("crate.js", "Script"));
-	crate->AddComponent(crateScript);
+		std::vector<StorableObject*> components = loader->GetRecords(componentTypes[i], 1);
 
-	crateScript->Initialize(cratejs);
-	crateScript->SetActive(true);
-	crateScript->AddToSystem();
+		for (int j = 0; j < components.size(); j++) {
+			// Find entity
+			Entity* entity = entitySystem->FindEntity(atoi(components[j]->GetStorableObjectFieldValue("entity_id").c_str()));
+			assert(entity != 0);
+
+			Component* component = (Component*)components[j];
+			entity->AddComponent(component);
+			component->SetActive(true);
+			component->AddToSystem();
+		}
+	}
 
 	// Set up server
 	networkSystem->Listen(8053);
@@ -70,13 +81,30 @@ void StartApplication() {
 	Timer* mainTimer = new Timer();
 	mainTimer->Start();
 	float delta = 0.0f;
+	float saveTimer = 0.0f;
 	
 	// Main loop
 	while (true) {
 		delta = mainTimer->Duration();
+		saveTimer += delta;
 		mainTimer->Reset();
 
 		PROFILE_START_FRAME();
+
+		if (saveTimer >= 5.0f) {
+			std::list<Entity*> entityList = entitySystem->GetEntities();
+			std::list<Entity*>::iterator i = entityList.begin();
+			for (; i != entityList.end(); i++) {
+				loader->SaveRecord(*i);
+
+				std::vector<Component*> components = (*i)->GetComponents();
+				for (size_t j = 0; j < components.size(); j++) {
+					loader->SaveRecord(components[j]);
+				}
+			}
+
+			saveTimer = 0.0f;
+		}
 
 		application->Update(delta);
 

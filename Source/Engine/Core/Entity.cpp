@@ -53,10 +53,9 @@ Entity* Entity::Clone() {
     Entity* entity = new Entity();
     entity->m_id = m_id;
     entity->m_name = m_name;
-    
-    for(size_t i = 0; i < m_components.size(); i++) {
-        entity->AddComponent(m_components[i]->Clone());
-    }
+
+	entity->CopyStorableObject(this);
+	entity->SetDataMappings();
     
     return(entity);
 }
@@ -69,6 +68,10 @@ Component* Entity::FindComponent(int type) {
     }
     
     return(0);
+}
+
+void Entity::SetDataMappings() {
+	SetStorableObjectFieldMapping("entity_name", &m_name);
 }
 
 Variant* Entity::FindComponent(Variant* object, int argc, Variant** argv) {

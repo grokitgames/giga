@@ -28,7 +28,7 @@ void MySQLDataLoader::UpdateTables() {
         std::string query = "CREATE TABLE IF NOT EXISTS ";
         query += (*r)->GetName() + " (";
         
-        query += primaryKey + " INTEGER,";
+        query += primaryKey + " SERIAL,";
         
         std::vector<StorableObjectField*> fields = (*r)->GetFields();
         for(int j = 0; j < fields.size(); j++) {
@@ -86,8 +86,12 @@ void MySQLDataLoader::UpdateTables() {
     }
 }
 
-std::vector<StorableObject*> MySQLDataLoader::GetRecords(StorableObjectType* type, int sceneID) {
+std::vector<StorableObject*> MySQLDataLoader::GetRecords(std::string typeName, int sceneID) {
     UpdateTables();
+
+	// Get the type
+	StorableObjectType* type = GetRecordType(typeName);
+	assert(type != 0);
     
     // Get the name of the type we want to get
     std::string name = type->GetName();
@@ -114,6 +118,8 @@ std::vector<StorableObject*> MySQLDataLoader::GetRecords(StorableObjectType* typ
         query += " WHERE scene_id = ";
         query += strSceneID;
     }
+
+	printf("%s\n", query.c_str());
     
     if (mysql_query(m_connection, query.c_str())) {
         ErrorSystem::Process(new Error(ERROR_WARN, "Unable to get record list from MySQL.", (char*)mysql_error(m_connection)));
@@ -126,22 +132,24 @@ std::vector<StorableObject*> MySQLDataLoader::GetRecords(StorableObjectType* typ
         return(retval);
     }
     
-    int colCount = type->GetFieldCount();
+    int colCount = mysql_field_count(m_connection);
     
     MYSQL_ROW row;
+	MYSQL_FIELD* sqlfields = mysql_fetch_fields(result);
     while((row = mysql_fetch_row(result))) {
         unsigned int primaryKeyID = 0;
         StorableObject* record = type->CreateRecord();
         record->InitializeStorableObject(type->GetName());
-        std::map<std::string, std::string> data;
+		record->SetDataMappings();
         
         for(int i = 0; i < colCount; i++) {
-            data[fields[i]->name] = row[i];
-            record->UpdateStorableObjectFieldValue(fields[i]->name, row[i]);
-            
-            if(fields[i]->name.compare(type->GetPrimaryKey().c_str()) == 0) {
-                primaryKeyID = atoi(row[i]);
-            }
+			printf("Setting %s to %s.\n", sqlfields[i].name, row[i]);
+			if (strcmp(sqlfields[i].name, type->GetPrimaryKey().c_str()) == 0) {
+				primaryKeyID = atoi(row[i]);
+				continue;
+			}
+
+            record->UpdateStorableObjectFieldValue(std::string(sqlfields[i].name), std::string(row[i]));
         }
         
         record->SetStorableObjectID(primaryKeyID);
@@ -154,97 +162,90 @@ std::vector<StorableObject*> MySQLDataLoader::GetRecords(StorableObjectType* typ
     return(m_records[name]);
 }
 
-void MySQLDataLoader::SaveRecords() {
+void MySQLDataLoader::SaveRecord(StorableObject* record) {
+	// TODO: just update the one table, maybe even once per "game"?
     UpdateTables();
     
-    std::map< std::string, std::vector<StorableObject*> >::iterator i = m_records.begin();
-    for(; i != m_records.end(); i++) {
-        for(int j = (int)i->second.size(); j >= 0; j--) {
-            // Get our record out
-            StorableObject* record = i->second[j];
-            std::string query = "";
-            
-            // Trigger an update of the record's values
-            record->UpdateStorableObjectFieldValues();
-            
-            // Get record type
-            StorableObjectType* type = record->GetStorableObjectType();
-            
-            // Get the primary key
-            char primaryKeyID[10];
-            sprintf(primaryKeyID, "%d", record->GetStorableObjectID());
-            
-            // Process deletion
-            if(record->IsDeleted()) {
-                // Construct query
-                query = "DELETE FROM " + i->first + " WHERE " + type->GetPrimaryKey() + " = ";
-                query += primaryKeyID;
-                
-                if (mysql_query(m_connection, query.c_str())) {
-                    ErrorSystem::Process(new Error(ERROR_WARN, "Unable to delete object from MySQL.", (char*)mysql_error(m_connection)));
-                    assert(false); // Probably need to break here so you don't keep repeating this
-                }
-                
-                // Remove from our records as well
-                i->second.erase(std::remove(i->second.begin(), i->second.end(), record), i->second.end());
-                
-                continue;
-            }
-            
-            // Get fields to update
-            std::vector<StorableObjectField*> fields = type->GetFields();
-            std::vector<std::string> pairs;
-            std::string primaryKey = type->GetPrimaryKey();
-            
-            // Process new records
-            if(record->GetStorableObjectID() == 0) {
-                query = "INSERT INTO " + i->first + " (";
-                std::string values = ") VALUES (";
-                for(std::vector<StorableObjectField*>::iterator i = fields.begin(); i != fields.end(); i++) {
-                    std::string field = (*i)->name;
-                    if(field.compare(primaryKey) != 0) {
-                        query += field + ",";
-                        values += "'" + record->GetStorableObjectFieldValue((*i)->name) + "',";
-                    }
-                }
-                
-                query = query.substr(0, query.length() - 1);
-                values = values.substr(0, values.length() - 1);
-                query += values + ")";
-                
-                if (mysql_query(m_connection, query.c_str())) {
-                    ErrorSystem::Process(new Error(ERROR_WARN, "Unable to update object from MySQL.", (char*)mysql_error(m_connection)));
-                    assert(false); // Probably need to break here so you don't keep repeating this
-                }
-                
-                unsigned int newID = (unsigned int)mysql_insert_id(m_connection);
-                if(newID == 0) {
-                    ErrorSystem::Process(new Error(ERROR_WARN, "Unable to insert object from MySQL.", (char*)mysql_error(m_connection)));
-                    assert(false); // Probably need to break here so you don't keep repeating this
-                }
-                
-                record->SetStorableObjectID(newID);
-                continue;
-            }
-            
-            // Update record
-            query = "UPDATE " + i->first + " SET ";
-            for(std::vector<StorableObjectField*>::iterator i = fields.begin(); i != fields.end(); i++) {
-                std::string field = (*i)->name;
-                if(field.compare(primaryKey) != 0) {
-                    query += field + " = '" + record->GetStorableObjectFieldValue((*i)->name) + "', ";
-                }
-            }
-            
-            query = query.substr(0, query.length() - 2);
-            query += " WHERE " + primaryKey + " = " + primaryKeyID;
-            
-            if (mysql_query(m_connection, query.c_str())) {
-                ErrorSystem::Process(new Error(ERROR_WARN, "Unable to update object from MySQL.", (char*)mysql_error(m_connection)));
-                assert(false); // Probably need to break here so you don't keep repeating this
-            }
-        }
-    }
+	std::string query = "";
+
+	// Trigger an update of the record's values
+	record->UpdateStorableObjectFieldValues();
+
+	// Get record type
+	StorableObjectType* type = record->GetStorableObjectType();
+
+	// Get the primary key
+	char primaryKeyID[10];
+	sprintf(primaryKeyID, "%d", record->GetStorableObjectID());
+
+	// Process deletion
+	if (record->IsDeleted()) {
+		// Construct query
+		query = "DELETE FROM " + type->GetName() + " WHERE " + type->GetPrimaryKey() + " = ";
+		query += primaryKeyID;
+
+		if (mysql_query(m_connection, query.c_str())) {
+			ErrorSystem::Process(new Error(ERROR_WARN, "Unable to delete object from MySQL.", (char*)mysql_error(m_connection)));
+			assert(false); // Probably need to break here so you don't keep repeating this
+		}
+
+		return;
+	}
+
+	// Get fields to update
+	std::vector<StorableObjectField*> fields = type->GetFields();
+	std::vector<std::string> pairs;
+	std::string primaryKey = type->GetPrimaryKey();
+
+	// Process new records
+	if (record->GetStorableObjectID() == 0) {
+		query = "INSERT INTO " + type->GetName() +" (";
+		std::string values = ") VALUES (";
+		for (std::vector<StorableObjectField*>::iterator i = fields.begin(); i != fields.end(); i++) {
+			std::string field = (*i)->name;
+			if (field.compare(primaryKey) != 0) {
+				query += field + ",";
+				values += "'" + record->GetStorableObjectFieldValue((*i)->name) + "',";
+			}
+		}
+
+		query = query.substr(0, query.length() - 1);
+		values = values.substr(0, values.length() - 1);
+		query += values + ")";
+
+		if (mysql_query(m_connection, query.c_str())) {
+			ErrorSystem::Process(new Error(ERROR_WARN, "Unable to update object from MySQL.", (char*)mysql_error(m_connection)));
+			assert(false); // Probably need to break here so you don't keep repeating this
+		}
+
+		unsigned int newID = (unsigned int)mysql_insert_id(m_connection);
+		if (newID == 0) {
+			ErrorSystem::Process(new Error(ERROR_WARN, "Unable to insert object from MySQL.", (char*)mysql_error(m_connection)));
+			assert(false); // Probably need to break here so you don't keep repeating this
+		}
+
+		record->SetStorableObjectID(newID);
+		return;
+	}
+
+	// Update record
+	query = "UPDATE " + type->GetName() + " SET ";
+	for (std::vector<StorableObjectField*>::iterator i = fields.begin(); i != fields.end(); i++) {
+		std::string field = (*i)->name;
+		if (field.compare(primaryKey) != 0) {
+			query += field + " = '" + record->GetStorableObjectFieldValue((*i)->name) + "', ";
+		}
+	}
+
+	query = query.substr(0, query.length() - 2);
+	query += " WHERE " + primaryKey + " = " + primaryKeyID;
+
+	printf("%s\n", query.c_str());
+
+	if (mysql_query(m_connection, query.c_str())) {
+		ErrorSystem::Process(new Error(ERROR_WARN, "Unable to update object from MySQL.", (char*)mysql_error(m_connection)));
+		assert(false); // Probably need to break here so you don't keep repeating this
+	}
 }
 
 void MySQLDataLoader::AddRecord(StorableObject* data) {

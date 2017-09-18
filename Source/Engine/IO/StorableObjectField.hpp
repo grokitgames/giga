@@ -20,7 +20,8 @@ public:
         FIELD_RESOURCE,
         FIELD_VECTOR2,
         FIELD_VECTOR3,
-        FIELD_QUATERNION
+        FIELD_QUATERNION,
+		FIELD_FOREIGNKEY
     };
 };
 

@@ -126,6 +126,11 @@ public:
 	 */
 	int GetTypeID();
 
+	/**
+	 * Get component type list
+	 */
+	static std::vector<std::string> GetComponentTypes();
+
 protected:
     // Type ID
     int m_typeID;

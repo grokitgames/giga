@@ -41,6 +41,7 @@ ResourceObject* ResourceSystem::LoadResource(std::string filename, std::string t
         
         // Create a resource and load
         Resource* rs = new Resource();
+		rs->SetType(type);
         rs->SetFilename(fullpath);
         
         rs->Load();

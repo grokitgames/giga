@@ -54,9 +54,7 @@ void ReplicationSystem::Update(float delta) {
 		std::list<Entity*>::iterator i = entities.begin();
 		for (i; i != entities.end(); i++) {
 			// First, take full entity snapshot
-			Entity* e1 = new Entity();
-			e1->SetID((*i)->GetID());
-			e1->SetName((*i)->GetName());
+			Entity* e1 = (*i)->Clone();
 
 			// Add all components
 			std::vector<Component*> components = (*i)->GetComponents();
@@ -64,20 +62,21 @@ void ReplicationSystem::Update(float delta) {
 				Component* component = components[j]->Clone();
 				e1->AddComponent(component);
 			}
-
 			fullSnapshot->entities.push_back(e1);
 
 			// Then do delta snapshot
 			if (true) {
 				// Create a replica of the entity
-				Entity* entity = new Entity();
-				entity->SetID((*i)->GetID());
-				entity->SetName((*i)->GetName());
+				Entity* entity = 0;
 
-				// Find any updated components
+				std::vector<Component*> components = (*i)->GetComponents();
 				int updatedComponents = 0;
 				for (size_t j = 0; j < components.size(); j++) {
 					if (components[j]->HasUpdates()) {
+						if (entity == 0) {
+							entity = (*i)->Clone();
+						}
+
 						entity->AddComponent(components[j]->Clone());
 						components[j]->MarkUpdated(false);
 						updatedComponents++;
@@ -85,7 +84,9 @@ void ReplicationSystem::Update(float delta) {
 				}
 
 				// Add entity to snapshot
-				snapshot->entities.push_back(entity);
+				if (entity) {
+					snapshot->entities.push_back(entity);
+				}
 			}
 		}
   
@@ -139,9 +140,7 @@ void ReplicationSystem::Update(float delta) {
 				// Re-populate the entity system with the state as it existed in the full snapshot from that tick
 				EntitySnapshot* snapshot = GetFullEntitySnapshot(m_commandTick);
 				for (size_t i = 0; i < snapshot->entities.size(); i++) {
-					Entity* entity = new Entity();
-					entity->SetID(snapshot->entities[i]->GetID());
-					entity->SetName(snapshot->entities[i]->GetName());
+					Entity* entity = snapshot->entities[i]->Clone();
 
 					std::vector<Component*> components = snapshot->entities[i]->GetComponents();
 					for (size_t j = 0; j < components.size(); j++) {

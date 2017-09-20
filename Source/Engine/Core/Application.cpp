@@ -193,6 +193,12 @@ void Application::Initialize() {
 	scriptingSystem->RegisterGlobal("COMMAND_START", new Variant(COMMAND_START));
 	scriptingSystem->RegisterGlobal("COMMAND_END", new Variant(COMMAND_END));
 
+	// Files
+	ScriptableObjectType* fileType = new ScriptableObjectType("File");
+	fileType->AddStaticFunction("Load", &File::Load);
+
+	scriptingSystem->RegisterScriptableObjectType<File>(fileType);
+
 	/**
 	 * Networking
 	 */

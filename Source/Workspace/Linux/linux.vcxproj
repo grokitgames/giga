@@ -250,7 +250,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux/Engine;../contrib/bullet/include;../contrib/fmod/include;../contrib/freetype/include;../contrib/glew/include;../contrib/glfw/include;../contrib/glm/include;../contrib/libcurl/include;../contrib/mysql/include;../contrib/openssl/include;../contrib/recast/include;../contrib/soil/include;../contrib/sqlite/include;../contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>/usr/include/;/usr/include/mysql/;../linux/Engine;../contrib/bullet/include;../contrib/fmod/include;../contrib/freetype/include;../contrib/glew/include;../contrib/glfw/include;../contrib/glm/include;../contrib/json/include;../contrib/libcurl/include;../contrib/mysql/include;../contrib/openssl/include;../contrib/recast/include;../contrib/soil/include;../contrib/sqlite/include;../contrib/v8/include;$(StlIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GIGA_API=</PreprocessorDefinitions>
     </ClCompile>
     <Link>

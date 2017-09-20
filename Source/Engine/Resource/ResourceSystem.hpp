@@ -83,12 +83,12 @@ public:
      */
     static Variant* LoadResource(Variant* object, int argc, Variant** argv);
     
+	/**
+	* Iterate over search paths to find full path by filename
+	*/
+	std::string FindResourcePath(std::string filename);
+
 protected:
-    /**
-     * Iterate over search paths to find full path by filename
-     */
-    std::string FindResourcePath(std::string filename);
-    
     // Create a new C++ object based on a registered script interface type
     template<typename T> static ResourceObject* CreateResourceObject() { return new T; }
     

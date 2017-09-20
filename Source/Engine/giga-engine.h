@@ -75,6 +75,9 @@ typedef glm::mat4 matrix4;
 // libcurl (HTTP)
 #include <curl/curl.h>
 
+// JSON for JSON parsing
+#include <json.hpp>
+
 // Engine includes
 #include <Core/GigaObject.hpp>
 #include <Core/Variant.hpp>

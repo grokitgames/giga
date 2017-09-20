@@ -156,3 +156,23 @@ unsigned long File::GetFileSize() {
 void File::SetPosition(unsigned int offset) {
     fseek(m_fp, SEEK_SET, offset);
 }
+
+Variant* File::Load(Variant* object, int argc, Variant** argv) {
+	GIGA_ASSERT(argc == 1, "Load expects one argument.");
+	GIGA_ASSERT(argv[0]->IsString(), "First argument should be string file name.");
+
+	// Attempt to get full path
+	ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
+	std::string fullPath = resourceSystem->FindResourcePath(argv[0]->AsString());
+
+	if (fullPath.length() <= 0) {
+		return(new Variant(0));
+	}
+
+	File* file = new File();
+	file->Open(fullPath, FILEMODE_READ);
+	std::string data = (char*)file->ReadFile();
+	file->Close();
+
+	return(new Variant(data));
+}

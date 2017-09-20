@@ -91,7 +91,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CURL_STATICLIB;GIGA_EXPORTS;GIGA_USING_OPENGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Engine;..\..\ThirdParty\glew\include;..\..\ThirdParty\glfw\include;..\..\ThirdParty\glm\include;..\..\ThirdParty\libcurl\include;..\..\ThirdParty\mysql\include;..\..\ThirdParty\openssl\include;..\..\ThirdParty\soil\include;..\..\ThirdParty\sqlite\include;..\..\ThirdParty\v8\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Engine;..\..\ThirdParty\glew\include;..\..\ThirdParty\glfw\include;..\..\ThirdParty\glm\include;..\..\ThirdParty\json\include;..\..\ThirdParty\libcurl\include;..\..\ThirdParty\mysql\include;..\..\ThirdParty\openssl\include;..\..\ThirdParty\soil\include;..\..\ThirdParty\sqlite\include;..\..\ThirdParty\v8\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -15,13 +15,14 @@ enum {
 /**
  * A low level file access class
  */
-class GIGA_API File {
+class GIGA_API File : public ScriptableObject {
 public:
     File();
     File(std::string filename, int mode);
     ~File();
+
+	GIGA_CLASS_NAME("File");
     
-public:
     /**
      * Open a file
      */
@@ -76,6 +77,11 @@ public:
      * Go to a specific position in the file
      */
     void SetPosition(unsigned int offset);
+
+	/**
+	* Scripting integration
+	*/
+	static Variant* Load(Variant* object, int argc, Variant** argv);
     
 protected:
     // File handle

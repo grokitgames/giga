@@ -51,6 +51,14 @@ void StartApplication() {
     // Call Init() inside JS file
     gameComponent->AddToSystem();
     gameComponent->Initialize(gamejs);
+
+	// Load client.js file
+	Script* clientjs = dynamic_cast<Script*>(resourceSystem->LoadResource("client.js", "Script"));
+	ScriptComponent* clientComponent = new ScriptComponent();
+
+	// Call Init() inside JS file
+	clientComponent->AddToSystem();
+	clientComponent->Initialize(clientjs);
     
     // Set camera as active
     Scene* scene = renderSystem->GetScene();

@@ -145,7 +145,6 @@ void ReplicationSystem::Update(float delta) {
 					std::vector<Component*> components = snapshot->entities[i]->GetComponents();
 					for (size_t j = 0; j < components.size(); j++) {
 						Component* component = components[j]->Clone();
-						component->SetDataMappings();
 						component->AddToSystem();
 
 						entity->AddComponent(component);
@@ -565,6 +564,6 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 	// Get the command object
 	std::list<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
 
-	// Set the next valid received frame to the last tick received + 1 round-trip time (RTT)
-	replicationSystem->m_nextValidFrame = (*i)->tick + (ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime) * 2);
+	// Set the next valid received frame to the last tick received + 1.5 round-trip time (RTT)
+	replicationSystem->m_nextValidFrame = (*i)->tick + (ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime) * 3);
 }

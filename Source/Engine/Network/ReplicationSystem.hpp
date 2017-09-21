@@ -72,6 +72,7 @@ protected:
 	/**
 	 * Event handler for command end
 	 */
+	static void CommandStartHandler(Event* event);
 	static void CommandEndHandler(Event* event);
     
 protected:

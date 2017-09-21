@@ -20,6 +20,7 @@ ReplicationSystem::~ReplicationSystem() {
 
 void ReplicationSystem::Initialize() {
 	EventSystem* eventSystem = GetSystem<EventSystem>();
+	eventSystem->RegisterEventHandler("COMMAND_START", &ReplicationSystem::CommandStartHandler);
 	eventSystem->RegisterEventHandler("COMMAND_END", &ReplicationSystem::CommandEndHandler);
 }
 
@@ -211,7 +212,7 @@ void ReplicationSystem::Update(float delta) {
 
 		// Adjust our tick by a set amount of "render lag" so that we can interpolate
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
-		if (renderTick > m_nextValidFrame) {
+		if (renderTick > m_nextValidFrame && m_nextValidFrame) {
 			m_clientAuthoritative = false;
 		}
 
@@ -547,6 +548,17 @@ Variant* ReplicationSystem::SendCommand(Variant* object, int argc, Variant** arg
     
     delete commandMessage;
     return(new Variant(0));
+}
+
+void ReplicationSystem::CommandStartHandler(Event* event) {
+	// When a command ends on the client, don't process any more snapshots until we receive another full snapshot
+	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
+	if (replicationSystem->m_type == REPLICATION_SERVER) {
+		return;
+	}
+
+	//replicationSystem->m_clientAuthoritative = true;
+	//replicationSystem->m_nextValidFrame = 0;
 }
 
 void ReplicationSystem::CommandEndHandler(Event* event) {

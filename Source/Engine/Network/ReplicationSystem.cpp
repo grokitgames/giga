@@ -556,6 +556,9 @@ void ReplicationSystem::CommandStartHandler(Event* event) {
 	if (replicationSystem->m_type == REPLICATION_SERVER) {
 		return;
 	}
+    
+    Command* command = (Command*)event->GetData();
+    replicationSystem->m_commands.push_back(command);
 
 	//replicationSystem->m_clientAuthoritative = true;
 	//replicationSystem->m_nextValidFrame = 0;
@@ -567,6 +570,15 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 	if (replicationSystem->m_type == REPLICATION_SERVER) {
 		return;
 	}
+    
+    Command* command = (Command*)event->GetData();
+    std::list<Command*>::iterator it = replicationSystem->m_commands.begin();
+    for(; it != replicationSystem->m_commands.end(); it++) {
+        if((*it)->type == command->type) {
+            replicationSystem->m_commands.erase(it);
+            break;
+        }
+    }
 
 	replicationSystem->m_clientAuthoritative = true;
 

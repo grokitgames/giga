@@ -88,6 +88,9 @@ protected:
 	};
 
 	std::map<int, CommandTick*> m_commandHistory;
+    
+    // Currently open commands
+    std::list<Command*> m_commands;
 	
 	// The tick we need to roll back to for any new commands
 	int m_commandTick;

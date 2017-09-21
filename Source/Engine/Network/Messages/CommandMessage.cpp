@@ -46,7 +46,7 @@ void CommandMessage::OnReceive() {
 		printf("Current tick: %d, setting start to %d\n", tick, start);
 	}
 	else {
-		end = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG;
+		end = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG + 1;
 		printf("Current tick: %d, setting end to %d\n", tick, end);
 	}
 

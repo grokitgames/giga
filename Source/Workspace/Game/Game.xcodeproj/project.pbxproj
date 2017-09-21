@@ -33,6 +33,7 @@
 /* Begin PBXFileReference section */
 		5E0523B21F2163660088C9BA /* Game */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0523BD1F2163890088C9BA /* libEngine.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEngine.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/GIGA-garymltzmxmswqecbifgmrbpftaa/Build/Products/Debug/libEngine.dylib"; sourceTree = "<group>"; };
+		5EAF93311F71F3C500851063 /* client.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = client.js; path = ../../../../game/client.js; sourceTree = "<group>"; };
 		5EDCA3AB1F3B71C500329733 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../Game/main.cpp; sourceTree = SOURCE_ROOT; };
 		5EDCA3BE1F3BECB500329733 /* libicui18n.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicui18n.a; path = ../../ThirdParty/v8/lib/libicui18n.a; sourceTree = "<group>"; };
 		5EDCA3BF1F3BECB500329733 /* libicuuc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libicuuc.a; path = ../../ThirdParty/v8/lib/libicuuc.a; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 			children = (
 				5EDCA3FE1F5EF78300329733 /* Client */,
 				5EDCA3FF1F5EF78B00329733 /* Server */,
+				5EAF93311F71F3C500851063 /* client.js */,
 				5EDCA3F91F58927D00329733 /* game.js */,
 			);
 			name = JS;

@@ -17,6 +17,15 @@ Component::~Component() {
 	if (m_removeFunction) {
 		m_removeFunction(this);
 	}
+    else {
+        std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
+        for(i; i != m_componentTypes.end(); i++) {
+            if(this->GetGigaName() == i->second->name) {
+                i->second->removeFunc(this);
+                break;
+            }
+        }
+    }
 }
 
 Component* Component::CreateComponent(std::string type) {

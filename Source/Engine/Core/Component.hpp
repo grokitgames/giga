@@ -40,6 +40,11 @@ public:
      */
     void SetParent(Entity* entity) { m_parent = entity; }
     Entity* GetParent() { return m_parent; }
+
+	/**
+	 * Initialize from a storable object
+	 */
+	virtual void InitializeStorableObject(std::string name);
     
     /**
      * Clone this component into another
@@ -155,7 +160,6 @@ protected:
     // Removal function
     ComponentRemoveFunc m_removeFunction;
     
-private:
     // Globally registered component types (and their creation functions)
     static std::map<std::string, ComponentType*> m_componentTypes;
     

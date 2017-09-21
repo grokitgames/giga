@@ -33,11 +33,22 @@ void ComponentTemplate::InitializeStorableObject(std::string name) {
 }
 
 void ComponentTemplate::SetupFromType(std::string name) {
-    std::map<std::string, ComponentTemplateType*>::iterator i = m_types.find(name);
-    GIGA_ASSERT(i != m_types.end(), "Unregisted type name");
+    std::map<std::string, ComponentTemplateType*>::iterator it = m_types.find(name);
+    GIGA_ASSERT(it != m_types.end(), "Unregisted type name");
+
+	std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
+	for (i; i != m_componentTypes.end(); i++) {
+		if (i->second->name == name) {
+			this->InitializeComponent(i->second->name);
+
+			this->m_addFunction = i->second->addFunc;
+			this->m_removeFunction = i->second->removeFunc;
+			this->m_typeID = i->second->typeID;
+		}
+	}
     
     // Once we have a new component type, we need to set it up
-    i->second->InitializeComponent(this);
+    it->second->InitializeComponent(this);
 }
 
 void ComponentTemplate::Copy(Component* component) {

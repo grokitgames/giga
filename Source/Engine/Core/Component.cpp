@@ -18,13 +18,7 @@ Component::~Component() {
 		m_removeFunction(this);
 	}
     else {
-        std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
-        for(i; i != m_componentTypes.end(); i++) {
-            if(this->GetGigaName() == i->second->name) {
-                i->second->removeFunc(this);
-                break;
-            }
-        }
+		// GIGA_ASSERT(false, "Component removal function undefined.");
     }
 }
 
@@ -33,6 +27,7 @@ Component* Component::CreateComponent(std::string type) {
     std::map<std::string, ComponentType*>::iterator i = m_componentTypes.find(type);
     if (i == m_componentTypes.end()) {
         // Component type not registered
+		GIGA_ASSERT(false, "Type not found.");
         return(0);
     }
     
@@ -59,7 +54,24 @@ Component* Component::CreateComponent(int typeID) {
         }
     }
     
+	GIGA_ASSERT(false, "Type not found.");
     return(0);
+}
+
+void Component::InitializeStorableObject(std::string name) {
+	// Set functions
+	std::map<std::string, ComponentType*>::iterator i = m_componentTypes.begin();
+	for (i; i != m_componentTypes.end(); i++) {
+		if (i->second->name == name) {
+			this->InitializeComponent(i->second->name);
+
+			this->m_addFunction = i->second->addFunc;
+			this->m_removeFunction = i->second->removeFunc;
+			this->m_typeID = i->second->typeID;
+
+			return;
+		}
+	}
 }
 
 void Component::AddToSystem() {

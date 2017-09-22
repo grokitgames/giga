@@ -49,7 +49,7 @@ public:
         System* sys = dynamic_cast<System*>(obj);
         GIGA_ASSERT(sys != 0, "Class must be inherited from System type.");
         
-        std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+        std::vector<RegisteredSystem*>::iterator i = m_systems.begin();
         for(; i != m_systems.end(); i++) {
             if((*i)->system->GetGigaName() == sys->GetGigaName()) {
                 GIGA_ASSERT(false, "System type already registed.");
@@ -96,7 +96,7 @@ public:
      */
     template<class T>
     T* GetSystem() {
-        std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+        std::vector<RegisteredSystem*>::iterator i = m_systems.begin();
         for (; i != m_systems.end(); i++) {
             T* object = dynamic_cast<T*>((*i)->system);
             if (object) {
@@ -149,7 +149,7 @@ public:
     
 protected:
     // List of registered sub-systems
-    std::list<RegisteredSystem*> m_systems;
+    std::vector<RegisteredSystem*> m_systems;
     
     // List of registered data loaders
     std::vector<DataLoader*> m_loaders;

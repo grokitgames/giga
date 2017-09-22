@@ -10,7 +10,7 @@ Application::Application() {
 }
 
 Application::~Application() {
-    std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+    std::vector<RegisteredSystem*>::iterator i = m_systems.begin();
     for(; i != m_systems.end(); i++) {
         delete (*i)->system;
         delete (*i);
@@ -109,7 +109,7 @@ void Application::Initialize() {
 
 	 // Application
 	ScriptableObjectType* applicationType = new ScriptableObjectType("Application");
-	applicationType->SetStatic(true);
+    applicationType->SetStatic(true, this);
 	applicationType->AddStaticFunction("Log", &Application::Log);
 
 	scriptingSystem->RegisterScriptableObjectType<Application>(applicationType);
@@ -124,7 +124,7 @@ void Application::Initialize() {
     
     // Entity System
     ScriptableObjectType* entitySystemType = new ScriptableObjectType("EntitySystem");
-    entitySystemType->SetStatic(true);
+    entitySystemType->SetStatic(true, GetSystem<EntitySystem>());
     entitySystemType->AddStaticFunction("FindEntity", &EntitySystem::FindEntity);
     
     scriptingSystem->RegisterScriptableObjectType<EntitySystem>(entitySystemType);
@@ -139,7 +139,7 @@ void Application::Initialize() {
     
     // Event System
     ScriptableObjectType* eventSystemType = new ScriptableObjectType("EventSystem");
-    eventSystemType->SetStatic(true);
+    eventSystemType->SetStatic(true, GetSystem<EventSystem>());
     eventSystemType->AddStaticFunction("Process", &EventSystem::Process);
     eventSystemType->AddStaticFunction("RegisterEventHandler", &EventSystem::RegisterEventHandler);
     
@@ -168,7 +168,7 @@ void Application::Initialize() {
     
     // Input system
     ScriptableObjectType* inputSystemType = new ScriptableObjectType("InputSystem");
-    inputSystemType->SetStatic(true);
+    inputSystemType->SetStatic(true, GetSystem<InputSystem>());
     inputSystemType->AddStaticFunction("GetInputDevice", &InputSystem::GetInputDevice);
     inputSystemType->AddStaticFunction("RegisterInputMapping", &InputSystem::RegisterInputMapping);
     inputSystemType->AddStaticFunction("FindInputMapping", &InputSystem::FindInputMapping);
@@ -205,7 +205,7 @@ void Application::Initialize() {
 
 	// Network system
 	ScriptableObjectType* networkSystemType = new ScriptableObjectType("NetworkSystem");
-	networkSystemType->SetStatic(true);
+	networkSystemType->SetStatic(true, GetSystem<NetworkSystem>());
 	networkSystemType->AddStaticFunction("Connect", &NetworkSystem::Connect);
 	networkSystemType->AddStaticFunction("Send", &NetworkSystem::Send);
 	networkSystemType->AddStaticFunction("SetSessionID", &NetworkSystem::SetSessionID);
@@ -215,7 +215,7 @@ void Application::Initialize() {
 
 	// Replication system
     ScriptableObjectType* replicationSystemType = new ScriptableObjectType("ReplicationSystem");
-    replicationSystemType->SetStatic(true);
+    replicationSystemType->SetStatic(true, GetSystem<ReplicationSystem>());
     replicationSystemType->AddStaticFunction("SendCommand", &ReplicationSystem::SendCommand);
 	
 	scriptingSystem->RegisterScriptableObjectType<ReplicationSystem>(replicationSystemType);
@@ -250,7 +250,7 @@ void Application::Initialize() {
     
     // Resource system
     ScriptableObjectType* resourceSystemType = new ScriptableObjectType("ResourceSystem");
-    resourceSystemType->SetStatic(true);
+    resourceSystemType->SetStatic(true, GetSystem<ResourceSystem>());
     resourceSystemType->AddStaticFunction("LoadResource", &ResourceSystem::LoadResource);
     
     scriptingSystem->RegisterScriptableObjectType<ResourceSystem>(resourceSystemType);
@@ -361,7 +361,7 @@ void Application::Initialize() {
 }
 
 void Application::Update(float delta) {
-    std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+    std::vector<RegisteredSystem*>::iterator i = m_systems.begin();
 
     for(; i != m_systems.end(); i++) {
         if((*i)->tickRate > 0) {
@@ -394,7 +394,7 @@ Application* Application::GetInstance() {
 void Application::Shutdown() {
     Application::Log(MSGTYPE_INFO, "Shutting down...");
     
-    std::list<RegisteredSystem*>::iterator i = m_systems.begin();
+    std::vector<RegisteredSystem*>::iterator i = m_systems.begin();
     for(; i != m_systems.end(); i++) {
         (*i)->system->Shutdown();
     }

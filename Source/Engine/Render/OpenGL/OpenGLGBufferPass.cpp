@@ -72,7 +72,7 @@ void OpenGLGBufferPass::Render(Scene* scene) {
     GL_CHECK(glClearBufferfv(GL_COLOR, 3, &fValue));
     
     // Get our renderable mesh objects
-    std::list<StaticMeshComponent*> renderList = scene->GetMeshes();
+    std::vector<StaticMeshComponent*> renderList = scene->GetMeshes();
     
     // Get the camera
     CameraComponent* camera = scene->GetActiveCamera();
@@ -95,7 +95,7 @@ void OpenGLGBufferPass::Render(Scene* scene) {
     vector3 cameraPosition = camera->GetWorldPosition();
     
     // Loop over scene's renderable list and render into g-buffer
-	std::list<StaticMeshComponent*>::iterator i = renderList.begin();
+	std::vector<StaticMeshComponent*>::iterator i = renderList.begin();
 	int counter = 0;
 	for (i; i != renderList.end(); i++) {
 		// If this object doesn't have lighting applied, skip it (will cover next loop)

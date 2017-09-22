@@ -23,7 +23,7 @@ void OpenGLShadowPass::Render(Scene* scene) {
     GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     
     // Get our renderable mesh objects
-    std::list<StaticMeshComponent*> renderList = scene->GetMeshes();
+    std::vector<StaticMeshComponent*> renderList = scene->GetMeshes();
     
     // Get matrices
     matrix4 proj = m_camera->GetProjectionMatrix();
@@ -35,7 +35,7 @@ void OpenGLShadowPass::Render(Scene* scene) {
     vector3 cameraPosition = m_camera->GetWorldPosition();
     
     // Loop over scene's renderable list and render
-	std::list<StaticMeshComponent*>::iterator i = renderList.begin();
+	std::vector<StaticMeshComponent*>::iterator i = renderList.begin();
 	int counter = 0;
 	for (i; i != renderList.end(); i++) {
 		// If this object doesn't have lighting applied, skip it (will cover next loop)

@@ -2,7 +2,7 @@
 #include <giga-engine.h>
 
 ResendRequestMessage::~ResendRequestMessage() {
-    std::list<ResendRequestInfo*>::iterator i = m_packets.begin();
+    std::vector<ResendRequestInfo*>::iterator i = m_packets.begin();
     for(; i != m_packets.end(); i++) {
         delete (*i);
     }
@@ -29,7 +29,7 @@ void ResendRequestMessage::OnSend() {
     uint32_t numPackets = (uint32_t)m_packets.size();
     writer->Write(&numPackets, sizeof(uint32_t));
     
-    std::list<ResendRequestInfo*>::iterator i = m_packets.begin();
+    std::vector<ResendRequestInfo*>::iterator i = m_packets.begin();
     for(; i != m_packets.end(); i++) {
         writer->Write(&(*i)->messageID, sizeof(uint32_t));
         writer->Write(&(*i)->chunkID, sizeof(uint32_t));

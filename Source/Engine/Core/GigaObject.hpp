@@ -22,6 +22,16 @@ public:
      * Convert object to a string representation
      */
     virtual std::string ToString() { return "GigaObject []"; }
+    
+    /**
+     * Lock/unlock access for a thread
+     */
+    virtual void LockMutex();
+    virtual void UnlockMutex();
+    
+protected:
+    // Locking for multi-threaded access
+    std::mutex m_mutex;
 };
 
 #endif 

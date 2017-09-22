@@ -45,8 +45,8 @@ void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
     m_globals[name] = variant;
     
     // Add to any existing script components
-    std::list<ScriptComponent*> scripts = m_scripts.GetList();
-	std::list<ScriptComponent*>::iterator i = scripts.begin();
+    std::vector<ScriptComponent*> scripts = m_scripts.GetList();
+	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 	for (i; i != scripts.end(); i++) {
         (*i)->SetGlobal(name, value);
     }
@@ -75,8 +75,8 @@ void ScriptingSystem::EventHandler(Event* event) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     
     // Iterate over event handlers
-	std::list<ScriptComponent*> scripts = scriptingSystem->m_scripts.GetList();
-	std::list<ScriptComponent*>::iterator i = scripts.begin();
+	std::vector<ScriptComponent*> scripts = scriptingSystem->m_scripts.GetList();
+	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 	for (; i != scripts.end(); i++) {
 		(*i)->ProcessEvent(event);
 	}
@@ -86,8 +86,8 @@ void ScriptingSystem::Update(float delta) {
     PROFILE_START_AREA("ScriptingSystem Update");
 	Variant* d = new Variant(delta);
     
-	std::list<ScriptComponent*> scripts = m_scripts.GetList();
-	std::list<ScriptComponent*>::iterator i = scripts.begin();
+	std::vector<ScriptComponent*> scripts = m_scripts.GetList();
+	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 
 	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
@@ -109,8 +109,8 @@ void ScriptingSystem::Update(float delta) {
 	isolate->IdleNotification(1.0f / NETWORK_TICKS_PER_SECOND * 1000.0f);
 
 	// Remove any transient variables marked for deletion
-	std::list<ScriptableObject*> transients = m_transients.GetList();
-	std::list<ScriptableObject*>::iterator i2 = transients.begin();
+	std::vector<ScriptableObject*> transients = m_transients.GetList();
+	std::vector<ScriptableObject*>::iterator i2 = transients.begin();
 	int counter = 0;
 	for (i2; i2 != transients.end(); i2++) {
 		m_transients.RemoveObject(*i2);

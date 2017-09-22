@@ -43,8 +43,8 @@ public:
         m_types.push_back(type);
         
         // Add to any existing script components
-        std::list<ScriptComponent*> scripts = m_scripts.GetList();
-		std::list<ScriptComponent*>::iterator i = scripts.begin();
+        std::vector<ScriptComponent*> scripts = m_scripts.GetList();
+		std::vector<ScriptComponent*>::iterator i = scripts.begin();
 		for (i; i != scripts.end(); i++) {
             (*i)->AddToContext(type);
         }

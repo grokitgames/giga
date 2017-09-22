@@ -78,7 +78,7 @@ public:
     /**
      * Identify whether this template is for a static global that won't have a "this" pointer
      */
-    void SetStatic(bool global) { m_static = global; }
+    void SetStatic(bool global, ScriptableObject* obj) { m_static = global; m_staticObject = obj; }
 
 	/**
 	 * Set an object as transient (delete after JS is done with it)
@@ -190,6 +190,9 @@ protected:
 
 	// Whether the type is transient (should be garbage collected after V8 is done with it)
 	bool m_transient;
+    
+    // If this is a static object, object is stored in here
+    ScriptableObject* m_staticObject;
 };
 
 #endif

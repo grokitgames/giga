@@ -9,7 +9,7 @@ NetworkMessagePart::NetworkMessagePart() {
 }
 
 NetworkMessagePart::~NetworkMessagePart() {
-    std::list<NetworkMessage*>::iterator i = parts.begin();
+    std::vector<NetworkMessage*>::iterator i = parts.begin();
     for(; i != parts.end(); i++) {
         delete (*i);
     }
@@ -371,7 +371,7 @@ void NetworkSystem::Update(float delta) {
             }
             
             // Check which have been received
-            std::list<NetworkMessage*>::iterator m = part->parts.begin();
+            std::vector<NetworkMessage*>::iterator m = part->parts.begin();
             for(; m != part->parts.end(); m++) {
                 received[((*m)->GetEnvelope())->chunkID] = true;
             }
@@ -464,7 +464,7 @@ float NetworkSystem::GetCurrentTime() {
 }
 
 void NetworkSystem::MarkReceived(int sessionID, int messageID) {
-	std::list<NetworkMessage*>::iterator i = m_acks.begin();
+	std::vector<NetworkMessage*>::iterator i = m_acks.begin();
 	for (; i != m_acks.end(); i++) {
 		NetworkMessage::NetworkEnvelope* env = (*i)->GetEnvelope();
 		if (env->session == sessionID && env->id == messageID) {

@@ -77,20 +77,20 @@ protected:
     
 protected:
     // Historical (+ potential future) snapshots
-    std::list<EntitySnapshot*> m_snapshots;
+    std::vector<EntitySnapshot*> m_snapshots;
 
 	// Full historical snapshots
-	std::list<EntitySnapshot*> m_fullSnapshots;
+	std::vector<EntitySnapshot*> m_fullSnapshots;
 
 	// Command history
 	struct CommandTick {
-		std::list<Command*> commands;
+		std::vector<Command*> commands;
 	};
 
 	std::map<int, CommandTick*> m_commandHistory;
     
     // Currently open commands
-    std::list<Command*> m_commands;
+    std::vector<Command*> m_commands;
 	
 	// The tick we need to roll back to for any new commands
 	int m_commandTick;
@@ -105,7 +105,7 @@ protected:
     bool m_initialized;
 
 	// Sessions that we need to send a full snapshot to next tick
-	std::list<int> m_sessionIDs;
+	std::vector<int> m_sessionIDs;
 
 	// Whether the replication system is currently in "replay" mode
 	bool m_replay;

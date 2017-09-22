@@ -4,6 +4,7 @@
 ScriptableObjectType::ScriptableObjectType(std::string name) {
     m_static = false;
     m_transient = false;
+    m_staticObject = 0;
     
     SetName(name);
     StartTemplate();
@@ -47,6 +48,7 @@ void ScriptableObjectType::New(const v8::FunctionCallbackInfo<v8::Value>& info) 
     ScriptableObjectType* interface = ss->GetScriptableObjectType(*funcName);
     
     ScriptableObject* obj = interface->m_createFunction();
+    obj->LockMutex();
     obj->InitializeScriptableObject(interface->GetName());
     obj->Initialize(args, info.Length());
     if (interface->m_static == false) {
@@ -61,6 +63,7 @@ void ScriptableObjectType::New(const v8::FunctionCallbackInfo<v8::Value>& info) 
     }
     free(args);
     
+    obj->UnlockMutex();
     return info.GetReturnValue().Set(info.This());
 }
 
@@ -153,6 +156,10 @@ void ScriptableObjectType::HandleStaticFunctionCallback(const v8::FunctionCallba
     v8::String::Utf8Value thisName(funcHolder->GetName());
     ScriptableObjectType* interface = ss->GetScriptableObjectType(*thisName);
     
+    if(interface->m_staticObject) {
+        interface->m_staticObject->LockMutex();
+    }
+    
     // Iterate through the callback list, looking for a registered callback function
     std::vector<ScriptFunctionCallback*> funcList = interface->GetFunctionList();
     for (size_t i = 0; i < funcList.size(); i++) {
@@ -176,6 +183,10 @@ void ScriptableObjectType::HandleStaticFunctionCallback(const v8::FunctionCallba
         argv[i] = 0;
     }
     
+    if(interface->m_staticObject) {
+        interface->m_staticObject->UnlockMutex();
+    }
+    
     free(argv);
 }
 
@@ -183,6 +194,7 @@ void ScriptableObjectType::HandleObjectFunctionCallback(const v8::FunctionCallba
     // Unwrap our object
     ScriptableObject* jsobj = ScriptableObject::Unwrap(info.This());
     Variant* obj = new Variant(jsobj);
+    jsobj->LockMutex();
     
     // Get the script interface we're supposed to connect to
     ScriptingSystem* ss = GetSystem<ScriptingSystem>();
@@ -218,6 +230,7 @@ void ScriptableObjectType::HandleObjectFunctionCallback(const v8::FunctionCallba
         argv[i] = 0;
     }
     
+    jsobj->UnlockMutex();
     free(argv);
     delete obj;
 }
@@ -226,6 +239,7 @@ void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, co
     // Unwrap our object
     ScriptableObject* jsobj = ScriptableObject::Unwrap(info.This());
     Variant* obj = new Variant(jsobj);
+    jsobj->LockMutex();
     
     // Get the script interface we're supposed to connect to
     ScriptingSystem* ss = GetSystem<ScriptingSystem>();
@@ -248,12 +262,14 @@ void ScriptableObjectType::HandleObjectGetter(v8::Local<v8::String> property, co
         }
     }
     
+    jsobj->UnlockMutex();
     delete obj;
 }
 
 void ScriptableObjectType::HandleObjectSetter(v8::Local<v8::String> property, v8::Local<v8::Value> value, const v8::PropertyCallbackInfo<void>& info) {
     ScriptableObject* jsobj = ScriptableObject::Unwrap(info.This());
     Variant* obj = new Variant(jsobj);
+    jsobj->LockMutex();
     
     // Get the script interface we're supposed to connect to
     ScriptingSystem* ss = GetSystem<ScriptingSystem>();
@@ -275,6 +291,7 @@ void ScriptableObjectType::HandleObjectSetter(v8::Local<v8::String> property, v8
         }
     }
     
+    jsobj->UnlockMutex();
     delete obj;
 }
 
@@ -286,6 +303,10 @@ void ScriptableObjectType::HandleStaticGetter(v8::Local<v8::String> property, co
     v8::Local<v8::Function> funcHolder = holder.As<v8::Function>();
     v8::String::Utf8Value thisName(funcHolder->GetName());
     ScriptableObjectType* interface = ss->GetScriptableObjectType(*thisName);
+    
+    if(interface->m_staticObject) {
+        interface->m_staticObject->LockMutex();
+    }
     
     // Iterate through the callback list, looking for a registered callback function
     std::vector<ScriptObjectCallbackPair*> varList = interface->GetVariableList();
@@ -299,9 +320,13 @@ void ScriptableObjectType::HandleStaticGetter(v8::Local<v8::String> property, co
                 info.GetReturnValue().Set(val);
                 delete value;
                 
-                return;
+                break;
             }
         }
+    }
+    
+    if(interface->m_staticObject) {
+        interface->m_staticObject->UnlockMutex();
     }
 }
 

@@ -12,7 +12,7 @@ ReplicationSystem::ReplicationSystem() {
 }
 
 ReplicationSystem::~ReplicationSystem() {
-    std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+    std::vector<EntitySnapshot*>::iterator i = m_snapshots.begin();
     for(i; i != m_snapshots.end(); i++) {
         delete (*i);
     }
@@ -40,7 +40,7 @@ void ReplicationSystem::Update(float delta) {
 	if (m_type == REPLICATION_SERVER) {
 		// Get all entities
 		EntitySystem* entitySystem = GetSystem<EntitySystem>();
-		std::list<Entity*> entities = entitySystem->GetEntities();
+		std::vector<Entity*> entities = entitySystem->GetEntities();
 
 		// Create an entity snapshot
 		EntitySnapshot* snapshot = new EntitySnapshot();
@@ -52,7 +52,7 @@ void ReplicationSystem::Update(float delta) {
 		fullSnapshot->type = EntitySnapshot::SNAPSHOT_FULL;
 
 		// Iterate over to find entities with updates
-		std::list<Entity*>::iterator i = entities.begin();
+		std::vector<Entity*>::iterator i = entities.begin();
 		for (i; i != entities.end(); i++) {
 			// First, take full entity snapshot
 			Entity* e1 = (*i)->Clone();
@@ -121,7 +121,7 @@ void ReplicationSystem::Update(float delta) {
 
 				msg->SetEntityPayload(packet, size);
 
-				std::list<int>::iterator s = m_sessionIDs.begin();
+				std::vector<int>::iterator s = m_sessionIDs.begin();
 				for (; s != m_sessionIDs.end(); s++) {
 					networkSystem->Send(*s, msg);
 				}
@@ -161,7 +161,7 @@ void ReplicationSystem::Update(float delta) {
 					std::map<int, CommandTick*>::iterator ct = m_commandHistory.find(t);
 
 					if (ct != m_commandHistory.end()) {
-						std::list<Command*>::iterator c = m_commandHistory[t]->commands.begin();
+						std::vector<Command*>::iterator c = m_commandHistory[t]->commands.begin();
 						for (; c != m_commandHistory[t]->commands.end(); c++) {
 							// Get our entity
 							Entity* entity = entitySystem->FindEntity((*c)->entityID);
@@ -196,7 +196,7 @@ void ReplicationSystem::Update(float delta) {
 					break;
 				}
 
-				std::list<Command*>::iterator c = (*ct).second->commands.begin();
+				std::vector<Command*>::iterator c = (*ct).second->commands.begin();
 				for (; c != (*ct).second->commands.end(); c++) {
 					delete (*c);
 				}
@@ -218,7 +218,7 @@ void ReplicationSystem::Update(float delta) {
 
         // If we are not yet initialized, check for a full snapshot first
         if(m_initialized == false && m_snapshots.size() > 0) {
-            std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+            std::vector<EntitySnapshot*>::iterator i = m_snapshots.begin();
             for(i; i != m_snapshots.end(); i++) {
                 if((*i)->type == EntitySnapshot::SNAPSHOT_FULL) {
                     ApplySnapshot(*i, 0, 0);
@@ -245,8 +245,8 @@ void ReplicationSystem::Update(float delta) {
         // Check which snapshots we have to interpolate between
         int startTick = 0;
         int endTick = renderTick;
-        std::list<EntitySnapshot*>::iterator i = m_snapshots.end();
-        std::list<EntitySnapshot*>::iterator i2 = m_snapshots.end();
+        std::vector<EntitySnapshot*>::iterator i = m_snapshots.end();
+        std::vector<EntitySnapshot*>::iterator i2 = m_snapshots.end();
         
 		if (m_snapshots.size() > 2) {
 			i--;
@@ -282,7 +282,7 @@ void ReplicationSystem::Update(float delta) {
 	if (m_replay == false) {
 		// Finally, delete any "old" snapshots that are no longer needed
 		if (m_snapshots.size()) {
-			std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+			std::vector<EntitySnapshot*>::iterator i = m_snapshots.begin();
 			if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
 				for (i; i != m_snapshots.end(); i++) {
 					if ((*i)->tick > (tick - NETWORK_SNAPSHOT_HISTORY))
@@ -297,7 +297,7 @@ void ReplicationSystem::Update(float delta) {
 
 		// Same thing with full snapshots, delete any "old" snapshots that are no longer needed
 		if (m_fullSnapshots.size()) {
-			std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
+			std::vector<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
 			if ((*i)->tick < (tick - NETWORK_SNAPSHOT_HISTORY)) {
 				for (i; i != m_fullSnapshots.end(); i++) {
 					if ((*i)->tick > (tick - NETWORK_SNAPSHOT_HISTORY))
@@ -377,7 +377,7 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 	}
 
 	// Check if this snapshot just goes at the end
-	std::list<EntitySnapshot*>::iterator i = m_snapshots.end();
+	std::vector<EntitySnapshot*>::iterator i = m_snapshots.end();
 	i--;
 
 	if ((*i)->tick < tick) {
@@ -424,7 +424,7 @@ void ReplicationSystem::AddSnapshot(int tick, EntitySnapshot* snapshot) {
 	}
 
 	// If we get here, we to put it at the front of the list
-	m_snapshots.push_front(snapshot);
+    m_snapshots.insert(m_snapshots.begin(), snapshot);
 }
 
 void ReplicationSystem::AddFullSnapshot(int tick, EntitySnapshot* snapshot) {
@@ -435,7 +435,7 @@ void ReplicationSystem::AddFullSnapshot(int tick, EntitySnapshot* snapshot) {
 	}
 
 	// Check if this snapshot just goes at the end
-	std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.end();
+	std::vector<EntitySnapshot*>::iterator i = m_fullSnapshots.end();
 	i--;
 
 	if ((*i)->tick < tick) {
@@ -484,11 +484,11 @@ void ReplicationSystem::AddFullSnapshot(int tick, EntitySnapshot* snapshot) {
 	}
 
 	// If we get here, we to put it at the front of the list
-	m_fullSnapshots.push_front(snapshot);
+    m_fullSnapshots.insert(m_fullSnapshots.begin(), snapshot);
 }
 
 EntitySnapshot* ReplicationSystem::GetEntitySnapshot(int tick) {
-	std::list<EntitySnapshot*>::iterator i = m_snapshots.begin();
+	std::vector<EntitySnapshot*>::iterator i = m_snapshots.begin();
 	for (i; i != m_snapshots.end(); i++) {
 		if ((*i)->tick == tick) {
 			return(*i);
@@ -499,7 +499,7 @@ EntitySnapshot* ReplicationSystem::GetEntitySnapshot(int tick) {
 }
 
 EntitySnapshot* ReplicationSystem::GetFullEntitySnapshot(int tick) {
-	std::list<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
+	std::vector<EntitySnapshot*>::iterator i = m_fullSnapshots.begin();
 	for (i; i != m_fullSnapshots.end(); i++) {
 		if ((*i)->tick == tick) {
 			return(*i);
@@ -574,7 +574,7 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 	NetworkSession* session = networkSystem->FindSession(0);
 
 	// Get the command object
-	std::list<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
+	std::vector<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
 
 	// Set the next valid received frame to the last tick received + 1.5 round-trip time (RTT)
 	replicationSystem->m_nextValidFrame = (*i)->tick + (ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime) * 3);

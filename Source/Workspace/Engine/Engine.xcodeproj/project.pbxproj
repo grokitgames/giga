@@ -152,6 +152,14 @@
 		5E6C66081F3B5DFD0089FD55 /* OpenGLDeferredRenderPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C66021F3B5DFD0089FD55 /* OpenGLDeferredRenderPass.hpp */; };
 		5E6C66091F3B5DFD0089FD55 /* OpenGLGBufferPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C66031F3B5DFD0089FD55 /* OpenGLGBufferPass.cpp */; };
 		5E6C660A1F3B5DFD0089FD55 /* OpenGLGBufferPass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C66041F3B5DFD0089FD55 /* OpenGLGBufferPass.hpp */; };
+		5EAF93341F7555D100851063 /* Task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF93321F7555D100851063 /* Task.cpp */; };
+		5EAF93351F7555D100851063 /* Task.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF93331F7555D100851063 /* Task.hpp */; };
+		5EAF93381F75A11000851063 /* TaskPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF93361F75A11000851063 /* TaskPool.cpp */; };
+		5EAF93391F75A11000851063 /* TaskPool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF93371F75A11000851063 /* TaskPool.hpp */; };
+		5EAF933C1F75A29F00851063 /* TaskSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF933A1F75A29F00851063 /* TaskSystem.cpp */; };
+		5EAF933D1F75A29F00851063 /* TaskSystem.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF933B1F75A29F00851063 /* TaskSystem.hpp */; };
+		5EAF93401F75A2B000851063 /* TaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF933E1F75A2B000851063 /* TaskThread.cpp */; };
+		5EAF93411F75A2B000851063 /* TaskThread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF933F1F75A2B000851063 /* TaskThread.hpp */; };
 		5EDCA3A41F3B67A700329733 /* Color.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3A21F3B67A700329733 /* Color.hpp */; };
 		5EDCA3AA1F3B6AEA00329733 /* OpenGLColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3A91F3B6AEA00329733 /* OpenGLColor.cpp */; };
 		5EDCA3B71F3BE76600329733 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFD9D1F219857009FA81B /* libicui18n.a */; };
@@ -390,6 +398,14 @@
 		5E6C66021F3B5DFD0089FD55 /* OpenGLDeferredRenderPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenGLDeferredRenderPass.hpp; path = ../../Engine/Render/OpenGL/OpenGLDeferredRenderPass.hpp; sourceTree = "<group>"; };
 		5E6C66031F3B5DFD0089FD55 /* OpenGLGBufferPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLGBufferPass.cpp; path = ../../Engine/Render/OpenGL/OpenGLGBufferPass.cpp; sourceTree = "<group>"; };
 		5E6C66041F3B5DFD0089FD55 /* OpenGLGBufferPass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = OpenGLGBufferPass.hpp; path = ../../Engine/Render/OpenGL/OpenGLGBufferPass.hpp; sourceTree = "<group>"; };
+		5EAF93321F7555D100851063 /* Task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Task.cpp; path = ../../Engine/Core/Task.cpp; sourceTree = "<group>"; };
+		5EAF93331F7555D100851063 /* Task.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Task.hpp; path = ../../Engine/Core/Task.hpp; sourceTree = "<group>"; };
+		5EAF93361F75A11000851063 /* TaskPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TaskPool.cpp; path = ../../Engine/Core/TaskPool.cpp; sourceTree = "<group>"; };
+		5EAF93371F75A11000851063 /* TaskPool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TaskPool.hpp; path = ../../Engine/Core/TaskPool.hpp; sourceTree = "<group>"; };
+		5EAF933A1F75A29F00851063 /* TaskSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TaskSystem.cpp; path = ../../Engine/Core/TaskSystem.cpp; sourceTree = "<group>"; };
+		5EAF933B1F75A29F00851063 /* TaskSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TaskSystem.hpp; path = ../../Engine/Core/TaskSystem.hpp; sourceTree = "<group>"; };
+		5EAF933E1F75A2B000851063 /* TaskThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TaskThread.cpp; path = ../../Engine/Core/TaskThread.cpp; sourceTree = "<group>"; };
+		5EAF933F1F75A2B000851063 /* TaskThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TaskThread.hpp; path = ../../Engine/Core/TaskThread.hpp; sourceTree = "<group>"; };
 		5EDCA3A21F3B67A700329733 /* Color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Color.hpp; path = ../../Engine/Render/Color.hpp; sourceTree = "<group>"; };
 		5EDCA3A91F3B6AEA00329733 /* OpenGLColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLColor.cpp; path = ../../Engine/Render/OpenGL/OpenGLColor.cpp; sourceTree = "<group>"; };
 		5EDCA3AD1F3BD58600329733 /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../ThirdParty/v8/lib/libicui18n.dylib; sourceTree = "<group>"; };
@@ -566,6 +582,14 @@
 				5E0523A21F20FE780088C9BA /* GigaObject.hpp */,
 				5E0523A61F2162800088C9BA /* ObjectPool.hpp */,
 				5E0523961F20482B0088C9BA /* System.hpp */,
+				5EAF93321F7555D100851063 /* Task.cpp */,
+				5EAF93331F7555D100851063 /* Task.hpp */,
+				5EAF93361F75A11000851063 /* TaskPool.cpp */,
+				5EAF93371F75A11000851063 /* TaskPool.hpp */,
+				5EAF933A1F75A29F00851063 /* TaskSystem.cpp */,
+				5EAF933B1F75A29F00851063 /* TaskSystem.hpp */,
+				5EAF933E1F75A2B000851063 /* TaskThread.cpp */,
+				5EAF933F1F75A2B000851063 /* TaskThread.hpp */,
 				5E05239D1F20FBA40088C9BA /* Variant.cpp */,
 				5E05239E1F20FBA40088C9BA /* Variant.hpp */,
 			);
@@ -885,6 +909,7 @@
 				5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */,
 				5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */,
 				5EDCA4051F66BB7F00329733 /* AckMessage.hpp in Headers */,
+				5EAF933D1F75A29F00851063 /* TaskSystem.hpp in Headers */,
 				5EDCA3D31F3DF69F00329733 /* SQLiteDataLoader.hpp in Headers */,
 				5EFDFDE41F22986B009FA81B /* Timer.hpp in Headers */,
 				5E556B021F295A4200F6FB2E /* MemoryReader.hpp in Headers */,
@@ -892,6 +917,7 @@
 				5E6C65F61F3B5B430089FD55 /* OpenGLFramebuffer.hpp in Headers */,
 				5E6C65801F31485A0089FD55 /* PosixUDPSocket.hpp in Headers */,
 				5E6C65EA1F3B55CD0089FD55 /* OpenGLTexture2D.hpp in Headers */,
+				5EAF93351F7555D100851063 /* Task.hpp in Headers */,
 				5E6C66061F3B5DFD0089FD55 /* OpenGLDeferredLightingPass.hpp in Headers */,
 				5EDCA3E51F3E8AFC00329733 /* ComponentTemplateType.hpp in Headers */,
 				5E0523C21F2166000088C9BA /* EntitySystem.hpp in Headers */,
@@ -925,6 +951,7 @@
 				5E6C659E1F32A2760089FD55 /* NetworkSystem.hpp in Headers */,
 				5EDCA3F81F56FB6A00329733 /* CommandMessage.hpp in Headers */,
 				5E556B0E1F2A6B9300F6FB2E /* Bone.hpp in Headers */,
+				5EAF93411F75A2B000851063 /* TaskThread.hpp in Headers */,
 				5E6C65431F2C041F0089FD55 /* Plane.hpp in Headers */,
 				5E556B161F2A6C8600F6FB2E /* AnimationTransform.hpp in Headers */,
 				5E0523DE1F2181110088C9BA /* ScriptableVariant.hpp in Headers */,
@@ -979,6 +1006,7 @@
 				5E0523941F2046750088C9BA /* Entity.hpp in Headers */,
 				5E556AC41F2431A000F6FB2E /* BoundingBox.hpp in Headers */,
 				5E6C65891F314AD30089FD55 /* NetworkMessage.hpp in Headers */,
+				5EAF93391F75A11000851063 /* TaskPool.hpp in Headers */,
 				5EDCA4131F69708000329733 /* Directory.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1076,12 +1104,14 @@
 				5E0523C51F216CAB0088C9BA /* Event.cpp in Sources */,
 				5E6C66051F3B5DFD0089FD55 /* OpenGLDeferredLightingPass.cpp in Sources */,
 				5E6C657F1F31485A0089FD55 /* PosixUDPSocket.cpp in Sources */,
+				5EAF933C1F75A29F00851063 /* TaskSystem.cpp in Sources */,
 				5E6C65521F2CF4480089FD55 /* Framebuffer.cpp in Sources */,
 				5E556B051F2961F100F6FB2E /* ShaderSystem.cpp in Sources */,
 				5EDCA3FC1F59AC2A00329733 /* ResendRequestMessage.cpp in Sources */,
 				5EFDFDE31F22986B009FA81B /* Timer.cpp in Sources */,
 				5E6C65D11F3B4F4E0089FD55 /* OpenGLVertexBuffer.cpp in Sources */,
 				5EFDFDAD1F219AC0009FA81B /* InputSystem.cpp in Sources */,
+				5EAF93381F75A11000851063 /* TaskPool.cpp in Sources */,
 				5E0523D21F217ABF0088C9BA /* EventSystem.cpp in Sources */,
 				5EDCA3AA1F3B6AEA00329733 /* OpenGLColor.cpp in Sources */,
 				5E6C65311F2BA1050089FD55 /* RenderComponent.cpp in Sources */,
@@ -1123,6 +1153,7 @@
 				5E6C65F51F3B5B430089FD55 /* OpenGLFramebuffer.cpp in Sources */,
 				5EFDFDB11F21A0B4009FA81B /* Keyboard.cpp in Sources */,
 				5E556B191F2A6D4300F6FB2E /* Animation.cpp in Sources */,
+				5EAF93401F75A2B000851063 /* TaskThread.cpp in Sources */,
 				5E6C65D81F3B50CF0089FD55 /* OpenGLIndexBuffer.cpp in Sources */,
 				5EFDFDE71F229908009FA81B /* DateTime.cpp in Sources */,
 				5EDCA3E81F3E9BE000329733 /* ComponentTemplate.cpp in Sources */,
@@ -1132,6 +1163,7 @@
 				5EDCA3D21F3DF69F00329733 /* SQLiteDataLoader.cpp in Sources */,
 				5E0523CE1F2170410088C9BA /* ErrorSystem.cpp in Sources */,
 				5E6C65DD1F3B51BE0089FD55 /* OpenGLVertexAttributes.cpp in Sources */,
+				5EAF93341F7555D100851063 /* Task.cpp in Sources */,
 				5EDCA3F01F42053D00329733 /* ShadowPass.cpp in Sources */,
 				5E6C654E1F2CF2CE0089FD55 /* Scene.cpp in Sources */,
 			);

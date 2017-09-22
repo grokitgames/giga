@@ -29,7 +29,7 @@ public:
     
 protected:
     // The packets and byte ranges we are re-requesting
-    std::list<ResendRequestInfo*> m_packets;
+    std::vector<ResendRequestInfo*> m_packets;
 };
 
 #endif

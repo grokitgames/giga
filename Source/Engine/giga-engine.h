@@ -43,7 +43,8 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include <list>
+#include <thread>
+#include <mutex>
 
 // GLM (math)
 #define GLM_FORCE_RADIANS       1
@@ -99,6 +100,10 @@ typedef glm::mat4 matrix4;
 #include <Core/EventSystem.hpp>
 #include <Core/Error.hpp>
 #include <Core/ErrorSystem.hpp>
+#include <Core/Task.hpp>
+#include <Core/TaskPool.hpp>
+#include <Core/TaskThread.hpp>
+#include <Core/TaskSystem.hpp>
 #include <IO/InputDevice.hpp>
 #include <IO/Command.hpp>
 #include <IO/InputSystem.hpp>

@@ -72,6 +72,11 @@ public:
 	 */
 	void ProcessEvent(Event* ev);
     
+    /**
+     * Task system integration
+     */
+    void Update(Variant* obj, int argc, Variant** argv);
+    
 protected:
     // Our script
     Script* m_scriptSource;

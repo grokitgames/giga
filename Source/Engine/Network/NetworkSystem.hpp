@@ -61,7 +61,7 @@ public:
     NetworkMessage* master;
     
     // Parts of the message (for tracking)
-    std::list<NetworkMessage*> parts;
+    std::vector<NetworkMessage*> parts;
     
     // Last tick we received message in
     uint32_t lastTick;
@@ -214,7 +214,7 @@ protected:
 	int m_overrideTick;
 
 	// Network messages waiting for an ack response
-	std::list<NetworkMessage*> m_acks;
+	std::vector<NetworkMessage*> m_acks;
 };
 
 #endif

@@ -48,7 +48,7 @@ void Command::Initialize(Variant** argv, int argc) {
 	if (argc == 0) return;
 
 	GIGA_ASSERT(argc == 2, "Expecting two arguments.");
-	GIGA_ASSERT(argv[0]->IsObject(), "Expecting first parameter to be an entity object.");
+	GIGA_ASSERT(argv[0]->IsInt(), "Expecting first parameter to be an entity ID.");
 	GIGA_ASSERT(argv[1]->IsString(), "Expecting parameter one to be a string command type.");
 
 	for (size_t i = 0; i < m_commandTypes.size(); i++) {
@@ -61,7 +61,7 @@ void Command::Initialize(Variant** argv, int argc) {
 	GIGA_ASSERT(type > 0, "Unregistered command type.");
 
 	EntitySystem* entitySystem = GetSystem<EntitySystem>();
-	Entity* entity = argv[0]->AsObject<Entity>();
+	Entity* entity = entitySystem->FindEntity(argv[0]->AsInt());
 	entityID = entity->GetID();
 }
 

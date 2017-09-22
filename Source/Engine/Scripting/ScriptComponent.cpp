@@ -405,11 +405,19 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 		if (m_eventHandlers[i]->type == type) {
 			if (m_eventHandlers[i]->entityID == 0 || m_eventHandlers[i]->entityID == ev->GetEntityID()) {
 				Variant* v = new Variant(ev);
-				Variant* parent = new Variant(this->GetParent());
-				SetGlobal("GameObject", parent);
+
+				Entity* p = this->GetParent();
+				Variant* parent = 0;
+				if (p) {
+					Variant* parent = new Variant(p);
+					SetGlobal("GameObject", parent);
+				}
 				CallFunction(m_eventHandlers[i]->func, 1, &v);
 				delete v;
-				delete parent;
+
+				if (parent) {
+					delete parent;
+				}
 			}
 		}
 	}

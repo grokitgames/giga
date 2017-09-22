@@ -43,6 +43,18 @@ void StartApplication() {
     
     // Initialize render system
     renderSystem->Initialize(width, height);
+
+	// Set camera as active
+	Scene* scene = renderSystem->GetScene();
+	scene->SetAmbientLight(vector3(1, 1, 1));
+
+	// Create keyboard
+	Keyboard* keyboard = new Keyboard();
+	keyboard->Initialize();
+	inputSystem->RegisterInputDevice(keyboard);
+
+	// Initialize replication system
+	replicationSystem->SetType(REPLICATION_CLIENT);
     
     // Load game.js file
     Script* gamejs = dynamic_cast<Script*>(resourceSystem->LoadResource("game.js", "Script"));
@@ -59,18 +71,6 @@ void StartApplication() {
 	// Call Init() inside JS file
 	clientComponent->AddToSystem();
 	clientComponent->Initialize(clientjs);
-    
-    // Set camera as active
-    Scene* scene = renderSystem->GetScene();
-    scene->SetAmbientLight(vector3(1, 1, 1));
-    
-    // Create keyboard
-    Keyboard* keyboard = new Keyboard();
-    keyboard->Initialize();
-    inputSystem->RegisterInputDevice(keyboard);
-
-	// Initialize replication system
-	replicationSystem->SetType(REPLICATION_CLIENT);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

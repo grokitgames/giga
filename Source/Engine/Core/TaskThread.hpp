@@ -2,7 +2,7 @@
 #ifndef taskthread_hpp
 #define taskthread_hpp
 
-class TaskThread {
+class GIGA_API TaskThread {
 public:
     TaskThread() = default;
     ~TaskThread() = default;

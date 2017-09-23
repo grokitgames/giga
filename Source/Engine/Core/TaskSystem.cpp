@@ -36,7 +36,19 @@ Task* TaskSystem::GetNextTask() {
 void TaskSystem::Execute(TaskPool* pool) {
     m_taskPool = pool;
     m_executing = true;
+
+	// If we haven't created a thread pool, process on the main thread
+	if (m_threads.size() == 0) {
+		Task* task = GetNextTask();
+		while (task) {
+			task->Execute();
+			task = GetNextTask();
+		}
+
+		return;
+	}
     
+	// Otherwise, process on our threads
     while(m_executing) {
         Timer::Sleep(1);
     }

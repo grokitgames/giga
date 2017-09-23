@@ -336,18 +336,15 @@ void ScriptableObjectType::AddToContext(v8::Local<v8::Context> context) {
     v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
     v8::Local<v8::Object> global = isolate->GetCurrentContext()->Global();
     
-    // Get our constructor for this type
-    m_constructor.Reset(isolate, tpl->GetFunction());
-    v8::Local<v8::Function> constructor = m_constructor.Get(isolate);
-    
-    global->Set(v8::String::NewFromUtf8(isolate, m_typeName.c_str()), constructor);
+    global->Set(v8::String::NewFromUtf8(isolate, m_typeName.c_str()), tpl->GetFunction());
 }
 
 v8::Local<v8::Value> ScriptableObjectType::CreateJSObject() {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     
     v8::EscapableHandleScope handle_scope(isolate);
-    v8::Local<v8::Function> constructor = m_constructor.Get(isolate);
+	v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
+	v8::Local<v8::Function> constructor = tpl->GetFunction();
     
     v8::Local<v8::Object> obj = constructor->NewInstance();
     return(handle_scope.Escape(obj));

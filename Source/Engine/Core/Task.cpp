@@ -5,8 +5,16 @@ Task::Task() {
     m_obj = 0;
 }
 
-void Task::Create(Variant *obj, TaskCallbackFn func) {
-    m_obj = obj;
+Task::~Task() {
+	for (size_t i = 0; i < m_args.size(); i++) {
+		delete m_args[i];
+	}
+
+	delete m_obj;
+}
+
+void Task::Create(GigaObject *obj, TaskCallbackFn func) {
+    m_obj = new Variant(obj);
     m_func = func;
 }
 

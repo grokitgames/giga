@@ -2,10 +2,10 @@
 #ifndef taskpool_hpp
 #define taskpool_hpp
 
-class TaskPool {
+class GIGA_API TaskPool {
 public:
     TaskPool() = default;
-    ~TaskPool() = default;
+    ~TaskPool();
     
     /**
      * Add a task to the pool

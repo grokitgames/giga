@@ -2,9 +2,9 @@
 #ifndef tasksystem_hpp
 #define tasksystem_hpp
 
-class TaskSystem : public System {
+class GIGA_API TaskSystem : public System {
 public:
-    TaskSystem();
+	TaskSystem();
     ~TaskSystem() = default;
     
     GIGA_CLASS_NAME("TaskSystem");

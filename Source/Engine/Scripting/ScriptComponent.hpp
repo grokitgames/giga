@@ -75,7 +75,7 @@ public:
     /**
      * Task system integration
      */
-    void Update(Variant* obj, int argc, Variant** argv);
+    static void Update(Variant* obj, int argc, Variant** argv);
     
 protected:
     // Our script

@@ -30,7 +30,7 @@ void ScriptComponent::Initialize(Script* script) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+	v8::Isolate* isolate = v8::Isolate::GetCurrent();
     
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
@@ -142,7 +142,7 @@ void ScriptComponent::Initialize(Script* script) {
 
 			var->value.Reset(isolate, actual);
 
-			m_globals.push_back(var);
+			// m_globals.push_back(var);
         }
         
         if(actual->IsFunction()) {
@@ -158,6 +158,7 @@ void ScriptComponent::Initialize(Script* script) {
     }
     
     context->Exit();
+
     scriptingSystem->SetCurrentScript(0);
 }
 
@@ -169,8 +170,8 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    
+	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
     
@@ -196,8 +197,8 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    
+	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
     
@@ -251,8 +252,8 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    
+	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
     
@@ -300,15 +301,14 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 
 	// Get globals, reset
 	for (size_t i = 0; i < m_globals.size(); i++) {
-		v8::Local<v8::Value> value = globalSpace->Get(context, v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str())).ToLocalChecked();
-		m_globals[i]->value.Reset(isolate, value);
+		//v8::Local<v8::Value> value = globalSpace->Get(context, v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str())).ToLocalChecked();
+		//m_globals[i]->value.Reset(isolate, value);
 	}
     
     free(args);
     
     // Exit context
     context->Exit();
-    
     scriptingSystem->SetCurrentScript(0);
 }
 
@@ -361,7 +361,7 @@ void ScriptComponent::Copy(Component* component) {
 
 		// Set
 		globalSpace->Set(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()), value);
-
+		
 		context->Exit();
 	}
 
@@ -421,4 +421,9 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 			}
 		}
 	}
+}
+
+void ScriptComponent::Update(Variant* obj, int argc, Variant** argv) {
+	ScriptComponent* component = obj->AsObject<ScriptComponent>();
+	component->CallFunction("Update", argc, argv);
 }

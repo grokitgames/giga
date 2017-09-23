@@ -20,6 +20,7 @@ void StartApplication() {
     OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
     MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
     NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
+	TaskSystem* taskSystem = application->CreateSystem<TaskSystem>();
     
     application->Initialize();
     
@@ -71,6 +72,9 @@ void StartApplication() {
 	// Call Init() inside JS file
 	clientComponent->AddToSystem();
 	clientComponent->Initialize(clientjs);
+
+	// Initialize multi-threading BROKEN: V8 multi-threading requires one isolate per thread
+	// taskSystem->Initialize(2);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

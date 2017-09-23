@@ -10,15 +10,15 @@ typedef void(*TaskCallbackFn)(Variant* obj, int argc, Variant** argv);
 /**
  * A single task to be added to a task pool and picked up by a series of threads
  */
-class Task {
+class GIGA_API Task {
 public:
     Task();
-    ~Task() = default;
+    ~Task();
     
     /**
      * Create a new task to be executed
      */
-    void Create(Variant* obj, TaskCallbackFn func);
+    void Create(GigaObject* obj, TaskCallbackFn func);
     
     /**
      * Add argument
@@ -32,7 +32,7 @@ public:
     
 protected:
     TaskCallbackFn m_func;
-    Variant* m_obj;
+	Variant* m_obj;
     std::vector<Variant*> m_args;
 };
 

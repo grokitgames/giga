@@ -14,7 +14,7 @@ ScriptingSystem::~ScriptingSystem() {
         delete i->second;
     }
     
-    m_isolate->Dispose();
+	m_isolate->Dispose();
     v8::V8::ShutdownPlatform();
 }
 
@@ -30,13 +30,13 @@ void ScriptingSystem::Initialize() {
     std::string file = cwd + std::string("/");
     
     v8::V8::InitializeExternalStartupData(file.c_str());
-    
-    v8::Isolate::CreateParams create_params;
-    create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-    m_isolate = v8::Isolate::New(create_params);
-    
-    v8::Isolate::Scope isolate_scope(m_isolate);
-    m_isolate->Enter();
+
+	v8::Isolate::CreateParams create_params;
+	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
+	m_isolate = v8::Isolate::New(create_params);
+
+	v8::Isolate::Scope isolate_scope(m_isolate);
+	m_isolate->Enter();
 }
 
 void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
@@ -89,19 +89,29 @@ void ScriptingSystem::Update(float delta) {
 	std::vector<ScriptComponent*> scripts = m_scripts.GetList();
 	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 
+	TaskPool* pool = new TaskPool();
+
 	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
 		if ((*i)->IsActive() == false) {
 			continue;
 		}
 
-        Variant* parent = new Variant((*i)->GetParent());
+		Variant* parent = new Variant((*i)->GetParent());
 		(*i)->SetGlobal("GameObject", parent);
-		(*i)->CallFunction("Update", 1, &d);
-        
-        delete parent;
+		delete parent;
+
+		Task* task = new Task();
+		task->Create(*i, &ScriptComponent::Update);
+		task->AddArgument(new Variant(delta));
+
+		pool->Push(task);
     }
     
+	TaskSystem* taskSystem = GetSystem<TaskSystem>();
+	taskSystem->Execute(pool);
+
+	delete pool;
     delete d;
 
 	// Garbage collection

@@ -90,8 +90,10 @@ public:
 protected:
     // V8 stuff
     v8::Platform* m_platform;
-    v8::Isolate* m_isolate;
     
+	// Our isolated script environment
+	v8::Isolate* m_isolate;
+
     // Registered script interfaces to C++ objects
     std::vector<ScriptableObjectType*> m_types;
     

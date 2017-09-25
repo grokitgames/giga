@@ -179,6 +179,7 @@
     <ClInclude Include="..\..\Engine\IO\StorableObject.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp" />
+    <ClInclude Include="..\..\Engine\Network\ClientPredictionError.hpp" />
     <ClInclude Include="..\..\Engine\Network\EntitySnapshot.hpp" />
     <ClInclude Include="..\..\Engine\Network\HttpRequest.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\AckMessage.hpp" />

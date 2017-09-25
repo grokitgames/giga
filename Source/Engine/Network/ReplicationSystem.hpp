@@ -3,8 +3,9 @@
 #define replicationsystem_hpp
 
 // The number of seconds to maintain snapshot history for
-#define NETWORK_SNAPSHOT_HISTORY    NETWORK_TICKS_PER_SECOND * 3
-#define NETWORK_SNAPSHOT_RENDER_LAG 2
+#define NETWORK_SNAPSHOT_HISTORY				NETWORK_TICKS_PER_SECOND * 3
+#define NETWORK_SNAPSHOT_RENDER_LAG				2
+#define NETWORK_REPLICATION_CORRECTION_TIME		5
 
 enum {
     REPLICATION_SERVER = 1,
@@ -57,6 +58,12 @@ public:
 	 * Add command to history
 	 */
 	void AddCommand(Command* command);
+
+	/**
+	 * Set command as received
+	 */
+	void SetClientAuthoritative(bool authoritative) { m_clientAuthoritative = authoritative; }
+
     
     /**
      * Scripting integration
@@ -112,7 +119,6 @@ protected:
 
 	// Whether the client is authoritative for the player entity for the time being
 	bool m_clientAuthoritative;
-	int m_nextValidFrame;
 };
 
 #endif

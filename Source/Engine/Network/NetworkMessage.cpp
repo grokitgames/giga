@@ -29,6 +29,7 @@ void NetworkMessage::Initialize(unsigned char* buffer, int size) {
 	reader->Read(&m_envelope.bytes, sizeof(int32_t));
 	reader->Read(&m_envelope.chunkID, sizeof(uint16_t));
 	reader->Read(&m_envelope.end, sizeof(uint16_t));
+	reader->Read(&m_envelope.lastCmd, sizeof(int32_t));
     
     // Otherwise, we have a message to process, read in the rest
     m_payload = (unsigned char*)malloc(m_envelope.bytes);
@@ -60,6 +61,7 @@ unsigned char* NetworkMessage::GetPayload(int &size) {
 	writer->Write(&m_envelope.bytes, sizeof(uint32_t));
 	writer->Write(&m_envelope.chunkID, sizeof(int16_t));
 	writer->Write(&m_envelope.end, sizeof(int16_t));
+	writer->Write(&m_envelope.lastCmd, sizeof(int32_t));
 	writer->Write(m_payload, m_envelope.bytes);
     
 	delete writer;
@@ -84,4 +86,5 @@ void NetworkMessage::Copy(NetworkMessage* copy) {
 
 	unsigned char* payload = (unsigned char*)malloc(m_envelope.bytes);
 	memcpy(payload, m_payload, m_envelope.bytes);
+	copy->SetPayload(payload, m_envelope.bytes);
 }

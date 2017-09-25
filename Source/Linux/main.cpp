@@ -20,6 +20,7 @@ void StartApplication() {
 	RenderSystem* renderSystem = application->CreateSystem<RenderSystem>(20);
 	MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>(20);
 	NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
+	TaskSystem* taskSystem = application->CreateSystem<TaskSystem>();
 
 	application->Initialize();
 
@@ -92,8 +93,8 @@ void StartApplication() {
 		PROFILE_START_FRAME();
 
 		if (saveTimer >= 5.0f) {
-			std::list<Entity*> entityList = entitySystem->GetEntities();
-			std::list<Entity*>::iterator i = entityList.begin();
+			std::vector<Entity*> entityList = entitySystem->GetEntities();
+			std::vector<Entity*>::iterator i = entityList.begin();
 			for (; i != entityList.end(); i++) {
 				loader->SaveRecord(*i);
 

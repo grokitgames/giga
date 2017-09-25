@@ -42,11 +42,11 @@ void CommandMessage::OnReceive() {
 	int tick = networkSystem->GetCurrentTick();
 
 	if (end == 0) {
-		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG;
+		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG + 1;
 		printf("Current tick: %d, setting start to %d\n", tick, start);
 	}
 	else {
-		end = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG + 1;
+		end = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG;
 		printf("Current tick: %d, setting end to %d\n", tick, end);
 	}
 
@@ -63,6 +63,9 @@ void CommandMessage::OnReceive() {
 	command->end = end;
 
 	replicationSystem->AddCommand(command);
+	
+	// Set as last command processed
+	session->lastCommandMessage = m_envelope.id;
 }
 
 void CommandMessage::Initialize(Variant** argv, int argc) {

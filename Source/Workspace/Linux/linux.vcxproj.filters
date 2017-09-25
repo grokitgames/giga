@@ -262,6 +262,18 @@
     <ClCompile Include="..\..\Engine\IO\Directory.cpp">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\Task.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\TaskPool.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\TaskSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\TaskThread.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Engine\Core\Application.hpp">
@@ -546,6 +558,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Engine\IO\Directory.hpp">
       <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\Task.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\TaskPool.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\TaskSystem.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\TaskThread.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\ClientPredictionError.hpp">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,6 @@ ReplicationSystem::ReplicationSystem() {
 	m_replay = false;
 	m_commandTick = 0;
 	m_clientAuthoritative = false;
-	m_nextValidFrame = 0;
 }
 
 ReplicationSystem::~ReplicationSystem() {
@@ -212,7 +211,7 @@ void ReplicationSystem::Update(float delta) {
 
 		// Adjust our tick by a set amount of "render lag" so that we can interpolate
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
-		if (renderTick > m_nextValidFrame && m_nextValidFrame) {
+		if (m_clientAuthoritative && m_lastCommand == 0) {
 			m_clientAuthoritative = false;
 		}
 
@@ -264,7 +263,7 @@ void ReplicationSystem::Update(float delta) {
             // Get the current offset from start tick
             float startTime = (float)startTick / NETWORK_TICKS_PER_SECOND;
             float endTime = (float)endTick / NETWORK_TICKS_PER_SECOND;
-            float currentPos = networkSystem->GetCurrentTime() - (((float)tick - renderTick) / NETWORK_TICKS_PER_SECOND) - startTime;
+            float currentPos = networkSystem->GetCurrentTickTime() - (((float)tick - renderTick) / NETWORK_TICKS_PER_SECOND) - startTime;
             float interpolate = currentPos / (endTime - startTime);
 			if (interpolate < 0) {
 				interpolate = 0;
@@ -328,8 +327,10 @@ void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* n
 
     // Apply changes from the startTick (now in i)
     for(size_t j = 0; j < current->entities.size(); j++) {
-		if (m_clientAuthoritative && current->entities[j]->GetID() == playerID) {
-			continue;
+		if (current->entities[j]->GetID() == playerID) {
+			if (m_clientAuthoritative) {
+				continue;
+			}
 		}
 
         Entity* entity = entitySystem->FindEntity(current->entities[j]->GetID());
@@ -341,30 +342,35 @@ void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* n
         
         std::vector<Component*> components = current->entities[j]->GetComponents();
         for(size_t k = 0; k < components.size(); k++) {
-            Component* component = entity->FindComponent(components[k]->GetTypeID());
-            if(component == 0) {
-				component = components[k]->Clone();
-				component->SetDataMappings();
-				component->SetActive(true);
-				component->AddToSystem();
+			// Apply current frame
+			Component* currentComponent = entity->FindComponent(components[k]->GetTypeID());
+			Component* currentFrameComponent = components[k];
+
+            if(currentComponent == 0) {
+				currentComponent = components[k]->Clone();
+				currentComponent->SetDataMappings();
+				currentComponent->SetActive(true);
+
+				entity->AddComponent(currentComponent);
+				currentComponent->AddToSystem();
             }
 			else {
-				components[k]->Copy(component);
+				currentFrameComponent->Copy(currentComponent);
 			}
             
             // If this same entity is present in the next snapshot, interpolate
             if (next) {
                 for (size_t m = 0; m < next->entities.size(); m++) {
                     if (next->entities[m]->GetID() == current->entities[j]->GetID()) {
-                        Component* updated = next->entities[m]->FindComponent(components[k]->GetTypeID());
-                        if (updated) {
-                            component->Interpolate(updated, interpolate);
+                        Component* nextFrameComponent = next->entities[m]->FindComponent(components[k]->GetTypeID());
+                        if (nextFrameComponent) {
+							currentComponent->Interpolate(currentFrameComponent, nextFrameComponent, interpolate);
                         }
+
+						break;
                     }
                 }
             }
-            
-            entity->AddComponent(component);
         }
     }
 }
@@ -557,8 +563,7 @@ void ReplicationSystem::CommandStartHandler(Event* event) {
 		return;
 	}
 
-	//replicationSystem->m_clientAuthoritative = true;
-	//replicationSystem->m_nextValidFrame = 0;
+	replicationSystem->m_clientAuthoritative = true;
 }
 
 void ReplicationSystem::CommandEndHandler(Event* event) {
@@ -567,15 +572,4 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 	if (replicationSystem->m_type == REPLICATION_SERVER) {
 		return;
 	}
-
-	replicationSystem->m_clientAuthoritative = true;
-
-	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
-	NetworkSession* session = networkSystem->FindSession(0);
-
-	// Get the command object
-	std::vector<EntitySnapshot*>::reverse_iterator i = replicationSystem->m_snapshots.rbegin();
-
-	// Set the next valid received frame to the last tick received + 1.5 round-trip time (RTT)
-	replicationSystem->m_nextValidFrame = (*i)->tick + (ceil(NETWORK_TICKS_PER_SECOND * session->info.pingTime) * 3);
 }

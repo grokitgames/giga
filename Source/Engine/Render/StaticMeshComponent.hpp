@@ -20,7 +20,7 @@ public:
 	/**
 	* Interpolate from another static mesh component
 	*/
-	void Interpolate(Component* component, float amount);
+	void Interpolate(Component* current, Component* next, float amount);
     
     /**
      * Set data bindings

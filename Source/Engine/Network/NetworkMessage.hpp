@@ -22,6 +22,7 @@ public:
         uint32_t id;
         uint16_t type;
         uint32_t session;
+		uint32_t lastCmd;
         uint32_t bytes;
         uint16_t chunkID;
         uint16_t end;
@@ -47,6 +48,11 @@ public:
      * Serialize a message into the payload (called on send)
      */
     virtual void OnSend() = 0;
+
+	/**
+	 * A callback for when the message is acked back
+	 */
+	virtual void OnAck() { }
     
     /**
      * Get a packet with envelope + payload to be sent

@@ -104,6 +104,7 @@ typedef glm::mat4 matrix4;
 #include <Core/TaskPool.hpp>
 #include <Core/TaskThread.hpp>
 #include <Core/TaskSystem.hpp>
+#include <Network/ClientPredictionError.hpp>
 #include <IO/InputDevice.hpp>
 #include <IO/Command.hpp>
 #include <IO/InputSystem.hpp>

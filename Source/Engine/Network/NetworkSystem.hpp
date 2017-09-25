@@ -126,7 +126,7 @@ public:
     /**
      * Get current offset time since start
      */
-    float GetCurrentTime();
+    float GetCurrentTickTime();
     
     /**
      * Get/set server startup time

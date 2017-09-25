@@ -21,6 +21,7 @@ void NetworkSession::Write(NetworkMessage* msg) {
     
     // Set session ID
     env->session = sessionID;
+	env->lastCmd = lastCommandMessage;
     
     // Create payload
     msg->OnSend();

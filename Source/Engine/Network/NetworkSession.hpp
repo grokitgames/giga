@@ -45,6 +45,9 @@ public:
     
     // Last ping time (in ticks)
     int lastPing;
+
+	// Last command message processed
+	int lastCommandMessage;
 };
 
 #endif

@@ -98,15 +98,6 @@ void NetworkSystem::Send(NetworkSession* session, NetworkMessage* msg) {
 	env->tick = GetCurrentTick();
 	env->id = ++m_lastMessageID;
 
-	// If this message requires an ack response, save a copy
-	if (env->flags & NetworkMessage::Flags::FLAG_ACK) {
-		std::map<int, NetworkMessage*(*)()>::iterator it = m_messageTypes.find(env->type);
-		NetworkMessage* copy = it->second();
-		msg->Copy(copy);
-
-		m_acks.push_back(copy);
-	}
-
 	int written = 0;
 
 	if (env->bytes > NETWORK_MAX_PACKET_SIZE) {
@@ -148,6 +139,15 @@ void NetworkSystem::Send(NetworkSession* session, NetworkMessage* msg) {
 	}
 
 	session->Write(msg);
+
+	// If this message requires an ack response, save a copy
+	if (env->flags & NetworkMessage::Flags::FLAG_ACK) {
+		std::map<int, NetworkMessage*(*)()>::iterator it = m_messageTypes.find(env->type);
+		NetworkMessage* copy = it->second();
+		msg->Copy(copy);
+
+		m_acks.push_back(copy);
+	}
 }
 
 void NetworkSystem::Send(NetworkMessage* msg) {
@@ -279,21 +279,21 @@ void NetworkSystem::Update(float delta) {
             // If we're in server mode, check to see if this is a new session
             NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
             NetworkSession* session = FindSession(env->session, socket);
-
-			// If we need an ack, send it
-			if (env->flags & NetworkMessage::Flags::FLAG_ACK) {
-				AckMessage* ack = new AckMessage();
-				ack->messageID = env->id;
-				Send(session, ack);
-
-				printf("Sending ack for message ID %d on session ID %d.\n", env->id, env->session);
-
-				delete ack;
-			}
             
             if(env->bytes == env->end && env->chunkID == 1) {
                 // If this message is a full message, just parse it
                 msg->OnReceive();
+
+				// If we need an ack, send it
+				if (env->flags & NetworkMessage::Flags::FLAG_ACK) {
+					AckMessage* ack = new AckMessage();
+					ack->messageID = env->id;
+					Send(session, ack);
+
+					printf("Sending ack for message ID %d on session ID %d.\n", env->id, env->session);
+
+					delete ack;
+				}
                 delete msg;
             }
 			else {
@@ -448,7 +448,7 @@ int NetworkSystem::GetCurrentTick() {
     return(floor(d * NETWORK_TICKS_PER_SECOND));
 }
 
-float NetworkSystem::GetCurrentTime() {
+float NetworkSystem::GetCurrentTickTime() {
     timespec t;
     Timer::GetTimestamp(&t);
     
@@ -468,6 +468,8 @@ void NetworkSystem::MarkReceived(int sessionID, int messageID) {
 	for (; i != m_acks.end(); i++) {
 		NetworkMessage::NetworkEnvelope* env = (*i)->GetEnvelope();
 		if (env->session == sessionID && env->id == messageID) {
+			(*i)->OnAck();
+
 			delete (*i);
 			m_acks.erase(i);
 

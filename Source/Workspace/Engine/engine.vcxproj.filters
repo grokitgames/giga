@@ -373,6 +373,9 @@
     <ClInclude Include="..\..\Engine\Core\TaskThread.hpp">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Network\ClientPredictionError.hpp">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">

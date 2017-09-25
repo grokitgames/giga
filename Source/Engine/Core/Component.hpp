@@ -4,6 +4,7 @@
 
 class Entity;
 class Component;
+class ClientPredictionError;
 
 /**
  * Internal typedefs for creating and removing components
@@ -59,7 +60,7 @@ public:
     /**
      * Interpolate from another component
      */
-    virtual void Interpolate(Component* component, float amount) { }
+    virtual void Interpolate(Component* current, Component* next, float amount) { }
     
     /**
      * Check whether this component is active or not

@@ -62,15 +62,18 @@ void StaticMeshComponent::Instantiate(Mesh *mesh) {
 	m_initialized = true;
 }
 
-void StaticMeshComponent::Interpolate(Component* component, float amount) {
+void StaticMeshComponent::Interpolate(Component* current, Component* next, float amount) {
 	Transform interpolated;
 
-	StaticMeshComponent* tc = dynamic_cast<StaticMeshComponent*>(component);
-	Transform* newTransform = tc->GetTransform();
+	StaticMeshComponent* currentMesh = (StaticMeshComponent*)current;
+	StaticMeshComponent* nextMesh = (StaticMeshComponent*)next;
 
-	interpolated.position = (m_transform.position * (1.0f - amount)) + (newTransform->position * amount);
-	interpolated.rotation = glm::lerp(m_transform.rotation, newTransform->rotation, amount);
-	interpolated.scaling = (m_transform.scaling * (1.0f - amount)) + (newTransform->scaling * amount);
+	Transform* currentTransform = currentMesh->GetTransform();
+	Transform* nextTransform = nextMesh->GetTransform();
+
+	interpolated.position = (currentTransform->position * (1.0f - amount)) + (nextTransform->position * amount);
+	interpolated.rotation = glm::lerp(currentTransform->rotation, nextTransform->rotation, amount);
+	interpolated.scaling = (currentTransform->scaling * (1.0f - amount)) + (nextTransform->scaling * amount);
 
 	SetTransform(&interpolated);
 }

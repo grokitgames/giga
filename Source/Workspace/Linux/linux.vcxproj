@@ -77,6 +77,10 @@
     <ClCompile Include="..\..\Engine\Core\Event.cpp" />
     <ClCompile Include="..\..\Engine\Core\EventSystem.cpp" />
     <ClCompile Include="..\..\Engine\Core\GigaObject.cpp" />
+    <ClCompile Include="..\..\Engine\Core\Task.cpp" />
+    <ClCompile Include="..\..\Engine\Core\TaskPool.cpp" />
+    <ClCompile Include="..\..\Engine\Core\TaskSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Core\TaskThread.cpp" />
     <ClCompile Include="..\..\Engine\Core\Variant.cpp" />
     <ClCompile Include="..\..\Engine\IO\Command.cpp" />
     <ClCompile Include="..\..\Engine\IO\DataLoader.cpp" />
@@ -161,6 +165,10 @@
     <ClInclude Include="..\..\Engine\Core\GigaObject.hpp" />
     <ClInclude Include="..\..\Engine\Core\ObjectPool.hpp" />
     <ClInclude Include="..\..\Engine\Core\System.hpp" />
+    <ClInclude Include="..\..\Engine\Core\Task.hpp" />
+    <ClInclude Include="..\..\Engine\Core\TaskPool.hpp" />
+    <ClInclude Include="..\..\Engine\Core\TaskSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Core\TaskThread.hpp" />
     <ClInclude Include="..\..\Engine\Core\Variant.hpp" />
     <ClInclude Include="..\..\Engine\giga-engine.h" />
     <ClInclude Include="..\..\Engine\IO\Command.hpp" />
@@ -178,6 +186,7 @@
     <ClInclude Include="..\..\Engine\IO\StorableObject.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectField.hpp" />
     <ClInclude Include="..\..\Engine\IO\StorableObjectType.hpp" />
+    <ClInclude Include="..\..\Engine\Network\ClientPredictionError.hpp" />
     <ClInclude Include="..\..\Engine\Network\EntitySnapshot.hpp" />
     <ClInclude Include="..\..\Engine\Network\HttpRequest.hpp" />
     <ClInclude Include="..\..\Engine\Network\Messages\AckMessage.hpp" />

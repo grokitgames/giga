@@ -62,8 +62,12 @@ public:
 	/**
 	 * Set command as received
 	 */
-	void SetClientAuthoritative(bool authoritative) { m_clientAuthoritative = authoritative; }
+	void SetClientAuthoritative(bool authoritative) { m_clientShouldBeAuthoritative = authoritative; }
 
+	/**
+	 * Find a command
+	 */
+	Command* GetCommand(int entityID, int commandID);
     
     /**
      * Scripting integration
@@ -119,6 +123,7 @@ protected:
 
 	// Whether the client is authoritative for the player entity for the time being
 	bool m_clientAuthoritative;
+	bool m_clientShouldBeAuthoritative;
 };
 
 #endif

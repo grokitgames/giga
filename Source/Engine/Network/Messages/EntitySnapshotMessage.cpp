@@ -17,4 +17,9 @@ void EntitySnapshotMessage::OnReceive() {
 
 	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
 	replicationSystem->AddSnapshot(m_envelope.tick, snapshot);
+
+	// Check if we can make the server authoritative again
+	if (m_envelope.lastCmd >= Command::GetLastCommandID()) {
+		replicationSystem->SetClientAuthoritative(false);
+	}
 }

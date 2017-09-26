@@ -10,7 +10,7 @@ CommandMessage::CommandMessage() {
 void CommandMessage::OnSend() {
 	GIGA_ASSERT(m_command != 0, "Command object not set.");
 
-	unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 4);
+	unsigned char* message = (unsigned char*)malloc(sizeof(uint32_t) * 6);
 
 	int offset = 0;
 	memcpy(message + offset, &m_command->type, sizeof(uint32_t));
@@ -23,19 +23,31 @@ void CommandMessage::OnSend() {
 	offset += sizeof(uint32_t);
 
 	memcpy(message + offset, &m_command->end, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
 
-	SetPayload(message, sizeof(uint32_t) * 4);
+	memcpy(message + offset, &m_command->sessionID, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+
+	memcpy(message + offset, &m_command->commandID, sizeof(uint32_t));
+	offset += sizeof(uint32_t);
+
+	SetPayload(message, sizeof(uint32_t) * 6);
 }
 
 void CommandMessage::OnReceive() {
 	MemoryReader* reader = new MemoryReader();
 	reader->Initialize(m_payload, m_envelope.bytes);
 
-	uint32_t type, entityID, start, end;
+	uint32_t type, entityID, start, end, sessionID, commandID;
 	reader->Read(&type, sizeof(uint32_t));
 	reader->Read(&entityID, sizeof(uint32_t));
 	reader->Read(&start, sizeof(uint32_t));
 	reader->Read(&end, sizeof(uint32_t));
+	reader->Read(&sessionID, sizeof(uint32_t));
+	reader->Read(&commandID, sizeof(uint32_t));
+
+	// Save the original start and end difference
+	int diff = end - start;
 
 	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
 	NetworkSession* session = networkSystem->FindSession(m_envelope.session);
@@ -55,17 +67,27 @@ void CommandMessage::OnReceive() {
 	// Make sure the replication system has been run for this tick
 	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
 
+	// Get the original duration and match it
+	if (end > 0) {
+		// Find the start
+		Command* startCmd = replicationSystem->GetCommand(entityID, commandID);
+		int diffDiff = end - start;
+		if (startCmd) {
+			printf("Adjusting end time on command from %d to %d.\n", end, startCmd->start + diff - 1);
+			end = startCmd->start + diff - 1;
+		}
+	}
+
 	// Save command
 	Command* command = new Command();
 	command->type = type;
 	command->entityID = entityID;
 	command->start = start;
 	command->end = end;
+	command->commandID = commandID;
+	command->sessionID = m_envelope.session;
 
 	replicationSystem->AddCommand(command);
-	
-	// Set as last command processed
-	session->lastCommandMessage = m_envelope.id;
 }
 
 void CommandMessage::Initialize(Variant** argv, int argc) {

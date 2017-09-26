@@ -31,6 +31,11 @@ public:
 	static void RegisterCommandType(std::string name, int typeID);
 
 	/**
+	 * Get current command ID
+	 */
+	static int GetLastCommandID() { return m_lastCommandID; }
+
+	/**
 	 * Scripting integration
 	 */
 	static Variant* RegisterCommandType(Variant* object, int argc, Variant** argv);
@@ -51,6 +56,12 @@ public:
 	// The end time
 	uint32_t end;
 
+	// The session ID
+	uint32_t sessionID;
+
+	// The command ID
+	uint32_t commandID;
+
 protected:
 	struct CommandType {
 		std::string name;
@@ -58,6 +69,8 @@ protected:
 	};
 
 	static std::vector<CommandType*> m_commandTypes;
+
+	static int m_lastCommandID;
 };
 
 #endif

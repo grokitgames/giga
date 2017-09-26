@@ -8,6 +8,7 @@ ReplicationSystem::ReplicationSystem() {
 	m_replay = false;
 	m_commandTick = 0;
 	m_clientAuthoritative = false;
+	m_clientShouldBeAuthoritative = false;
 }
 
 ReplicationSystem::~ReplicationSystem() {
@@ -167,8 +168,14 @@ void ReplicationSystem::Update(float delta) {
 							GIGA_ASSERT(entity != 0, "Entity not found.");
 
 							std::string eventStr = ((*c)->end > 0) ? "COMMAND_END" : "COMMAND_START";
-							printf("Firing %s on entity %d.\n", eventStr.c_str(), (*c)->entityID);
+							printf("Firing command ID %d: %s on entity %d.\n", (*c)->commandID, eventStr.c_str(), (*c)->entityID);
 							EventSystem::Process(new Event(eventStr, (*c), (*c)->entityID));
+
+							// Update last command ID processed
+							if ((*c)->end > 0) {
+								NetworkSession* session = networkSystem->FindSession((*c)->sessionID);
+								session->lastCommandMessage = std::max(session->lastCommandMessage, (int)(*c)->commandID);
+							}
 						}
 					}
 
@@ -211,7 +218,7 @@ void ReplicationSystem::Update(float delta) {
 
 		// Adjust our tick by a set amount of "render lag" so that we can interpolate
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
-		if (m_clientAuthoritative && m_lastCommand == 0) {
+		if (m_clientAuthoritative && m_clientShouldBeAuthoritative == false) {
 			m_clientAuthoritative = false;
 		}
 
@@ -564,6 +571,7 @@ void ReplicationSystem::CommandStartHandler(Event* event) {
 	}
 
 	replicationSystem->m_clientAuthoritative = true;
+	replicationSystem->m_clientShouldBeAuthoritative = true;
 }
 
 void ReplicationSystem::CommandEndHandler(Event* event) {
@@ -572,4 +580,18 @@ void ReplicationSystem::CommandEndHandler(Event* event) {
 	if (replicationSystem->m_type == REPLICATION_SERVER) {
 		return;
 	}
+}
+
+Command* ReplicationSystem::GetCommand(int entityID, int commandID) {
+	std::map<int, CommandTick*>::iterator i = m_commandHistory.begin();
+	for (; i != m_commandHistory.end(); i++) {
+		for (size_t j = 0; j < i->second->commands.size(); j++) {
+			Command* command = i->second->commands[j];
+			if (command->commandID == commandID && command->entityID == entityID) {
+				return(command);
+			}
+		}
+	}
+
+	return(0);
 }

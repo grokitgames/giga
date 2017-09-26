@@ -2,12 +2,15 @@
 #include <giga-engine.h>
 
 std::vector<Command::CommandType*> Command::m_commandTypes;
+int Command::m_lastCommandID = 0;
 
 Command::Command() {
 	type = 0;
 	start = 0;
 	end = 0;
 	entityID = 0;
+	sessionID = 0;
+	commandID = ++m_lastCommandID;
 }
 
 void Command::RegisterCommandType(std::string name, int typeID) {

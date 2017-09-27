@@ -1,6 +1,8 @@
 
 #include <giga-engine.h>
 
+#define STATICMESH_ERROR_MARGIN		0.0001
+
 StaticMeshComponent::StaticMeshComponent() {
     m_mesh = 0;
     m_applyLighting = true;
@@ -76,6 +78,43 @@ void StaticMeshComponent::Interpolate(Component* current, Component* next, float
 	interpolated.scaling = (currentTransform->scaling * (1.0f - amount)) + (nextTransform->scaling * amount);
 
 	SetTransform(&interpolated);
+}
+
+ClientPredictionError* StaticMeshComponent::CheckPredictionError(Component* current) {
+	StaticMeshComponent* currentMesh = (StaticMeshComponent*)current;
+	Transform* currentTransform = currentMesh->GetTransform();
+
+	StaticMeshPredictionError* error = 0;
+	if(fabs(currentTransform->position.x - m_transform.position.x) > STATICMESH_ERROR_MARGIN ||
+		fabs(currentTransform->position.y - m_transform.position.y) > STATICMESH_ERROR_MARGIN ||
+		fabs(currentTransform->position.z - m_transform.position.z) > STATICMESH_ERROR_MARGIN) {
+		// Prediction error
+		error = new StaticMeshPredictionError();
+		error->translation = currentTransform->position - m_transform.position;
+	}
+
+	if (fabs(currentTransform->rotation.x - m_transform.rotation.x) > STATICMESH_ERROR_MARGIN ||
+		fabs(currentTransform->rotation.y - m_transform.rotation.y) > STATICMESH_ERROR_MARGIN ||
+		fabs(currentTransform->rotation.z - m_transform.rotation.z) > STATICMESH_ERROR_MARGIN ||
+		fabs(currentTransform->rotation.w - m_transform.rotation.w) > STATICMESH_ERROR_MARGIN) {
+		// Prediction error
+		if (error == 0) {
+			error = new StaticMeshPredictionError();
+		}
+
+		error->rotation = glm::inverse(currentTransform->rotation) * m_transform.rotation;
+	}
+
+	return(error);
+}
+
+void StaticMeshComponent::AdjustForPredictionError(ClientPredictionError* error, float interpolation) {
+	StaticMeshPredictionError* sterror = (StaticMeshPredictionError*)error;
+	m_transform.position -= sterror->translation + (sterror->translation * interpolation);
+
+	quaternion origRot = m_transform.rotation;
+	m_transform.rotation *= glm::inverse(sterror->rotation);
+	m_transform.rotation *= glm::lerp(origRot, origRot * sterror->rotation, interpolation);
 }
 
 void StaticMeshComponent::UpdateBoundingBox() {

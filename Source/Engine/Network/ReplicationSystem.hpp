@@ -124,6 +124,10 @@ protected:
 	// Whether the client is authoritative for the player entity for the time being
 	bool m_clientAuthoritative;
 	bool m_clientShouldBeAuthoritative;
+	bool m_checkPredictionErrors;
+
+	// A list of on-going prediction error corrections
+	std::vector<ClientPredictionError*> m_predictionErrors;
 };
 
 #endif

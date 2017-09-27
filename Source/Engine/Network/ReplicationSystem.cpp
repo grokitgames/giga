@@ -9,6 +9,7 @@ ReplicationSystem::ReplicationSystem() {
 	m_commandTick = 0;
 	m_clientAuthoritative = false;
 	m_clientShouldBeAuthoritative = false;
+	m_checkPredictionErrors = false;
 }
 
 ReplicationSystem::~ReplicationSystem() {
@@ -186,7 +187,6 @@ void ReplicationSystem::Update(float delta) {
 					application->Update(newDelta);
 					
 					networkSystem->SetTick(0);
-					tick = networkSystem->GetCurrentTick();
 				}
 
 				m_replay = false;
@@ -220,6 +220,7 @@ void ReplicationSystem::Update(float delta) {
 		int renderTick = tick - NETWORK_SNAPSHOT_RENDER_LAG;
 		if (m_clientAuthoritative && m_clientShouldBeAuthoritative == false) {
 			m_clientAuthoritative = false;
+			m_checkPredictionErrors = true;
 		}
 
         // If we are not yet initialized, check for a full snapshot first
@@ -362,6 +363,17 @@ void ReplicationSystem::ApplySnapshot(EntitySnapshot* current, EntitySnapshot* n
 				currentComponent->AddToSystem();
             }
 			else {
+				if (m_checkPredictionErrors) {
+					ClientPredictionError* error = currentComponent->CheckPredictionError(currentFrameComponent);
+					if (error) {
+						error->componentTypeID = currentComponent->GetTypeID();
+						error->startTick = current->tick;
+						error->endTick = current->tick + NETWORK_REPLICATION_CORRECTION_TIME;
+						error->entityID = entity->GetID();
+
+						m_predictionErrors.push_back(error);
+					}
+				}
 				currentFrameComponent->Copy(currentComponent);
 			}
             

@@ -10,8 +10,6 @@ public:
 	ClientPredictionError() = default;
 	~ClientPredictionError() = default;
 
-	virtual void Apply(float interpolation) = 0;
-
 public:
 	int startTick;
 	int endTick;

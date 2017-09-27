@@ -61,6 +61,8 @@ public:
      * Interpolate from another component
      */
     virtual void Interpolate(Component* current, Component* next, float amount) { }
+	virtual ClientPredictionError* CheckPredictionError(Component* current) { return(0); }
+	virtual void AdjustForPredictionError(ClientPredictionError* error, float interpolation) { };
     
     /**
      * Check whether this component is active or not

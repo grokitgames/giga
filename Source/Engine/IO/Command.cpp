@@ -32,7 +32,6 @@ void Command::RegisterCommandType(std::string name, int typeID) {
 void Command::Start() {
 	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
 	int tick = networkSystem->GetCurrentTick();
-	tick -= NETWORK_SNAPSHOT_RENDER_LAG;
 
 	start = tick;
 	EventSystem::Process(new Event("COMMAND_START", this, entityID));
@@ -41,7 +40,6 @@ void Command::Start() {
 void Command::End() {
 	NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
 	int tick = networkSystem->GetCurrentTick();
-	tick -= NETWORK_SNAPSHOT_RENDER_LAG;
 
 	end = tick;
 	EventSystem::Process(new Event("COMMAND_END", this, entityID));

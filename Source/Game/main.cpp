@@ -85,13 +85,14 @@ void StartApplication() {
     while(window->IsClosing() == false) {
         PROFILE_START_FRAME();
 
+		delta = mainTimer->Duration();
+		mainTimer->Reset();
+		//delta = remainderf(delta, 0.05);
+
         application->Update(delta);
         
         window->SwapBuffer();
         window->ProcessEvents();
-        
-        delta = mainTimer->Duration();
-        mainTimer->Reset();
         
         PROFILE_END_FRAME();
         Timer::Sleep(1);

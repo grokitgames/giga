@@ -89,7 +89,7 @@ void ScriptingSystem::Update(float delta) {
 	std::vector<ScriptComponent*> scripts = m_scripts.GetList();
 	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 
-	TaskPool* pool = new TaskPool();
+	/*TaskPool* pool = new TaskPool();
 
 	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
@@ -111,7 +111,19 @@ void ScriptingSystem::Update(float delta) {
 	TaskSystem* taskSystem = GetSystem<TaskSystem>();
 	taskSystem->Execute(pool);
 
-	delete pool;
+	delete pool;*/
+	for (i; i != scripts.end(); i++) {
+		// Make sure this component is active
+		if ((*i)->IsActive() == false) {
+			continue;
+		}
+
+		Variant* parent = new Variant((*i)->GetParent());
+		(*i)->SetGlobal("GameObject", parent);
+
+		(*i)->CallFunction("Update", 1, &d);
+	}
+
     delete d;
 
 	// Garbage collection

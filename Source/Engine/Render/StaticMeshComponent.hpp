@@ -11,6 +11,15 @@ public:
     ~StaticMeshComponent();
     
     GIGA_CLASS_NAME("StaticMeshComponent");
+
+	class StaticMeshPredictionError : public ClientPredictionError {
+	public:
+		StaticMeshPredictionError() = default;
+		~StaticMeshPredictionError() = default;
+
+		vector3 translation;
+		quaternion rotation;
+	};
     
     /**
      * Instantiate an instance from a mesh
@@ -21,6 +30,8 @@ public:
 	* Interpolate from another static mesh component
 	*/
 	void Interpolate(Component* current, Component* next, float amount);
+	ClientPredictionError* CheckPredictionError(Component* current);
+	void AdjustForPredictionError(ClientPredictionError* error, float interpolation);
     
     /**
      * Set data bindings

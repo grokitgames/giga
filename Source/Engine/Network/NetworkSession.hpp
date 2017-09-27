@@ -15,6 +15,10 @@ struct GIGA_API NetworkConnectionInfo {
 	// Last few ping times
 	float pingTimes[10];
 	int pingIndex;
+
+	// Client offset times
+	float offsetTimes[10];
+	int offsetIndex;
 };
 
 /**

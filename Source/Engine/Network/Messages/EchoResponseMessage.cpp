@@ -75,8 +75,24 @@ void EchoResponseMessage::OnReceive() {
     NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
     NetworkSession* session = networkSystem->FindSession(m_envelope.session);
     
+	float pingTime = rtt / 2.0f;
+	session->info.pingTimes[session->info.pingIndex] = pingTime;
+	session->info.pingIndex = (session->info.pingIndex + 1) % 10;
+
+	// Determine average ping time
+	float avgPingTime = 0.0f;
+	int counter = 0;
+	for (int i = 0; i < 10; i++) {
+		if (session->info.pingTimes[i] > 0) {
+			avgPingTime += session->info.pingTimes[i];
+			counter++;
+		}
+	}
+	avgPingTime /= counter;
+	session->info.pingTime = avgPingTime;
+
     // Update properties (round trip time / 2.0)
-    session->info.pingTime = rtt / 2.0f;
+    // session->info.pingTime = rtt / 2.0f;
     
     // Use the ping time to figure out the client offset
     timespec serverTime;
@@ -87,11 +103,28 @@ void EchoResponseMessage::OnReceive() {
     timespec offset = Timer::Diff(&serverTime, &now);
     float diff = (float)offset.tv_sec + ((float)offset.tv_nsec / 1000000000.0f);
     
-    // Minus the ping time
+	float offsetValue = diff - session->info.pingTime;
+	session->info.offsetTimes[session->info.offsetIndex] = offsetValue;
+	session->info.offsetIndex = (session->info.offsetIndex + 1) % 10;
+
+	// Determine average client offset
+	float avgClientOffset = 0.0f;
+	counter = 0;
+	for (int i = 0; i < 10; i++) {
+		if (session->info.offsetTimes[i] > 0) {
+			avgClientOffset += session->info.offsetTimes[i];
+			counter++;
+		}
+	}
+
+	avgClientOffset /= counter;
+	session->info.clientTimeDiff = avgClientOffset;
+
+    /* Minus the ping time
     float d = diff - session->info.pingTime;
 	if (session->info.clientTimeDiff == 0) {
 		session->info.clientTimeDiff = d;
-	}
+	}*/
     
     // Save the start time
     timespec startTime;

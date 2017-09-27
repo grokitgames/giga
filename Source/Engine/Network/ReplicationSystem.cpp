@@ -158,7 +158,7 @@ void ReplicationSystem::Update(float delta) {
 				// Loop over all ticks since then, replaying events
 				m_replay = true;
 				Application* application = Application::GetInstance();
-				for (int t = m_commandTick; t <= tick; t++) {
+				for (int t = m_commandTick; t < tick; t++) {
 					std::map<int, CommandTick*>::iterator ct = m_commandHistory.find(t);
 
 					if (ct != m_commandHistory.end()) {

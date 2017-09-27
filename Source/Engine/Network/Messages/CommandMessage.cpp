@@ -74,7 +74,7 @@ void CommandMessage::OnReceive() {
 		int diffDiff = end - start;
 		if (startCmd) {
 			printf("Adjusting end time on command from %d to %d.\n", end, startCmd->start + diff);
-			//end = startCmd->start + diff;
+			end = startCmd->start + diff;
 		}
 	}
 

@@ -19,7 +19,7 @@ void Transform::Move(vector3 translation) {
 	char buffer[1000];
 	sprintf(buffer, "%d: Translating to (%.2f, %.2f, %.2f)\n", tick, position.x, position.y, position.z);
 	printf(buffer);
-	//OutputDebugString(buffer);
+	OutputDebugString(buffer);
 	if (m_component) m_component->MarkUpdated(true);
 }
 

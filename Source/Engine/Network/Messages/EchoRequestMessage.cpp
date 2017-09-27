@@ -79,11 +79,28 @@ void EchoRequestMessage::OnReceive() {
 	avgPingTime /= counter;
 	session->info.pingTime = avgPingTime;
 
-	if (session->info.clientTimeDiff == 0) {
-		session->info.clientTimeDiff = (float)clientOffset / 1000.0f;
+	float offsetValue = (float)clientOffset / 1000.0f;
+	session->info.offsetTimes[session->info.offsetIndex] = offsetValue;
+	session->info.offsetIndex = (session->info.offsetIndex + 1) % 10;
+
+	// Determine average client offset
+	float avgClientOffset = 0.0f;
+	counter = 0;
+	for (int i = 0; i < 10; i++) {
+		if (session->info.offsetTimes[i] > 0) {
+			avgClientOffset += session->info.offsetTimes[i];
+			counter++;
+		}
 	}
 
-	printf("Client ping time: %d ms (%f avg), offset %d ms\n", clientPing, avgPingTime * 1000.0f, clientOffset);
+	avgClientOffset /= counter;
+	session->info.clientTimeDiff = avgClientOffset;
+
+	/*if (session->info.clientTimeDiff == 0) {
+		session->info.clientTimeDiff = (float)clientOffset / 1000.0f;
+	}*/
+
+	printf("Client ping time: %d ms (%f avg), offset %d ms\n", clientPing, avgPingTime * 1000.0f, avgClientOffset * 1000.0f);
 
 	// Queue up a full snapshot
 	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();

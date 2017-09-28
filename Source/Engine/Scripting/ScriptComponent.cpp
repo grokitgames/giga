@@ -7,11 +7,6 @@ ScriptComponent::ScriptComponent() {
 }
 
 ScriptComponent::~ScriptComponent() {
-    for(size_t i = 0; i < m_functions.size(); i++) {
-		m_functions[i]->func.Reset();
-        delete m_functions[i];
-    }
-
 	// Delete event handlers
 	for (size_t i = 0; i < m_eventHandlers.size(); i++) {
 		delete m_eventHandlers[i];
@@ -128,20 +123,6 @@ void ScriptComponent::Initialize(Script* script) {
 		std::map<std::string, ScriptableVariant*>::iterator g = globals.find(*name);
 		std::vector<std::string>::iterator ii = std::find(interfaceNames.begin(), interfaceNames.end(), *name);
         if(g == globals.end() && ii == interfaceNames.end() && typeStr != "function") {
-			ScriptVariable* var = 0;
-			for (size_t i = 0; i < m_globals.size(); i++) {
-				if (m_globals[i]->name == *name) {
-					var = m_globals[i];
-				}
-			}
-
-			if (var == 0) {
-				var = new ScriptVariable();
-				var->name = *name;
-			}
-
-			var->value.Reset(isolate, actual);
-
 			// m_globals.push_back(var);
         }
         
@@ -149,11 +130,7 @@ void ScriptComponent::Initialize(Script* script) {
             v8::Local<v8::Function> func = actual.As<v8::Function>();
             v8::String::Utf8Value funcName(func->GetName());
             
-            ScriptFunction* cached = new ScriptFunction();
-            cached->name = std::string(*funcName);
-            cached->func.Reset(isolate, func);
-            
-            m_functions.push_back(cached);
+            m_functions.push_back(*funcName);
         }
     }
     
@@ -211,22 +188,8 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     
     // Get into our global namespace
     v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
-    
-	ScriptVariable* var = 0;
-	for (size_t i = 0; i < m_globals.size(); i++) {
-		if (m_globals[i]->name == name) {
-			var = m_globals[i];
-		}
-	}
-
-	if (var == 0) {
-		var = new ScriptVariable();
-		var->name = name;
-		m_globals.push_back(var);
-	}
 
 	ScriptableVariant* sv = (ScriptableVariant*)value;
-	var->value.Reset(isolate, sv->GetValue());
 	globalSpace->Set(v8::String::NewFromUtf8(isolate, name.c_str()), sv->GetValue());
     
     // Exit
@@ -242,7 +205,7 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 	// Check to ensure this function exists
 	bool exists = false;
 	for (size_t i = 0; i < m_functions.size(); i++) {
-		if (m_functions[i]->name == function) {
+		if (m_functions[i] == function) {
 			exists = true;
 		}
 	}
@@ -338,39 +301,11 @@ void ScriptComponent::Copy(Component* component) {
 	v8::TryCatch try_catch(isolate);
 
 	for (size_t i = 0; i < m_globals.size(); i++) {
-		// Get our context
-		v8::Local<v8::Context> context = m_context.Get(isolate);
-
-		// Enter our context
-		context->Enter();
-
-		// Get our global object space and start adding stuff to it
-		v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
-
 		clone->m_globals.push_back(m_globals[i]);
-		v8::Local<v8::Value> value = globalSpace->Get(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()));
-
-		// Exit context
-		context->Exit();
-
-		context = clone->m_context.Get(isolate);
-
-		// Enter our context
-		context->Enter();
-		globalSpace = isolate->GetCurrentContext()->Global();
-
-		// Set
-		globalSpace->Set(v8::String::NewFromUtf8(isolate, m_globals[i]->name.c_str()), value);
-		
-		context->Exit();
 	}
 
 	for (size_t i = 0; i < m_functions.size(); i++) {
-		ScriptFunction* func = new ScriptFunction();
-		func->func = m_functions[i]->func;
-		func->name = m_functions[i]->name;
-
-		clone->m_functions.push_back(func);
+		clone->m_functions.push_back(m_functions[i]);
 	}
 
 	for (size_t i = 0; i < m_eventHandlers.size(); i++) {
@@ -423,7 +358,12 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 	}
 }
 
-void ScriptComponent::Update(Variant* obj, int argc, Variant** argv) {
+void ScriptComponent::Update(int threadID, Variant* obj, int argc, Variant** argv) {
+	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+	scriptingSystem->EnterIsolate(threadID);
+
 	ScriptComponent* component = obj->AsObject<ScriptComponent>();
 	component->CallFunction("Update", argc, argv);
+
+	scriptingSystem->ExitIsolate(threadID);
 }

@@ -11,19 +11,6 @@ public:
     ~ScriptComponent();
     
     GIGA_CLASS_NAME("ScriptComponent");
-    
-    /**
-     * A cached/linked function from the script
-     */
-    struct ScriptFunction {
-        std::string name;
-        v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> func;
-    };
-
-	struct ScriptVariable {
-		std::string name;
-		v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>> value;
-	};
 
 	// The storage of an event handler
 	struct ScriptEventHandler {
@@ -75,7 +62,7 @@ public:
     /**
      * Task system integration
      */
-    static void Update(Variant* obj, int argc, Variant** argv);
+    static void Update(int threadID, Variant* obj, int argc, Variant** argv);
     
 protected:
     // Our script
@@ -88,10 +75,10 @@ protected:
     v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>> m_context;
     
     // List of functions from inside of the script
-    std::vector<ScriptFunction*> m_functions;
+    std::vector<std::string> m_functions;
     
     // List of accessible (undefined) global variables
-    std::vector<ScriptVariable*> m_globals;
+    std::vector<std::string> m_globals;
 
 	// Registered event handlers from scripts
 	std::vector<ScriptEventHandler*> m_eventHandlers;

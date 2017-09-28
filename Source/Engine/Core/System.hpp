@@ -10,6 +10,11 @@ public:
      * Overridable initialization function
      */
     virtual void Initialize() { }
+
+	/**
+	 * Thread specific initialization
+	 */
+	virtual void InitializeThread(int threadID) { }
     
     /**
      * Overridable update function (called once per frame)

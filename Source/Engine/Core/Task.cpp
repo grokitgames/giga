@@ -18,8 +18,8 @@ void Task::Create(GigaObject *obj, TaskCallbackFn func) {
     m_func = func;
 }
 
-void Task::Execute() {
-    m_func(m_obj, m_args.size(), m_args.data());
+void Task::Execute(int threadID) {
+    m_func(threadID, m_obj, m_args.size(), m_args.data());
 }
 
 void Task::AddArgument(Variant* arg) {

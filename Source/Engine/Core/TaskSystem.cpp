@@ -41,7 +41,7 @@ void TaskSystem::Execute(TaskPool* pool) {
 	if (m_threads.size() == 0) {
 		Task* task = GetNextTask();
 		while (task) {
-			task->Execute();
+			task->Execute(0);
 			task = GetNextTask();
 		}
 

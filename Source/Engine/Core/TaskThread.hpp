@@ -4,7 +4,7 @@
 
 class GIGA_API TaskThread {
 public:
-    TaskThread() = default;
+    TaskThread();
     ~TaskThread() = default;
     
     /**
@@ -14,11 +14,14 @@ public:
     
 protected:
     // Internal run function
-    static void Run();
+    static void Run(TaskThread* thread);
     
 protected:
     // Internal thread
     std::thread m_thread;
+
+	// Thread ID
+	int threadID;
 };
 
 #endif

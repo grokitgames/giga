@@ -14,7 +14,11 @@ ScriptingSystem::~ScriptingSystem() {
         delete i->second;
     }
     
-	m_isolate->Dispose();
+	std::map<int, v8::Isolate*>::iterator i = m_isolates.begin();
+	for (; i != m_isolates.end(); i++) {
+		m_isolates[i->first]->Dispose();
+	}
+
     v8::V8::ShutdownPlatform();
 }
 
@@ -33,10 +37,21 @@ void ScriptingSystem::Initialize() {
 
 	v8::Isolate::CreateParams create_params;
 	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-	m_isolate = v8::Isolate::New(create_params);
+	m_isolates[0] = v8::Isolate::New(create_params);
+	m_isolates[0]->Enter();
+}
 
-	v8::Isolate::Scope isolate_scope(m_isolate);
-	m_isolate->Enter();
+void ScriptingSystem::InitializeThread(int threadID) {
+	if (threadID == 0) {
+		return;
+	}
+
+	v8::Isolate::CreateParams create_params;
+	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
+	v8::Isolate* isolate = v8::Isolate::New(create_params);
+
+	m_isolates[threadID] = isolate;
+	m_locks[threadID] = 0;
 }
 
 void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
@@ -126,10 +141,6 @@ void ScriptingSystem::Update(float delta) {
 
     delete d;
 
-	// Garbage collection
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
-	isolate->IdleNotification(1.0f / NETWORK_TICKS_PER_SECOND * 1000.0f);
-
 	// Remove any transient variables marked for deletion
 	std::vector<ScriptableObject*> transients = m_transients.GetList();
 	std::vector<ScriptableObject*>::iterator i2 = transients.begin();
@@ -160,4 +171,12 @@ void ScriptingSystem::RemoveScriptComponent(Component* component) {
 
 void ScriptingSystem::AddTransient(ScriptableObject* object) {
 	m_transients.AddObject(object);
+}
+
+void ScriptingSystem::EnterIsolate(int threadID) {
+	m_isolates[threadID]->Enter();
+}
+
+void ScriptingSystem::ExitIsolate(int threadID) {
+	m_isolates[threadID]->Exit();
 }

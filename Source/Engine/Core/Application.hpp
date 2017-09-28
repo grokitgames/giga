@@ -28,6 +28,11 @@ public:
      * Initialize our application's default systems (must be called at the beginning of application)
      */
     void Initialize();
+
+	/**
+	 * Initialize per-thread specific resources
+	 */
+	void InitializeThread();
     
     /**
      * Get/set window if we created one in our application
@@ -55,8 +60,6 @@ public:
                 GIGA_ASSERT(false, "System type already registed.");
             }
         }
-        
-        sys->Initialize();
         
         RegisteredSystem* rs = new RegisteredSystem();
         rs->tickRate = tickRate;

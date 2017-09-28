@@ -16,6 +16,7 @@ public:
      * Initialize scripting system
      */
     void Initialize();
+	void InitializeThread(int threadID);
     
     /**
      * Update loop
@@ -86,13 +87,20 @@ public:
 	 * Add a transient JS object (can be garbage collected)
 	 */
 	void AddTransient(ScriptableObject* object);
+
+	/**
+	 * Enter a thread specific environment
+	 */
+	void EnterIsolate(int threadID);
+	void ExitIsolate(int threadID);
     
 protected:
     // V8 stuff
     v8::Platform* m_platform;
     
 	// Our isolated script environment
-	v8::Isolate* m_isolate;
+	std::map<int, v8::Isolate*> m_isolates;
+	std::map<int, v8::Locker*> m_locks;
 
     // Registered script interfaces to C++ objects
     std::vector<ScriptableObjectType*> m_types;

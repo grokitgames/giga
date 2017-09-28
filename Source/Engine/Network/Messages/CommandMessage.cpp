@@ -67,14 +67,27 @@ void CommandMessage::OnReceive() {
 	// Make sure the replication system has been run for this tick
 	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
 
-	// Get the original duration and match it
-	if (end > 0) {
+	// If this is a start command, make sure the end hasn't already been received
+	if (end == 0) {
 		// Find the start
+		Command* endCmd = replicationSystem->GetCommand(entityID, commandID);
+		if (endCmd) {
+			return;
+		}
+	}
+	else {
+		// If this is an end command and we don't have a start command, insert it twice
 		Command* startCmd = replicationSystem->GetCommand(entityID, commandID);
-		int diffDiff = end - start;
-		if (startCmd) {
-			//printf("Adjusting end time on command from %d to %d.\n", end, startCmd->start + diff);
-			//end = startCmd->start + diff;
+		if (startCmd == 0) {
+			Command* command = new Command();
+			command->type = type;
+			command->entityID = entityID;
+			command->start = end - 1;
+			command->end = 0;
+			command->commandID = commandID;
+			command->sessionID = m_envelope.session;
+
+			replicationSystem->AddCommand(command);
 		}
 	}
 

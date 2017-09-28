@@ -35,6 +35,9 @@ void Command::Start() {
 
 	start = tick;
 	EventSystem::Process(new Event("COMMAND_START", this, entityID));
+
+	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
+	replicationSystem->StartCommand(this);
 }
 
 void Command::End() {
@@ -43,6 +46,9 @@ void Command::End() {
 
 	end = tick;
 	EventSystem::Process(new Event("COMMAND_END", this, entityID));
+
+	ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
+	replicationSystem->EndCommand(this);
 }
 
 void Command::Initialize(Variant** argv, int argc) {

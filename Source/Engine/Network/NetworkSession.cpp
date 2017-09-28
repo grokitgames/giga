@@ -7,6 +7,7 @@ NetworkSession::NetworkSession() {
     playerID = 0;
     memset(&info, 0, sizeof(NetworkConnectionInfo));
     lastPing = 0;
+	lastCommandMessage = 0;
 }
 
 NetworkSession::~NetworkSession() {

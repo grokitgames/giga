@@ -54,7 +54,7 @@ void CommandMessage::OnReceive() {
 	int tick = networkSystem->GetCurrentTick();
 
 	if (end == 0) {
-		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG + 1;
+		start = tick - floor(NETWORK_TICKS_PER_SECOND * session->info.pingTime) - NETWORK_SNAPSHOT_RENDER_LAG;
 		printf("Current tick: %d, setting start to %d\n", tick, start);
 	}
 	else {
@@ -73,8 +73,8 @@ void CommandMessage::OnReceive() {
 		Command* startCmd = replicationSystem->GetCommand(entityID, commandID);
 		int diffDiff = end - start;
 		if (startCmd) {
-			printf("Adjusting end time on command from %d to %d.\n", end, startCmd->start + diff);
-			end = startCmd->start + diff;
+			//printf("Adjusting end time on command from %d to %d.\n", end, startCmd->start + diff);
+			//end = startCmd->start + diff;
 		}
 	}
 

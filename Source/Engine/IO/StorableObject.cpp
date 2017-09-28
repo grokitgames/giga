@@ -405,6 +405,7 @@ void StorableObject::CopyStorableObject(StorableObject* other) {
 	for (std::map<std::string, int>::iterator i = other->m_foreignKeyFields.begin(); i != other->m_foreignKeyFields.end(); i++) {
 		m_foreignKeyFields[i->first] = other->m_foreignKeyFields[i->first];
 	}
+	GIGA_ASSERT(other->m_foreignKeyFields.size() == m_foreignKeyFields.size(), "Copy error.");
 
 	// Mark the record as deleted
 	m_recordDeleted = other->m_recordDeleted;

@@ -60,9 +60,15 @@ public:
 	void AddCommand(Command* command);
 
 	/**
+	 * Start command
+	 */
+	void StartCommand(Command* command);
+	void EndCommand(Command* command);
+
+	/**
 	 * Set command as received
 	 */
-	void SetClientAuthoritative(bool authoritative) { m_clientShouldBeAuthoritative = authoritative; }
+	void SetClientAuthoritative(bool authoritative);
 
 	/**
 	 * Find a command
@@ -101,7 +107,7 @@ protected:
 	std::map<int, CommandTick*> m_commandHistory;
     
     // Currently open commands
-    std::vector<Command*> m_commands;
+    std::vector<Command*> m_activeCommands;
 	
 	// The tick we need to roll back to for any new commands
 	int m_commandTick;

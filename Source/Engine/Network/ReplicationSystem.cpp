@@ -558,6 +558,28 @@ void ReplicationSystem::AddCommand(Command* command) {
 	}
 }
 
+void ReplicationSystem::StartCommand(Command* command) {
+	m_activeCommands.push_back(command);
+}
+
+void ReplicationSystem::EndCommand(Command* command) {
+	std::vector<Command*>::iterator i = m_activeCommands.begin();
+	for (; i != m_activeCommands.end(); i++) {
+		if ((*i) == command) {
+			m_activeCommands.erase(i);
+			return;
+		}
+	}
+}
+
+void ReplicationSystem::SetClientAuthoritative(bool authoritative) {
+	if (m_activeCommands.size() > 0) {
+		return;
+	}
+
+	m_clientShouldBeAuthoritative = authoritative; 
+}
+
 Variant* ReplicationSystem::SendCommand(Variant* object, int argc, Variant** argv) {
     GIGA_ASSERT(argc == 1, "SendComand expects one argument.");
     GIGA_ASSERT(argv[0]->IsObject(), "First argument should be a command object.");

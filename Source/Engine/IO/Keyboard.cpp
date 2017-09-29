@@ -33,6 +33,7 @@ void Keyboard::Initialize() {
     
     // Get our scripting system and register globals
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+	scriptingSystem->EnterIsolate(0);
     
     // Keyboard
     ScriptableObjectType* keyboardType = new ScriptableObjectType("Keyboard");
@@ -118,6 +119,8 @@ void Keyboard::Initialize() {
     scriptingSystem->RegisterGlobal("KEY_CODE_ESCAPE", new Variant(GLFW_KEY_ESCAPE));
     scriptingSystem->RegisterGlobal("KEY_CODE_APOSTROPHE", new Variant(GLFW_KEY_APOSTROPHE));
     scriptingSystem->RegisterGlobal("KEY_CODE_PRINT_SCREEN", new Variant(GLFW_KEY_PRINT_SCREEN));
+
+	scriptingSystem->ExitIsolate(0);
 }
 
 void Keyboard::ProcessAction(int key, int action) {

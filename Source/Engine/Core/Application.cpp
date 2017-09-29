@@ -144,12 +144,12 @@ void Application::Initialize() {
 
 	Application::Log(MSGTYPE_DEBUG, "Registered storable types...");
 
-	InitializeThread();
+	InitializeThread(0);
     
     Application::Log(MSGTYPE_INFO, "Initialization complete.");
 }
 
-void Application::InitializeThread() {
+void Application::InitializeThread(int threadID) {
 	/**
 	* Scripting interfaces
 	*/
@@ -157,6 +157,7 @@ void Application::InitializeThread() {
 	Application::Log(MSGTYPE_DEBUG, "Registering scripting types...");
 
 	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+	scriptingSystem->EnterIsolate(threadID);
 
 	/**
 	* Base
@@ -373,6 +374,17 @@ void Application::InitializeThread() {
 
 	scriptingSystem->RegisterScriptableObjectType<CameraComponent>(cameraType);
 
+	// Render system
+	ScriptableObjectType* renderSystemType = new ScriptableObjectType("RenderSystem");
+	renderSystemType->SetStatic(true, this);
+	renderSystemType->AddStaticFunction("GetWindowWidth", &RenderSystem::GetWindowWidth);
+	renderSystemType->AddStaticFunction("GetWindowHeight", &RenderSystem::GetWindowHeight);
+	renderSystemType->AddStaticFunction("SetActiveCamera", &RenderSystem::SetActiveCamera);
+
+	scriptingSystem->RegisterScriptableObjectType<RenderSystem>(renderSystemType);
+
+	scriptingSystem->ExitIsolate(threadID);
+
 	Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
 }
 
@@ -469,6 +481,15 @@ void Application::Log(int type, std::string message, std::string details) {
 
 void Application::LogError(Error* error) {
     Application::Log(error->GetType(), error->GetMsg(), error->GetDetails());
+}
+
+std::vector<System*> Application::GetSystems() {
+	std::vector<System*> systems;
+	for (size_t i = 0; i < m_systems.size(); i++) {
+		systems.push_back(m_systems[i]->system);
+	}
+
+	return(systems);
 }
 
 Variant* Application::Log(Variant* object, int argc, Variant** argv) {

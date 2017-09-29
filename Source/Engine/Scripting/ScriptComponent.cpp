@@ -289,17 +289,6 @@ void ScriptComponent::Copy(Component* component) {
 	clone->m_script = m_script;
 	clone->m_initialized = m_initialized;
 
-	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-	scriptingSystem->SetCurrentScript(this);
-
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
-
-	// Create a stack-allocated handle scope.
-	v8::HandleScope handle_scope(isolate);
-
-	// Catch any errors the script might throw
-	v8::TryCatch try_catch(isolate);
-
 	for (size_t i = 0; i < m_globals.size(); i++) {
 		clone->m_globals.push_back(m_globals[i]);
 	}
@@ -316,8 +305,6 @@ void ScriptComponent::Copy(Component* component) {
 
 		clone->m_eventHandlers.push_back(handler);
 	}
-
-	scriptingSystem->SetCurrentScript(0);
 }
 
 void ScriptComponent::SetDataMappings() {
@@ -335,11 +322,15 @@ void ScriptComponent::RegisterEventHandler(std::string type, std::string func, i
 }
 
 void ScriptComponent::ProcessEvent(Event* ev) {
+	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+
 	std::string type = ev->GetType();
 	for (size_t i = 0; i < m_eventHandlers.size(); i++) {
 		if (m_eventHandlers[i]->type == type) {
 			if (m_eventHandlers[i]->entityID == 0 || m_eventHandlers[i]->entityID == ev->GetEntityID()) {
 				Variant* v = new Variant(ev);
+
+				scriptingSystem->EnterIsolate(0);
 
 				Entity* p = this->GetParent();
 				Variant* parent = 0;
@@ -353,6 +344,8 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 				if (parent) {
 					delete parent;
 				}
+
+				scriptingSystem->ExitIsolate(0);
 			}
 		}
 	}
@@ -363,6 +356,9 @@ void ScriptComponent::Update(int threadID, Variant* obj, int argc, Variant** arg
 	scriptingSystem->EnterIsolate(threadID);
 
 	ScriptComponent* component = obj->AsObject<ScriptComponent>();
+
+	Variant* parent = argv[1];
+	component->SetGlobal("GameObject", parent);
 	component->CallFunction("Update", argc, argv);
 
 	scriptingSystem->ExitIsolate(threadID);

@@ -10,7 +10,7 @@ public:
     /**
      * Execute thread function
      */
-    void Start();
+    void Start(int threadID);
     
 protected:
     // Internal run function

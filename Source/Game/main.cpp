@@ -56,6 +56,8 @@ void StartApplication() {
 
 	// Initialize replication system
 	replicationSystem->SetType(REPLICATION_CLIENT);
+
+	scriptingSystem->EnterIsolate(0);
     
     // Load game.js file
     Script* gamejs = dynamic_cast<Script*>(resourceSystem->LoadResource("game.js", "Script"));
@@ -73,8 +75,10 @@ void StartApplication() {
 	clientComponent->AddToSystem();
 	clientComponent->Initialize(clientjs);
 
+	scriptingSystem->ExitIsolate(0);
+
 	// Initialize multi-threading BROKEN: V8 multi-threading requires one isolate per thread
-	// taskSystem->Initialize(2);
+	taskSystem->Initialize(2);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

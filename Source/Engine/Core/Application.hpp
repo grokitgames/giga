@@ -32,7 +32,7 @@ public:
 	/**
 	 * Initialize per-thread specific resources
 	 */
-	void InitializeThread();
+	void InitializeThread(int threadID);
     
     /**
      * Get/set window if we created one in our application
@@ -109,6 +109,11 @@ public:
         
         return(0);
     }
+
+	/**
+	 * Get all systems
+	 */
+	std::vector<System*> GetSystems();
     
     /**
      * Find a specific data loader by class type

@@ -38,7 +38,6 @@ void ScriptingSystem::Initialize() {
 	v8::Isolate::CreateParams create_params;
 	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 	m_isolates[0] = v8::Isolate::New(create_params);
-	m_isolates[0]->Enter();
 }
 
 void ScriptingSystem::InitializeThread(int threadID) {
@@ -50,8 +49,12 @@ void ScriptingSystem::InitializeThread(int threadID) {
 	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 	v8::Isolate* isolate = v8::Isolate::New(create_params);
 
+	if (m_isolates[threadID]) {
+		m_isolates[threadID]->Dispose();
+		m_isolates[threadID] = 0;
+	}
+
 	m_isolates[threadID] = isolate;
-	m_locks[threadID] = 0;
 }
 
 void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
@@ -99,12 +102,11 @@ void ScriptingSystem::EventHandler(Event* event) {
 
 void ScriptingSystem::Update(float delta) {
     PROFILE_START_AREA("ScriptingSystem Update");
-	Variant* d = new Variant(delta);
-    
+
 	std::vector<ScriptComponent*> scripts = m_scripts.GetList();
 	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 
-	/*TaskPool* pool = new TaskPool();
+	TaskPool* pool = new TaskPool();
 
 	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
@@ -112,13 +114,10 @@ void ScriptingSystem::Update(float delta) {
 			continue;
 		}
 
-		Variant* parent = new Variant((*i)->GetParent());
-		(*i)->SetGlobal("GameObject", parent);
-		delete parent;
-
 		Task* task = new Task();
 		task->Create(*i, &ScriptComponent::Update);
 		task->AddArgument(new Variant(delta));
+		task->AddArgument(new Variant((*i)->GetParent()));
 
 		pool->Push(task);
     }
@@ -126,8 +125,8 @@ void ScriptingSystem::Update(float delta) {
 	TaskSystem* taskSystem = GetSystem<TaskSystem>();
 	taskSystem->Execute(pool);
 
-	delete pool;*/
-	for (i; i != scripts.end(); i++) {
+	delete pool;
+	/*for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
 		if ((*i)->IsActive() == false) {
 			continue;
@@ -137,9 +136,7 @@ void ScriptingSystem::Update(float delta) {
 		(*i)->SetGlobal("GameObject", parent);
 
 		(*i)->CallFunction("Update", 1, &d);
-	}
-
-    delete d;
+	}*/
 
 	// Remove any transient variables marked for deletion
 	std::vector<ScriptableObject*> transients = m_transients.GetList();

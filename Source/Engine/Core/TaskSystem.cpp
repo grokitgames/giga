@@ -7,9 +7,9 @@ TaskSystem::TaskSystem() {
 }
 
 void TaskSystem::Initialize(int threads) {
-    for(int i = 0; i < threads; i++) {
+    for(int i = 1; i <= threads; i++) {
         TaskThread* thread = new TaskThread();
-        thread->Start();
+        thread->Start(i);
         
         m_threads.push_back(thread);
     }

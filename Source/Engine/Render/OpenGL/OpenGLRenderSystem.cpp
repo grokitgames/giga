@@ -63,20 +63,6 @@ void OpenGLRenderSystem::Initialize(int width, int height) {
      */
     ResourceSystem* resourceSystem = GetSystem<ResourceSystem>();
     resourceSystem->RegisterResourceType<OpenGLTexture2D>("Texture2D");
-    
-    /**
-     * Scripting integration
-     */
-    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    
-    // Render system
-    ScriptableObjectType* renderSystemType = new ScriptableObjectType("RenderSystem");
-    renderSystemType->SetStatic(true, this);
-    renderSystemType->AddStaticFunction("GetWindowWidth", &RenderSystem::GetWindowWidth);
-    renderSystemType->AddStaticFunction("GetWindowHeight", &RenderSystem::GetWindowHeight);
-	renderSystemType->AddStaticFunction("SetActiveCamera", &RenderSystem::SetActiveCamera);
-    
-    scriptingSystem->RegisterScriptableObjectType<OpenGLRenderSystem>(renderSystemType);
 }
 
 void OpenGLRenderSystem::Update(float delta) {

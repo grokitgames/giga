@@ -8,6 +8,11 @@
 #include <unistd.h>
 #endif
 
+ScriptingSystem::ScriptingSystem() {
+	m_isolateCounter = 0;
+	m_platform = 0;
+}
+
 ScriptingSystem::~ScriptingSystem() {
     // Delete stored global variables
     for(std::map<std::string, ScriptableVariant*>::iterator i = m_globals.begin(); i != m_globals.end(); i++) {
@@ -168,6 +173,11 @@ void ScriptingSystem::RemoveScriptComponent(Component* component) {
 
 void ScriptingSystem::AddTransient(ScriptableObject* object) {
 	m_transients.AddObject(object);
+}
+
+v8::Isolate* ScriptingSystem::GetIsolate() {
+	m_isolateCounter = ++m_isolateCounter % m_isolates.size();
+	return(m_isolates[m_isolateCounter]);
 }
 
 void ScriptingSystem::EnterIsolate(int threadID) {

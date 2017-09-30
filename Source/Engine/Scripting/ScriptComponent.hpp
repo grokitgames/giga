@@ -62,9 +62,12 @@ public:
     /**
      * Task system integration
      */
-    static void Update(int threadID, Variant* obj, int argc, Variant** argv);
+    static bool Update(int threadID, Variant* obj, int argc, Variant** argv);
     
 protected:
+	// The isolate this thread was created on
+	v8::Isolate* m_isolate;
+
     // Our script
     Script* m_scriptSource;
     

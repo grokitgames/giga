@@ -5,7 +5,7 @@
 /**
  * Generic task callback function
  */
-typedef void(*TaskCallbackFn)(int threadID, Variant* obj, int argc, Variant** argv);
+typedef bool(*TaskCallbackFn)(int threadID, Variant* obj, int argc, Variant** argv);
 
 /**
  * A single task to be added to a task pool and picked up by a series of threads
@@ -28,7 +28,7 @@ public:
     /**
      * Execute
      */
-    void Execute(int threadID);
+    bool Execute(int threadID);
     
 protected:
     TaskCallbackFn m_func;

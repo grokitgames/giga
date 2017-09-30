@@ -3,6 +3,7 @@
 #define scriptableobjecttype_hpp
 
 class ScriptableObject;
+class ScriptableObjectImpl;
 
 /**
  * A "getter" function template
@@ -26,33 +27,35 @@ class GIGA_API ScriptableObjectType {
 public:
     ScriptableObjectType(std::string name);
     ~ScriptableObjectType() = default;
-    
-    /**
-     * Storage for getter and setter to variable pairs
-     */
-    class GIGA_API ScriptObjectCallbackPair {
-    public:
-        ScriptObjectCallbackPair() : getter(0), setter(0) { }
-        ~ScriptObjectCallbackPair() = default;
-        
-    public:
-        std::string variableName;
-        ScriptObjectGetterFunc getter;
-        ScriptObjectSetterFunc setter;
-    };
-    
-    /**
-     * Storage for callback functions
-     */
-    class GIGA_API ScriptFunctionCallback {
-    public:
-        ScriptFunctionCallback() : func(0) { }
-        ~ScriptFunctionCallback() = default;
-        
-    public:
-        std::string variableName;
-        ScriptObjectFunc func;
-    };
+
+	/**
+	* Storage for getter and setter to variable pairs
+	*/
+	class ScriptObjectCallbackPair {
+	public:
+		ScriptObjectCallbackPair() : getter(0), setter(0) { }
+		~ScriptObjectCallbackPair() = default;
+
+	public:
+		std::string variableName;
+		bool isStatic;
+		ScriptObjectGetterFunc getter;
+		ScriptObjectSetterFunc setter;
+	};
+
+	/**
+	* Storage for callback functions
+	*/
+	class ScriptFunctionCallback {
+	public:
+		ScriptFunctionCallback() : func(0) { }
+		~ScriptFunctionCallback() = default;
+
+	public:
+		std::string funcName;
+		bool isStatic;
+		ScriptObjectFunc func;
+	};
     
     /**
      * Get/set the name of this interface as used in JS
@@ -68,12 +71,7 @@ public:
     /**
      * End our template
      */
-    void EndTemplate();
-    
-    /**
-     * Called from JS to create a new version of our object to pass back
-     */
-    static void New(const v8::FunctionCallbackInfo<v8::Value>& info);
+    void EndTemplate();    
     
     /**
      * Identify whether this template is for a static global that won't have a "this" pointer
@@ -85,11 +83,6 @@ public:
 	 */
 	void SetTransient(bool transient) { m_transient = transient; }
 	bool IsTransient() { return m_transient; }
-    
-    /**
-     * Add this template to a new context
-     */
-    void AddToContext(v8::Local<v8::Context> context);
     
     /**
      * Add an object variable (ie. this.var) to our object with callbacks for get/set
@@ -112,31 +105,6 @@ public:
     void AddStaticFunction(std::string name, ScriptObjectFunc func);
     
     /**
-     * Handle static function callbacks (ie. Time.GetTime())
-     */
-    static void HandleStaticFunctionCallback(const v8::FunctionCallbackInfo<v8::Value>& info);
-    
-    /**
-     * Handle object function callbacks (ie. this.DoSomething())
-     */
-    static void HandleObjectFunctionCallback(const v8::FunctionCallbackInfo<v8::Value>& info);
-    
-    /**
-     * Handle object getters (call internal callbacks based on name)
-     */
-    static void HandleObjectGetter(v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info);
-    
-    /**
-     * Handle object setters (call internal callbacks based on name)
-     */
-    static void HandleObjectSetter(v8::Local<v8::String> property, v8::Local<v8::Value> value, const v8::PropertyCallbackInfo<void>& info);
-    
-    /**
-     * Handle static getter calls (call internal callback based on name)
-     */
-    static void HandleStaticGetter(v8::Local<v8::String> property, const v8::PropertyCallbackInfo<v8::Value>& info);
-    
-    /**
      * Get our function list
      */
     std::vector<ScriptFunctionCallback*>& GetFunctionList() { return m_funcList; }
@@ -153,11 +121,8 @@ public:
         else
             m_createFunction = &CreateObject<T>;
     }
-    
-    /**
-     * Create a JavaScript object to pass back to V8
-     */
-    v8::Local<v8::Value> CreateJSObject();
+
+	friend class ScriptableObjectImpl;
     
 protected:
     // Internal function to call a C++ constructor
@@ -172,12 +137,6 @@ protected:
     
     // Link back to our internal CreateObject function
     ScriptObjectCreateFunc m_createFunction;
-    
-    // The function template
-    v8::Persistent<v8::FunctionTemplate, v8::CopyablePersistentTraits<v8::FunctionTemplate>> m_functionTemplate;
-    
-    // Our constructor to create new objects of this type
-    v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> m_constructor;
     
     // Linked list of getter/setter combinations for vars
     std::vector<ScriptObjectCallbackPair*> m_varList;

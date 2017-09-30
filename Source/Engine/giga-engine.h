@@ -103,6 +103,7 @@ typedef glm::mat4 matrix4;
 #include <Core/Task.hpp>
 #include <Core/TaskPool.hpp>
 #include <Core/TaskThread.hpp>
+#include <Core/ThreadPool.hpp>
 #include <Core/TaskSystem.hpp>
 #include <Network/ClientPredictionError.hpp>
 #include <IO/InputDevice.hpp>
@@ -125,6 +126,8 @@ typedef glm::mat4 matrix4;
 #include <Resource/ResourceSystem.hpp>
 #include <Scripting/Script.hpp>
 #include <Scripting/ScriptComponent.hpp>
+#include <Scripting/ScriptThread.hpp>
+#include <Scripting/ScriptableObjectImpl.hpp>
 #include <Scripting/ScriptingSystem.hpp>
 #include <Render/Color.hpp>
 #include <Render/VertexBuffer.hpp>

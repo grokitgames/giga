@@ -8,34 +8,20 @@ public:
     ~TaskSystem() = default;
     
     GIGA_CLASS_NAME("TaskSystem");
-    
-    /**
-     * Initialize with a number of threads
-     */
-    void Initialize(int threads);
-    
+
+	/**
+	 * Initialize with a certain number of internal threads
+	 */
+	void Initialize(int threads);
+
     /**
      * Execute a task pool to completion
      */
-    void Execute(TaskPool* pool);
-    
-    /**
-     * Get next available task
-     */
-    Task* GetNextTask();
+    void Execute(TaskPool* taskPool, ThreadPool* threadPool = 0);
     
 protected:
-    // Threads
-    std::vector<TaskThread*> m_threads;
-    
-    // Current task pool
-    TaskPool* m_taskPool;
-    
-    // Whether we are currently executing or not
-    bool m_executing;
-    
-    // Internal mutex for task pool access
-    std::mutex m_mutex;
+    // Current thread pool
+	ThreadPool* m_threadPool;
 };
 
 #endif

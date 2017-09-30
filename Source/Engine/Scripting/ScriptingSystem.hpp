@@ -7,7 +7,7 @@
  */
 class GIGA_API ScriptingSystem : public System {
 public:
-    ScriptingSystem() = default;
+    ScriptingSystem();
     ~ScriptingSystem();
     
     GIGA_CLASS_NAME("ScriptingSystem");
@@ -91,6 +91,11 @@ public:
 	/**
 	 * Enter a thread specific environment
 	 */
+	v8::Isolate* GetIsolate();
+	
+	/**
+	 * Enter/exit a thread's isolate manually
+	 */
 	void EnterIsolate(int threadID);
 	void ExitIsolate(int threadID);
     
@@ -100,7 +105,7 @@ protected:
     
 	// Our isolated script environment
 	std::map<int, v8::Isolate*> m_isolates;
-	std::map<int, v8::Locker*> m_locks;
+	int m_isolateCounter;
 
     // Registered script interfaces to C++ objects
     std::vector<ScriptableObjectType*> m_types;

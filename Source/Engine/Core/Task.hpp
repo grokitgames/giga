@@ -2,10 +2,12 @@
 #ifndef task_hpp
 #define task_hpp
 
+class TaskThread;
+
 /**
  * Generic task callback function
  */
-typedef bool(*TaskCallbackFn)(int threadID, Variant* obj, int argc, Variant** argv);
+typedef bool(*TaskCallbackFn)(TaskThread* thread, Variant* obj, int argc, Variant** argv);
 
 /**
  * A single task to be added to a task pool and picked up by a series of threads
@@ -28,7 +30,7 @@ public:
     /**
      * Execute
      */
-    bool Execute(int threadID);
+    bool Execute(TaskThread* thread);
     
 protected:
     TaskCallbackFn m_func;

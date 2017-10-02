@@ -4,6 +4,7 @@
 TaskThread::TaskThread() {
 	threadID = 0;
 	m_terminated = false;
+    m_threadPool = 0;
 }
 
 void TaskThread::Start(int threadID) {
@@ -17,15 +18,19 @@ void TaskThread::Run(TaskThread* thread) {
 	thread->Initialize();
     
     while(true) {
-        // Check if there is a task available
-        Task* task = system->GetNextTask();
-        if(task) {
-            bool result = task->Execute(thread->threadID);
-			if (result == false) {
-				system->AddTask(task);
-			}
+        // Check if there is a task pool
+        if(thread->m_threadPool->m_taskPool) {
+            TaskPool* taskPool = thread->m_threadPool->m_taskPool;
+            
+            if(taskPool->HasTasks() == false) {
+                thread->m_threadPool->m_executing = false;
+                break;
+            }
+            
+            Task* task = taskPool->Pop();
+            task->Execute(0);
         }
-
+        
 		if (thread->IsTerminated()) {
 			break;
 		}

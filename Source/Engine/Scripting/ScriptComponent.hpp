@@ -2,6 +2,8 @@
 #ifndef scriptcomponent_hpp
 #define scriptcomponent_hpp
 
+class ScriptThread;
+
 /**
  * Script component to be added to entities
  */
@@ -62,11 +64,11 @@ public:
     /**
      * Task system integration
      */
-    static bool Update(int threadID, Variant* obj, int argc, Variant** argv);
+    static bool Update(TaskThread* thread, Variant* obj, int argc, Variant** argv);
     
 protected:
-	// The isolate this thread was created on
-	v8::Isolate* m_isolate;
+	// The thread this component was created on
+	ScriptThread* m_thread;
 
     // Our script
     Script* m_scriptSource;

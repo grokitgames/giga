@@ -24,6 +24,9 @@ public:
     
 protected:
     std::vector<Task*> m_tasks;
+    
+    // Internal mutex for task pool access
+    std::mutex m_mutex;
 };
 
 #endif

@@ -4,7 +4,7 @@
 ScriptComponent::ScriptComponent() {
 	m_initialized = false;
 	m_scriptSource = 0;
-	m_isolate = 0;
+    m_thread = 0;
 }
 
 ScriptComponent::~ScriptComponent() {
@@ -26,8 +26,7 @@ void ScriptComponent::Initialize(Script* script) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
-	m_isolate = isolate;
+    v8::Isolate* isolate = m_thread->GetIsolate();
     
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
@@ -59,7 +58,7 @@ void ScriptComponent::Initialize(Script* script) {
     std::vector<ScriptableObjectType*> interfaces = scriptingSystem->GetRegisteredTypes();
 	std::vector<std::string> interfaceNames;
     for(int i = 0; i < interfaces.size(); i++) {
-        interfaces[i]->AddToContext(context);
+        ScriptableObjectImpl* impl = m_thread->GetScriptableImpl(interfaces[i]->GetName());
 		interfaceNames.push_back(interfaces[i]->GetName());
     }
     
@@ -162,7 +161,8 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
     context->Enter();
     
     // Register stuff into our script's context
-    type->AddToContext(context);
+    ScriptableObjectImpl* impl = m_thread->GetScriptableImpl(type->GetName());
+    impl->AddToContext(context);
     
     context->Exit();
     scriptingSystem->SetCurrentScript(0);
@@ -332,18 +332,6 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 			if (m_eventHandlers[i]->entityID == 0 || m_eventHandlers[i]->entityID == ev->GetEntityID()) {
 				Variant* v = new Variant(ev);
 
-				if (m_isolate) {
-					while (v8::Locker::IsLocked(m_isolate)) {
-						Timer::Sleep(1);
-					}
-				}
-				else {
-					m_isolate = scriptingSystem->GetIsolate();
-				}
-
-				v8::Locker locker(m_isolate);
-				m_isolate->Enter();
-
 				Entity* p = this->GetParent();
 				Variant* parent = 0;
 				if (p) {
@@ -356,32 +344,29 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 				if (parent) {
 					delete parent;
 				}
-
-				m_isolate->Exit();
 			}
 		}
 	}
 }
 
-bool ScriptComponent::Update(int threadID, Variant* obj, int argc, Variant** argv) {
+bool ScriptComponent::Update(TaskThread* thread, Variant* obj, int argc, Variant** argv) {
 	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
 	ScriptComponent* component = obj->AsObject<ScriptComponent>();
+    
+    if(component->m_thread == 0) {
+        component->m_thread = (ScriptThread*)thread;
+    }
 
-	if (component->m_isolate) {
-		if (v8::Locker::IsLocked(component->m_isolate))
-			return(false);
-	}
-	else {
-		component->m_isolate = scriptingSystem->GetIsolate();
-	}
-
-	v8::Locker locker(component->m_isolate);
-	component->m_isolate->Enter();
+    if(component->m_thread->IsLocked()) {
+        return(false);
+    }
+    
+    component->m_thread->Lock();
 
 	Variant* parent = argv[1];
 	component->SetGlobal("GameObject", parent);
 	component->CallFunction("Update", argc, argv);
 
-	component->m_isolate->Exit();
+	component->m_thread->Unlock();
 	return(true);
 }

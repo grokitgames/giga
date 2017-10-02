@@ -15,10 +15,23 @@ void TaskSystem::Initialize(int threads) {
 }
 
 void TaskSystem::Execute(TaskPool* taskPool, ThreadPool* threadPool) {
-	if (threadPool == 0) {
-		m_threadPool->Execute(taskPool);
+	if (threadPool) {
+		threadPool->Execute(taskPool);
 		return;
 	}
+    
+    if(m_threadPool) {
+        m_threadPool->Execute(taskPool);
+        return;
+    }
 
-	threadPool->Execute(taskPool);
+    // If we haven't created a thread pool, process on the main thread
+    while(true) {
+        if(taskPool->HasTasks() == false) {
+            break;
+        }
+            
+        Task* task = taskPool->Pop();
+        task->Execute(0);
+    }
 }

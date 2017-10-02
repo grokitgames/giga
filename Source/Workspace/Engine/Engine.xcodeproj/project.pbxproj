@@ -160,6 +160,12 @@
 		5EAF933D1F75A29F00851063 /* TaskSystem.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF933B1F75A29F00851063 /* TaskSystem.hpp */; };
 		5EAF93401F75A2B000851063 /* TaskThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF933E1F75A2B000851063 /* TaskThread.cpp */; };
 		5EAF93411F75A2B000851063 /* TaskThread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF933F1F75A2B000851063 /* TaskThread.hpp */; };
+		5EAF93441F81533B00851063 /* ThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF93421F81533B00851063 /* ThreadPool.cpp */; };
+		5EAF93451F81533B00851063 /* ThreadPool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF93431F81533B00851063 /* ThreadPool.hpp */; };
+		5EAF934A1F81535A00851063 /* ScriptableObjectImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF93461F81535A00851063 /* ScriptableObjectImpl.cpp */; };
+		5EAF934B1F81535A00851063 /* ScriptableObjectImpl.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF93471F81535A00851063 /* ScriptableObjectImpl.hpp */; };
+		5EAF934C1F81535A00851063 /* ScriptThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF93481F81535A00851063 /* ScriptThread.cpp */; };
+		5EAF934D1F81535A00851063 /* ScriptThread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EAF93491F81535A00851063 /* ScriptThread.hpp */; };
 		5EDCA3A41F3B67A700329733 /* Color.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EDCA3A21F3B67A700329733 /* Color.hpp */; };
 		5EDCA3AA1F3B6AEA00329733 /* OpenGLColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3A91F3B6AEA00329733 /* OpenGLColor.cpp */; };
 		5EDCA3B71F3BE76600329733 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EFDFD9D1F219857009FA81B /* libicui18n.a */; };
@@ -406,6 +412,12 @@
 		5EAF933B1F75A29F00851063 /* TaskSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TaskSystem.hpp; path = ../../Engine/Core/TaskSystem.hpp; sourceTree = "<group>"; };
 		5EAF933E1F75A2B000851063 /* TaskThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TaskThread.cpp; path = ../../Engine/Core/TaskThread.cpp; sourceTree = "<group>"; };
 		5EAF933F1F75A2B000851063 /* TaskThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TaskThread.hpp; path = ../../Engine/Core/TaskThread.hpp; sourceTree = "<group>"; };
+		5EAF93421F81533B00851063 /* ThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadPool.cpp; path = ../../Engine/Core/ThreadPool.cpp; sourceTree = "<group>"; };
+		5EAF93431F81533B00851063 /* ThreadPool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ThreadPool.hpp; path = ../../Engine/Core/ThreadPool.hpp; sourceTree = "<group>"; };
+		5EAF93461F81535A00851063 /* ScriptableObjectImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptableObjectImpl.cpp; path = ../../Engine/Scripting/ScriptableObjectImpl.cpp; sourceTree = "<group>"; };
+		5EAF93471F81535A00851063 /* ScriptableObjectImpl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ScriptableObjectImpl.hpp; path = ../../Engine/Scripting/ScriptableObjectImpl.hpp; sourceTree = "<group>"; };
+		5EAF93481F81535A00851063 /* ScriptThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptThread.cpp; path = ../../Engine/Scripting/ScriptThread.cpp; sourceTree = "<group>"; };
+		5EAF93491F81535A00851063 /* ScriptThread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ScriptThread.hpp; path = ../../Engine/Scripting/ScriptThread.hpp; sourceTree = "<group>"; };
 		5EDCA3A21F3B67A700329733 /* Color.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Color.hpp; path = ../../Engine/Render/Color.hpp; sourceTree = "<group>"; };
 		5EDCA3A91F3B6AEA00329733 /* OpenGLColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenGLColor.cpp; path = ../../Engine/Render/OpenGL/OpenGLColor.cpp; sourceTree = "<group>"; };
 		5EDCA3AD1F3BD58600329733 /* libicui18n.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicui18n.dylib; path = ../../ThirdParty/v8/lib/libicui18n.dylib; sourceTree = "<group>"; };
@@ -590,6 +602,8 @@
 				5EAF933B1F75A29F00851063 /* TaskSystem.hpp */,
 				5EAF933E1F75A2B000851063 /* TaskThread.cpp */,
 				5EAF933F1F75A2B000851063 /* TaskThread.hpp */,
+				5EAF93421F81533B00851063 /* ThreadPool.cpp */,
+				5EAF93431F81533B00851063 /* ThreadPool.hpp */,
 				5E05239D1F20FBA40088C9BA /* Variant.cpp */,
 				5E05239E1F20FBA40088C9BA /* Variant.hpp */,
 			);
@@ -754,8 +768,12 @@
 			children = (
 				5E556A991F23613300F6FB2E /* Script.cpp */,
 				5E556A9A1F23613300F6FB2E /* Script.hpp */,
+				5EAF93481F81535A00851063 /* ScriptThread.cpp */,
+				5EAF93491F81535A00851063 /* ScriptThread.hpp */,
 				5E0523D41F217EF90088C9BA /* ScriptableObject.cpp */,
 				5E0523D51F217EF90088C9BA /* ScriptableObject.hpp */,
+				5EAF93461F81535A00851063 /* ScriptableObjectImpl.cpp */,
+				5EAF93471F81535A00851063 /* ScriptableObjectImpl.hpp */,
 				5E0523D91F2180A70088C9BA /* ScriptableObjectType.cpp */,
 				5E0523D81F217F310088C9BA /* ScriptableObjectType.hpp */,
 				5E0523DB1F2181110088C9BA /* ScriptableVariant.cpp */,
@@ -909,6 +927,7 @@
 				5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */,
 				5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */,
 				5EDCA4051F66BB7F00329733 /* AckMessage.hpp in Headers */,
+				5EAF93451F81533B00851063 /* ThreadPool.hpp in Headers */,
 				5EAF933D1F75A29F00851063 /* TaskSystem.hpp in Headers */,
 				5EDCA3D31F3DF69F00329733 /* SQLiteDataLoader.hpp in Headers */,
 				5EFDFDE41F22986B009FA81B /* Timer.hpp in Headers */,
@@ -985,6 +1004,7 @@
 				5E6C65DE1F3B51BE0089FD55 /* OpenGLVertexAttributes.hpp in Headers */,
 				5EFDFDE01F22963D009FA81B /* ResourceObject.hpp in Headers */,
 				5E6C65B21F353AF20089FD55 /* EntitySnapshot.hpp in Headers */,
+				5EAF934D1F81535A00851063 /* ScriptThread.hpp in Headers */,
 				5E6C65771F2EB9630089FD55 /* SpotLightComponent.hpp in Headers */,
 				5E6C657C1F3145AD0089FD55 /* UDPSocket.hpp in Headers */,
 				5E556B221F2AB65000F6FB2E /* StaticMeshComponent.hpp in Headers */,
@@ -1007,6 +1027,7 @@
 				5E556AC41F2431A000F6FB2E /* BoundingBox.hpp in Headers */,
 				5E6C65891F314AD30089FD55 /* NetworkMessage.hpp in Headers */,
 				5EAF93391F75A11000851063 /* TaskPool.hpp in Headers */,
+				5EAF934B1F81535A00851063 /* ScriptableObjectImpl.hpp in Headers */,
 				5EDCA4131F69708000329733 /* Directory.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1107,6 +1128,7 @@
 				5EAF933C1F75A29F00851063 /* TaskSystem.cpp in Sources */,
 				5E6C65521F2CF4480089FD55 /* Framebuffer.cpp in Sources */,
 				5E556B051F2961F100F6FB2E /* ShaderSystem.cpp in Sources */,
+				5EAF934C1F81535A00851063 /* ScriptThread.cpp in Sources */,
 				5EDCA3FC1F59AC2A00329733 /* ResendRequestMessage.cpp in Sources */,
 				5EFDFDE31F22986B009FA81B /* Timer.cpp in Sources */,
 				5E6C65D11F3B4F4E0089FD55 /* OpenGLVertexBuffer.cpp in Sources */,
@@ -1133,11 +1155,13 @@
 				5E0523C11F2166000088C9BA /* EntitySystem.cpp in Sources */,
 				5E6C65AD1F353AB00089FD55 /* ReplicationSystem.cpp in Sources */,
 				5EFDFDC21F21AB8D009FA81B /* RenderSystem.cpp in Sources */,
+				5EAF934A1F81535A00851063 /* ScriptableObjectImpl.cpp in Sources */,
 				5EDCA3D81F3DF8BD00329733 /* sqlite3.c in Sources */,
 				5EFDFDC71F227023009FA81B /* File.cpp in Sources */,
 				5E6C65C41F3549220089FD55 /* StorableObjectType.cpp in Sources */,
 				5E6C652D1F2B9E610089FD55 /* TransformComponent.cpp in Sources */,
 				5E6C65A91F3376240089FD55 /* EchoResponseMessage.cpp in Sources */,
+				5EAF93441F81533B00851063 /* ThreadPool.cpp in Sources */,
 				5E556B291F2ABA6500F6FB2E /* Vector3.cpp in Sources */,
 				5E05239B1F2048ED0088C9BA /* Application.cpp in Sources */,
 				5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */,

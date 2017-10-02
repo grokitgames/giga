@@ -54,6 +54,11 @@ public:
 	* Create a JavaScript object to pass back to V8
 	*/
 	v8::Local<v8::Value> CreateJSObject();
+    
+    /**
+     * Get the name of the type we're based on
+     */
+    std::string GetName();
 
 protected:
 	// The scriptable object typ def we are based on

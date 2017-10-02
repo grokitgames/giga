@@ -2,6 +2,8 @@
 #ifndef taskthread_hpp
 #define taskthread_hpp
 
+class ThreadPool;
+
 class GIGA_API TaskThread {
 public:
     TaskThread();
@@ -28,6 +30,8 @@ public:
 	bool IsTerminated() { return m_terminated; }
 	void Terminate() { m_terminated = true; }
     
+    friend class ThreadPool;
+    
 protected:
     // Internal run function
     static void Run(TaskThread* thread);
@@ -35,6 +39,9 @@ protected:
 protected:
     // Internal thread
     std::thread m_thread;
+    
+    // The thread pool we are a part of
+    ThreadPool* m_threadPool;
 
 	// Thread ID
 	int threadID;

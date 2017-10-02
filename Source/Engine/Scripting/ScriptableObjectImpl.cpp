@@ -42,7 +42,6 @@ void ScriptableObjectImpl::Create(ScriptableObjectType* type) {
 	}
 
 	// End template
-	v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Set our class name
@@ -293,4 +292,8 @@ v8::Local<v8::Value> ScriptableObjectImpl::CreateJSObject() {
 
 	v8::Local<v8::Object> obj = constructor->NewInstance();
 	return(handle_scope.Escape(obj));
+}
+
+std::string ScriptableObjectImpl::GetName() {
+    return(m_type->GetName());
 }

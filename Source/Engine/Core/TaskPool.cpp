@@ -8,7 +8,9 @@ TaskPool::~TaskPool() {
 }
 
 void TaskPool::Push(Task* task) {
+    m_mutex.lock();
 	m_tasks.insert(m_tasks.begin(), task);
+    m_mutex.unlock();
 }
 
 Task* TaskPool::Pop() {
@@ -16,8 +18,11 @@ Task* TaskPool::Pop() {
 		return(0);
 	}
 
+    m_mutex.lock();
     Task* task = *(m_tasks.end() - 1);
     m_tasks.pop_back();
+    m_mutex.unlock();
+    
     return(task);
 }
 

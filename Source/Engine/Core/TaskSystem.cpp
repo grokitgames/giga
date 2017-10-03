@@ -15,6 +15,10 @@ void TaskSystem::Initialize(int threads) {
 }
 
 void TaskSystem::Execute(TaskPool* taskPool, ThreadPool* threadPool) {
+    if(taskPool->HasTasks() == false) {
+        return;
+    }
+    
 	if (threadPool) {
 		threadPool->Execute(taskPool);
 		return;

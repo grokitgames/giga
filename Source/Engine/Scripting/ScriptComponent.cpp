@@ -334,6 +334,9 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 		if (m_eventHandlers[i]->type == type) {
 			if (m_eventHandlers[i]->entityID == 0 || m_eventHandlers[i]->entityID == ev->GetEntityID()) {
 				Variant* v = new Variant(ev);
+                
+                m_thread->Lock();
+                
 
 				Entity* p = this->GetParent();
 				Variant* parent = 0;
@@ -347,6 +350,8 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 				if (parent) {
 					delete parent;
 				}
+                
+                m_thread->Unlock();
 			}
 		}
 	}

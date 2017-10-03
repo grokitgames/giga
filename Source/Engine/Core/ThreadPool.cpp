@@ -20,3 +20,10 @@ void ThreadPool::Execute(TaskPool* pool) {
 		Timer::Sleep(1);
 	}
 }
+
+void ThreadPool::SetExecuting(bool executing) {
+    m_mutex.lock();
+    m_executing = executing;
+    m_taskPool = 0;
+    m_mutex.unlock();
+}

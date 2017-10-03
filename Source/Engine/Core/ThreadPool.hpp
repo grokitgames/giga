@@ -20,7 +20,9 @@ public:
 	 */
 	void Execute(TaskPool* pool);
     
-    friend class TaskThread;
+    TaskPool* GetTaskPool() { return m_taskPool; }
+    
+    void SetExecuting(bool executing);
 
 protected:
 	// Threads
@@ -31,6 +33,7 @@ protected:
 
 	// Whether we are currently executing or not
 	bool m_executing;
+    std::mutex m_mutex;
 };
 
 #endif

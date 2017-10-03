@@ -19,19 +19,16 @@ void TaskThread::Run(TaskThread* thread) {
     
     while(true) {
         // Check if there is a task pool
-        if(thread->m_threadPool->m_taskPool) {
-            TaskPool* taskPool = thread->m_threadPool->m_taskPool;
+        if(thread->m_threadPool->GetTaskPool()) {
+            TaskPool* taskPool = thread->m_threadPool->GetTaskPool();
             
             if(taskPool->HasTasks() == false) {
-                thread->m_threadPool->m_executing = false;
-                break;
+                thread->m_threadPool->SetExecuting(false);
             }
-            
-            Task* task = taskPool->Pop();
-            task->Execute(0);
-        }
-        else {
-            thread->m_threadPool->m_executing = false;
+            else {
+                Task* task = taskPool->Pop();
+                task->Execute(thread);
+            }
         }
         
 		if (thread->IsTerminated()) {

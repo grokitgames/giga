@@ -34,11 +34,7 @@ void ScriptingSystem::Initialize() {
     
     v8::V8::InitializeExternalStartupData(file.c_str());
 
-	v8::Isolate::CreateParams create_params;
-	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-	m_isolate = v8::Isolate::New(create_params);
-    
-    m_isolate->SetData(0, this);
+    ScriptThread::Initialize();
     
     // Initialize threads
     m_threadPool = new ThreadPool();

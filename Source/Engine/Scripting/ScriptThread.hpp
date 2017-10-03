@@ -48,7 +48,7 @@ protected:
     v8::Locker* m_locker;
 
 	// Scriptable object types initialized in this isolate
-	std::vector<ScriptableObjectImpl*> m_types;
+	std::vector<ScriptableObjectImpl*> m_impls;
 };
 
 #endif

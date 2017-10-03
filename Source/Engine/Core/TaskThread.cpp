@@ -30,6 +30,9 @@ void TaskThread::Run(TaskThread* thread) {
             Task* task = taskPool->Pop();
             task->Execute(0);
         }
+        else {
+            thread->m_threadPool->m_executing = false;
+        }
         
 		if (thread->IsTerminated()) {
 			break;

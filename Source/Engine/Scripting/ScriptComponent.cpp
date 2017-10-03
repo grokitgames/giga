@@ -20,13 +20,14 @@ ScriptComponent::~ScriptComponent() {
 void ScriptComponent::Initialize(Script* script) {
 	if (m_initialized) return;
 	m_initialized = true;
-
+    
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    
+    m_thread = (ScriptThread*)isolate->GetData(0);
     m_scriptSource = script;
     
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
-    
-    v8::Isolate* isolate = m_thread->GetIsolate();
     
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
@@ -59,6 +60,8 @@ void ScriptComponent::Initialize(Script* script) {
 	std::vector<std::string> interfaceNames;
     for(int i = 0; i < interfaces.size(); i++) {
         ScriptableObjectImpl* impl = m_thread->GetScriptableImpl(interfaces[i]->GetName());
+        impl->AddToContext(context);
+        
 		interfaceNames.push_back(interfaces[i]->GetName());
     }
     
@@ -144,11 +147,11 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
 	if (m_initialized == false) {
 		this->Initialize(m_scriptSource);
 	}
+    
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
-    
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);

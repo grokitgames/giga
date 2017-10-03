@@ -19,9 +19,6 @@ void ScriptableObjectType::EndTemplate() {
 }
 
 void ScriptableObjectType::AddObjectVariable(std::string name, ScriptObjectGetterFunc getter, ScriptObjectSetterFunc setter) {
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    v8::HandleScope handle_scope(isolate);
-    
     // Create a new variable function callback
     ScriptObjectCallbackPair* pair = new ScriptObjectCallbackPair();
     
@@ -35,9 +32,6 @@ void ScriptableObjectType::AddObjectVariable(std::string name, ScriptObjectGette
 }
 
 void ScriptableObjectType::AddObjectFunction(std::string name, ScriptObjectFunc func) {
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    v8::HandleScope handle_scope(isolate);
-    
     // Create a new variable function callback
     ScriptFunctionCallback* pair = new ScriptFunctionCallback();
     
@@ -50,9 +44,6 @@ void ScriptableObjectType::AddObjectFunction(std::string name, ScriptObjectFunc 
 }
 
 void ScriptableObjectType::AddStaticVariable(std::string name, ScriptObjectGetterFunc getter) {
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    v8::HandleScope handle_scope(isolate);
-    
     // Create a new variable function callback
     ScriptObjectCallbackPair* pair = new ScriptObjectCallbackPair();
     
@@ -65,9 +56,6 @@ void ScriptableObjectType::AddStaticVariable(std::string name, ScriptObjectGette
 }
 
 void ScriptableObjectType::AddStaticFunction(std::string name, ScriptObjectFunc func) {
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-    v8::HandleScope handle_scope(isolate);
-    
     // Create a new variable function callback
     ScriptFunctionCallback* pair = new ScriptFunctionCallback();
     

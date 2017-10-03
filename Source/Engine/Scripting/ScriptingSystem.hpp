@@ -5,7 +5,7 @@
 /**
  * Scripting system, tracking interfaces to C++ and executing loaded JavaScript
  */
-class GIGA_API ScriptingSystem : public System {
+class GIGA_API ScriptingSystem : public System, public ScriptThread {
 public:
     ScriptingSystem();
     ~ScriptingSystem();
@@ -16,7 +16,6 @@ public:
      * Initialize scripting system
      */
     void Initialize();
-	void InitializeThread(int threadID);
     
     /**
      * Update loop
@@ -49,6 +48,14 @@ public:
 		for (i; i != scripts.end(); i++) {
             (*i)->AddToContext(type);
         }
+
+        this->Lock();
+        
+        ScriptableObjectImpl* impl = new ScriptableObjectImpl();
+        impl->Create(type);
+        
+        m_impls.push_back(impl);
+        this->Unlock();
     }
     
     /**
@@ -87,25 +94,10 @@ public:
 	 * Add a transient JS object (can be garbage collected)
 	 */
 	void AddTransient(ScriptableObject* object);
-
-	/**
-	 * Enter a thread specific environment
-	 */
-	v8::Isolate* GetIsolate();
-	
-	/**
-	 * Enter/exit a thread's isolate manually
-	 */
-	void EnterIsolate(int threadID);
-	void ExitIsolate(int threadID);
     
 protected:
     // V8 stuff
     v8::Platform* m_platform;
-    
-	// Our isolated script environment
-	std::map<int, v8::Isolate*> m_isolates;
-	int m_isolateCounter;
 
     // Registered script interfaces to C++ objects
     std::vector<ScriptableObjectType*> m_types;
@@ -121,6 +113,9 @@ protected:
 
 	// List of transient JS objects
 	ObjectPool<ScriptableObject> m_transients;
+    
+    // Script thread
+    ThreadPool* m_threadPool;
 };
 
 #endif

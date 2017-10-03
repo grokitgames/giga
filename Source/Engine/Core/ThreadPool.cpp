@@ -3,6 +3,7 @@
 
 ThreadPool::ThreadPool() {
 	m_executing = false;
+    m_taskPool = 0;
 }
 
 void ThreadPool::AddThread(TaskThread* thread) {

@@ -14,8 +14,10 @@ void ScriptThread::Initialize() {
 	v8::Isolate::CreateParams create_params;
 	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 	m_isolate = v8::Isolate::New(create_params);
+    
+    m_isolate->SetData(0, this);
 
-	m_isolate->Enter();
+    Lock();
 
 	// Get all scriptable object type definitions and initialize in our isolate environment
 	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
@@ -25,10 +27,10 @@ void ScriptThread::Initialize() {
 		ScriptableObjectImpl* impl = new ScriptableObjectImpl();
 		impl->Create(types[i]);
 
-		m_types.push_back(impl);
+		m_impls.push_back(impl);
 	}
 
-	m_isolate->Exit();
+    Unlock();
 }
 
 void ScriptThread::Shutdown() {
@@ -59,13 +61,11 @@ void ScriptThread::Unlock() {
 
 ScriptableObjectImpl* ScriptThread::GetScriptableImpl(std::string name) {
     // First, go through our implementations for this one
-    for (size_t i = 0; i < m_types.size(); i++) {
-        if(m_types[i]->GetName() == name) {
-            return(m_types[i]);
+    for (size_t i = 0; i < m_impls.size(); i++) {
+        if(m_impls[i]->GetName() == name) {
+            return(m_impls[i]);
         }
     }
-    
-    m_isolate->Enter();
     
     // Then seeif it needs to be added
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
@@ -73,14 +73,14 @@ ScriptableObjectImpl* ScriptThread::GetScriptableImpl(std::string name) {
     std::vector<ScriptableObjectType*> types = scriptingSystem->GetRegisteredTypes();
     ScriptableObjectImpl* impl = 0;
     for (size_t i = 0; i < types.size(); i++) {
-        ScriptableObjectImpl* impl = new ScriptableObjectImpl();
-        impl->Create(types[i]);
+        if(types[i]->GetName() == name) {
+            impl = new ScriptableObjectImpl();
+            impl->Create(types[i]);
         
-        m_types.push_back(impl);
-        break;
+            m_impls.push_back(impl);
+            break;
+        }
     }
-    
-    m_isolate->Exit();
     
     return(impl);
 }

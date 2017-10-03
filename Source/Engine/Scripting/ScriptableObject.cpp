@@ -10,6 +10,9 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     v8::EscapableHandleScope handle_scope(isolate);
     
+    // Get the thread we are currently executing on
+    ScriptThread* thread = (ScriptThread*)isolate->GetData(0);
+    
     // Lazy load interface
     if (m_scriptType == 0) {
         ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
@@ -18,9 +21,11 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
         GIGA_ASSERT(m_scriptType != 0, "Interface not defined for class type.")
     }
     
+    ScriptableObjectImpl* impl = thread->GetScriptableImpl(m_scriptType->GetName());
+    
     // Then fill the handle if it is empty (otherwise just pass it in)
     if (m_jsHandle.IsEmpty()) {
-        v8::Local<v8::Value> ret = m_scriptType->CreateJSObject();
+        v8::Local<v8::Value> ret = impl->CreateJSObject();
         v8::Local<v8::Object> jsobj = ret.As<v8::Object>();
         Wrap(jsobj);
         m_jsHandle.Reset(isolate, jsobj);

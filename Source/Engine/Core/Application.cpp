@@ -157,7 +157,6 @@ void Application::InitializeThread(int threadID) {
 	Application::Log(MSGTYPE_DEBUG, "Registering scripting types...");
 
 	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-	scriptingSystem->EnterIsolate(threadID);
 
 	/**
 	* Base
@@ -382,8 +381,6 @@ void Application::InitializeThread(int threadID) {
 	renderSystemType->AddStaticFunction("SetActiveCamera", &RenderSystem::SetActiveCamera);
 
 	scriptingSystem->RegisterScriptableObjectType<RenderSystem>(renderSystemType);
-
-	scriptingSystem->ExitIsolate(threadID);
 
 	Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
 }

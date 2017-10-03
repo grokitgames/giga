@@ -9,7 +9,6 @@
 #endif
 
 ScriptingSystem::ScriptingSystem() {
-	m_isolateCounter = 0;
 	m_platform = 0;
 }
 
@@ -18,11 +17,6 @@ ScriptingSystem::~ScriptingSystem() {
     for(std::map<std::string, ScriptableVariant*>::iterator i = m_globals.begin(); i != m_globals.end(); i++) {
         delete i->second;
     }
-    
-	std::map<int, v8::Isolate*>::iterator i = m_isolates.begin();
-	for (; i != m_isolates.end(); i++) {
-		m_isolates[i->first]->Dispose();
-	}
 
     v8::V8::ShutdownPlatform();
 }
@@ -42,24 +36,18 @@ void ScriptingSystem::Initialize() {
 
 	v8::Isolate::CreateParams create_params;
 	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-	m_isolates[0] = v8::Isolate::New(create_params);
-}
-
-void ScriptingSystem::InitializeThread(int threadID) {
-	if (threadID == 0) {
-		return;
-	}
-
-	v8::Isolate::CreateParams create_params;
-	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-	v8::Isolate* isolate = v8::Isolate::New(create_params);
-
-	if (m_isolates[threadID]) {
-		m_isolates[threadID]->Dispose();
-		m_isolates[threadID] = 0;
-	}
-
-	m_isolates[threadID] = isolate;
+	m_isolate = v8::Isolate::New(create_params);
+    
+    m_isolate->SetData(0, this);
+    
+    // Initialize threads
+    m_threadPool = new ThreadPool();
+    for(int i = 0; i < 2; i++) {
+        ScriptThread* thread = new ScriptThread();
+        thread->Start(i + 1);
+        
+        m_threadPool->AddThread(thread);
+    }
 }
 
 void ScriptingSystem::RegisterGlobal(std::string name, Variant* value) {
@@ -128,7 +116,7 @@ void ScriptingSystem::Update(float delta) {
     }
     
 	TaskSystem* taskSystem = GetSystem<TaskSystem>();
-	taskSystem->Execute(pool);
+	taskSystem->Execute(pool, m_threadPool);
 
 	delete pool;
 	/*for (i; i != scripts.end(); i++) {
@@ -173,17 +161,4 @@ void ScriptingSystem::RemoveScriptComponent(Component* component) {
 
 void ScriptingSystem::AddTransient(ScriptableObject* object) {
 	m_transients.AddObject(object);
-}
-
-v8::Isolate* ScriptingSystem::GetIsolate() {
-	m_isolateCounter = ++m_isolateCounter % m_isolates.size();
-	return(m_isolates[m_isolateCounter]);
-}
-
-void ScriptingSystem::EnterIsolate(int threadID) {
-	m_isolates[threadID]->Enter();
-}
-
-void ScriptingSystem::ExitIsolate(int threadID) {
-	m_isolates[threadID]->Exit();
 }

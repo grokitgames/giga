@@ -26,7 +26,10 @@ void TaskThread::Run(TaskThread* thread) {
             }
             else {
                 Task* task = taskPool->Pop();
-                task->Execute(thread);
+                bool executed = task->Execute(thread);
+                if(executed == false) {
+                    taskPool->Push(task);
+                }
             }
         }
         

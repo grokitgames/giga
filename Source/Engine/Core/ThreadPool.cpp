@@ -27,3 +27,7 @@ void ThreadPool::SetExecuting(bool executing) {
     m_taskPool = 0;
     m_mutex.unlock();
 }
+
+TaskPool* ThreadPool::GetTaskPool() {
+    return(m_taskPool);
+}

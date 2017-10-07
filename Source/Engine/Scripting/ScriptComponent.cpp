@@ -13,20 +13,24 @@ ScriptComponent::~ScriptComponent() {
 		delete m_eventHandlers[i];
 	}
     
-    m_script.Reset();
-    m_context.Reset();
+    // m_script.Reset();
+    // m_context.Reset();
 }
 
 void ScriptComponent::Initialize(Script* script) {
 	if (m_initialized) return;
 	m_initialized = true;
     
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
+    if(m_thread == 0) {
+        m_thread = scriptingSystem;
+    }
+    
+    v8::Isolate* isolate = m_thread->GetIsolate();
     
     m_thread = (ScriptThread*)isolate->GetData(0);
     m_scriptSource = script;
     
-    ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
     // Create a stack-allocated handle scope.
@@ -60,7 +64,7 @@ void ScriptComponent::Initialize(Script* script) {
 	std::vector<std::string> interfaceNames;
     for(int i = 0; i < interfaces.size(); i++) {
         ScriptableObjectImpl* impl = m_thread->GetScriptableImpl(interfaces[i]->GetName());
-        impl->AddToContext(context);
+        impl->AddToContext(m_thread);
         
 		interfaceNames.push_back(interfaces[i]->GetName());
     }
@@ -134,7 +138,11 @@ void ScriptComponent::Initialize(Script* script) {
             v8::Local<v8::Function> func = actual.As<v8::Function>();
             v8::String::Utf8Value funcName(func->GetName());
             
-            m_functions.push_back(*funcName);
+            ScriptFunction* scriptFunc = new ScriptFunction();
+            scriptFunc->func.Reset(isolate, func);
+            scriptFunc->funcName = *funcName;
+            
+            m_functions.push_back(scriptFunc);
         }
     }
     
@@ -148,7 +156,7 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
 		this->Initialize(m_scriptSource);
 	}
     
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::Isolate* isolate = m_thread->GetIsolate();
 
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
@@ -165,7 +173,7 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
     
     // Register stuff into our script's context
     ScriptableObjectImpl* impl = m_thread->GetScriptableImpl(type->GetName());
-    impl->AddToContext(context);
+    impl->AddToContext(m_thread);
     
     context->Exit();
     scriptingSystem->SetCurrentScript(0);
@@ -179,7 +187,7 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+	v8::Isolate* isolate = m_thread->GetIsolate();
 
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
@@ -192,7 +200,7 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     v8::TryCatch try_catch(isolate);
     
     // Get into our global namespace
-    v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
+    v8::Local<v8::Object> globalSpace = context->Global();
 
 	ScriptableVariant* sv = (ScriptableVariant*)value;
 	globalSpace->Set(v8::String::NewFromUtf8(isolate, name.c_str()), sv->GetValue());
@@ -208,22 +216,24 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 	}
 
 	// Check to ensure this function exists
-	bool exists = false;
+    ScriptFunction* scriptFunction = 0;
 	for (size_t i = 0; i < m_functions.size(); i++) {
-		if (m_functions[i] == function) {
-			exists = true;
+		if (m_functions[i]->funcName == function) {
+            scriptFunction = m_functions[i];
 		}
 	}
 
-	if (exists == false) return;
+	if (scriptFunction == 0) return;
 
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
     scriptingSystem->SetCurrentScript(this);
     
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+	v8::Isolate* isolate = m_thread->GetIsolate();
 
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
+    
+    v8::Local<v8::Function> storedFunction = scriptFunction->func.Get(isolate);
     
     // Catch any errors the script might throw
     v8::TryCatch try_catch(isolate);
@@ -235,7 +245,7 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
     context->Enter();
     
     // Get our global object space and start adding stuff to it
-    v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
+    v8::Local<v8::Object> globalSpace = context->Global();
     
     // Convert our arguments to v8::Values
     v8::Local<v8::Value>* args = (v8::Local<v8::Value>*)malloc(argc * sizeof(v8::Local<v8::Value>*));

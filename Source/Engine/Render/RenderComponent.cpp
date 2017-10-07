@@ -143,6 +143,7 @@ Variant* RenderComponent::GetTransform(std::string var, Variant* obj) {
     RenderComponent* mi = obj->AsObject<RenderComponent>();
     Transform* transform = mi->GetTransform();
     
+    assert(transform != 0);
     return(new Variant(transform));
 }
 

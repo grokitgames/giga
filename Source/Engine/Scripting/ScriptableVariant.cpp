@@ -57,6 +57,9 @@ v8::Local<v8::Value> ScriptableVariant::GetValue() {
     v8::EscapableHandleScope handle_scope(isolate);
     v8::Local<v8::Value> ret;
     
+    // Get thread specific v8 variable
+    ScriptThread* thread = (ScriptThread*)isolate->GetData(0);
+    
     // Catch any errors the script might throw
     v8::TryCatch try_catch(isolate);
     

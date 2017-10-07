@@ -61,6 +61,11 @@ public:
 	 */
 	void ProcessEvent(Event* ev);
     
+    struct ScriptFunction {
+        std::string funcName;
+        v8::Persistent<v8::Function> func;
+    };
+    
     /**
      * Task system integration
      */
@@ -80,7 +85,7 @@ protected:
     v8::Persistent<v8::Context, v8::CopyablePersistentTraits<v8::Context>> m_context;
     
     // List of functions from inside of the script
-    std::vector<std::string> m_functions;
+    std::vector<ScriptFunction*> m_functions;
     
     // List of accessible (undefined) global variables
     std::vector<std::string> m_globals;

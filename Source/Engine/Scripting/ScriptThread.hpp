@@ -41,6 +41,11 @@ public:
      * Get an implementation by name
      */
     ScriptableObjectImpl* GetScriptableImpl(std::string name);
+    
+    /**
+     * Find a scriptable object
+     */
+    v8::Local<v8::Object> GetCachedObject(ScriptableObject* obj);
 
 protected:
 	// V8 isolated execution environment (own heap, stack, GC, etc.)
@@ -49,6 +54,9 @@ protected:
 
 	// Scriptable object types initialized in this isolate
 	std::vector<ScriptableObjectImpl*> m_impls;
+    
+    // Objects inside of this thread's context
+    std::map<ScriptableObject*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>> m_vars;
 };
 
 #endif

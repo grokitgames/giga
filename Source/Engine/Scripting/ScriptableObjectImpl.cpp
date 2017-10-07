@@ -5,11 +5,12 @@ ScriptableObjectImpl::ScriptableObjectImpl() {
 	m_type = 0;
 }
 
-void ScriptableObjectImpl::Create(ScriptableObjectType* type) {
+void ScriptableObjectImpl::Create(ScriptableObjectType* type, ScriptThread* thread) {
 	m_type = type;
+    m_thread = thread;
 
 	// Start template
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::Isolate* isolate = thread->GetIsolate();
 	v8::HandleScope handle_scope(isolate);
 
 	v8::Local<v8::FunctionTemplate> tpl = v8::FunctionTemplate::New(isolate, New);
@@ -19,11 +20,9 @@ void ScriptableObjectImpl::Create(ScriptableObjectType* type) {
 	std::vector<ScriptableObjectType::ScriptFunctionCallback*> functions = type->GetFunctionList();
 	for (size_t i = 0; i < functions.size(); i++) {
 		if (functions[i]->isStatic == false) {
-			v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
 			tpl->InstanceTemplate()->Set(v8::String::NewFromUtf8(isolate, functions[i]->funcName.c_str()), v8::FunctionTemplate::New(isolate, HandleObjectFunctionCallback));
 		}
 		else {
-			v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
 			tpl->Set(v8::String::NewFromUtf8(isolate, functions[i]->funcName.c_str()), v8::FunctionTemplate::New(isolate, HandleStaticFunctionCallback));
 		}
 	}
@@ -32,11 +31,9 @@ void ScriptableObjectImpl::Create(ScriptableObjectType* type) {
 	std::vector<ScriptableObjectType::ScriptObjectCallbackPair*> variables = type->GetVariableList();
 	for (size_t i = 0; i < variables.size(); i++) {
 		if (variables[i]->isStatic == false) {
-			v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
 			tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, variables[i]->variableName.c_str()), HandleObjectGetter, HandleObjectSetter);
 		}
 		else {
-			v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
 			tpl->SetNativeDataProperty(v8::String::NewFromUtf8(isolate, variables[i]->variableName.c_str()), HandleStaticGetter);
 		}
 	}
@@ -274,17 +271,19 @@ void ScriptableObjectImpl::HandleStaticGetter(v8::Local<v8::String> property, co
 	}
 }
 
-void ScriptableObjectImpl::AddToContext(v8::Local<v8::Context> context) {
+void ScriptableObjectImpl::AddToContext(ScriptThread* thread) {
+    assert(m_thread == thread);
+    
 	// Inject this type name into V8
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::Isolate* isolate = m_thread->GetIsolate();
 	v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);
 	v8::Local<v8::Object> global = isolate->GetCurrentContext()->Global();
 
 	global->Set(v8::String::NewFromUtf8(isolate, m_type->GetName().c_str()), tpl->GetFunction());
 }
 
-v8::Local<v8::Value> ScriptableObjectImpl::CreateJSObject() {
-	v8::Isolate* isolate = v8::Isolate::GetCurrent();
+v8::Local<v8::Object> ScriptableObjectImpl::CreateJSObject() {
+	v8::Isolate* isolate = m_thread->GetIsolate();
 
 	v8::EscapableHandleScope handle_scope(isolate);
 	v8::Local<v8::FunctionTemplate> tpl = m_functionTemplate.Get(isolate);

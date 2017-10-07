@@ -13,7 +13,7 @@ public:
 	/**
 	 * Create an implementation from an object type definition
 	 */
-	void Create(ScriptableObjectType* type);
+	void Create(ScriptableObjectType* type, ScriptThread* thread);
 
 	/**
 	* Called from JS to create a new version of our object to pass back
@@ -23,7 +23,7 @@ public:
 	/**
 	* Add this template to a new context
 	*/
-	void AddToContext(v8::Local<v8::Context> context);
+	void AddToContext(ScriptThread* thread);
 
 	/**
 	* Handle static function callbacks (ie. Time.GetTime())
@@ -53,7 +53,7 @@ public:
 	/**
 	* Create a JavaScript object to pass back to V8
 	*/
-	v8::Local<v8::Value> CreateJSObject();
+	v8::Local<v8::Object> CreateJSObject();
     
     /**
      * Get the name of the type we're based on
@@ -63,6 +63,9 @@ public:
 protected:
 	// The scriptable object typ def we are based on
 	ScriptableObjectType* m_type;
+    
+    // The thread this implementation is tied to
+    ScriptThread* m_thread;
 
 	// The function template
 	v8::Persistent<v8::FunctionTemplate, v8::CopyablePersistentTraits<v8::FunctionTemplate>> m_functionTemplate;

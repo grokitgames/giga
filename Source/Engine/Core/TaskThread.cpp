@@ -19,9 +19,8 @@ void TaskThread::Run(TaskThread* thread) {
     
     while(true) {
         // Check if there is a task pool
-        if(thread->m_threadPool->GetTaskPool()) {
-            TaskPool* taskPool = thread->m_threadPool->GetTaskPool();
-            
+        TaskPool* taskPool = thread->m_threadPool->GetTaskPool();
+        if(taskPool) {
             if(taskPool->HasTasks() == false) {
                 thread->m_threadPool->SetExecuting(false);
             }

@@ -52,7 +52,7 @@ public:
         this->Lock();
         
         ScriptableObjectImpl* impl = new ScriptableObjectImpl();
-        impl->Create(type);
+        impl->Create(type, this);
         
         m_impls.push_back(impl);
         this->Unlock();

@@ -83,7 +83,7 @@ void EchoResponseMessage::OnReceive() {
 	float avgPingTime = 0.0f;
 	int counter = 0;
 	for (int i = 0; i < 10; i++) {
-		if (session->info.pingTimes[i] > 0) {
+		if (session->info.pingTimes[i] != 0) {
 			avgPingTime += session->info.pingTimes[i];
 			counter++;
 		}
@@ -111,7 +111,7 @@ void EchoResponseMessage::OnReceive() {
 	float avgClientOffset = 0.0f;
 	counter = 0;
 	for (int i = 0; i < 10; i++) {
-		if (session->info.offsetTimes[i] > 0) {
+		if (session->info.offsetTimes[i] != 0) {
 			avgClientOffset += session->info.offsetTimes[i];
 			counter++;
 		}

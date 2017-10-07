@@ -57,8 +57,6 @@ public:
         assert(inthandle->InternalFieldCount() > 0);
         
         inthandle->SetAlignedPointerInInternalField(0, this);
-        m_jsHandle.Reset(v8::Isolate::GetCurrent(), inthandle);
-		m_jsHandle.SetWeak<ScriptableObject>(this, __GCCallback, v8::WeakCallbackType::kParameter);
     }
 
 	/**
@@ -76,9 +74,6 @@ protected:
 
 	// Is deleted
 	bool m_deleted;
-    
-    // Internal V8 handle
-    v8::Persistent<v8::Value, v8::CopyablePersistentTraits<v8::Value>> m_jsHandle;
 };
 
 #endif 

@@ -25,7 +25,7 @@ void ScriptThread::Initialize() {
 	std::vector<ScriptableObjectType*> types = scriptingSystem->GetRegisteredTypes();
 	for (size_t i = 0; i < types.size(); i++) {
 		ScriptableObjectImpl* impl = new ScriptableObjectImpl();
-		impl->Create(types[i]);
+		impl->Create(types[i], this);
 
 		m_impls.push_back(impl);
 	}
@@ -75,7 +75,7 @@ ScriptableObjectImpl* ScriptThread::GetScriptableImpl(std::string name) {
     for (size_t i = 0; i < types.size(); i++) {
         if(types[i]->GetName() == name) {
             impl = new ScriptableObjectImpl();
-            impl->Create(types[i]);
+            impl->Create(types[i], this);
         
             m_impls.push_back(impl);
             break;
@@ -83,4 +83,27 @@ ScriptableObjectImpl* ScriptThread::GetScriptableImpl(std::string name) {
     }
     
     return(impl);
+}
+
+v8::Local<v8::Object> ScriptThread::GetCachedObject(ScriptableObject* obj) {
+    v8::EscapableHandleScope scope(m_isolate);
+    
+    v8::Local<v8::Object> retval;
+    std::map<ScriptableObject*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>>::iterator it = m_vars.find(obj);
+    if(it != m_vars.end()) {
+        retval = it->second.Get(m_isolate);
+    }
+    else {
+        obj->LockMutex();
+        ScriptableObjectImpl* impl = this->GetScriptableImpl(obj->GetScriptType()->GetName());
+        
+        retval = impl->CreateJSObject();
+        v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Value>> persistent;
+        persistent.Reset(m_isolate, retval);
+        obj->UnlockMutex();
+        
+        m_vars[obj] = persistent;
+    }
+    
+    return(scope.Escape(retval));
 }

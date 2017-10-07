@@ -20,7 +20,7 @@ public:
 	 */
 	void Execute(TaskPool* pool);
     
-    TaskPool* GetTaskPool() { return m_taskPool; }
+    TaskPool* GetTaskPool();
     
     void SetExecuting(bool executing);
 

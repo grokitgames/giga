@@ -376,6 +376,15 @@
     <ClInclude Include="..\..\Engine\Network\ClientPredictionError.hpp">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Engine\Core\ThreadPool.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptThread.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectImpl.hpp">
+      <Filter>Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Engine\Core\Application.cpp">
@@ -668,6 +677,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Engine\Core\TaskThread.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptThread.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Core\ThreadPool.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectImpl.cpp">
+      <Filter>Scripting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

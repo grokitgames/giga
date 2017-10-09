@@ -30,6 +30,8 @@ void StartApplication() {
 	resourceSystem->AddSearchPath("Resources/Textures");
 	resourceSystem->AddSearchPath("Resources/Shaders");
 	resourceSystem->AddSearchPath("Resources/Scripts/Server");
+
+	scriptingSystem->Lock();
     
     // Load game.js file
     Script* gamejs = dynamic_cast<Script*>(resourceSystem->LoadResource("game.js", "Script"));
@@ -38,6 +40,8 @@ void StartApplication() {
     // Call Init() inside JS file
     gameComponent->AddToSystem();
     gameComponent->Initialize(gamejs);
+
+	scriptingSystem->Unlock();
 
 	// Create our data loader
 	MySQLDataLoader* loader = application->CreateDataLoader<MySQLDataLoader>();

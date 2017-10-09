@@ -31,7 +31,7 @@ void ScriptComponent::Initialize(Script* script) {
     m_thread = (ScriptThread*)isolate->GetData(0);
     m_scriptSource = script;
     
-    scriptingSystem->SetCurrentScript(this);
+    m_thread->SetCurrentScript(this);
     
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
@@ -77,7 +77,7 @@ void ScriptComponent::Initialize(Script* script) {
     if (v8::Script::Compile(context, scriptSrc).ToLocal(&vscript) == false) {
         v8::String::Utf8Value error(try_catch.Exception());
         ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to compile script file", (char*)*error));
-        scriptingSystem->SetCurrentScript(0);
+        m_thread->SetCurrentScript(0);
         return;
     }
     
@@ -88,7 +88,7 @@ void ScriptComponent::Initialize(Script* script) {
     if (vscript->Run(context).ToLocal(&result) == false) {
         v8::String::Utf8Value error(try_catch.Exception());
         ErrorSystem::Process(new Error(ERROR_WARN, (char*)"Unable to execute script file", (char*)*error));
-        scriptingSystem->SetCurrentScript(0);
+        m_thread->SetCurrentScript(0);
         return;
     }
     
@@ -100,7 +100,7 @@ void ScriptComponent::Initialize(Script* script) {
 			SetGlobal("GameObject", parent);
 		}
 
-		scriptingSystem->SetCurrentScript(this);
+		m_thread->SetCurrentScript(this);
 
         // Call the Init function if there is one
         v8::Local<v8::Function> initFunc = value.As<v8::Function>();
@@ -148,7 +148,7 @@ void ScriptComponent::Initialize(Script* script) {
     
     context->Exit();
 
-    scriptingSystem->SetCurrentScript(0);
+    m_thread->SetCurrentScript(0);
 }
 
 void ScriptComponent::AddToContext(ScriptableObjectType* type) {
@@ -159,7 +159,7 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
     v8::Isolate* isolate = m_thread->GetIsolate();
 
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    scriptingSystem->SetCurrentScript(this);
+    m_thread->SetCurrentScript(this);
 
     // Create a stack-allocated handle scope.
     v8::HandleScope handle_scope(isolate);
@@ -176,7 +176,7 @@ void ScriptComponent::AddToContext(ScriptableObjectType* type) {
     impl->AddToContext(m_thread);
     
     context->Exit();
-    scriptingSystem->SetCurrentScript(0);
+    m_thread->SetCurrentScript(0);
 }
 
 void ScriptComponent::SetGlobal(std::string name, Variant* value) {
@@ -185,7 +185,7 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
 	}
 
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    scriptingSystem->SetCurrentScript(this);
+    m_thread->SetCurrentScript(this);
     
 	v8::Isolate* isolate = m_thread->GetIsolate();
 
@@ -207,7 +207,7 @@ void ScriptComponent::SetGlobal(std::string name, Variant* value) {
     
     // Exit
     context->Exit();
-    scriptingSystem->SetCurrentScript(0);
+    m_thread->SetCurrentScript(0);
 }
 
 void ScriptComponent::CallFunction(std::string function, int argc, Variant** argv) {
@@ -226,7 +226,7 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
 	if (scriptFunction == 0) return;
 
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    scriptingSystem->SetCurrentScript(this);
+    m_thread->SetCurrentScript(this);
     
 	v8::Isolate* isolate = m_thread->GetIsolate();
 
@@ -287,7 +287,7 @@ void ScriptComponent::CallFunction(std::string function, int argc, Variant** arg
     
     // Exit context
     context->Exit();
-    scriptingSystem->SetCurrentScript(0);
+    m_thread->SetCurrentScript(0);
 }
 
 void ScriptComponent::Copy(Component* component) {
@@ -303,6 +303,7 @@ void ScriptComponent::Copy(Component* component) {
 	clone->m_context = m_context;
 	clone->m_script = m_script;
 	clone->m_initialized = m_initialized;
+	clone->m_thread = m_thread;
 
 	for (size_t i = 0; i < m_globals.size(); i++) {
 		clone->m_globals.push_back(m_globals[i]);

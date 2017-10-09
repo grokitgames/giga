@@ -2,7 +2,7 @@
 #ifndef scriptthread_hpp
 #define scriptthread_hpp
 
-class ScriptThread : public TaskThread {
+class GIGA_API ScriptThread : public TaskThread {
 public:
 	ScriptThread();
 	~ScriptThread();
@@ -47,6 +47,11 @@ public:
      */
     v8::Local<v8::Object> GetCachedObject(ScriptableObject* obj);
 
+	/**
+	* The currently executing script (so events can be proxied back in)
+	*/
+	void SetCurrentScript(ScriptComponent* component) { m_currentScript = component; }
+
 protected:
 	// V8 isolated execution environment (own heap, stack, GC, etc.)
 	v8::Isolate* m_isolate;
@@ -57,6 +62,9 @@ protected:
     
     // Objects inside of this thread's context
     std::map<ScriptableObject*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>> m_vars;
+
+	// Currently executing script component
+	ScriptComponent* m_currentScript;
 };
 
 #endif

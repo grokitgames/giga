@@ -3,6 +3,7 @@
 
 ScriptThread::ScriptThread() {
 	m_isolate = 0;
+	m_currentScript = 0;
 }
 
 ScriptThread::~ScriptThread() {

@@ -5,7 +5,7 @@
 /**
  * The implementation of a ScriptableObjectType definition
  */
-class ScriptableObjectImpl {
+class GIGA_API ScriptableObjectImpl {
 public:
 	ScriptableObjectImpl();
 	~ScriptableObjectImpl() = default;

@@ -14,11 +14,12 @@ void TaskPool::Push(Task* task) {
 }
 
 Task* TaskPool::Pop() {
+	m_mutex.lock();
 	if (m_tasks.size() == 0) {
+		m_mutex.unlock();
 		return(0);
 	}
 
-    m_mutex.lock();
     Task* task = *(m_tasks.end() - 1);
     m_tasks.pop_back();
     m_mutex.unlock();

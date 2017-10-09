@@ -64,11 +64,6 @@ public:
     void RegisterGlobal(std::string name, Variant* value);
     
     /**
-     * The currently executing script (so events can be proxied back in)
-     */
-    void SetCurrentScript(ScriptComponent* component) { m_currentScript = component; }
-    
-    /**
      * Get all currently registered interfaces
      */
     std::vector<ScriptableObjectType*>& GetRegisteredTypes() { return m_types; }
@@ -105,9 +100,6 @@ protected:
     // A list of global variables to be injected into all scripts upon creation
     std::map<std::string, ScriptableVariant*> m_globals;
     
-    // Our currently executing script
-    ScriptComponent* m_currentScript;
-    
     // List of running script components
     ObjectPool<ScriptComponent> m_scripts;
 
@@ -115,7 +107,7 @@ protected:
 	ObjectPool<ScriptableObject> m_transients;
     
     // Script thread
-    ThreadPool* m_threadPool;
+	ThreadPool* m_threadPool;
 };
 
 #endif

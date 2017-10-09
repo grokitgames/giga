@@ -81,6 +81,7 @@
     <ClCompile Include="..\..\Engine\Core\TaskPool.cpp" />
     <ClCompile Include="..\..\Engine\Core\TaskSystem.cpp" />
     <ClCompile Include="..\..\Engine\Core\TaskThread.cpp" />
+    <ClCompile Include="..\..\Engine\Core\ThreadPool.cpp" />
     <ClCompile Include="..\..\Engine\Core\Variant.cpp" />
     <ClCompile Include="..\..\Engine\IO\Command.cpp" />
     <ClCompile Include="..\..\Engine\IO\DataLoader.cpp" />
@@ -143,10 +144,12 @@
     <ClCompile Include="..\..\Engine\Resource\ResourceSystem.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\Script.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptableObject.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectImpl.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptableObjectType.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptableVariant.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptComponent.cpp" />
     <ClCompile Include="..\..\Engine\Scripting\ScriptingSystem.cpp" />
+    <ClCompile Include="..\..\Engine\Scripting\ScriptThread.cpp" />
     <ClCompile Include="..\..\Linux\main.cpp" />
     <ClCompile Include="..\..\ThirdParty\sqlite\src\sqlite3.c" />
   </ItemGroup>
@@ -169,6 +172,7 @@
     <ClInclude Include="..\..\Engine\Core\TaskPool.hpp" />
     <ClInclude Include="..\..\Engine\Core\TaskSystem.hpp" />
     <ClInclude Include="..\..\Engine\Core\TaskThread.hpp" />
+    <ClInclude Include="..\..\Engine\Core\ThreadPool.hpp" />
     <ClInclude Include="..\..\Engine\Core\Variant.hpp" />
     <ClInclude Include="..\..\Engine\giga-engine.h" />
     <ClInclude Include="..\..\Engine\IO\Command.hpp" />
@@ -247,10 +251,12 @@
     <ClInclude Include="..\..\Engine\Resource\ResourceSystem.hpp" />
     <ClInclude Include="..\..\Engine\Scripting\Script.hpp" />
     <ClInclude Include="..\..\Engine\Scripting\ScriptableObject.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectImpl.hpp" />
     <ClInclude Include="..\..\Engine\Scripting\ScriptableObjectType.hpp" />
     <ClInclude Include="..\..\Engine\Scripting\ScriptableVariant.hpp" />
     <ClInclude Include="..\..\Engine\Scripting\ScriptComponent.hpp" />
     <ClInclude Include="..\..\Engine\Scripting\ScriptingSystem.hpp" />
+    <ClInclude Include="..\..\Engine\Scripting\ScriptThread.hpp" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <ClCompile>

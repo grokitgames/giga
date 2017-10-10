@@ -72,7 +72,7 @@ public:
     /**
      * Register a scripted event handler
      */
-    void RegisterEventHandler(std::string type, std::string func, int entityID = 0);
+    void RegisterEventHandler(ScriptComponent* component, std::string type, std::string func, int entityID = 0);
     
     /**
      * Generic callback fo registered events from the event system

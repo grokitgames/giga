@@ -88,6 +88,11 @@ void ScriptableObjectImpl::HandleStaticFunctionCallback(const v8::FunctionCallba
 	for (int i = 0; i < argc; i++) {
 		argv[i] = new ScriptableVariant(info[i]);
 	}
+    
+    // Get current thread out of isolate
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    ScriptThread* thread = (ScriptThread*)isolate->GetData(0);
+    ScriptComponent* component = thread->GetCurrentScript();
 
 	// Get the script interface we're supposed to connect to
 	ScriptingSystem* ss = GetSystem<ScriptingSystem>();
@@ -108,7 +113,13 @@ void ScriptableObjectImpl::HandleStaticFunctionCallback(const v8::FunctionCallba
 		v8::String::Utf8Value funcName(func->GetName());
 		if (funcList[i]->funcName == std::string(*funcName)) {
 			if (funcList[i]->func != 0) {
-				ScriptableVariant* scrval = (ScriptableVariant*)(funcList[i]->func(0, argc, argv));
+                ScriptableVariant* scrval = 0;
+                if(funcList[i]->isComponent == false) {
+                    scrval = (ScriptableVariant*)(funcList[i]->func(0, argc, argv));
+                }
+                else {
+                    scrval = (ScriptableVariant*)(funcList[i]->func2(component, 0, argc, argv));
+                }
 				v8::Local<v8::Value> val = scrval->GetValue();
 				info.GetReturnValue().Set(val);
 				delete scrval;
@@ -136,6 +147,11 @@ void ScriptableObjectImpl::HandleObjectFunctionCallback(const v8::FunctionCallba
 	ScriptableObject* jsobj = ScriptableObject::Unwrap(info.This());
 	Variant* obj = new Variant(jsobj);
 	jsobj->LockMutex();
+    
+    // Get current thread out of isolate
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    ScriptThread* thread = (ScriptThread*)isolate->GetData(0);
+    ScriptComponent* component = thread->GetCurrentScript();
 
 	// Get the script interface we're supposed to connect to
 	ScriptingSystem* ss = GetSystem<ScriptingSystem>();
@@ -155,7 +171,13 @@ void ScriptableObjectImpl::HandleObjectFunctionCallback(const v8::FunctionCallba
 		v8::String::Utf8Value funcName(func->GetName());
 		if (funcList[i]->funcName == std::string(*funcName)) {
 			if (funcList[i]->func != 0) {
-				ScriptableVariant* value = (ScriptableVariant*)(funcList[i]->func(obj, argc, argv));
+                ScriptableVariant* value = 0;
+                if(funcList[i]->isComponent == false) {
+                    value = (ScriptableVariant*)(funcList[i]->func(obj, argc, argv));
+                }
+                else {
+                    value = (ScriptableVariant*)(funcList[i]->func2(component, obj, argc, argv));
+                }
 				v8::Local<v8::Value> val = value->GetValue();
 				info.GetReturnValue().Set(val);
 				delete value;

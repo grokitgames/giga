@@ -51,6 +51,7 @@ public:
 	* The currently executing script (so events can be proxied back in)
 	*/
 	void SetCurrentScript(ScriptComponent* component) { m_currentScript = component; }
+    ScriptComponent* GetCurrentScript() { return m_currentScript; }
 
 protected:
 	// V8 isolated execution environment (own heap, stack, GC, etc.)

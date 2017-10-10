@@ -4,6 +4,7 @@
 
 class ScriptableObject;
 class ScriptableObjectImpl;
+class ScriptComponent;
 
 /**
  * A "getter" function template
@@ -19,6 +20,7 @@ typedef void (*ScriptObjectSetterFunc)(std::string prop, Variant* obj, Variant* 
  * A generic callback function template
  */
 typedef Variant* (*ScriptObjectFunc)(Variant* obj, int argc, Variant** argv);
+typedef Variant* (*ScriptComponentObjectFunc)(ScriptComponent* component, Variant* obj, int argc, Variant** argv);
 
 /**
  * A defined interface to the scripting system
@@ -54,7 +56,11 @@ public:
 	public:
 		std::string funcName;
 		bool isStatic;
-		ScriptObjectFunc func;
+        bool isComponent;
+        union {
+            ScriptObjectFunc func;
+            ScriptComponentObjectFunc func2;
+        };
 	};
     
     /**
@@ -95,6 +101,11 @@ public:
     void AddObjectFunction(std::string name, ScriptObjectFunc func);
     
     /**
+     * Add a component aware object function to our template (ie. this.DoSomething())
+     */
+    void AddObjectFunction(std::string name, ScriptComponentObjectFunc func);
+    
+    /**
      * Add a static variable to our type name (ie. Time.deltaTime) with a getter only
      */
     void AddStaticVariable(std::string name, ScriptObjectGetterFunc getter);
@@ -103,6 +114,11 @@ public:
      * Add a static function to our type (ie. Time.GetTime())
      */
     void AddStaticFunction(std::string name, ScriptObjectFunc func);
+    
+    /**
+     * Add a component aware static function to our type (ie. Time.GetTime())
+     */
+    void AddStaticFunction(std::string name, ScriptComponentObjectFunc func);
     
     /**
      * Get our function list

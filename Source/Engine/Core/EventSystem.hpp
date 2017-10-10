@@ -40,7 +40,7 @@ public:
     /**
      * Register a scripted event handler
      */
-    static Variant* RegisterEventHandler(Variant* object, int argc, Variant** argv);
+    static Variant* RegisterEventHandler(ScriptComponent* component, Variant* object, int argc, Variant** argv);
     
 private:
     // The storage of an event handler

@@ -39,6 +39,20 @@ void ScriptableObjectType::AddObjectFunction(std::string name, ScriptObjectFunc 
     pair->funcName = name;
     pair->func = func;
 	pair->isStatic = false;
+    pair->isComponent = false;
+    
+    m_funcList.push_back(pair);
+}
+
+void ScriptableObjectType::AddObjectFunction(std::string name, ScriptComponentObjectFunc func) {
+    // Create a new variable function callback
+    ScriptFunctionCallback* pair = new ScriptFunctionCallback();
+    
+    // Copy params
+    pair->funcName = name;
+    pair->func2 = func;
+    pair->isStatic = false;
+    pair->isComponent = true;
     
     m_funcList.push_back(pair);
 }
@@ -63,6 +77,20 @@ void ScriptableObjectType::AddStaticFunction(std::string name, ScriptObjectFunc 
     pair->funcName = name;
     pair->func = func;
 	pair->isStatic = true;
+    pair->isComponent = false;
 
+    m_funcList.push_back(pair);
+}
+
+void ScriptableObjectType::AddStaticFunction(std::string name, ScriptComponentObjectFunc func) {
+    // Create a new variable function callback
+    ScriptFunctionCallback* pair = new ScriptFunctionCallback();
+    
+    // Copy params
+    pair->funcName = name;
+    pair->func2 = func;
+    pair->isStatic = true;
+    pair->isComponent = true;
+    
     m_funcList.push_back(pair);
 }

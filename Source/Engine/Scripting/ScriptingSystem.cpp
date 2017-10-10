@@ -69,8 +69,8 @@ ScriptableObjectType* ScriptingSystem::GetScriptableObjectType(std::string name)
     return(0);
 }
 
-void ScriptingSystem::RegisterEventHandler(std::string type, std::string func, int entityID) {
-	m_currentScript->RegisterEventHandler(type, func, entityID);
+void ScriptingSystem::RegisterEventHandler(ScriptComponent* component, std::string type, std::string func, int entityID) {
+	component->RegisterEventHandler(type, func, entityID);
     
     // Register our callback for this type of event
     EventSystem* eventSystem = GetSystem<EventSystem>();

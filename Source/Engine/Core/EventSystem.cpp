@@ -67,7 +67,7 @@ Variant* EventSystem::Process(Variant* object, int argc, Variant** argv) {
     return(new Variant(0));
 }
 
-Variant* EventSystem::RegisterEventHandler(Variant* object, int argc, Variant** argv) {
+Variant* EventSystem::RegisterEventHandler(ScriptComponent* component, Variant* object, int argc, Variant** argv) {
     GIGA_ASSERT(argc == 2 || argc == 3, "RegisterEventHandler function expects 2 or 3 arguments.");
     GIGA_ASSERT(argv[0]->IsString(), "First parameter should be a string event type.");
     GIGA_ASSERT(argv[1]->IsString(), "Second parameter should be a function name.");
@@ -81,7 +81,7 @@ Variant* EventSystem::RegisterEventHandler(Variant* object, int argc, Variant** 
     
     // Pass to scripting system to handle
     ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
-    scriptingSystem->RegisterEventHandler(argv[0]->AsString(), argv[1]->AsString(), entityID);
+    scriptingSystem->RegisterEventHandler(component, argv[0]->AsString(), argv[1]->AsString(), entityID);
     
     return(new Variant(0));
 }

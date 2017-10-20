@@ -21,6 +21,11 @@ public:
      * Remove a task from the pool
      */
     Task* Pop();
+
+	/**
+	 * Size of pool
+	 */
+	int Size() { return m_tasks.size(); }
     
 protected:
     std::vector<Task*> m_tasks;

@@ -20,9 +20,10 @@ public:
 	 */
 	void Execute(TaskPool* pool);
     
-    TaskPool* GetTaskPool();
+    TaskPool* LockTaskPool();
+	void UnlockTaskPool();
     
-    void SetExecuting(bool executing);
+	void MarkCompleted(Task* task);
 
 protected:
 	// Threads
@@ -31,8 +32,10 @@ protected:
     // The task pool we are executing
     TaskPool* m_taskPool;
 
-	// Whether we are currently executing or not
-	bool m_executing;
+	// Number of completed tasks
+	int m_poolSize;
+	int m_completed;
+
     std::mutex m_mutex;
 };
 

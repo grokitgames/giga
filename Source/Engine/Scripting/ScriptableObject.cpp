@@ -12,7 +12,16 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
     
     // Get the thread we are currently executing on
     ScriptThread* thread = (ScriptThread*)isolate->GetData(0);
+
+	v8::Local<v8::Object> retval;
+	std::map<ScriptThread*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>>::iterator it = m_cached.find(thread);
+	if (it != m_cached.end()) {
+		retval = it->second.Get(isolate);
+		return(handle_scope.Escape(retval));
+	}
     
+	LockMutex();
+
     // Lazy load interface
     if (m_scriptType == 0) {
         ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
@@ -21,14 +30,18 @@ v8::Local<v8::Object> ScriptableObject::GetJSObject() {
         GIGA_ASSERT(m_scriptType != 0, "Interface not defined for class type.")
     }
     
-    // Check if we have handle for this variable already
-    v8::Local<v8::Object> ret = thread->GetCachedObject(this);
-    if(ret->IsNull() == true) {
-        GIGA_ASSERT(false, "Cannot get JS object.");
-    }
-    
-    Wrap(ret);
-    return(handle_scope.Escape(ret));
+	ScriptableObjectImpl* impl = thread->GetScriptableImpl(GetScriptType()->GetName());
+
+	retval = impl->CreateJSObject();
+	v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Value>> persistent;
+	persistent.Reset(isolate, retval);
+
+    Wrap(retval);
+	m_cached[thread] = persistent;
+
+	UnlockMutex();
+
+    return(handle_scope.Escape(retval));
 }
 
 void ScriptableObject::__GCCallback(const v8::WeakCallbackInfo<ScriptableObject>& data) {

@@ -2,6 +2,9 @@
 #ifndef transform_hpp
 #define transform_hpp
 
+class Vector3;
+class Quaternion;
+
 class GIGA_API Transform : public ScriptableObject {
 public:
 	Transform();
@@ -54,6 +57,15 @@ public:
     vector3 look;
     vector3 up;
     vector3 right;
+
+	// Scripting variables
+	Vector3* vlook;
+	Vector3* vup;
+	Vector3* vright;
+
+	Vector3* vposition;
+	Vector3* vrotation;
+	Vector3* vscaling;
     
 protected:
     matrix4 m_modelMatrix;

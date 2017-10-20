@@ -10,6 +10,7 @@
 
 ScriptingSystem::ScriptingSystem() {
 	m_platform = 0;
+	m_taskPool = 0;
 }
 
 ScriptingSystem::~ScriptingSystem() {
@@ -95,7 +96,9 @@ void ScriptingSystem::Update(float delta) {
 	std::vector<ScriptComponent*> scripts = m_scripts.GetList();
 	std::vector<ScriptComponent*>::iterator i = scripts.begin();
 
-	TaskPool* pool = new TaskPool();
+	if (m_taskPool == 0) {
+		m_taskPool = new TaskPool();
+	}
 
 	for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
@@ -108,13 +111,12 @@ void ScriptingSystem::Update(float delta) {
 		task->AddArgument(new Variant(delta));
 		task->AddArgument(new Variant((*i)->GetParent()));
 
-		pool->Push(task);
+		m_taskPool->Push(task);
     }
     
 	TaskSystem* taskSystem = GetSystem<TaskSystem>();
-	taskSystem->Execute(pool, m_threadPool);
+	taskSystem->Execute(m_taskPool, m_threadPool);
 
-	delete pool;
 	/*for (i; i != scripts.end(); i++) {
 		// Make sure this component is active
 		if ((*i)->IsActive() == false) {

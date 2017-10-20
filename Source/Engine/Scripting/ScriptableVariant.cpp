@@ -64,22 +64,28 @@ v8::Local<v8::Value> ScriptableVariant::GetValue() {
     v8::TryCatch try_catch(isolate);
     
     if (IsInt()) {
+		//printf("Returning int of value %d.\n", AsInt());
         ret = v8::Number::New(isolate, AsInt());
     }
     if (IsFloat()) {
+		//printf("Returning float of value %.2f.\n", AsFloat());
         ret = v8::Number::New(isolate, AsFloat());
     }
     if (IsString()) {
+		//printf("Returning string of value %s.\n", AsString().c_str());
         ret = v8::String::NewFromUtf8(isolate, AsString().c_str());
     }
     if (IsObject()) {
         ScriptableObject* obj = AsObject<ScriptableObject>();
+		//printf("Returning object of type %s.\n", obj->GetGigaName().c_str());
         ret = obj->GetJSObject();
     }
     if (IsFunction()) {
         v8::Local<v8::Object> globalSpace = isolate->GetCurrentContext()->Global();
         ret = globalSpace->Get(v8::String::NewFromUtf8(isolate, AsString().c_str()));
     }
+
+	GIGA_ASSERT(ret.IsEmpty() == false, "Returned value cannot be read.");
     
     // Attempt to get an error message (need a better way to do this)
     v8::String::Utf8Value error(try_catch.Exception());

@@ -9,6 +9,9 @@ Transform::Transform() {
 	look = vector3(0, 0, -1);
 	up = vector3(0, 1, 0);
 	right = vector3(1, 0, 0);
+	vlook = 0;
+	vup = 0;
+	vright = 0;
 }
 
 void Transform::Move(vector3 translation) {
@@ -148,18 +151,33 @@ Variant* Transform::Scale(Variant* obj, int argc, Variant** argv) {
 
 Variant* Transform::GetLook(std::string var, Variant* obj) {
     Transform* tc = obj->AsObject<Transform>();
-    Vector3* lv = new Vector3(tc->look);
-    return(new Variant(lv));
+
+	if (tc->vlook == 0) {
+		tc->vlook = new Vector3();
+	}
+	tc->vlook->Set(tc->look);
+
+    return(new Variant(tc->vlook));
 }
 
 Variant* Transform::GetUp(std::string var, Variant* obj) {
     Transform* tc = obj->AsObject<Transform>();
-    Vector3* lv = new Vector3(tc->up);
-    return(new Variant(lv));
+
+	if (tc->vup == 0) {
+		tc->vup = new Vector3();
+	}
+	tc->vup->Set(tc->up);
+
+	return(new Variant(tc->vup));
 }
 
 Variant* Transform::GetRight(std::string var, Variant* obj) {
     Transform* tc = obj->AsObject<Transform>();
-    Vector3* lv = new Vector3(tc->right);
-    return(new Variant(lv));
+
+	if (tc->vright == 0) {
+		tc->vright = new Vector3();
+	}
+	tc->vright->Set(tc->right);
+
+	return(new Variant(tc->vright));
 }

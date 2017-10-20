@@ -108,6 +108,7 @@ protected:
     
     // Script thread
 	ThreadPool* m_threadPool;
+	TaskPool* m_taskPool;
 };
 
 #endif

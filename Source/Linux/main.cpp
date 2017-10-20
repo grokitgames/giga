@@ -96,7 +96,7 @@ void StartApplication() {
 
 		PROFILE_START_FRAME();
 
-		if (saveTimer >= 5.0f) {
+		/*if (saveTimer >= 5.0f) {
 			std::vector<Entity*> entityList = entitySystem->GetEntities();
 			std::vector<Entity*>::iterator i = entityList.begin();
 			for (; i != entityList.end(); i++) {
@@ -109,7 +109,7 @@ void StartApplication() {
 			}
 
 			saveTimer = 0.0f;
-		}
+		}*/
 
 		application->Update(delta);
 

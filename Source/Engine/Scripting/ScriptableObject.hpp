@@ -2,6 +2,8 @@
 #ifndef scriptableobject_hpp
 #define scriptableobject_hpp
 
+class ScriptThread;
+
 /**
  * Scriptable object base class - all C++ classes used in JS should inherit this
  */
@@ -74,6 +76,9 @@ protected:
 
 	// Is deleted
 	bool m_deleted;
+
+	// Cached JS variables for various threads
+	std::map<ScriptThread*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>> m_cached;
 };
 
 #endif 

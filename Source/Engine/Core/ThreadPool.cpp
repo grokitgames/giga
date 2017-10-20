@@ -2,7 +2,8 @@
 #include <giga-engine.h>
 
 ThreadPool::ThreadPool() {
-	m_executing = false;
+	m_completed = 0;
+	m_poolSize = 0;
     m_taskPool = 0;
 }
 
@@ -13,21 +14,29 @@ void ThreadPool::AddThread(TaskThread* thread) {
 
 void ThreadPool::Execute(TaskPool* pool) {
 	m_taskPool = pool;
-    m_executing = true;
+	m_poolSize = pool->Size();
+	m_completed = 0;
 
 	// Otherwise, process on our threads
-	while (m_executing) {
+	while (m_completed < m_poolSize) {
 		Timer::Sleep(1);
 	}
+
+	m_taskPool = 0;
 }
 
-void ThreadPool::SetExecuting(bool executing) {
+void ThreadPool::MarkCompleted(Task* task) {
     m_mutex.lock();
-    m_executing = executing;
-    m_taskPool = 0;
+	m_completed++;
     m_mutex.unlock();
 }
 
-TaskPool* ThreadPool::GetTaskPool() {
+TaskPool* ThreadPool::LockTaskPool() {
+	m_mutex.lock();
     return(m_taskPool);
+}
+
+
+void ThreadPool::UnlockTaskPool() {
+	m_mutex.unlock();
 }

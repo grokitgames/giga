@@ -24,6 +24,16 @@ public:
      */
 	void Copy(Component* component);
     
+    /**
+     * Set data bindings
+     */
+    void SetDataMappings();
+    
+    /**
+     * Update once data is bound
+     */
+    void UpdateFromDataMappings();
+    
 protected:
     struct LookVectors {
         vector3 look;

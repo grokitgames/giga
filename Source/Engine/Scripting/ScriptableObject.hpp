@@ -9,7 +9,7 @@ class ScriptThread;
  */
 class GIGA_API ScriptableObject : public GigaObject {
 public:
-    virtual ~ScriptableObject() = default;
+    virtual ~ScriptableObject();
     
     /**
      * Initialize a newly created object

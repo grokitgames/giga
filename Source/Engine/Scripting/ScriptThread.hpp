@@ -41,11 +41,6 @@ public:
      * Get an implementation by name
      */
     ScriptableObjectImpl* GetScriptableImpl(std::string name);
-    
-    /**
-     * Find a scriptable object
-     */
-    v8::Local<v8::Object> GetCachedObject(ScriptableObject* obj);
 
 	/**
 	* The currently executing script (so events can be proxied back in)
@@ -60,9 +55,6 @@ protected:
 
 	// Scriptable object types initialized in this isolate
 	std::vector<ScriptableObjectImpl*> m_impls;
-    
-    // Objects inside of this thread's context
-    std::map<ScriptableObject*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>> m_vars;
 
 	// Currently executing script component
 	ScriptComponent* m_currentScript;

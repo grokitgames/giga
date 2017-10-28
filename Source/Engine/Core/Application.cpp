@@ -141,6 +141,17 @@ void Application::Initialize() {
 	scriptStorableType->AddField("script", "Script", true, StorableObjectField::FIELD_RESOURCE);
 
 	DataLoader::RegisterRecordType<ScriptComponent>(scriptStorableType);
+    
+    StorableObjectType* spotLightStorableType = new StorableObjectType();
+    spotLightStorableType->SetName("SpotLightComponent");
+    spotLightStorableType->SetPrimaryKey("spotlight_id");
+    spotLightStorableType->AddField("scene_id", StorableObjectField::FIELD_FOREIGNKEY);
+    spotLightStorableType->AddField("entity_id", StorableObjectField::FIELD_FOREIGNKEY);
+    spotLightStorableType->AddField("position", "Position", true, StorableObjectField::FIELD_VECTOR3);
+    spotLightStorableType->AddField("color", "Color", true, StorableObjectField::FIELD_VECTOR3);
+    spotLightStorableType->AddField("attenuation", "Attenuation", true, StorableObjectField::FIELD_FLOAT);
+    
+    DataLoader::RegisterRecordType<SpotLightComponent>(spotLightStorableType);
 
 	Application::Log(MSGTYPE_DEBUG, "Registered storable types...");
 

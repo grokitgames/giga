@@ -85,29 +85,3 @@ ScriptableObjectImpl* ScriptThread::GetScriptableImpl(std::string name) {
     
     return(impl);
 }
-
-v8::Local<v8::Object> ScriptThread::GetCachedObject(ScriptableObject* obj) {
-    v8::EscapableHandleScope scope(m_isolate);
-    
-    v8::Local<v8::Object> retval;
-    std::map<ScriptableObject*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>>::iterator it = m_vars.find(obj);
-    if(it != m_vars.end()) {
-		//printf("Returning stored pointer to object of type %s.\n", it->first->GetGigaName().c_str());
-        retval = it->second.Get(m_isolate);
-    }
-    else {
-		printf("Creating stored pointer to object of type %s.\n", obj->GetGigaName().c_str());
-
-        obj->LockMutex();
-        ScriptableObjectImpl* impl = this->GetScriptableImpl(obj->GetScriptType()->GetName());
-        
-        retval = impl->CreateJSObject();
-        v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Value>> persistent;
-        persistent.Reset(m_isolate, retval);
-        obj->UnlockMutex();
-        
-        m_vars[obj] = persistent;
-    }
-    
-    return(scope.Escape(retval));
-}

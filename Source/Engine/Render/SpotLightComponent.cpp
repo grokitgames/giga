@@ -93,3 +93,13 @@ void SpotLightComponent::Copy(Component* component) {
 void SpotLightComponent::RecalculateMatrices() {
 
 }
+
+void SpotLightComponent::SetDataMappings() {
+    SetStorableObjectFieldMapping("position", &m_transform.position);
+    SetStorableObjectFieldMapping("color", &m_color);
+    SetStorableObjectFieldMapping("attenuation", &m_attenuation);
+}
+
+void SpotLightComponent::UpdateFromDataMappings() {
+    this->Initialize();
+}

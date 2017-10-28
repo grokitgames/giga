@@ -6,6 +6,13 @@ ScriptableObject::ScriptableObject() {
 	m_deleted = false;
 }
 
+ScriptableObject::~ScriptableObject() {
+    std::map<ScriptThread*, v8::Persistent<v8::Object, v8::CopyablePersistentTraits<v8::Object>>>::iterator it = m_cached.begin();
+    for(; it != m_cached.end(); it++) {
+        it->second.Reset();
+    }
+}
+
 v8::Local<v8::Object> ScriptableObject::GetJSObject() {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     v8::EscapableHandleScope handle_scope(isolate);

@@ -4,7 +4,7 @@
 
 void OpenGLShadowPass::Initialize(int width, int height) {
     // Load shader
-    m_shader = ShaderSystem::Find("depth.vs", "depth.fs", 0);
+    m_shader = ShaderSystem::Find("depth.vs", "depth.fs", new ShaderAttributes());
 }
 
 void OpenGLShadowPass::Render(Scene* scene) {

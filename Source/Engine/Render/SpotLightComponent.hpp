@@ -7,7 +7,7 @@ public:
     SpotLightComponent() { m_type = LIGHT_SPOT; }
     ~SpotLightComponent() = default;
     
-    GIGA_CLASS_NAME("SpotLightCompoent");
+    GIGA_CLASS_NAME("SpotLightComponent");
     
     /**
      * Initialize

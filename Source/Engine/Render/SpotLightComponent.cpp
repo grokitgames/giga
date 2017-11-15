@@ -11,12 +11,14 @@ void SpotLightComponent::Initialize() {
     m_shadowMap = renderSystem->CreateTexture3D();
     m_shadowMap->Initialize(512, 512, COLOR_RED16F, COLOR_RED);
     
+    m_framebuffer = renderSystem->CreateFramebuffer();
+    m_framebuffer->Initialize(512, 512);
+    
     // Create depth texture (one used over and over for each pass)
     m_depthTexture = renderSystem->CreateTexture2D();
     m_depthTexture->Initialize(512, 512, COLOR_DEPTH_COMPONENT32, COLOR_DEPTH_COMPONENT);
     
-    m_framebuffer = renderSystem->CreateFramebuffer();
-    m_framebuffer->AddTexture(m_depthTexture, FRAMEBUFFER_SLOT_0);
+    //m_framebuffer->AddTexture(m_shadowMap, FRAMEBUFFER_SLOT_0);
     m_framebuffer->AddTexture(m_depthTexture, FRAMEBUFFER_SLOT_DEPTH);
     
     // Create render pass

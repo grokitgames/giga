@@ -4,6 +4,8 @@
 ScriptThread::ScriptThread() {
 	m_isolate = 0;
 	m_currentScript = 0;
+    m_locker = 0;
+    m_currentLocker = 0;
 }
 
 ScriptThread::~ScriptThread() {
@@ -16,9 +18,8 @@ void ScriptThread::Initialize() {
 	create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
 	m_isolate = v8::Isolate::New(create_params);
     
+    Lock(this);
     m_isolate->SetData(0, this);
-
-    Lock();
 
 	// Get all scriptable object type definitions and initialize in our isolate environment
 	ScriptingSystem* scriptingSystem = GetSystem<ScriptingSystem>();
@@ -40,9 +41,20 @@ void ScriptThread::Shutdown() {
 	}
 }
 
-void ScriptThread::Lock() {
+void ScriptThread::Lock(ScriptThread* locker) {
+    if(m_locker && locker == m_currentLocker) {
+        return;
+    }
+    
+    while(v8::Locker::IsLocked(m_isolate)) {
+        Timer::Sleep(1);
+    }
+    
+    GIGA_ASSERT(m_locker == 0, "Locker already exists.");
+    
     m_locker = new v8::Locker(m_isolate);
     m_isolate->Enter();
+    m_currentLocker = locker;
 }
 
 bool ScriptThread::IsLocked() {
@@ -56,8 +68,14 @@ bool ScriptThread::IsLocked() {
 void ScriptThread::Unlock() {
     m_isolate->Exit();
     
-    delete m_locker;
+    if(m_locker) {
+        if(v8::Locker::IsLocked(m_isolate)) {
+            delete m_locker;
+        }
+    }
+    
     m_locker = 0;
+    m_currentLocker = 0;
 }
 
 ScriptableObjectImpl* ScriptThread::GetScriptableImpl(std::string name) {

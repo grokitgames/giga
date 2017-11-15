@@ -57,7 +57,7 @@ void StartApplication() {
 	// Initialize replication system
 	replicationSystem->SetType(REPLICATION_CLIENT);
 
-    scriptingSystem->Lock();
+    scriptingSystem->Lock(scriptingSystem);
     
     // Load game.js file
     Script* gamejs = dynamic_cast<Script*>(resourceSystem->LoadResource("game.js", "Script"));
@@ -73,12 +73,30 @@ void StartApplication() {
 
 	// Call Init() inside JS file
 	clientComponent->AddToSystem();
-	clientComponent->Initialize(clientjs);
+    clientComponent->Initialize(clientjs);
 
+	// Create some stuff
+    Entity* crate = entitySystem->CreateEntity("Crate");
+    
+    Mesh* crateMesh = (Mesh*)resourceSystem->LoadResource("crate.g3d", "Mesh");
+    StaticMeshComponent* meshComponent = new StaticMeshComponent();
+    crate->AddComponent(meshComponent);
+    meshComponent->AddToSystem();
+    meshComponent->SetActive(true);
+    
+    meshComponent->Instantiate(crateMesh);
+    meshComponent->SetWorldPosition(vector3(-0.45, 0.00, -5.79));
+    meshComponent->SetWorldRotation(quaternion(0.99, 0.00, -0.15, 0.00));
+    
+    Script* crateScript = (Script*)resourceSystem->LoadResource("crate.js", "Script");
+    ScriptComponent* scriptComponent = new ScriptComponent();
+    
+    crate->AddComponent(scriptComponent);
+    scriptComponent->AddToSystem();
+    scriptComponent->Initialize(crateScript);
+    scriptComponent->SetActive(true);
+    
     scriptingSystem->Unlock();
-
-	// Initialize multi-threading BROKEN: V8 multi-threading requires one isolate per thread
-	// taskSystem->Initialize(2);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

@@ -25,7 +25,7 @@ public:
     /**
      * Lock thread
      */
-    void Lock();
+    void Lock(ScriptThread* thread);
     
     /**
      * Check lock
@@ -58,6 +58,9 @@ protected:
 
 	// Currently executing script component
 	ScriptComponent* m_currentScript;
+    
+    // The thread which is currently locking this
+    ScriptThread* m_currentLocker;
 };
 
 #endif

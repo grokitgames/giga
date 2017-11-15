@@ -93,6 +93,10 @@ void NetworkSystem::Listen(int port) {
 }
 
 void NetworkSystem::Send(NetworkSession* session, NetworkMessage* msg) {
+    if(m_systemType == 0) {
+        return;
+    }
+    
 	// Fill in message ID and tick
 	NetworkMessage::NetworkEnvelope* env = msg->GetEnvelope();
 	env->tick = GetCurrentTick();
@@ -151,6 +155,10 @@ void NetworkSystem::Send(NetworkSession* session, NetworkMessage* msg) {
 }
 
 void NetworkSystem::Send(NetworkMessage* msg) {
+    if(m_systemType == 0) {
+        return;
+    }
+    
 	if (m_systemType == NETWORK_SYSTEM_CLIENT) {
 		Send(m_info.client_info->session, msg);
 	}
@@ -162,6 +170,10 @@ void NetworkSystem::Send(NetworkMessage* msg) {
 }
 
 void NetworkSystem::Send(int sessionID, NetworkMessage* msg) {
+    if(m_systemType == 0) {
+        return;
+    }
+    
 	GIGA_ASSERT(m_systemType == NETWORK_SYSTEM_SERVER, "This function should only be called on servers.");
     
     for(size_t i = 0; i < m_info.server_info->sessions.size(); i++) {

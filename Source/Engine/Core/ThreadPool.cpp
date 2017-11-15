@@ -19,6 +19,7 @@ void ThreadPool::Execute(TaskPool* pool) {
 
 	// Otherwise, process on our threads
 	while (m_completed < m_poolSize) {
+        m_poolSize = pool->Size();
 		Timer::Sleep(1);
 	}
 

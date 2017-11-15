@@ -346,7 +346,7 @@ void ScriptComponent::ProcessEvent(Event* ev) {
 			if (m_eventHandlers[i]->entityID == 0 || m_eventHandlers[i]->entityID == ev->GetEntityID()) {
 				Variant* v = new Variant(ev);
                 
-                m_thread->Lock();
+                m_thread->Lock(m_thread);
                 
 
 				Entity* p = this->GetParent();
@@ -380,7 +380,7 @@ bool ScriptComponent::Update(TaskThread* thread, Variant* obj, int argc, Variant
         return(false);
     }
     
-    component->m_thread->Lock();
+    component->m_thread->Lock((ScriptThread*)thread);
 
 	Variant* parent = argv[1];
 	component->SetGlobal("GameObject", parent);

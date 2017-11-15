@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Linux/Server.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Game/Game.xcodeproj">
    </FileRef>
    <FileRef

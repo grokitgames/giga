@@ -559,10 +559,34 @@ void ReplicationSystem::AddCommand(Command* command) {
 }
 
 void ReplicationSystem::StartCommand(Command* command) {
+    if(m_type == 0) {
+        return;
+    }
+    
 	m_activeCommands.push_back(command);
+    
+    this->AddCommand(command);
+    
+    CommandMessage* commandMessage = new CommandMessage();
+    commandMessage->SetCommand(command);
+    
+    NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+    networkSystem->Send(commandMessage);
+    
+    delete commandMessage;
 }
 
 void ReplicationSystem::EndCommand(Command* command) {
+    if(m_type == 0) {
+        return;
+    }
+    
+    CommandMessage* commandMessage = new CommandMessage();
+    commandMessage->SetCommand(command);
+    
+    NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
+    networkSystem->Send(commandMessage);
+    
 	std::vector<Command*>::iterator i = m_activeCommands.begin();
 	for (; i != m_activeCommands.end(); i++) {
 		if ((*i) == command) {
@@ -578,23 +602,6 @@ void ReplicationSystem::SetClientAuthoritative(bool authoritative) {
 	}
 
 	m_clientShouldBeAuthoritative = authoritative; 
-}
-
-Variant* ReplicationSystem::SendCommand(Variant* object, int argc, Variant** argv) {
-    GIGA_ASSERT(argc == 1, "SendComand expects one argument.");
-    GIGA_ASSERT(argv[0]->IsObject(), "First argument should be a command object.");
-    
-    ReplicationSystem* replicationSystem = GetSystem<ReplicationSystem>();
-    replicationSystem->AddCommand(argv[0]->AsObject<Command>());
-    
-    CommandMessage* commandMessage = new CommandMessage();
-    commandMessage->SetCommand(argv[0]->AsObject<Command>());
-    
-    NetworkSystem* networkSystem = GetSystem<NetworkSystem>();
-    networkSystem->Send(commandMessage);
-    
-    delete commandMessage;
-    return(new Variant(0));
 }
 
 void ReplicationSystem::CommandStartHandler(Event* event) {

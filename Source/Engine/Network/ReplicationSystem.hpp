@@ -75,11 +75,6 @@ public:
 	 */
 	Command* GetCommand(int entityID, int commandID);
     
-    /**
-     * Scripting integration
-     */
-    static Variant* SendCommand(Variant* object, int argc, Variant** argv);
-    
 protected:
     /**
      * Internal application of snapshot

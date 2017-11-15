@@ -9,13 +9,6 @@
 /* Begin PBXBuildFile section */
 		5E0523BE1F2163890088C9BA /* libEngine.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0523BD1F2163890088C9BA /* libEngine.dylib */; };
 		5EDCA3AC1F3B71C500329733 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EDCA3AB1F3B71C500329733 /* main.cpp */; };
-		5EDCA3C51F3BECB500329733 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3BE1F3BECB500329733 /* libicui18n.a */; };
-		5EDCA3C61F3BECB500329733 /* libicuuc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3BF1F3BECB500329733 /* libicuuc.a */; };
-		5EDCA3C71F3BECB500329733 /* libv8_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C01F3BECB500329733 /* libv8_base.a */; };
-		5EDCA3C81F3BECB500329733 /* libv8_external_snapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C11F3BECB500329733 /* libv8_external_snapshot.a */; };
-		5EDCA3C91F3BECB500329733 /* libv8_libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C21F3BECB500329733 /* libv8_libbase.a */; };
-		5EDCA3CA1F3BECB500329733 /* libv8_libplatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C31F3BECB500329733 /* libv8_libplatform.a */; };
-		5EDCA3CB1F3BECB500329733 /* libv8_libsampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDCA3C41F3BECB500329733 /* libv8_libsampler.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,13 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EDCA3C51F3BECB500329733 /* libicui18n.a in Frameworks */,
-				5EDCA3C61F3BECB500329733 /* libicuuc.a in Frameworks */,
-				5EDCA3C71F3BECB500329733 /* libv8_base.a in Frameworks */,
-				5EDCA3C81F3BECB500329733 /* libv8_external_snapshot.a in Frameworks */,
-				5EDCA3C91F3BECB500329733 /* libv8_libbase.a in Frameworks */,
-				5EDCA3CA1F3BECB500329733 /* libv8_libplatform.a in Frameworks */,
-				5EDCA3CB1F3BECB500329733 /* libv8_libsampler.a in Frameworks */,
 				5E0523BE1F2163890088C9BA /* libEngine.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

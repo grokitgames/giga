@@ -172,6 +172,8 @@ void Application::InitializeThread(int threadID) {
 	/**
 	* Base
 	*/
+    
+    scriptingSystem->Lock(scriptingSystem);
 
 	// Application
 	ScriptableObjectType* applicationType = new ScriptableObjectType("Application");
@@ -282,7 +284,6 @@ void Application::InitializeThread(int threadID) {
 	// Replication system
 	ScriptableObjectType* replicationSystemType = new ScriptableObjectType("ReplicationSystem");
 	replicationSystemType->SetStatic(true, GetSystem<ReplicationSystem>());
-	replicationSystemType->AddStaticFunction("SendCommand", &ReplicationSystem::SendCommand);
 
 	scriptingSystem->RegisterScriptableObjectType<ReplicationSystem>(replicationSystemType);
 
@@ -392,6 +393,8 @@ void Application::InitializeThread(int threadID) {
 	renderSystemType->AddStaticFunction("SetActiveCamera", &RenderSystem::SetActiveCamera);
 
 	scriptingSystem->RegisterScriptableObjectType<RenderSystem>(renderSystemType);
+    
+    scriptingSystem->Unlock();
 
 	Application::Log(MSGTYPE_DEBUG, "Registered scripting types...");
 }

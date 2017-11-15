@@ -38,6 +38,7 @@ void Keyboard::Initialize() {
     ScriptableObjectType* keyboardType = new ScriptableObjectType("Keyboard");
     keyboardType->AddObjectFunction("GetButtonState", &Keyboard::GetButtonState);
     
+    scriptingSystem->Lock(scriptingSystem);
     scriptingSystem->RegisterScriptableObjectType<Keyboard>(keyboardType);
     
     // Keyboard event data
@@ -118,6 +119,8 @@ void Keyboard::Initialize() {
     scriptingSystem->RegisterGlobal("KEY_CODE_ESCAPE", new Variant(GLFW_KEY_ESCAPE));
     scriptingSystem->RegisterGlobal("KEY_CODE_APOSTROPHE", new Variant(GLFW_KEY_APOSTROPHE));
     scriptingSystem->RegisterGlobal("KEY_CODE_PRINT_SCREEN", new Variant(GLFW_KEY_PRINT_SCREEN));
+    
+    scriptingSystem->Unlock();
 }
 
 void Keyboard::ProcessAction(int key, int action) {

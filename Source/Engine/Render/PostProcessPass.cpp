@@ -52,6 +52,9 @@ void PostProcessPass::Initialize(int windowWidth, int windowHeight) {
     
     InitializeShader();
     CreateVertexFormat(windowWidth, windowHeight);
+    
+    m_windowWidth = windowWidth;
+    m_windowHeight = windowHeight;
 }
 
 Texture2D* PostProcessPass::GetOutputTexture() {

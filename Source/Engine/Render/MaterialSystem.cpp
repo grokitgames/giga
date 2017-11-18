@@ -110,6 +110,7 @@ Texture2D* MaterialSystem::GetTexture() {
     if (m_texture == 0) {
         RenderSystem* renderSystem = GetSystem<RenderSystem>();
         m_texture = renderSystem->CreateTexture2D();
+        m_texture->Initialize(4, MAX_MATERIAL_TEXTURE_SIZE, COLOR_RGB16F, COLOR_RGB);
     }
     
     // Rebuild our material texture if necessary

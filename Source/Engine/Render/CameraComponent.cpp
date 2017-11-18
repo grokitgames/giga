@@ -71,6 +71,9 @@ Frustum CameraComponent::CalculateFrustum(float fnear, float ffar) {
 }
 
 void CameraComponent::SetLookVector(vector3 point) {
+    quaternion delta = glm::rotation(vector3(0, 0, -1), glm::normalize(point));
+    m_transform.rotation = delta;
+    
     m_look = point;
     
     CalculateMatricesAndFrustum();
@@ -163,7 +166,7 @@ void CameraComponent::SetLook(std::string var, Variant* obj, Variant* val) {
     GIGA_ASSERT(val->IsObject(), "Expecting first parameter to be a Vector3 object.");
     CameraComponent* camera = obj->AsObject<CameraComponent>();
     Vector3* vec = val->AsObject<Vector3>();
-    camera->m_look = vec->Get();
+    camera->SetLookVector(vec->Get());
 }
 
 Variant* CameraComponent::GetRight(std::string var, Variant* obj) {

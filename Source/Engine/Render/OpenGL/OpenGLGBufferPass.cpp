@@ -48,8 +48,13 @@ Texture2D* OpenGLGBufferPass::GetPositionTexture() {
 }
 
 Texture2D* OpenGLGBufferPass::GetDepthTexture() {
+    return(m_framebuffers[0]->GetTexture(4));
+}
+
+Texture2D* OpenGLGBufferPass::GetMaterialTexture() {
     return(m_framebuffers[0]->GetTexture(3));
 }
+
 
 void OpenGLGBufferPass::Render(Scene* scene) {
     PROFILE_START_AREA("Gbuffer Pass");

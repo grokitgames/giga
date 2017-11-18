@@ -77,7 +77,7 @@ void OpenGLFramebuffer::SetTexture(Texture2D* texture, int type) {
 
 void OpenGLFramebuffer::SetTexture(Texture3D* texture, int type, int slot) {
     // Attach the texture to the FBO
-    GL_CHECK(glFramebufferTexture2D(GL_FRAMEBUFFER, type, texture->GetTarget(slot), texture->GetTexture(), 0));
+    GL_CHECK(glFramebufferTexture2D(GL_FRAMEBUFFER, type, slot, texture->GetTexture(), 0));
 }
 
 void OpenGLFramebuffer::Use() {

@@ -47,8 +47,8 @@ void StartApplication() {
 
 	// Set camera as active
 	Scene* scene = renderSystem->GetScene();
-	scene->SetAmbientLight(vector3(1, 1, 1));
-
+	scene->SetAmbientLight(vector3(0.2, 0.2, 0.2));
+    
 	// Create keyboard
 	Keyboard* keyboard = new Keyboard();
 	keyboard->Initialize();
@@ -85,8 +85,8 @@ void StartApplication() {
     meshComponent->SetActive(true);
     
     meshComponent->Instantiate(crateMesh);
-    meshComponent->SetWorldPosition(vector3(-0.45, 0.00, -5.79));
-    meshComponent->SetWorldRotation(quaternion(0.99, 0.00, -0.15, 0.00));
+    meshComponent->SetWorldPosition(vector3(0, 0, 0));
+    meshComponent->SetWorldRotation(quaternion(1, 0.00, 0, 0.00));
     
     Script* crateScript = (Script*)resourceSystem->LoadResource("crate.js", "Script");
     ScriptComponent* scriptComponent = new ScriptComponent();
@@ -97,6 +97,16 @@ void StartApplication() {
     scriptComponent->SetActive(true);
     
     scriptingSystem->Unlock();
+    
+    Entity* light = entitySystem->CreateEntity("Light");
+    SpotLightComponent* spotLight = new SpotLightComponent();
+    spotLight->SetWorldPosition(vector3(0, 3, 2));
+    spotLight->SetColor(vector3(1, 1, 1));
+    spotLight->SetAttenuation(10.0f);
+    spotLight->Initialize();
+    
+    spotLight->AddToSystem();
+    spotLight->SetActive(true);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

@@ -15,6 +15,9 @@ void OpenGLDeferredRenderPass::Render(Scene* scene) {
     m_drawCalls = 0;
     m_renderedTriangles = 0;
     
+    // Get the camera
+    glViewport(0, 0, m_windowWidth, m_windowHeight);
+    
     // Bind our FBO and set the viewport to the proper size
     // m_framebuffers[0]->Use();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

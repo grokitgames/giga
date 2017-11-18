@@ -24,6 +24,7 @@ public:
     Texture2D* GetNormalTexture();
     Texture2D* GetPositionTexture();
     Texture2D* GetDepthTexture();
+    Texture2D* GetMaterialTexture();
     
 private:
     // Internally recurse through the children of a mesh component
@@ -32,9 +33,6 @@ private:
     // Storage for combined view/proj matrix
     matrix4 m_viewproj;
     matrix4 m_view;
-    
-    // Window width and height
-    int m_windowWidth, m_windowHeight;
 };
 
 #endif

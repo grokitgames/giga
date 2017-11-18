@@ -29,6 +29,7 @@ public:
      * Create depth textures
      */
     virtual void CreateDepthTextures(Scene* scene) = 0;
+    Texture* GetShadowMap() { return m_shadowMap; }
     
     /**
      * Get debug mesh
@@ -46,6 +47,9 @@ public:
      */
     void SetAttenuation(float distance) { m_attenuation = distance; }
     float GetAttenuation() { return m_attenuation; }
+    
+    // Get light type
+    int GetLightType() { return m_type; }
     
 protected:
     // Can't create directly

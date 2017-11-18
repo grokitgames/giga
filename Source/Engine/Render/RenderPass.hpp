@@ -12,7 +12,7 @@ public:
     /**
      * Initialize render pass
      */
-    virtual void Initialize(int windowWidth, int windowHeight) { }
+    virtual void Initialize(int windowWidth, int windowHeight);
     
     /**
      * Render our scene
@@ -36,6 +36,9 @@ protected:
     
     // How many draw calls this pass required
     int m_drawCalls;
+    
+    // Window width and height
+    int m_windowWidth, m_windowHeight;
 };
 
 #endif

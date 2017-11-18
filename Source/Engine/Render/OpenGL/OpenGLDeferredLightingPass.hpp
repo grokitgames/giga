@@ -21,6 +21,7 @@ public:
     void SetDiffuseTexture(Texture2D* diffuse) { m_diffuse = diffuse; }
     void SetNormalTexture(Texture2D* normal) { m_normal = normal; }
     void SetPositionTexture(Texture2D* position) { m_position = position; }
+    void SetMaterialTexture(Texture2D* material) { m_material = material; }
     
     /**
      * Get textures
@@ -37,6 +38,7 @@ protected:
     Texture2D* m_diffuse;
     Texture2D* m_normal;
     Texture2D* m_position;
+    Texture2D* m_material;
 };
 
 #endif

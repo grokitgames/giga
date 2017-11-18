@@ -48,7 +48,7 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
     // Get view matrix
     matrix4 view = camera->GetViewMatrix();
     matrix4 worldViewInverse = glm::inverse(view);
-    m_shader->Set("worldViewInverse", worldViewInverse);
+    m_shader->Set("worldviewInverseMatrix", worldViewInverse);
     
     // Set camera position (specular mostly)
     m_shader->Set("cameraPosition", camera->GetWorldPosition());
@@ -57,18 +57,21 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
     m_diffuse->Bind(0);
     m_shader->Set("textureDiffuse", 0);
     
-    m_position->Bind(1);
+    m_normal->Bind(1);
     m_shader->Set("textureNormal", 1);
     
-    m_normal->Bind(2);
+    m_position->Bind(2);
     m_shader->Set("texturePosition", 2);
+    
+    m_material->Bind(3);
+    m_shader->Set("textureMaterial", 3);
     
     // Get our material texture
     MaterialSystem* materialSystem = GetSystem<MaterialSystem>();
     Texture* materialTexture = materialSystem->GetTexture();
     
-    materialTexture->Bind(3);
-    m_shader->Set("textureMaterialLookup", 3);
+    materialTexture->Bind(4);
+    m_shader->Set("textureMaterialLookup", 4);
     
     // Make sure material texture does not filter
     GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
@@ -86,6 +89,14 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
     std::vector<LightComponent*> lights = scene->GetLights();
 	std::vector<LightComponent*>::iterator i = lights.begin();
 	for (i; i != lights.end(); i++) {
+        // Bind vars
+        m_shader->Set("lightPosition", (*i)->GetWorldPosition());
+        m_shader->Set("lightColour", (*i)->GetColor());
+        m_shader->Set("lightType", (*i)->GetLightType());
+        
+        (*i)->GetShadowMap()->Bind(5);
+        m_shader->Set("lightShadowMap3D", 5);
+        
         // Render
         GL_CHECK(glDrawArrays(GL_TRIANGLE_STRIP, 0, 4));
         
@@ -93,6 +104,7 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
         m_renderedTriangles += 2;
     }
     
+    //m_framebuffers[0]->GetTexture(0)->Save("lighting.bmp");
     m_buffer->Unbind();
     m_format->DisableVertexAttribs();
     

@@ -17,7 +17,7 @@ CameraComponent::CameraComponent() {
 }
 
 void CameraComponent::CalculateMatricesAndFrustum() {
-    m_aspect = m_width / m_height;
+    m_aspect = (float)m_width / m_height;
     
     // Update our view and projection matrices
     vector3 position = GetWorldPosition();
@@ -75,6 +75,7 @@ void CameraComponent::SetLookVector(vector3 point) {
     m_transform.rotation = delta;
     
     m_look = point;
+    m_right = delta * vector3(1, 0, 0);
     
     CalculateMatricesAndFrustum();
 }
@@ -85,11 +86,29 @@ void CameraComponent::SetUpVector(vector3 up) {
     CalculateMatricesAndFrustum();
 }
 
+void CameraComponent::SetNear(float fnear) {
+    m_fnear = fnear;
+    
+    CalculateMatricesAndFrustum();
+}
+
+void CameraComponent::SetFar(float ffar) {
+    m_ffar = ffar;
+    
+    CalculateMatricesAndFrustum();
+}
+
+void CameraComponent::SetFOV(float fov) {
+    m_fov = fov;
+    
+    CalculateMatricesAndFrustum();
+}
+
 void CameraComponent::SetViewport(int width, int height) {
     m_width = width;
     m_height = height;
     
-    SetAspectRatio((float)width / height);
+    this->SetAspectRatio((float)width / height);
 }
 
 void CameraComponent::SetAspectRatio(float ratio) {

@@ -98,11 +98,23 @@ void StartApplication() {
     
     scriptingSystem->Unlock();
     
+    Entity* floor = entitySystem->CreateEntity("Floor");
+    
+    Mesh* floorMesh = (Mesh*)resourceSystem->LoadResource("floor.g3d", "Mesh");
+    StaticMeshComponent* floorComponent = new StaticMeshComponent();
+    floor->AddComponent(floorComponent);
+    floorComponent->AddToSystem();
+    floorComponent->SetActive(true);
+    
+    floorComponent->Instantiate(floorMesh);
+    floorComponent->SetWorldPosition(vector3(0, 0, 0));
+    floorComponent->SetWorldRotation(quaternion(1, 0.00, 0, 0.00));
+    
     Entity* light = entitySystem->CreateEntity("Light");
     SpotLightComponent* spotLight = new SpotLightComponent();
-    spotLight->SetWorldPosition(vector3(0, 3, 2));
+    spotLight->SetWorldPosition(vector3(0, 4, 2));
     spotLight->SetColor(vector3(1, 1, 1));
-    spotLight->SetAttenuation(10.0f);
+    spotLight->SetAttenuation(20.0f);
     spotLight->Initialize();
     
     spotLight->AddToSystem();

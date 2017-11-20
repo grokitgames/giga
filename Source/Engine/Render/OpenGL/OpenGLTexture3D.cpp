@@ -1,6 +1,7 @@
 
 #include <giga-engine.h>
 #include <Render/OpenGL/OpenGL.hpp>
+#include <SOIL.h>
 
 void OpenGLTexture3D::Initialize(int width, int height, int format, int type) {
     if (m_texture) {
@@ -45,13 +46,42 @@ void OpenGLTexture3D::Initialize(int width, int height, int format, int type) {
 }
 
 void OpenGLTexture3D::Bind(int slot) {
+    GL_CHECK(glActiveTexture(GL_TEXTURE0 + slot));
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture));
 }
 
 void OpenGLTexture3D::Unbind() {
+    GL_CHECK(glActiveTexture(GL_TEXTURE0 + m_slot));
     GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }
 
 unsigned int OpenGLTexture3D::GetTarget(int slot) {
     return GL_TEXTURE_CUBE_MAP_POSITIVE_X + slot;
+}
+
+void OpenGLTexture3D::Save(std::string filename) {
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_texture);
+    for(int i = 0; i < 6; i++) {
+        std::string new_filename = filename.substr(0, filename.length() - 4) + "_" + std::to_string(i) + ".bmp";
+        // Dump out normal texture
+        float* pixels = (float*)malloc(m_width * m_height * sizeof(float) * m_channels);
+        glGetTexImage(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, m_channels == 3 ? GL_RGB : GL_RED, GL_FLOAT, pixels);
+        
+        // Convert from float to unsigned char
+        unsigned char* data = (unsigned char*)malloc(m_width * m_height * m_channels);
+        for (int y = 0; y < m_height; y++) {
+            for (int x = 0; x < m_width; x++) {
+                int offset = ((y * m_width) + x) * m_channels;
+                for(int c = 0; c < m_channels; c++) {
+                    float r = pixels[offset + c];
+                    data[offset] = r / 100.0f * 255.0f;
+                }
+            }
+        }
+        
+        SOIL_save_image(new_filename.c_str(), SOIL_SAVE_TYPE_BMP, m_width, m_height, m_channels, data);
+        free(data);
+        free(pixels);
+    }
+    GL_CHECK(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }

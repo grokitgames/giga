@@ -35,6 +35,11 @@ public:
      * Get target (always GL_TEXTURE_2D for 2D textures)
      */
     unsigned int GetTarget(int slot);
+    
+    /**
+     * Dump texture to disk
+     */
+    void Save(std::string filename);
 };
 
 #endif

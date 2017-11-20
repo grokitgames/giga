@@ -19,6 +19,7 @@ public:
      * Attach a texture to our framebuffer
      */
     void AddTexture(Texture2D* texture, int type);
+    void AddTexture(Texture3D* texture, int type, int slot);
     
     /**
      * Set a texture to a specific slot (one-time, not permanent)

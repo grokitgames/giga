@@ -1,6 +1,8 @@
 
 #include <giga-engine.h>
 
+#define GIGA_SPOTLIGHT_TEX_SIZE     1024
+
 void SpotLightComponent::Initialize() {
     m_passes = 6;
     
@@ -9,21 +11,21 @@ void SpotLightComponent::Initialize() {
     
     // Create cubemap shadow texture
     m_shadowMap = renderSystem->CreateTexture3D();
-    m_shadowMap->Initialize(512, 512, COLOR_RED16F, COLOR_RED);
+    m_shadowMap->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE, COLOR_RED16F, COLOR_RED);
     
     m_framebuffer = renderSystem->CreateFramebuffer();
-    m_framebuffer->Initialize(512, 512);
+    m_framebuffer->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE);
     
     // Create depth texture (one used over and over for each pass)
     m_depthTexture = renderSystem->CreateTexture2D();
-    m_depthTexture->Initialize(512, 512, COLOR_DEPTH_COMPONENT32, COLOR_DEPTH_COMPONENT);
+    m_depthTexture->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE, COLOR_DEPTH_COMPONENT32, COLOR_DEPTH_COMPONENT);
     
-    //m_framebuffer->AddTexture(m_shadowMap, FRAMEBUFFER_SLOT_0);
+    m_framebuffer->AddTexture((Texture3D*)m_shadowMap, FRAMEBUFFER_SLOT_0, m_shadowMap->GetTarget(0));
     m_framebuffer->AddTexture(m_depthTexture, FRAMEBUFFER_SLOT_DEPTH);
     
     // Create render pass
     m_shadowPass = renderSystem->CreateShadowPass();
-    m_shadowPass->Initialize(512, 512);
+    m_shadowPass->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE);
     
     // Initialize "camera"
     m_camera = new CameraComponent();
@@ -63,7 +65,9 @@ void SpotLightComponent::CreateDepthTextures(Scene* scene) {
     
     // Update "camera"
     m_camera->SetWorldPosition(position);
+    m_camera->SetViewport(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE);
     m_camera->SetFar(m_attenuation);
+    m_camera->SetFOV(90.0f);
     
     // Loop over each pass
     for(int i = 0; i < m_passes; i++) {
@@ -78,7 +82,14 @@ void SpotLightComponent::CreateDepthTextures(Scene* scene) {
         // Set "camera" and draw
         m_shadowPass->SetView(m_camera);
         m_shadowPass->Render(scene);
+        
+        if(i == 3) {
+            scene->SetActiveCamera(m_camera);
+            break;
+        }
     }
+    
+    //m_shadowMap->Save("depth.bmp");
 }
 
 void SpotLightComponent::Copy(Component* component) {

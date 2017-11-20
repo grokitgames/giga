@@ -9,7 +9,7 @@ void OpenGLDeferredLightingPass::InitializeShader() {
 }
 
 Texture2D* OpenGLDeferredLightingPass::GetLightingTexture() {
-    return(m_framebuffers[0]->GetTexture(0));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(0));
 }
 
 void OpenGLDeferredLightingPass::Render(Scene* scene) {

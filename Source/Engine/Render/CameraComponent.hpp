@@ -39,8 +39,8 @@ public:
     float GetNear() { return m_fnear; }
     float GetFar() { return m_ffar; }
     
-    void SetNear(float fnear) { m_fnear = fnear; }
-    void SetFar(float ffar) { m_ffar = ffar; }
+    void SetNear(float fnear);
+    void SetFar(float ffar);
     
     /**
      * Set size of window viewport
@@ -52,6 +52,8 @@ public:
      */
     float GetAspectRatio() { return m_aspect; }
     void SetAspectRatio(float m_ratio);
+    
+    void SetFOV(float fov);
     float GetFOV() { return m_fov; }
     
     /**

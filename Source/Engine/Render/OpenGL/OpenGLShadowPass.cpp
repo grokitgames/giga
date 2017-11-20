@@ -15,7 +15,7 @@ void OpenGLShadowPass::Render(Scene* scene) {
     m_renderedTriangles = 0;
     
     GL_CHECK(glEnable(GL_DEPTH_TEST));
-    GL_CHECK(glDepthFunc(GL_LEQUAL));
+    GL_CHECK(glDepthFunc(GL_LESS));
     
     glClearColor(FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX);
     
@@ -89,6 +89,7 @@ void OpenGLShadowPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent
     
     // Bind our model-view-projection matrix
     m_shader->Set("mvpMatrix", mvp);
+    m_shader->Set("lightPosition", m_camera->GetWorldPosition());
     
     // Things we need
     VertexFormat* vertexFormat = renderable->GetVertexFormat();

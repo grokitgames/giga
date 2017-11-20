@@ -71,14 +71,14 @@ void OpenGLRenderSystem::Update(float delta) {
 
     // Depth first pass
     
-    // Gbuffer pass
-    m_gbufferPass->Render(m_scene);
-    
     // Create shadow/depth buffers
     std::vector<LightComponent*> lights = m_scene->GetLights();
     for(int i = 0; i < lights.size(); i++) {
         lights[i]->CreateDepthTextures(m_scene);
     }
+    
+    // Gbuffer pass
+    m_gbufferPass->Render(m_scene);
     
     // Lighting pass
     m_lightingPass->Render(m_scene);

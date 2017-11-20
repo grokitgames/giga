@@ -58,5 +58,5 @@ void PostProcessPass::Initialize(int windowWidth, int windowHeight) {
 }
 
 Texture2D* PostProcessPass::GetOutputTexture() {
-    return(m_framebuffers[0]->GetTexture(0));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(0));
 }

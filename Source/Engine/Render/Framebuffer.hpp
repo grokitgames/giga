@@ -27,6 +27,7 @@ public:
      * Attach a texture to our framebuffer
      */
     virtual void AddTexture(Texture2D* texture, int type) { }
+    virtual void AddTexture(Texture3D* texture, int type, int slot) { }
     
     /**
      * Set a texture to a specific slot (one-time, not permanent)
@@ -41,7 +42,7 @@ public:
     /** 
      * Get a texture back out
      */
-    Texture2D* GetTexture(int index) { return m_textures[index]; }
+    Texture* GetTexture(int index) { return m_textures[index]; }
     
     /**
      * Use this framebuffer for rendering/output
@@ -56,7 +57,7 @@ public:
     
 protected:
     // The textures attached to this framebuffer
-    std::vector<Texture2D*> m_textures;
+    std::vector<Texture*> m_textures;
     
     // The color/output slots this framebuffer draws to
     std::vector<unsigned int> m_slots;

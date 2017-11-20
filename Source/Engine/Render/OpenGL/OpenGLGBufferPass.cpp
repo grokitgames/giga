@@ -36,23 +36,23 @@ void OpenGLGBufferPass::Initialize(int windowWidth, int windowHeight) {
 }
 
 Texture2D* OpenGLGBufferPass::GetDiffuseTexture() {
-    return(m_framebuffers[0]->GetTexture(0));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(0));
 }
 
 Texture2D* OpenGLGBufferPass::GetNormalTexture() {
-    return(m_framebuffers[0]->GetTexture(2));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(2));
 }
 
 Texture2D* OpenGLGBufferPass::GetPositionTexture() {
-    return(m_framebuffers[0]->GetTexture(1));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(1));
 }
 
 Texture2D* OpenGLGBufferPass::GetDepthTexture() {
-    return(m_framebuffers[0]->GetTexture(4));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(4));
 }
 
 Texture2D* OpenGLGBufferPass::GetMaterialTexture() {
-    return(m_framebuffers[0]->GetTexture(3));
+    return((Texture2D*)m_framebuffers[0]->GetTexture(3));
 }
 
 
@@ -87,6 +87,7 @@ void OpenGLGBufferPass::Render(Scene* scene) {
 	}
     
     // Update camera
+    camera->SetFar(100.0f);
     camera->SetViewport(m_windowWidth, m_windowHeight);
     
     // Get matrices
@@ -125,7 +126,7 @@ void OpenGLGBufferPass::Render(Scene* scene) {
         RecursiveRender((*i), model, scene, counter);
 		counter++;
     }
-    
+
     GL_CHECK(glDisable(GL_DEPTH_TEST));
     
     PROFILE_END_AREA("Gbuffer Pass");

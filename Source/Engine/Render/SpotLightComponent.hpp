@@ -38,6 +38,7 @@ protected:
     struct LookVectors {
         vector3 look;
         vector3 up;
+        vector3 right;
     };
     
 protected:

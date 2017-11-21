@@ -19,11 +19,14 @@ CameraComponent::CameraComponent() {
 void CameraComponent::CalculateMatricesAndFrustum() {
     m_aspect = (float)m_width / m_height;
     
+    m_transform.rotation = glm::rotation(vector3(0, 0, -1), m_look);
+    m_right = GetWorldRotation() * glm::vec3(1.0f, 0.0f, 0.0f);
+    
     // Update our view and projection matrices
     vector3 position = GetWorldPosition();
-    m_look = GetWorldRotation() * glm::vec3(0.0f, 0.0f, -1.0f);
-	m_right = GetWorldRotation() * glm::vec3(1.0f, 0.0f, 0.0f);
-	m_up = GetWorldRotation() * glm::vec3(0.0f, 1.0f, 0.0f);
+    /*m_look = GetWorldRotation() * glm::vec3(0.0f, 0.0f, -1.0f);
+	
+	m_up = GetWorldRotation() * glm::vec3(0.0f, 1.0f, 0.0f);*/
 
     m_view = glm::lookAt(position, position + m_look, m_up);
     m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_fnear, m_ffar);
@@ -71,11 +74,7 @@ Frustum CameraComponent::CalculateFrustum(float fnear, float ffar) {
 }
 
 void CameraComponent::SetLookVector(vector3 point) {
-    quaternion delta = glm::rotation(vector3(0, 0, -1), glm::normalize(point));
-    m_transform.rotation = delta;
-    
     m_look = point;
-    m_right = delta * vector3(1, 0, 0);
     
     CalculateMatricesAndFrustum();
 }

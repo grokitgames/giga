@@ -33,11 +33,11 @@ void SpotLightComponent::Initialize() {
     
     // Right
     m_vectors[0].look = vector3(1, 0, 0);
-    m_vectors[0].up = vector3(0, 1, 0);
+    m_vectors[0].up = vector3(0, -1, 0);
     
     // Left
     m_vectors[1].look = vector3(-1, 0, 0);
-    m_vectors[1].up = vector3(0, 1, 0);
+    m_vectors[1].up = vector3(0, -1, 0);
     
     // Up
     m_vectors[2].look = vector3(0, 1, 0);
@@ -46,14 +46,14 @@ void SpotLightComponent::Initialize() {
     // Down
     m_vectors[3].look = vector3(0, -1, 0);
     m_vectors[3].up = vector3(0, 0, -1);
-    
+
     // Backward
     m_vectors[4].look = vector3(0, 0, 1);
-    m_vectors[4].up = vector3(0, 1, 0);
+    m_vectors[4].up = vector3(0, -1, 0);
     
     // Forward
     m_vectors[5].look = vector3(0, 0, -1);
-    m_vectors[5].up = vector3(0, 1, 0);
+    m_vectors[5].up = vector3(0, -1, 0);
 }
 
 void SpotLightComponent::CreateDepthTextures(Scene* scene) {
@@ -84,8 +84,8 @@ void SpotLightComponent::CreateDepthTextures(Scene* scene) {
         m_shadowPass->Render(scene);
         
         if(i == 3) {
-            scene->SetActiveCamera(m_camera);
-            break;
+            //scene->SetActiveCamera(m_camera);
+            //break;
         }
     }
     

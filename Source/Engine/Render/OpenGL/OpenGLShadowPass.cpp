@@ -16,6 +16,8 @@ void OpenGLShadowPass::Render(Scene* scene) {
     
     GL_CHECK(glEnable(GL_DEPTH_TEST));
     GL_CHECK(glDepthFunc(GL_LESS));
+    GL_CHECK(glEnable(GL_CULL_FACE));
+    GL_CHECK(glCullFace(GL_FRONT));
     
     glClearColor(FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX);
     
@@ -53,7 +55,7 @@ void OpenGLShadowPass::Render(Scene* scene) {
 		// Check to ensure it is inside the view frustum
 		BoundingBox obb = (*i)->GetBoundingBox();
 		if ((viewFrustum.Intersects(obb) == 0) && (obb.Inside(cameraPosition) == false)) {
-			continue;
+			//continue;
 		}
 
 		// Render recursively
@@ -61,6 +63,7 @@ void OpenGLShadowPass::Render(Scene* scene) {
 		counter++;
 	}
     
+    GL_CHECK(glDisable(GL_CULL_FACE));
     GL_CHECK(glDisable(GL_DEPTH_TEST));
     GL_CHECK(glClearColor(0, 0, 0, 0));
     
@@ -89,6 +92,7 @@ void OpenGLShadowPass::RecursiveRender(StaticMeshComponent *mesh, matrix4 parent
     
     // Bind our model-view-projection matrix
     m_shader->Set("mvpMatrix", mvp);
+    m_shader->Set("modelMatrix", m);
     m_shader->Set("lightPosition", m_camera->GetWorldPosition());
     
     // Things we need

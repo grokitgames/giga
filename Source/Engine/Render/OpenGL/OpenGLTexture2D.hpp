@@ -45,6 +45,15 @@ public:
      * Get target (always GL_TEXTURE_2D for 2D textures)
      */
     unsigned int GetTarget(int slot);
+    
+    /**
+     * Get texture data
+     */
+    void* GetData();
+    
+protected:
+    // The internal data type (float or unsigned byte)
+    int m_dataType;
 };
 
 #endif 

@@ -180,6 +180,9 @@ typedef glm::mat4 matrix4;
 #include <Network/Messages/ResendRequestMessage.hpp>
 #include <Network/Messages/AckMessage.hpp>
 #include <Network/HttpRequest.hpp>
+#include <Terrain/TerrainMesh.hpp>
+#include <Terrain/TerrainChunk.hpp>
+#include <Terrain/TerrainSystem.hpp>
 #include <Core/Application.hpp>
 
 #ifdef GIGA_USING_OPENGL

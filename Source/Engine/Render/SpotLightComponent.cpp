@@ -11,7 +11,7 @@ void SpotLightComponent::Initialize() {
     
     // Create cubemap shadow texture
     m_shadowMap = renderSystem->CreateTexture3D();
-    m_shadowMap->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE, COLOR_RED16F, COLOR_RED);
+    m_shadowMap->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE, COLOR_RED32F, COLOR_RED);
     
     m_framebuffer = renderSystem->CreateFramebuffer();
     m_framebuffer->Initialize(GIGA_SPOTLIGHT_TEX_SIZE, GIGA_SPOTLIGHT_TEX_SIZE);
@@ -82,14 +82,7 @@ void SpotLightComponent::CreateDepthTextures(Scene* scene) {
         // Set "camera" and draw
         m_shadowPass->SetView(m_camera);
         m_shadowPass->Render(scene);
-        
-        if(i == 3) {
-            //scene->SetActiveCamera(m_camera);
-            //break;
-        }
     }
-    
-    //m_shadowMap->Save("depth.bmp");
 }
 
 void SpotLightComponent::Copy(Component* component) {

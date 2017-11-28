@@ -17,10 +17,11 @@ void StartApplication() {
     InputSystem* inputSystem = application->CreateSystem<InputSystem>(20);
     ErrorSystem* errorSystem = application->CreateSystem<ErrorSystem>();
     ResourceSystem* resourceSystem = application->CreateSystem<ResourceSystem>();
-    OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
     MaterialSystem* materialSystem = application->CreateSystem<MaterialSystem>();
     NetworkSystem* networkSystem = application->CreateSystem<NetworkSystem>();
 	TaskSystem* taskSystem = application->CreateSystem<TaskSystem>();
+    TerrainSystem* terrainSystem = application->CreateSystem<TerrainSystem>();
+    OpenGLRenderSystem* renderSystem = application->CreateSystem<OpenGLRenderSystem>();
     
     application->Initialize();
     
@@ -47,7 +48,7 @@ void StartApplication() {
 
 	// Set camera as active
 	Scene* scene = renderSystem->GetScene();
-	scene->SetAmbientLight(vector3(0.2, 0.2, 0.2));
+	scene->SetAmbientLight(vector3(0.3, 0.3, 0.3));
     
 	// Create keyboard
 	Keyboard* keyboard = new Keyboard();
@@ -112,13 +113,16 @@ void StartApplication() {
     
     Entity* light = entitySystem->CreateEntity("Light");
     SpotLightComponent* spotLight = new SpotLightComponent();
-    spotLight->SetWorldPosition(vector3(0, 4, 2));
+    spotLight->SetWorldPosition(vector3(0, 3, 2));
     spotLight->SetColor(vector3(1, 1, 1));
     spotLight->SetAttenuation(20.0f);
     spotLight->Initialize();
     
     spotLight->AddToSystem();
     spotLight->SetActive(true);
+    
+    // Terrain
+    terrainSystem->LoadChunk("terrain1.png", 0, 0, 0.25f);
     
     // Create main loop timer
     Timer* mainTimer = new Timer();

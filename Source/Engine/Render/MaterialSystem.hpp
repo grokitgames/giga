@@ -41,6 +41,11 @@ public:
     void RemoveMaterial(Material* material);
     
     /**
+     * Get default system material
+     */
+    Material* GetDefaultMaterial() { return m_materials[0]; }
+    
+    /**
      * Get the material texture
      */
     Texture2D* GetTexture();

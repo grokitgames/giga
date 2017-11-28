@@ -75,6 +75,12 @@
 		5E556B2A1F2ABA6500F6FB2E /* Vector3.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E556B281F2ABA6500F6FB2E /* Vector3.hpp */; };
 		5E556B2D1F2ABDFC00F6FB2E /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E556B2B1F2ABDFC00F6FB2E /* Quaternion.cpp */; };
 		5E556B2E1F2ABDFC00F6FB2E /* Quaternion.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E556B2C1F2ABDFC00F6FB2E /* Quaternion.hpp */; };
+		5E60CE841FC6516800D2E8B8 /* TerrainChunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E60CE821FC6516800D2E8B8 /* TerrainChunk.cpp */; };
+		5E60CE851FC6516800D2E8B8 /* TerrainChunk.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E60CE831FC6516800D2E8B8 /* TerrainChunk.hpp */; };
+		5E60CE881FC655E800D2E8B8 /* TerrainMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E60CE861FC655E800D2E8B8 /* TerrainMesh.cpp */; };
+		5E60CE891FC655E800D2E8B8 /* TerrainMesh.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E60CE871FC655E800D2E8B8 /* TerrainMesh.hpp */; };
+		5E60CE8C1FC6570400D2E8B8 /* TerrainSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E60CE8A1FC6570400D2E8B8 /* TerrainSystem.cpp */; };
+		5E60CE8D1FC6570400D2E8B8 /* TerrainSystem.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E60CE8B1FC6570400D2E8B8 /* TerrainSystem.hpp */; };
 		5E6C652D1F2B9E610089FD55 /* TransformComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C652B1F2B9E600089FD55 /* TransformComponent.cpp */; };
 		5E6C652E1F2B9E610089FD55 /* TransformComponent.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E6C652C1F2B9E600089FD55 /* TransformComponent.hpp */; };
 		5E6C65311F2BA1050089FD55 /* RenderComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C652F1F2BA1050089FD55 /* RenderComponent.cpp */; };
@@ -322,6 +328,12 @@
 		5E556B281F2ABA6500F6FB2E /* Vector3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Vector3.hpp; path = ../../Engine/Render/Vector3.hpp; sourceTree = "<group>"; };
 		5E556B2B1F2ABDFC00F6FB2E /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quaternion.cpp; path = ../../Engine/Render/Quaternion.cpp; sourceTree = "<group>"; };
 		5E556B2C1F2ABDFC00F6FB2E /* Quaternion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Quaternion.hpp; path = ../../Engine/Render/Quaternion.hpp; sourceTree = "<group>"; };
+		5E60CE821FC6516800D2E8B8 /* TerrainChunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TerrainChunk.cpp; path = ../../Engine/Terrain/TerrainChunk.cpp; sourceTree = "<group>"; };
+		5E60CE831FC6516800D2E8B8 /* TerrainChunk.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TerrainChunk.hpp; path = ../../Engine/Terrain/TerrainChunk.hpp; sourceTree = "<group>"; };
+		5E60CE861FC655E800D2E8B8 /* TerrainMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TerrainMesh.cpp; path = ../../Engine/Terrain/TerrainMesh.cpp; sourceTree = "<group>"; };
+		5E60CE871FC655E800D2E8B8 /* TerrainMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TerrainMesh.hpp; path = ../../Engine/Terrain/TerrainMesh.hpp; sourceTree = "<group>"; };
+		5E60CE8A1FC6570400D2E8B8 /* TerrainSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TerrainSystem.cpp; path = ../../Engine/Terrain/TerrainSystem.cpp; sourceTree = "<group>"; };
+		5E60CE8B1FC6570400D2E8B8 /* TerrainSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TerrainSystem.hpp; path = ../../Engine/Terrain/TerrainSystem.hpp; sourceTree = "<group>"; };
 		5E6C652B1F2B9E600089FD55 /* TransformComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TransformComponent.cpp; path = ../../Engine/Render/TransformComponent.cpp; sourceTree = "<group>"; };
 		5E6C652C1F2B9E600089FD55 /* TransformComponent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TransformComponent.hpp; path = ../../Engine/Render/TransformComponent.hpp; sourceTree = "<group>"; };
 		5E6C652F1F2BA1050089FD55 /* RenderComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderComponent.cpp; path = ../../Engine/Render/RenderComponent.cpp; sourceTree = "<group>"; };
@@ -546,6 +558,7 @@
 				5E05238B1F203B5B0088C9BA /* Render */,
 				5EFDFDD81F228C02009FA81B /* Resource */,
 				5E05238C1F203B5F0088C9BA /* Scripting */,
+				5E60CE811FC6512300D2E8B8 /* Terrain */,
 				5E0523831F203B120088C9BA /* giga-engine.h */,
 				5E05237D1F203ADF0088C9BA /* Products */,
 				5EFDFD8A1F2195D6009FA81B /* Frameworks */,
@@ -786,6 +799,19 @@
 			name = Scripting;
 			sourceTree = "<group>";
 		};
+		5E60CE811FC6512300D2E8B8 /* Terrain */ = {
+			isa = PBXGroup;
+			children = (
+				5E60CE821FC6516800D2E8B8 /* TerrainChunk.cpp */,
+				5E60CE831FC6516800D2E8B8 /* TerrainChunk.hpp */,
+				5E60CE861FC655E800D2E8B8 /* TerrainMesh.cpp */,
+				5E60CE871FC655E800D2E8B8 /* TerrainMesh.hpp */,
+				5E60CE8A1FC6570400D2E8B8 /* TerrainSystem.cpp */,
+				5E60CE8B1FC6570400D2E8B8 /* TerrainSystem.hpp */,
+			);
+			name = Terrain;
+			sourceTree = "<group>";
+		};
 		5E6C658E1F314C960089FD55 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,6 +951,7 @@
 				5E6C65C51F3549220089FD55 /* StorableObjectType.hpp in Headers */,
 				5E6C65AA1F3376240089FD55 /* EchoResponseMessage.hpp in Headers */,
 				5E6C65AE1F353AB00089FD55 /* ReplicationSystem.hpp in Headers */,
+				5E60CE851FC6516800D2E8B8 /* TerrainChunk.hpp in Headers */,
 				5EDCA3DC1F3DF92700329733 /* MySQLDataLoader.hpp in Headers */,
 				5EDCA4051F66BB7F00329733 /* AckMessage.hpp in Headers */,
 				5EAF93451F81533B00851063 /* ThreadPool.hpp in Headers */,
@@ -949,6 +976,7 @@
 				5EFDFDC81F227023009FA81B /* File.hpp in Headers */,
 				5EDCA3CF1F3DF1E100329733 /* DataLoader.hpp in Headers */,
 				5EDCA3ED1F41F2FD00329733 /* OpenGLShadowPass.hpp in Headers */,
+				5E60CE891FC655E800D2E8B8 /* TerrainMesh.hpp in Headers */,
 				5EFDFDDC1F228C1A009FA81B /* Resource.hpp in Headers */,
 				5E6C65C91F354C030089FD55 /* MemoryWriter.hpp in Headers */,
 				5E556AA81F23C6CB00F6FB2E /* Command.hpp in Headers */,
@@ -1008,6 +1036,7 @@
 				5E6C65771F2EB9630089FD55 /* SpotLightComponent.hpp in Headers */,
 				5E6C657C1F3145AD0089FD55 /* UDPSocket.hpp in Headers */,
 				5E556B221F2AB65000F6FB2E /* StaticMeshComponent.hpp in Headers */,
+				5E60CE8D1FC6570400D2E8B8 /* TerrainSystem.hpp in Headers */,
 				5EFDFDE81F229908009FA81B /* DateTime.hpp in Headers */,
 				5E6C656B1F2EAF990089FD55 /* LightComponent.hpp in Headers */,
 				5EFDFDEC1F22EB02009FA81B /* ResourceSystem.hpp in Headers */,
@@ -1111,6 +1140,7 @@
 				5E556B091F29736000F6FB2E /* MaterialSystem.cpp in Sources */,
 				5E556AA31F23618A00F6FB2E /* ScriptComponent.cpp in Sources */,
 				5E6C657B1F3145AD0089FD55 /* UDPSocket.cpp in Sources */,
+				5E60CE8C1FC6570400D2E8B8 /* TerrainSystem.cpp in Sources */,
 				5E6C65FD1F3B5CDD0089FD55 /* OpenGLRenderSystem.cpp in Sources */,
 				5E6C65C81F354C030089FD55 /* MemoryWriter.cpp in Sources */,
 				5E6C653E1F2C02F20089FD55 /* CameraComponent.cpp in Sources */,
@@ -1118,6 +1148,7 @@
 				5E6C65B81F3545D10089FD55 /* EntitySnapshot.cpp in Sources */,
 				5E6C65761F2EB9630089FD55 /* SpotLightComponent.cpp in Sources */,
 				5EDCA3F71F56FB6A00329733 /* CommandMessage.cpp in Sources */,
+				5E60CE881FC655E800D2E8B8 /* TerrainMesh.cpp in Sources */,
 				5E556A9B1F23613300F6FB2E /* Script.cpp in Sources */,
 				5E6C65881F314AD30089FD55 /* NetworkMessage.cpp in Sources */,
 				5EDCA3EC1F41F2FD00329733 /* OpenGLShadowPass.cpp in Sources */,
@@ -1166,6 +1197,7 @@
 				5E05239B1F2048ED0088C9BA /* Application.cpp in Sources */,
 				5EFDFD881F2194D8009FA81B /* InputDevice.cpp in Sources */,
 				5E0523DA1F2180A70088C9BA /* ScriptableObjectType.cpp in Sources */,
+				5E60CE841FC6516800D2E8B8 /* TerrainChunk.cpp in Sources */,
 				5E0523A31F20FE780088C9BA /* GigaObject.cpp in Sources */,
 				5E556B011F295A4200F6FB2E /* MemoryReader.cpp in Sources */,
 				5E556AC31F2431A000F6FB2E /* BoundingBox.cpp in Sources */,

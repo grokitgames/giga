@@ -93,6 +93,7 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
         m_shader->Set("lightPosition", (*i)->GetWorldPosition());
         m_shader->Set("lightColour", (*i)->GetColor());
         m_shader->Set("lightType", (*i)->GetLightType());
+        m_shader->Set("attenuationDist", (*i)->GetAttenuation());
         
         (*i)->GetShadowMap()->Bind(5);
         m_shader->Set("lightShadowMap3D", 5);
@@ -104,7 +105,6 @@ void OpenGLDeferredLightingPass::Render(Scene* scene) {
         m_renderedTriangles += 2;
     }
     
-    //m_framebuffers[0]->GetTexture(0)->Save("lighting.bmp");
     m_buffer->Unbind();
     m_format->DisableVertexAttribs();
     

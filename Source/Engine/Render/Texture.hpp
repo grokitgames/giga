@@ -46,6 +46,11 @@ public:
 	virtual unsigned int GetTexture() { return(0); }
     virtual unsigned int GetTarget(int slot) { return(0); }
     
+    /**
+     * Get texture data
+     */
+    virtual void* GetData() { return(0); }
+    
 protected:
     // Width and height
     int m_width, m_height;
